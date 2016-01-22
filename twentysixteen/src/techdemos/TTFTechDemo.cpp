@@ -16,18 +16,17 @@ void TTFTechDemo::draw()
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
+	glDisable(GL_DEPTH_TEST);
+	glEnable(GL_BLEND);
+
 	// draw the text
 	glPushMatrix();
 
-		glDisable(GL_DEPTH_TEST);
-		glEnable(GL_BLEND);
-
 		glColor3f(1.0f, 1.0f, 1.0f);
-
-		glBindTexture(GL_TEXTURE_2D, Paintbrush::font_texture);
 		glTranslatef(512.0f, 384.0f, 0.0f);
 		glScalef(700, 300, 1.0f);
 
+		glBindTexture(GL_TEXTURE_2D, Paintbrush::font_texture);
 		Paintbrush::draw_quad();
 	
 	glPopMatrix();
