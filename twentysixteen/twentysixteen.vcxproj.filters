@@ -13,10 +13,36 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\techdemos">
+      <UniqueIdentifier>{d9f00d3c-8010-452a-a0c7-36074c31d6c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\techdemos">
+      <UniqueIdentifier>{6f1509c4-1140-4511-b47e-d8225775ad7d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\techdemos\TTFTechDemo.cpp">
+      <Filter>Source Files\techdemos</Filter>
+    </ClCompile>
+    <ClCompile Include="src\paintbrush.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\level.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\paintbrush.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\techdemos\basetechdemo.h">
+      <Filter>Header Files\techdemos</Filter>
+    </ClInclude>
+    <ClInclude Include="src\techdemos\ttftechdemo.h">
+      <Filter>Header Files\techdemos</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

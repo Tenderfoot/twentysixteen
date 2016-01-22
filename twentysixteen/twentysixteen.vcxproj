@@ -20,6 +20,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\paintbrush.cpp" />
+    <ClCompile Include="src\techdemos\TTFTechDemo.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\level.h" />
+    <ClInclude Include="src\paintbrush.h" />
+    <ClInclude Include="src\techdemos\basetechdemo.h" />
+    <ClInclude Include="src\techdemos\ttftechdemo.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{16DFC385-0CB3-4E49-B473-0229B82CFDA3}</ProjectGuid>

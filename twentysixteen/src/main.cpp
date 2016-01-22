@@ -1,5 +1,6 @@
 #pragma comment(lib, "x86/SDL2")
 #pragma comment(lib, "x86/SDL2main")
+#pragma comment(lib, "x86/SDL2_ttf")
 #pragma comment(lib, "OpenGL32")
 #pragma comment(lib, "GLU32")
 
@@ -11,9 +12,13 @@
 #include <SDL_opengl.h>
 #include <gl/GLU.h>
 
+// Local Headers
+#include "techdemos\ttftechdemo.h"
+
 // and a few globals
 bool done = 0; // Quit?
 SDL_Window *window;
+Level *current_level;
 
 #define REZ_WIDTH 1024
 #define REZ_HEIGHT 768
@@ -37,7 +42,6 @@ void init_opengl()
 	glMatrixMode(GL_MODELVIEW);  // Select The Model View Matrix
 	glLoadIdentity();    // Reset The Model View Matrix
 
-
 	glClearColor(0.0f, 0.0f, 0.0f, 0.5f);
 
 }
@@ -47,6 +51,8 @@ void draw()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	// Clear Screen And Depth Buffer
 	glLoadIdentity();
 
+	current_level->draw();
+
 	SDL_GL_SwapWindow(window);
 }
 
@@ -55,7 +61,6 @@ void handle_sdl_event()
 	SDL_Event event;
 	while (SDL_PollEvent(&event))
 	{
-
 		if (event.type == SDL_QUIT || event.type == SDL_QUIT)
 			done = true;
 	}
@@ -68,10 +73,10 @@ int main(int argc, char *argv[])
 	SDL_Init(SDL_INIT_AUDIO);
 	SDL_Init(SDL_INIT_JOYSTICK);
 
-	/*if (TTF_Init() == -1) {
+	if (TTF_Init() == -1) {
 		printf("TTF_Init: %s\n", TTF_GetError());
 		exit(2);
-	}*/
+	}
 
 	window = SDL_CreateWindow("TwentySixteen", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, REZ_WIDTH, REZ_HEIGHT, SDL_WINDOW_OPENGL);
 	
@@ -87,6 +92,12 @@ int main(int argc, char *argv[])
 	SDL_Joystick *joy3 = SDL_JoystickOpen(2);
 	SDL_Joystick *joy4 = SDL_JoystickOpen(3);
 
+	// Initialize Paintrbush (fonts)
+	Paintbrush::init();
+
+	// Load levels and set the current level
+	current_level = new TTFTechDemo();
+
 	while (!done)
 	{
 		handle_sdl_event();
@@ -96,7 +107,7 @@ int main(int argc, char *argv[])
 	// shut everything down
 	//SDL_CloseAudio();
 
-
+	TTF_Quit();
 	SDL_GL_DeleteContext(glcontext);
 	SDL_JoystickClose(joy);
 	SDL_DestroyWindow(window);
