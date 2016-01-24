@@ -30,6 +30,12 @@
     <ClCompile Include="src\techdemos\TTFTechDemo.cpp">
       <Filter>Source Files\techdemos</Filter>
     </ClCompile>
+    <ClCompile Include="src\techdemos\SpineTechDemo.cpp">
+      <Filter>Source Files\techdemos</Filter>
+    </ClCompile>
+    <ClCompile Include="src\spine_data.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\level.h">
@@ -43,6 +49,12 @@
     </ClInclude>
     <ClInclude Include="src\techdemos\ttftechdemo.h">
       <Filter>Header Files\techdemos</Filter>
+    </ClInclude>
+    <ClInclude Include="src\techdemos\spinetechdemo.h">
+      <Filter>Header Files\techdemos</Filter>
+    </ClInclude>
+    <ClInclude Include="src\spine_data.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

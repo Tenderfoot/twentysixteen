@@ -4,6 +4,7 @@
 #pragma comment(lib, "OpenGL32")
 #pragma comment(lib, "GLU32")
 #pragma comment(lib, "SOIL")
+#pragma comment(lib, "spine-c")
 
 #define NO_SDL_GLEXT
 
@@ -15,6 +16,7 @@
 
 // Local Headers
 #include "techdemos\ttftechdemo.h"
+#include "techdemos\spinetechdemo.h"
 
 // and a few globals
 bool done = 0; // Quit?
@@ -94,7 +96,7 @@ int main(int argc, char *argv[])
 	Paintbrush::init();
 
 	// Load levels and set the current level
-	current_level = new TTFTechDemo();
+	current_level = new SpineTechDemo();
 
 	current_level->init();
 
