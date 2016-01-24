@@ -28,6 +28,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\base_user_interface.h" />
+    <ClInclude Include="src\common.h" />
     <ClInclude Include="src\level.h" />
     <ClInclude Include="src\paintbrush.h" />
     <ClInclude Include="src\spine_data.h" />

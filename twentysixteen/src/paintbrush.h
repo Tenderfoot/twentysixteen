@@ -11,6 +11,8 @@
 #include <gl/GLU.h>
 #include <map>
 
+#include "common.h"
+
 class Paintbrush
 {
 public:

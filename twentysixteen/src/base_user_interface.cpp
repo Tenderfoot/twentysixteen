@@ -3,7 +3,7 @@
 
 void TextWidget::draw()
 {
-	Paintbrush::draw_text(text, 512, 200, 300, 300);
+	Paintbrush::draw_text(text, x*res_width, y*res_height, width*res_width, height*res_height);
 }
 
 void UIImage::draw()
@@ -19,12 +19,17 @@ void UIImage::draw()
 	glPopMatrix();
 }
 
+void ListWidget::draw()
+{
+	
+}
+
 void BaseUserInterface::draw()
 {
 	// set up orthographic projection
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrtho(0.0, 1024, 768, 0.0, -1.0, 1.0);
+	glOrtho(0.0, res_width, res_height, 0.0, -1.0, 1.0);
 
 	// go back to the modelview matrix
 	glMatrixMode(GL_MODELVIEW);
@@ -42,7 +47,7 @@ void BaseUserInterface::draw()
 	// go back to regular projection...
 	glMatrixMode(GL_PROJECTION);  // Select The Projection Matrix
 	glLoadIdentity();                // Reset The Projection Matrix
-	gluPerspective(80, (float)1024 / (float)768, 1.0, 1000.0);
+	gluPerspective(80, (float)res_width / (float)res_height, 1.0, 1000.0);
 	glMatrixMode(GL_MODELVIEW);  // Select The Model View Matrix
 	glLoadIdentity();    // Reset The Model View Matrix
 }

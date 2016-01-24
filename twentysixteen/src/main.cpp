@@ -23,10 +23,6 @@ bool done = 0; // Quit?
 SDL_Window *window;
 Level *current_level;
 
-#define REZ_WIDTH 1024	
-#define REZ_HEIGHT 768
-#define FULLSCREEN 0
-
 void init_opengl()
 {
 	glShadeModel(GL_SMOOTH);							// Enable Smooth Shading
@@ -39,10 +35,10 @@ void init_opengl()
 	glEnable(GL_TEXTURE_2D);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	glViewport(0, 0, REZ_WIDTH, REZ_HEIGHT);
+	glViewport(0, 0, res_width, res_height);
 	glMatrixMode(GL_PROJECTION);  // Select The Projection Matrix
 	glLoadIdentity();                // Reset The Projection Matrix
-	gluPerspective(80, (float)REZ_WIDTH / (float)REZ_HEIGHT, 1.0, 1000.0);
+	gluPerspective(80, res_width / res_height, 1.0, 1000.0);
 	glMatrixMode(GL_MODELVIEW);  // Select The Model View Matrix
 	glLoadIdentity();    // Reset The Model View Matrix
 
@@ -81,7 +77,7 @@ int main(int argc, char *argv[])
 		exit(2);
 	}
 
-	window = SDL_CreateWindow("TwentySixteen", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, REZ_WIDTH, REZ_HEIGHT, SDL_WINDOW_OPENGL);
+	window = SDL_CreateWindow("TwentySixteen", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, res_width, res_height, SDL_WINDOW_OPENGL);
 	
 	SDL_GLContext glcontext = SDL_GL_CreateContext(window);
 

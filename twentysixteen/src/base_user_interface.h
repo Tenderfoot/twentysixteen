@@ -25,11 +25,17 @@ public:
 class TextWidget : public UIWidget
 {
 public:
-	TextWidget(char* text)
+
+	TextWidget(char* text, float x, float y, float width, float height)
 	{
 		this->text = text;
+		this->x = x;
+		this->y = y;
+		this->width = width;
+		this->height = height;
 	}
 
+	float x, y, width, height;
 	char *text;
 	void draw();
 };
@@ -43,6 +49,19 @@ public:
 	}
 
 	GLuint texture;
+	void draw();
+};
+
+class ListWidget : public UIWidget
+{
+public:
+	ListWidget(std::vector<char*> list_items)
+	{
+		this->list_items = list_items;
+	}
+
+	std::vector<char*> list_items;
+	int current_selection;
 	void draw();
 };
 

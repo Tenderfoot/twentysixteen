@@ -71,7 +71,7 @@ void Paintbrush::draw_text(char *text, float x, float y, float width, float heig
 	// set up orthographic projection
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrtho(0.0, 1024, 768, 0.0, -1.0, 1.0);
+	glOrtho(0.0, res_width, res_height, 0.0, -1.0, 1.0);
 
 	// go back to the modelview matrix
 	glMatrixMode(GL_MODELVIEW);

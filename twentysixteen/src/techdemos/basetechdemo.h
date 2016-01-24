@@ -25,7 +25,7 @@ public:
 
 	void init()
 	{
-		TechDemoUI.add_widget(new TextWidget(this->techdemo_title));
+		TechDemoUI.add_widget(new TextWidget(this->techdemo_title, 0.5, 0.2, 0.5, 0.3));
 	}
 
 	void draw() 
