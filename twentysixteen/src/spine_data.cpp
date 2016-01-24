@@ -22,6 +22,9 @@ char* _spUtil_readFile(const char* path, int* length) {
 
 /* Class methods */
 
+// by default, if I try to use the region UVs given to me from spine,
+// I don't get what i'm looking for. This is me manually fixing that -
+// I think it has to do with allowing for rotation in the atlas
 void SpineData::setslots()
 {
 	int i;
@@ -34,7 +37,7 @@ void SpineData::setslots()
 				spAtlasRegion *test = spAtlas_findRegion(atlas, skeleton->slots[i]->attachment->name);
 
 				spRegionAttachment* attch = (spRegionAttachment*)skeleton->slots[i]->attachment;
-				float width1 = float(test->x) / 1024; //I don't know what these mean yet
+				float width1 = float(test->x) / 1024;
 				float height1 = (float(test->y)) / 1024;
 				float width2 = (float(test->x) + float(test->width)) / 1024;
 				float height2 = (float(test->y) + float(test->height)) / 1024;
