@@ -1,6 +1,11 @@
 
 #include "ttftechdemo.h"
 
+void TTFTechDemo::init()
+{
+	texture = Paintbrush::Soil_Load_Texture();
+}
+
 void TTFTechDemo::run()
 {
 }
@@ -23,11 +28,24 @@ void TTFTechDemo::draw()
 	glPushMatrix();
 
 		glColor3f(1.0f, 1.0f, 1.0f);
-		glTranslatef(512.0f, 384.0f, 0.0f);
-		glScalef(700, 300, 1.0f);
+		glTranslatef(512.0f, 200.0f, 0.0f);
+		glScalef(700, 200, 1.0f);
 
 		glBindTexture(GL_TEXTURE_2D, Paintbrush::font_texture);
 		Paintbrush::draw_quad();
 	
+	glPopMatrix();
+
+	// test SOIL
+
+	glPushMatrix();
+
+		glColor3f(1.0f, 1.0f, 1.0f);
+		glTranslatef(512.0f, 500.0f, 0.0f);
+		glScalef(700, 300, 1.0f);
+
+		glBindTexture(GL_TEXTURE_2D, texture);
+		Paintbrush::draw_quad();
+
 	glPopMatrix();
 }

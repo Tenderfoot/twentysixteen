@@ -7,6 +7,7 @@
 
 #include <SDL_opengl.h>
 #include <SDL_ttf.h>
+#include <SOIL/SOIL.h>
 
 class Paintbrush
 {
@@ -20,6 +21,9 @@ public:
 
 	// Convert a string into an OpenGL Texture using SDL_TTF
 	static GLuint TextToTexture(GLubyte r, GLubyte g, GLubyte b, const char* text, int ptsize);
+
+	// Load a texture
+	static GLuint Soil_Load_Texture();
 
 	// TODO get rid of this and set it up so rendered strings are stored
 	static GLuint font_texture;

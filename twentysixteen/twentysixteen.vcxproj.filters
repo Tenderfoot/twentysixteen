@@ -24,11 +24,11 @@
     <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\techdemos\TTFTechDemo.cpp">
-      <Filter>Source Files\techdemos</Filter>
-    </ClCompile>
     <ClCompile Include="src\paintbrush.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\techdemos\TTFTechDemo.cpp">
+      <Filter>Source Files\techdemos</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

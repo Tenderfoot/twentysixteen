@@ -28,6 +28,24 @@ void Paintbrush::draw_quad()
 	glPopMatrix();
 }
 
+GLuint Paintbrush::Soil_Load_Texture()
+{
+	GLuint loaded_texture;
+
+	loaded_texture = SOIL_load_OGL_texture
+		(	"data/images/controller_splash.png",
+			SOIL_LOAD_AUTO,
+			SOIL_CREATE_NEW_ID,
+			SOIL_FLAG_MIPMAPS	);
+
+	// Make sure texture is set to repeat on wrap
+	glBindTexture(GL_TEXTURE_2D, loaded_texture);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+	return loaded_texture;
+}
+
 GLuint Paintbrush::TextToTexture(GLubyte r, GLubyte g, GLubyte b, const char* text, int ptsize)
 {
 	SDL_Color color = { r, g, b };

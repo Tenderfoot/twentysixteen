@@ -3,6 +3,7 @@
 #pragma comment(lib, "x86/SDL2_ttf")
 #pragma comment(lib, "OpenGL32")
 #pragma comment(lib, "GLU32")
+#pragma comment(lib, "SOIL")
 
 #define NO_SDL_GLEXT
 
@@ -20,8 +21,9 @@ bool done = 0; // Quit?
 SDL_Window *window;
 Level *current_level;
 
-#define REZ_WIDTH 1024
+#define REZ_WIDTH 1024	
 #define REZ_HEIGHT 768
+#define FULLSCREEN 0
 
 void init_opengl()
 {
@@ -43,7 +45,6 @@ void init_opengl()
 	glLoadIdentity();    // Reset The Model View Matrix
 
 	glClearColor(0.0f, 0.0f, 0.0f, 0.5f);
-
 }
 
 void draw()
@@ -88,15 +89,14 @@ int main(int argc, char *argv[])
 
 	SDL_JoystickEventState(SDL_ENABLE);
 	SDL_Joystick *joy = SDL_JoystickOpen(0);
-	SDL_Joystick *joy2 = SDL_JoystickOpen(1);
-	SDL_Joystick *joy3 = SDL_JoystickOpen(2);
-	SDL_Joystick *joy4 = SDL_JoystickOpen(3);
 
 	// Initialize Paintrbush (fonts)
 	Paintbrush::init();
 
 	// Load levels and set the current level
 	current_level = new TTFTechDemo();
+
+	current_level->init();
 
 	while (!done)
 	{
