@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\base_user_interface.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\paintbrush.cpp" />
     <ClCompile Include="src\spine_data.cpp" />
@@ -26,6 +27,7 @@
     <ClCompile Include="src\techdemos\TTFTechDemo.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\base_user_interface.h" />
     <ClInclude Include="src\level.h" />
     <ClInclude Include="src\paintbrush.h" />
     <ClInclude Include="src\spine_data.h" />

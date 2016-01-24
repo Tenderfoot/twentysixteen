@@ -9,8 +9,20 @@
 
 #include "../paintbrush.h"
 #include "../level.h"
+#include "../base_user_interface.h"
 
 class BaseTechDemo : public Level
 {
 public:
+
+	BaseTechDemo()
+	{
+		this->techdemo_title = "Base TechDemo";
+
+		TechDemoUI.add_widget(new TextWidget(this->techdemo_title));
+	}
+
+	char *techdemo_title;
+	BaseUserInterface TechDemoUI;
+	
 };

@@ -8,6 +8,7 @@
 #include <SDL_opengl.h>
 #include <SDL_ttf.h>
 #include <SOIL/SOIL.h>
+#include <gl/GLU.h>
 
 class Paintbrush
 {
@@ -24,6 +25,8 @@ public:
 
 	// Load a texture
 	static GLuint Soil_Load_Texture(char *filename);
+
+	static void draw_text(char *text, float x, float y, float width, float height);
 
 	// TODO get rid of this and set it up so rendered strings are stored
 	static GLuint font_texture;

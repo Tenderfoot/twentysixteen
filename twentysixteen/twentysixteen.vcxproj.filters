@@ -36,6 +36,9 @@
     <ClCompile Include="src\spine_data.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\base_user_interface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\level.h">
@@ -54,6 +57,9 @@
       <Filter>Header Files\techdemos</Filter>
     </ClInclude>
     <ClInclude Include="src\spine_data.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\base_user_interface.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

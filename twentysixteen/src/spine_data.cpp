@@ -86,7 +86,7 @@ void SpineData::draw()
 		{
 			glPushMatrix();
 
-			glTranslatef(0.0f, 0.0f, -950.0f);
+			glTranslatef(0.0f, -500.0f, -950.0f);
 
 			//glNormal3d(0, 0, 1);
 
