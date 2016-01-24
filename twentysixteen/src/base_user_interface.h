@@ -34,6 +34,18 @@ public:
 	void draw();
 };
 
+class UIImage : public UIWidget
+{
+public:
+	UIImage(GLuint texture)
+	{
+		this->texture = texture;
+	}
+
+	GLuint texture;
+	void draw();
+};
+
 class BaseUserInterface
 {
 public:

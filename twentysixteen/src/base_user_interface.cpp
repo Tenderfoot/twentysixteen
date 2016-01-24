@@ -6,6 +6,19 @@ void TextWidget::draw()
 	Paintbrush::draw_text(text, 512, 200, 300, 300);
 }
 
+void UIImage::draw()
+{
+	glPushMatrix();
+
+		glTranslatef(512.0f, 500.0f, 0.0f);
+		glScalef(700, 300, 1.0f);
+
+		glBindTexture(GL_TEXTURE_2D, texture);
+		Paintbrush::draw_quad();
+
+	glPopMatrix();
+}
+
 void BaseUserInterface::draw()
 {
 	// set up orthographic projection
@@ -19,6 +32,8 @@ void BaseUserInterface::draw()
 
 	glDisable(GL_DEPTH_TEST);
 	glEnable(GL_BLEND);
+
+	glColor3f(1.0f, 1.0f, 1.0f);
 
 	int i;
 	for (i = 0; i < widgets.size(); i++)
