@@ -27,4 +27,7 @@ public:
 
 	// the input, and whether it was pressed or released
 	virtual void take_input(boundinput input, bool type) = 0;
+
+	// Exit level
+	levels exit_level = LEVEL_NONE;
 };

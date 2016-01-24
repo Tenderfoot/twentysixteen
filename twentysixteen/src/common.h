@@ -6,9 +6,11 @@
 
 enum levels
 {
+	LEVEL_NONE,
 	TECHDEMO_BASE,
 	TECHDEMO_SPINE,
-	TECHDEMO_TTF
+	TECHDEMO_TTF,
+	QUIT
 };
 
 enum boundinput

@@ -62,7 +62,7 @@ boundinput translate_key_input(SDL_Keycode keycode)
 {
 	switch (keycode)
 	{
-		case SDLK_j:
+		case SDLK_SPACE:
 			return ACTION;
 			break;
 		case SDLK_s:
@@ -70,6 +70,9 @@ boundinput translate_key_input(SDL_Keycode keycode)
 			break;
 		case SDLK_w:
 			return UP;
+			break;
+		case SDLK_ESCAPE:
+			return BACK;
 			break;
 	}
 }
@@ -180,6 +183,19 @@ int main(int argc, char *argv[])
 		handle_sdl_event();
 		current_level->run();
 		draw();
+
+		if (current_level->exit_level != LEVEL_NONE)
+		{
+			levels next_level;
+			next_level = current_level->exit_level;
+			if (next_level == QUIT)
+				done = true;
+			else
+			{
+				current_level->exit_level = LEVEL_NONE;
+				current_level = level_map[next_level];
+			}
+		}
 	}
 
 	// shut everything down

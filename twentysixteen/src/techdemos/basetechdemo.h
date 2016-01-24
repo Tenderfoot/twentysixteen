@@ -33,15 +33,41 @@ public:
 
 	void take_input(boundinput input, bool type)
 	{
-
-		if (input == UP && type==true)
+		if (type == true)
 		{
-			my_list->previous_item();
-		}
+			if (input == UP)
+			{
+				my_list->previous_item();
+			}
 
-		if (input == DOWN && type == true)
-		{
-			my_list->next_item();
+			if (input == DOWN)
+			{
+				my_list->next_item();
+			}
+
+			if (input == ACTION)
+			{
+				char *choice = my_list->list_items[my_list->current_selection];
+				if (strcmp(choice, "Spine") == 0)
+				{
+					exit_level = TECHDEMO_SPINE;
+				}
+				if (strcmp(choice, "TTF/SOIL") == 0)
+				{
+					exit_level = TECHDEMO_TTF;
+				}
+				if (strcmp(choice, "SDL_MIXER") == 0)
+				{
+					exit_level = TECHDEMO_SPINE;
+				}
+				if (strcmp(choice, "ASSIMP") == 0)
+				{
+					exit_level = TECHDEMO_SPINE;
+				}
+			}
+
+			if (input == BACK)
+				exit_level = QUIT;
 		}
 	}
 
