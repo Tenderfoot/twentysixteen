@@ -127,6 +127,7 @@ void SpineData::update_skeleton()
 	spSkeleton_updateWorldTransform(skeleton);
 
 	prev_time = SDL_GetTicks();
-
+	
+	// this only probably needs to happen when animation changes
 	setslots();
 }

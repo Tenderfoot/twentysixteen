@@ -36,7 +36,7 @@ public:
 	// textures or rendered strings
 	// string -> texture GLuint
 	static std::map<char*, GLuint> texture_db;
-	static GLuint get_texture(char* texture_id);
+	static GLuint get_texture(char* texture_id, bool text);
 
 };
 

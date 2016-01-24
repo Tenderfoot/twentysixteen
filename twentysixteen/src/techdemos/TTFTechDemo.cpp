@@ -4,7 +4,7 @@
 void TTFTechDemo::init()
 {
 	BaseTechDemo::init();
-	TechDemoUI.add_widget(new UIImage(Paintbrush::Soil_Load_Texture("data/images/controller_splash.png")));
+	TechDemoUI.add_widget(new UIImage(Paintbrush::get_texture("data/images/controller_splash.png", false)));
 }
 
 void TTFTechDemo::run()

@@ -87,20 +87,27 @@ void Paintbrush::draw_text(char *text, float x, float y, float width, float heig
 		glTranslatef(x, y, 0.0f);
 		glScalef(width, height, 1.0f);
 
-		glBindTexture(GL_TEXTURE_2D, Paintbrush::get_texture(text));
+		glBindTexture(GL_TEXTURE_2D, Paintbrush::get_texture(text, true));
 		Paintbrush::draw_quad();
 
 	glPopMatrix();
 }
 
-GLuint Paintbrush::get_texture(char* texture_id)
+GLuint Paintbrush::get_texture(char* texture_id, bool text)
 {
 	std::map<char*, GLuint>::iterator it;
 	
 	it = texture_db.find(texture_id);
 	if (it == texture_db.end())
 	{
-		texture_db[texture_id] = TextToTexture(255, 255, 255, texture_id, 14);
+		if (text)
+		{
+			texture_db[texture_id] = TextToTexture(255, 255, 255, texture_id, 14);
+		}
+		else
+		{
+			texture_db[texture_id] = Soil_Load_Texture(texture_id);
+		}
 	}
 	else
 	{
