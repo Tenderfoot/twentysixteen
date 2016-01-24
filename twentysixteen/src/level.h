@@ -16,10 +16,15 @@
 // The base level class will also handle taking raw input, and translating it valid key events
 // for example taking controller inputs or keyboard inputs, and sending them to the base levels as the same input.
 
+#include "common.h"
+
 class Level
 {
 public:
 	virtual void init() = 0;
 	virtual void run() = 0;
 	virtual void draw() = 0;
+
+	// the input, and whether it was pressed or released
+	virtual void take_input(boundinput input, bool type) = 0;
 };

@@ -12,6 +12,10 @@ void SpineTechDemo::run()
 	spineboy.update_skeleton();
 }
 
+void SpineTechDemo::take_input(boundinput input, bool type)
+{
+}
+
 void SpineTechDemo::draw()
 {
 	BaseTechDemo::draw();

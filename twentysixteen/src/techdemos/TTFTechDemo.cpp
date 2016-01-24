@@ -11,6 +11,10 @@ void TTFTechDemo::run()
 {
 }
 
+void TTFTechDemo::take_input(boundinput input, bool type)
+{
+}
+
 void TTFTechDemo::draw()
 {
 	BaseTechDemo::draw();

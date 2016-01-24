@@ -43,10 +43,7 @@ public:
 class UIImage : public UIWidget
 {
 public:
-	UIImage(GLuint texture)
-	{
-		this->texture = texture;
-	}
+	UIImage(GLuint texture) : texture(texture) {};
 
 	GLuint texture;
 	void draw();
@@ -55,9 +52,20 @@ public:
 class ListWidget : public UIWidget
 {
 public:
-	ListWidget(std::vector<char*> list_items)
+	ListWidget(std::vector<char*> list_items) : list_items(list_items) {};
+
+	void next_item()
 	{
-		this->list_items = list_items;
+		current_selection++;
+		if (current_selection >= list_items.size())
+			current_selection = 0;
+	}
+
+	void previous_item()
+	{
+		current_selection--;
+		if (current_selection < 0)
+			current_selection = list_items.size()-1;
 	}
 
 	std::vector<char*> list_items;

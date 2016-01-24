@@ -13,6 +13,7 @@ public:
 	void run();
 	void draw();
 	void init();
+	void take_input(boundinput input, bool type);
 
 	// SOIL test
 	GLuint texture;

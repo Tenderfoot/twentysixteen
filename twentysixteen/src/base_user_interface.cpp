@@ -34,6 +34,8 @@ void ListWidget::draw()
 		}
 
 		Paintbrush::draw_text(list_items.at(i), 0.5*res_width, (0.4 + (0.1*i))*res_height, 0.1*res_width, 0.05*res_height);
+
+		glColor3f(1.0f, 1.0f, 1.0f);
 	}
 }
 

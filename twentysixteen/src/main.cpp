@@ -58,11 +58,72 @@ void draw()
 	SDL_GL_SwapWindow(window);
 }
 
+boundinput translate_key_input(SDL_Keycode keycode)
+{
+	switch (keycode)
+	{
+		case SDLK_j:
+			return ACTION;
+			break;
+		case SDLK_s:
+			return DOWN;
+			break;
+		case SDLK_w:
+			return UP;
+			break;
+	}
+}
+
+boundinput translate_joy_input(int joybutton)
+{
+	return ACTION;
+}
+
 void handle_sdl_event()
 {
 	SDL_Event event;
+	bool was_keypress = false;
+	bool was_joypress = false;
+	bool type;
+
 	while (SDL_PollEvent(&event))
 	{
+		was_keypress = false;
+		was_joypress = false;
+
+		// Translate and send key events
+		if (event.type == SDL_KEYDOWN)
+		{
+			was_keypress = true;
+			type = true;
+		}
+
+		if (event.type == SDL_KEYUP)
+		{
+			was_keypress = true;
+			type = false;
+		}
+
+		if (was_keypress)
+			current_level->take_input(translate_key_input(event.key.keysym.sym), type);
+
+		// Translate and send joypad events
+		if (event.type == SDL_JOYBUTTONDOWN)
+		{
+			type = true;
+			was_joypress = true;
+		}
+
+		if (event.type == SDL_JOYBUTTONUP)
+		{
+			type = false;
+			was_joypress = true;
+		}
+
+		if (was_joypress)
+			current_level->take_input(translate_joy_input(event.jbutton.button), type);
+
+		// quit event
 		if (event.type == SDL_QUIT || event.type == SDL_QUIT)
 			done = true;
 	}
