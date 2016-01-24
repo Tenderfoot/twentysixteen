@@ -5,6 +5,8 @@
 #include <SDL_opengl.h>
 #include <SOIL\SOIL.h>
 
+#include "paintbrush.h"
+
 /* These three functions are unused but required for using spine-c */
 
 void _spAtlasPage_createTexture(spAtlasPage* self, const char* path) {
@@ -68,11 +70,7 @@ void SpineData::load_spine_data(char* spine_folder)
 
 	sprintf_s(dir, sizeof(char)*256, "data/spinedata/%s/%s.png", spine_folder, spine_folder);
 
-	texture = SOIL_load_OGL_texture
-		(	dir,
-			SOIL_LOAD_AUTO,
-			SOIL_CREATE_NEW_ID,
-			SOIL_FLAG_MIPMAPS	);
+	texture = Paintbrush::get_texture(dir, false);
 
 	setslots();
 

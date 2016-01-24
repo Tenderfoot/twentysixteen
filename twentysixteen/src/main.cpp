@@ -100,7 +100,7 @@ int main(int argc, char *argv[])
 	Paintbrush::init();
 
 	// Load levels and set the current level
-	current_level = new TTFTechDemo();
+	current_level = new SpineTechDemo();
 
 	current_level->init();
 
