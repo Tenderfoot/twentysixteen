@@ -10,6 +10,7 @@
 #include "../paintbrush.h"
 #include "../level.h"
 #include "../base_user_interface.h"
+#include "../audio_controller.h"
 
 class BaseTechDemo : public Level
 {
@@ -58,7 +59,7 @@ public:
 				}
 				if (strcmp(choice, "SDL_MIXER") == 0)
 				{
-					exit_level = TECHDEMO_SPINE;
+					exit_level = TECHDEMO_AUDIO;
 				}
 				if (strcmp(choice, "ASSIMP") == 0)
 				{

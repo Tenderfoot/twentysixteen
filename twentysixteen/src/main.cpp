@@ -1,5 +1,6 @@
 #pragma comment(lib, "x86/SDL2")
 #pragma comment(lib, "x86/SDL2main")
+#pragma comment(lib, "x86/SDL2_mixer")
 #pragma comment(lib, "x86/SDL2_ttf")
 #pragma comment(lib, "OpenGL32")
 #pragma comment(lib, "GLU32")
@@ -17,6 +18,7 @@
 // Local Headers
 #include "techdemos\ttftechdemo.h"
 #include "techdemos\spinetechdemo.h"
+#include "techdemos\audiotechdemo.h"
 
 // and a few globals
 bool done = 0; // Quit?
@@ -64,21 +66,18 @@ boundinput translate_key_input(SDL_Keycode keycode)
 	{
 		case SDLK_SPACE:
 			return ACTION;
-			break;
 		case SDLK_s:
 			return DOWN;
-			break;
 		case SDLK_w:
 			return UP;
-			break;
 		case SDLK_ESCAPE:
 			return BACK;
-			break;
 	}
 }
 
 boundinput translate_joy_input(int joybutton)
 {
+	printf("%d\n", joybutton);
 	return ACTION;
 }
 
@@ -117,6 +116,7 @@ void init_levels()
 	level_map[TECHDEMO_BASE] = new BaseTechDemo();
 	level_map[TECHDEMO_SPINE] = new SpineTechDemo();
 	level_map[TECHDEMO_TTF] = new TTFTechDemo();
+	level_map[TECHDEMO_AUDIO] = new AudioTechDemo();
 
 	for (auto it = std::begin(level_map); it != std::end(level_map); ++it)
 	{
@@ -147,8 +147,9 @@ int main(int argc, char *argv[])
 	SDL_JoystickEventState(SDL_ENABLE);
 	SDL_Joystick *joy = SDL_JoystickOpen(0);
 
-	// Initialize Paintrbush (fonts)
+	// Initialize Paintrbush (fonts) and AudioController
 	Paintbrush::init();
+	AudioController::init();
 
 	// set up level map
 	init_levels();
@@ -179,8 +180,8 @@ int main(int argc, char *argv[])
 	}
 
 	// shut everything down
-	//SDL_CloseAudio();
-
+	
+	SDL_CloseAudio();
 	TTF_Quit();
 	SDL_GL_DeleteContext(glcontext);
 	SDL_JoystickClose(joy);
