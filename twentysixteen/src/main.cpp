@@ -91,40 +91,19 @@ void handle_sdl_event()
 
 	while (SDL_PollEvent(&event))
 	{
-		was_keypress = false;
-		was_joypress = false;
-
 		// Translate and send key events
 		if (event.type == SDL_KEYDOWN)
-		{
-			was_keypress = true;
-			type = true;
-		}
+			current_level->take_input(translate_key_input(event.key.keysym.sym), true);
 
 		if (event.type == SDL_KEYUP)
-		{
-			was_keypress = true;
-			type = false;
-		}
-
-		if (was_keypress)
-			current_level->take_input(translate_key_input(event.key.keysym.sym), type);
+			current_level->take_input(translate_key_input(event.key.keysym.sym), false);
 
 		// Translate and send joypad events
 		if (event.type == SDL_JOYBUTTONDOWN)
-		{
-			type = true;
-			was_joypress = true;
-		}
+			current_level->take_input(translate_joy_input(event.jbutton.button), true);
 
 		if (event.type == SDL_JOYBUTTONUP)
-		{
-			type = false;
-			was_joypress = true;
-		}
-
-		if (was_joypress)
-			current_level->take_input(translate_joy_input(event.jbutton.button), type);
+			current_level->take_input(translate_joy_input(event.jbutton.button), false);
 
 		// quit event
 		if (event.type == SDL_QUIT || event.type == SDL_QUIT)
