@@ -69,18 +69,6 @@ GLuint Paintbrush::TextToTexture(GLubyte r, GLubyte g, GLubyte b, const char* te
 
 void Paintbrush::draw_text(char *text, float x, float y, float width, float height)
 {
-	// set up orthographic projection
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glOrtho(0.0, 1024, 768, 0.0, -1.0, 1.0);
-
-	// go back to the modelview matrix
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-
-	glDisable(GL_DEPTH_TEST);
-	glEnable(GL_BLEND);
-
 	// draw the text
 	glPushMatrix();
 
@@ -92,11 +80,4 @@ void Paintbrush::draw_text(char *text, float x, float y, float width, float heig
 		Paintbrush::draw_quad();
 
 	glPopMatrix();
-
-	glMatrixMode(GL_PROJECTION);  // Select The Projection Matrix
-	glLoadIdentity();                // Reset The Projection Matrix
-	gluPerspective(80, (float)1024 / (float)768, 1.0, 1000.0);
-	glMatrixMode(GL_MODELVIEW);  // Select The Model View Matrix
-	glLoadIdentity();    // Reset The Model View Matrix
-
 }
