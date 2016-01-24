@@ -3,8 +3,8 @@
 
 void SpineTechDemo::init()
 {
+	BaseTechDemo::init();
 	spineboy.load_spine_data("spineboy");
-
 }
 
 void SpineTechDemo::run()

@@ -17,13 +17,16 @@ public:
 
 	BaseTechDemo()
 	{
-		this->techdemo_title = "Base TechDemo";
-
-		TechDemoUI.add_widget(new TextWidget(this->techdemo_title));
+		this->techdemo_title = "Base Tech Demo";
 	}
 
 	char *techdemo_title;
 	BaseUserInterface TechDemoUI;
+
+	void init()
+	{
+		TechDemoUI.add_widget(new TextWidget(this->techdemo_title));
+	}
 
 	void draw() 
 	{

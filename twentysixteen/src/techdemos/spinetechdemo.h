@@ -5,6 +5,12 @@
 
 class SpineTechDemo : public BaseTechDemo
 {
+public:
+	SpineTechDemo()
+	{
+		this->techdemo_title = "Spine Tech Demo";
+	}
+
 	void run();
 	void draw();
 	void init();

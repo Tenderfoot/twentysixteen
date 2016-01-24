@@ -9,6 +9,7 @@
 #include <SDL_ttf.h>
 #include <SOIL/SOIL.h>
 #include <gl/GLU.h>
+#include <map>
 
 class Paintbrush
 {
@@ -30,5 +31,12 @@ public:
 
 	// TODO get rid of this and set it up so rendered strings are stored
 	static GLuint font_texture;
+
+	// texturedb stores and returns already loaded
+	// textures or rendered strings
+	// string -> texture GLuint
+	static std::map<char*, GLuint> texture_db;
+	static GLuint get_texture(char* texture_id);
+
 };
 

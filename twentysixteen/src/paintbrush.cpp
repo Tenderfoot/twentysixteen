@@ -4,6 +4,7 @@
 
 GLuint Paintbrush::font_texture = 0;
 TTF_Font *Paintbrush::font = NULL;
+std::map<char*, GLuint> Paintbrush::texture_db = {};
 
 void Paintbrush::init()
 {
@@ -12,18 +13,16 @@ void Paintbrush::init()
 	{
 		printf("TTF_OpenFont: %s\n", TTF_GetError());
 	}
-
-	font_texture = TextToTexture(255,255,255,"Test this shit", 14);
 }
 
 void Paintbrush::draw_quad()
 {
 	glPushMatrix();
 		glBegin(GL_QUADS);
-			glTexCoord2f(1.0f, 0.99f);	glVertex3f(0.5f, 0.5f, 0.0f);
-			glTexCoord2f(0.0f, 0.99f);	glVertex3f(-0.5f, 0.5f, 0.0f);
-			glTexCoord2f(0.0f, -0.01f);	glVertex3f(-0.5f, -0.5f, 0.0f);
-			glTexCoord2f(1.0f, -0.01f);	glVertex3f(0.5f, -0.5f, 0.0f);
+			glTexCoord2f(1.0f, 1.00f);	glVertex3f(0.5f, 0.5f, 0.0f);
+			glTexCoord2f(0.0f, 1.00f);	glVertex3f(-0.5f, 0.5f, 0.0f);
+			glTexCoord2f(0.0f, 0.0f);	glVertex3f(-0.5f, -0.5f, 0.0f);
+			glTexCoord2f(1.0f, 0.0f);	glVertex3f(0.5f, -0.5f, 0.0f);
 		glEnd();
 	glPopMatrix();
 }
@@ -69,6 +68,18 @@ GLuint Paintbrush::TextToTexture(GLubyte r, GLubyte g, GLubyte b, const char* te
 
 void Paintbrush::draw_text(char *text, float x, float y, float width, float height)
 {
+	// set up orthographic projection
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glOrtho(0.0, 1024, 768, 0.0, -1.0, 1.0);
+
+	// go back to the modelview matrix
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
+	glDisable(GL_DEPTH_TEST);
+	glEnable(GL_BLEND);
+
 	// draw the text
 	glPushMatrix();
 
@@ -76,8 +87,25 @@ void Paintbrush::draw_text(char *text, float x, float y, float width, float heig
 		glTranslatef(x, y, 0.0f);
 		glScalef(width, height, 1.0f);
 
-		glBindTexture(GL_TEXTURE_2D, Paintbrush::font_texture);
+		glBindTexture(GL_TEXTURE_2D, Paintbrush::get_texture(text));
 		Paintbrush::draw_quad();
 
 	glPopMatrix();
+}
+
+GLuint Paintbrush::get_texture(char* texture_id)
+{
+	std::map<char*, GLuint>::iterator it;
+	
+	it = texture_db.find(texture_id);
+	if (it == texture_db.end())
+	{
+		texture_db[texture_id] = TextToTexture(255, 255, 255, texture_id, 14);
+	}
+	else
+	{
+		return texture_db[texture_id];
+	}
+
+	return texture_db[texture_id];
 }

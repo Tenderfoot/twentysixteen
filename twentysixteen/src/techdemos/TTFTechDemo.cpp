@@ -3,6 +3,7 @@
 
 void TTFTechDemo::init()
 {
+	BaseTechDemo::init();
 	texture = Paintbrush::Soil_Load_Texture("data/images/controller_splash.png");
 }
 
@@ -12,14 +13,9 @@ void TTFTechDemo::run()
 
 void TTFTechDemo::draw()
 {
-
-	// draw text
-	glPushMatrix();
-		Paintbrush::draw_text("test", 512, 200, 700, 200);
-	glPopMatrix();
-
+	BaseTechDemo::draw();
+	
 	// test SOIL
-
 	// set up orthographic projection
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
