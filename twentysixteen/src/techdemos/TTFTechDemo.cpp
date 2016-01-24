@@ -3,7 +3,7 @@
 
 void TTFTechDemo::init()
 {
-	texture = Paintbrush::Soil_Load_Texture();
+	texture = Paintbrush::Soil_Load_Texture("data/images/controller_splash.png");
 }
 
 void TTFTechDemo::run()

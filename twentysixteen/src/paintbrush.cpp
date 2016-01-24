@@ -28,12 +28,12 @@ void Paintbrush::draw_quad()
 	glPopMatrix();
 }
 
-GLuint Paintbrush::Soil_Load_Texture()
+GLuint Paintbrush::Soil_Load_Texture(char *filename)
 {
 	GLuint loaded_texture;
 
 	loaded_texture = SOIL_load_OGL_texture
-		(	"data/images/controller_splash.png",
+		(	filename,
 			SOIL_LOAD_AUTO,
 			SOIL_CREATE_NEW_ID,
 			SOIL_FLAG_MIPMAPS	);
