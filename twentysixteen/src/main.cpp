@@ -23,6 +23,9 @@ bool done = 0; // Quit?
 SDL_Window *window;
 Level *current_level;
 
+std::map<levels, Level*> level_map;
+
+
 void init_opengl()
 {
 	glShadeModel(GL_SMOOTH);							// Enable Smooth Shading
@@ -66,6 +69,19 @@ void handle_sdl_event()
 
 }
 
+void init_levels()
+{
+	level_map[TECHDEMO_BASE] = new BaseTechDemo();
+	level_map[TECHDEMO_SPINE] = new SpineTechDemo();
+	level_map[TECHDEMO_TTF] = new TTFTechDemo();
+
+	for (auto it = std::begin(level_map); it != std::end(level_map); ++it)
+	{
+		it->second->init();
+	}
+
+}
+
 int main(int argc, char *argv[])
 {
 	SDL_Init(SDL_INIT_VIDEO);
@@ -91,10 +107,11 @@ int main(int argc, char *argv[])
 	// Initialize Paintrbush (fonts)
 	Paintbrush::init();
 
-	// Load levels and set the current level
-	current_level = new SpineTechDemo();
+	// set up level map
+	init_levels();
 
-	current_level->init();
+	// Load levels and set the current level
+	current_level = level_map[TECHDEMO_BASE];
 
 	while (!done)
 	{

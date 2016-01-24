@@ -10,7 +10,7 @@ void UIImage::draw()
 {
 	glPushMatrix();
 
-		glTranslatef(700.0f, 500.0f, 0.0f);
+		glTranslatef(0.5*res_width, 500.0f, 0.0f);
 		glScalef(700, 300, 1.0f);
 
 		glBindTexture(GL_TEXTURE_2D, texture);

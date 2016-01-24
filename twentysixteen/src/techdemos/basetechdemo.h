@@ -25,7 +25,7 @@ public:
 	void init()
 	{
 		TechDemoUI.add_widget(new TextWidget("Base Tech Demo", 0.5, 0.2, 0.5, 0.3));
-		TechDemoUI.add_widget(new ListWidget({"Spine", "TTF/SOIL"}));
+		TechDemoUI.add_widget(new ListWidget({"Spine", "TTF/SOIL", "SDL_MIXER", "ASSIMP"}));
 	}
 
 	void run()
