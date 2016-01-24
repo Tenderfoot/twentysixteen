@@ -26,6 +26,7 @@ public:
 	{
 		TechDemoUI.add_widget(new TextWidget("Base Tech Demo", 0.5, 0.2, 0.5, 0.3));
 		TechDemoUI.add_widget(new ListWidget({"Spine", "TTF/SOIL", "SDL_MIXER", "ASSIMP"}));
+		TechDemoUI.add_widget(new TextWidget("Use directions (WASD) and A (space) to select", 0.5, 0.9, 0.5, 0.05));
 	}
 
 	void run()

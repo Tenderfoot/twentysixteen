@@ -110,9 +110,10 @@ int main(int argc, char *argv[])
 	// set up level map
 	init_levels();
 
-	// Load levels and set the current level
+	// set start level
 	current_level = level_map[TECHDEMO_BASE];
 
+	// main loop
 	while (!done)
 	{
 		handle_sdl_event();

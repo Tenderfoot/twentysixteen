@@ -33,7 +33,7 @@ void ListWidget::draw()
 			glColor3f(1.0f, 1.0f, 1.0f);
 		}
 
-		Paintbrush::draw_text(list_items.at(i), 0.5*res_width, (0.5 + (0.1*i))*res_height, 0.1*res_width, 0.05*res_height);
+		Paintbrush::draw_text(list_items.at(i), 0.5*res_width, (0.4 + (0.1*i))*res_height, 0.1*res_width, 0.05*res_height);
 	}
 }
 

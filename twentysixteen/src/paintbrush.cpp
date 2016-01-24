@@ -81,7 +81,6 @@ void Paintbrush::draw_text(char *text, float x, float y, float width, float heig
 
 		glBindTexture(GL_TEXTURE_2D, Paintbrush::get_texture(text, true));
 		Paintbrush::draw_quad();
-
 	glPopMatrix();
 }
 
