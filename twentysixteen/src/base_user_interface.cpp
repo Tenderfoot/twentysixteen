@@ -10,7 +10,7 @@ void UIImage::draw()
 {
 	glPushMatrix();
 
-		glTranslatef(512.0f, 500.0f, 0.0f);
+		glTranslatef(700.0f, 500.0f, 0.0f);
 		glScalef(700, 300, 1.0f);
 
 		glBindTexture(GL_TEXTURE_2D, texture);
@@ -21,7 +21,20 @@ void UIImage::draw()
 
 void ListWidget::draw()
 {
-	
+	int i;
+	for (i = 0; i < list_items.size(); i++)
+	{
+		if (i == current_selection)
+		{
+			glColor3f(0.0f, 1.0f, 0.0f);
+		}
+		else
+		{
+			glColor3f(1.0f, 1.0f, 1.0f);
+		}
+
+		Paintbrush::draw_text(list_items.at(i), 0.5*res_width, (0.5 + (0.1*i))*res_height, 0.1*res_width, 0.05*res_height);
+	}
 }
 
 void BaseUserInterface::draw()

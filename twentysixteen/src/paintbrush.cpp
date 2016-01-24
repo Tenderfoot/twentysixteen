@@ -82,8 +82,6 @@ void Paintbrush::draw_text(char *text, float x, float y, float width, float heig
 
 	// draw the text
 	glPushMatrix();
-
-		glColor3f(1.0f, 1.0f, 1.0f);
 		glTranslatef(x, y, 0.0f);
 		glScalef(width, height, 1.0f);
 

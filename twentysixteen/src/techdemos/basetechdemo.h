@@ -17,7 +17,6 @@ public:
 
 	BaseTechDemo()
 	{
-		this->techdemo_title = "Base Tech Demo";
 	}
 
 	char *techdemo_title;
@@ -25,7 +24,12 @@ public:
 
 	void init()
 	{
-		TechDemoUI.add_widget(new TextWidget(this->techdemo_title, 0.5, 0.2, 0.5, 0.3));
+		TechDemoUI.add_widget(new TextWidget("Base Tech Demo", 0.5, 0.2, 0.5, 0.3));
+		TechDemoUI.add_widget(new ListWidget({"test", "this"}));
+	}
+
+	void run()
+	{
 	}
 
 	void draw() 

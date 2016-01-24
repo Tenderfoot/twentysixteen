@@ -3,7 +3,7 @@
 
 void TTFTechDemo::init()
 {
-	BaseTechDemo::init();
+	TechDemoUI.add_widget(new TextWidget("TTF Tech Demo", 0.5, 0.2, 0.5, 0.3));
 	TechDemoUI.add_widget(new UIImage(Paintbrush::get_texture("data/images/controller_splash.png", false)));
 }
 
