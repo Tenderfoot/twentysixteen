@@ -167,6 +167,7 @@ int main(int argc, char *argv[])
 		{
 			levels next_level;
 			next_level = current_level->exit_level;
+
 			if (next_level == QUIT)
 				done = true;
 			else
