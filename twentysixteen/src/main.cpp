@@ -42,7 +42,7 @@ void init_opengl()
 	glViewport(0, 0, REZ_WIDTH, REZ_HEIGHT);
 	glMatrixMode(GL_PROJECTION);  // Select The Projection Matrix
 	glLoadIdentity();                // Reset The Projection Matrix
-	gluPerspective(80, (float)REZ_WIDTH / (float)REZ_HEIGHT, 1.0, 200.0);
+	gluPerspective(80, (float)REZ_WIDTH / (float)REZ_HEIGHT, 1.0, 1000.0);
 	glMatrixMode(GL_MODELVIEW);  // Select The Model View Matrix
 	glLoadIdentity();    // Reset The Model View Matrix
 
@@ -103,6 +103,7 @@ int main(int argc, char *argv[])
 	while (!done)
 	{
 		handle_sdl_event();
+		current_level->run();
 		draw();
 	}
 

@@ -8,8 +8,10 @@ void SpineTechDemo::init()
 
 void SpineTechDemo::run()
 {
+	spineboy.update_skeleton();
 }
 
 void SpineTechDemo::draw()
 {
+	spineboy.draw();
 }

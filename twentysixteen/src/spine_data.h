@@ -5,6 +5,8 @@
 // characters and other entities will have
 // their own instance of spinedata.
 
+#include <SDL_opengl.h>
+
 #include <spine/spine.h>
 #include <spine/extension.h>
 
@@ -13,10 +15,18 @@ class SpineData
 public:
 	
 	void load_spine_data(char* spine_folder);
+	void setslots();
+	void update_skeleton();
+
+	char *animation_name;
+	float prev_time;
 
 	spSkeleton* skeleton;
 	spAtlas* atlas;
 	spSkeletonData *skeletonData;
 
+	GLuint texture; 
+
+	void draw();
 };
 
