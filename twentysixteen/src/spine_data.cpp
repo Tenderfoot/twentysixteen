@@ -35,7 +35,7 @@ void SpineData::setslots()
 			if (skeleton->slots[i]->attachment != NULL)
 			{
 				spAtlasRegion *test = spAtlas_findRegion(atlas, skeleton->slots[i]->attachment->name);
-
+	
 				spRegionAttachment* attch = (spRegionAttachment*)skeleton->slots[i]->attachment;
 				float width1 = float(test->x) / 1024;
 				float height1 = (float(test->y)) / 1024;
@@ -67,9 +67,7 @@ void SpineData::load_spine_data(char* spine_folder)
 
 	setslots();
 
-	animation_name = "run";
-
-	printf("%d\n", skeletonData->animationsCount);
+	animation_name = "idle";
 }
 
 void SpineData::draw()
@@ -120,4 +118,6 @@ void SpineData::update_skeleton()
 	spSkeleton_updateWorldTransform(skeleton);
 
 	prev_time = SDL_GetTicks();
+
+	setslots();
 }
