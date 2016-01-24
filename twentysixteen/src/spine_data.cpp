@@ -49,9 +49,16 @@ void SpineData::setslots()
 
 void SpineData::load_spine_data(char* spine_folder)
 {
-	atlas = spAtlas_createFromFile("data/spinedata/spineboy/spineboy.atlas", NULL);
+	char *dir = new char[256];
+
+	sprintf_s(dir, sizeof(char)*256, "data/spinedata/%s/%s.atlas", spine_folder, spine_folder);
+
+	atlas = spAtlas_createFromFile(dir, NULL);
 	spSkeletonJson* skeletonJson = spSkeletonJson_create(atlas);
-	skeletonData = spSkeletonJson_readSkeletonDataFile(skeletonJson, "data/spinedata/spineboy/spineboy.json");
+
+	sprintf_s(dir, sizeof(char)*256, "data/spinedata/%s/%s.json", spine_folder, spine_folder);
+
+	skeletonData = spSkeletonJson_readSkeletonDataFile(skeletonJson, dir);
 	skeleton = spSkeleton_create(skeletonData);
 	if (!skeletonData) printf("Error: %s\n", skeletonJson->error);
 	spSkeletonJson_dispose(skeletonJson);
@@ -59,8 +66,10 @@ void SpineData::load_spine_data(char* spine_folder)
 	spSkeleton_setToSetupPose(skeleton);
 	spSkeleton_updateWorldTransform(skeleton);
 
+	sprintf_s(dir, sizeof(char)*256, "data/spinedata/%s/%s.png", spine_folder, spine_folder);
+
 	texture = SOIL_load_OGL_texture
-		(	"data/spinedata/spineboy/spineboy.png",
+		(	dir,
 			SOIL_LOAD_AUTO,
 			SOIL_CREATE_NEW_ID,
 			SOIL_FLAG_MIPMAPS	);

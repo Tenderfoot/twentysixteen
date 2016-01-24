@@ -3,7 +3,7 @@
 
 void SpineTechDemo::init()
 {
-	spineboy.load_spine_data("old");
+	spineboy.load_spine_data("spineboy");
 
 }
 
@@ -14,6 +14,6 @@ void SpineTechDemo::run()
 
 void SpineTechDemo::draw()
 {
-	TechDemoUI.draw();
+	BaseTechDemo::draw();
 	spineboy.draw();
 }

@@ -24,5 +24,10 @@ public:
 
 	char *techdemo_title;
 	BaseUserInterface TechDemoUI;
+
+	void draw() 
+	{
+		TechDemoUI.draw();
+	}
 	
 };
