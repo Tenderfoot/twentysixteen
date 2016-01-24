@@ -8,10 +8,6 @@
 
 #define NO_SDL_GLEXT
 
-// TODOS
-// make draw_text see if the text has been rendered
-// and use old renders if possible. otherwise, render.
-
 // General Libraries
 #include <stdio.h>
 #include <SDL.h>
