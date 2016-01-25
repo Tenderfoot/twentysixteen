@@ -26,6 +26,7 @@
 bool done = 0; // Quit?
 SDL_Window *window;
 Level *current_level;
+SDL_Joystick *joy;
 
 std::map<levels, Level*> level_map;
 
@@ -75,13 +76,42 @@ boundinput translate_key_input(SDL_Keycode keycode)
 			return BACK;
 	}
 
-	return ACTION;
+	return NO_BIND;
 }
 
-boundinput translate_joy_input(int joybutton)
+boundinput translate_joy_input(int joybutton, bool hat)
 {
-	printf("%d\n", joybutton);
-	return ACTION;
+	if (hat)
+	{
+		switch (joybutton)
+		{
+			case 1:
+				return UP;
+				break;
+			case 2:
+				return RIGHT;
+				break;
+			case 4:
+				return DOWN;
+				break;
+			case 8:
+				return LEFT;
+				break;
+		}
+		return NO_BIND;
+	}
+	else
+	{
+		switch (joybutton)
+		{
+			case 0:
+				return ACTION;
+				break;
+			case 1:
+				return BACK;
+				break;
+		}
+	}
 }
 
 void handle_sdl_event()
@@ -102,10 +132,14 @@ void handle_sdl_event()
 
 		// Translate and send joypad events
 		if (event.type == SDL_JOYBUTTONDOWN)
-			current_level->take_input(translate_joy_input(event.jbutton.button), true);
+			current_level->take_input(translate_joy_input(event.jbutton.button, false), true);
 
 		if (event.type == SDL_JOYBUTTONUP)
-			current_level->take_input(translate_joy_input(event.jbutton.button), false);
+			current_level->take_input(translate_joy_input(event.jbutton.button, false), false);
+
+		if(event.type == SDL_JOYHATMOTION)
+			current_level->take_input(translate_joy_input(SDL_JoystickGetHat(joy, 0), true), true);
+
 
 		// quit event
 		if (event.type == SDL_QUIT || event.type == SDL_QUIT)
@@ -149,7 +183,7 @@ int main(int argc, char *argv[])
 	init_opengl();
 
 	SDL_JoystickEventState(SDL_ENABLE);
-	SDL_Joystick *joy = SDL_JoystickOpen(0);
+	joy = SDL_JoystickOpen(0);
 
 	// Initialize Paintrbush (fonts) and AudioController
 	Paintbrush::init();

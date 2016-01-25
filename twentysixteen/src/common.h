@@ -1,8 +1,8 @@
 #pragma once
 
 // some globals
-#define res_width  1920
-#define res_height  1080
+#define res_width  1024	
+#define res_height  768
 
 enum levels
 {
@@ -17,6 +17,7 @@ enum levels
 
 enum boundinput
 {
+	NO_BIND,
 	UP,
 	DOWN,
 	LEFT,
