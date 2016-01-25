@@ -45,6 +45,12 @@
     <ClCompile Include="src\techdemos\AudioTechDemo.cpp">
       <Filter>Source Files\techdemos</Filter>
     </ClCompile>
+    <ClCompile Include="src\model_data.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\techdemos\ModelTechDemo.cpp">
+      <Filter>Source Files\techdemos</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\level.h">
@@ -75,6 +81,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\techdemos\audiotechdemo.h">
+      <Filter>Header Files\techdemos</Filter>
+    </ClInclude>
+    <ClInclude Include="src\model_data.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\techdemos\modeltechdemo.h">
       <Filter>Header Files\techdemos</Filter>
     </ClInclude>
   </ItemGroup>

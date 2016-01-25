@@ -88,9 +88,15 @@ GLuint Paintbrush::get_texture(char* texture_id, bool text)
 {
 	std::map<char*, GLuint>::iterator it;
 	
+	int i;
+
+	it = texture_db.begin();
+
 	it = texture_db.find(texture_id);
+
 	if (it == texture_db.end())
 	{
+
 		if (text)
 		{
 			texture_db[texture_id] = TextToTexture(255, 255, 255, texture_id, 14);
@@ -99,10 +105,6 @@ GLuint Paintbrush::get_texture(char* texture_id, bool text)
 		{
 			texture_db[texture_id] = Soil_Load_Texture(texture_id);
 		}
-	}
-	else
-	{
-		return texture_db[texture_id];
 	}
 
 	return texture_db[texture_id];

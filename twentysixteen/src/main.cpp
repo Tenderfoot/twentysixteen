@@ -6,6 +6,7 @@
 #pragma comment(lib, "GLU32")
 #pragma comment(lib, "SOIL")
 #pragma comment(lib, "spine-c")
+#pragma comment(lib, "assimp")
 
 #define NO_SDL_GLEXT
 
@@ -19,6 +20,7 @@
 #include "techdemos\ttftechdemo.h"
 #include "techdemos\spinetechdemo.h"
 #include "techdemos\audiotechdemo.h"
+#include "techdemos\modeltechdemo.h"
 
 // and a few globals
 bool done = 0; // Quit?
@@ -26,7 +28,6 @@ SDL_Window *window;
 Level *current_level;
 
 std::map<levels, Level*> level_map;
-
 
 void init_opengl()
 {
@@ -117,6 +118,7 @@ void init_levels()
 	level_map[TECHDEMO_SPINE] = new SpineTechDemo();
 	level_map[TECHDEMO_TTF] = new TTFTechDemo();
 	level_map[TECHDEMO_AUDIO] = new AudioTechDemo();
+	level_map[TECHDEMO_MODEL] = new ModelTechDemo();
 
 	for (auto it = std::begin(level_map); it != std::end(level_map); ++it)
 	{

@@ -63,7 +63,7 @@ public:
 				}
 				if (strcmp(choice, "ASSIMP") == 0)
 				{
-					exit_level = TECHDEMO_SPINE;
+					exit_level = TECHDEMO_MODEL;
 				}
 			}
 
