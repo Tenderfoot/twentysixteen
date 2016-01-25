@@ -74,6 +74,8 @@ boundinput translate_key_input(SDL_Keycode keycode)
 		case SDLK_ESCAPE:
 			return BACK;
 	}
+
+	return ACTION;
 }
 
 boundinput translate_joy_input(int joybutton)
