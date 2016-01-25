@@ -12,9 +12,9 @@ src\main.cpp(90): warning C4101: 'type': unreferenced local variable
 src\main.cpp(162): warning C4244: 'initializing': conversion from 'Uint32' to 'float', possible loss of data
 src\main.cpp(171): warning C4244: '=': conversion from 'Uint32' to 'float', possible loss of data
   model_data.cpp
-src\model_data.cpp(63): warning C4018: '<': signed/unsigned mismatch
-src\model_data.cpp(66): warning C4018: '<': signed/unsigned mismatch
-src\model_data.cpp(39): warning C4101: 'filename': unreferenced local variable
+src\model_data.cpp(62): warning C4018: '<': signed/unsigned mismatch
+src\model_data.cpp(65): warning C4018: '<': signed/unsigned mismatch
+src\model_data.cpp(38): warning C4101: 'filename': unreferenced local variable
   paintbrush.cpp
 src\paintbrush.cpp(91): warning C4101: 'i': unreferenced local variable
 src\paintbrush.cpp(135): warning C4018: '<': signed/unsigned mismatch
@@ -50,8 +50,8 @@ d:\programming stuff\twentysixteen\twentysixteen\src\techdemos\basetechdemo.h(32
 src\techdemos\TTFTechDemo.cpp(6): warning C4305: 'argument': truncation from 'double' to 'float'
 src\techdemos\TTFTechDemo.cpp(7): warning C4305: 'argument': truncation from 'double' to 'float'
   Generating code
-  35 of 1254 functions ( 2.8%) were compiled, the rest were copied from previous compilation.
-    6 functions were new in current compilation
-    3 functions had inline decision re-evaluated but remain unchanged
+  2 of 1254 functions ( 0.2%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   twentysixteen.vcxproj -> D:\programming stuff\twentysixteen\Release\twentysixteen.exe

@@ -44,15 +44,7 @@ class ModelData
 {
 public:
 
-	ModelData(char *filename)
-	{
-		this_model = import(filename, 1.0);
-	}
-
 	static Assimp::Importer importer;
-
-	t_3dModel *this_model;
 	static t_3dModel *import(char *filename, float scale);
-
 };
 

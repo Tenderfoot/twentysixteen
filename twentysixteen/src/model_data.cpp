@@ -13,8 +13,7 @@ t_3dModel *ModelData::import(char *filename, float scale)
 	dir = new char[256];
 	sprintf_s(dir, sizeof(char) * 256, "data/models/%s", filename);
 
-	scene = importer.ReadFile(dir,
-		aiProcess_PreTransformVertices);
+	scene = importer.ReadFile(dir, aiProcess_PreTransformVertices);
 
 	// If the import failed, report it
 	if (!scene)
