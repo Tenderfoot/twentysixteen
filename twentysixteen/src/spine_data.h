@@ -16,10 +16,10 @@ public:
 	
 	void load_spine_data(char* spine_folder);
 	void setslots();
-	void update_skeleton();
+	void update_skeleton(float delta_time);
 
 	char *animation_name;
-	float prev_time;
+	float current_time;
 
 	spSkeleton* skeleton;
 	spAtlas* atlas;

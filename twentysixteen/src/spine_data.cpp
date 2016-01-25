@@ -117,15 +117,13 @@ void SpineData::draw()
 	}
 }
 
-void SpineData::update_skeleton()
+void SpineData::update_skeleton(float delta_time)
 {
-	float delta = ((float)SDL_GetTicks()) / 1000;
-
-	spAnimation_apply(spSkeletonData_findAnimation(skeletonData, animation_name), skeleton, prev_time/1000, delta, true, NULL, NULL);
+	spAnimation_apply(spSkeletonData_findAnimation(skeletonData, animation_name), skeleton, current_time/1000, (current_time+delta_time)/1000, true, NULL, NULL);
 	spSkeleton_updateWorldTransform(skeleton);
 
-	prev_time = SDL_GetTicks();
-	
 	// this only probably needs to happen when animation changes
 	setslots();
+
+	current_time = SDL_GetTicks();
 }

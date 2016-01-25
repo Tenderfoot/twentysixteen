@@ -10,7 +10,7 @@ void SpineTechDemo::init()
 
 void SpineTechDemo::run(float time_delta)
 {
-	spineboy.update_skeleton();
+	spineboy.update_skeleton(time_delta);
 }
 
 void SpineTechDemo::take_input(boundinput input, bool type)

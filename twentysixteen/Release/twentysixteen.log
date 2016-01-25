@@ -1,54 +1,5 @@
-﻿  base_user_interface.cpp
-d:\programming stuff\twentysixteen\twentysixteen\src\base_user_interface.h(60): warning C4018: '>=': signed/unsigned mismatch
-src\base_user_interface.cpp(25): warning C4018: '<': signed/unsigned mismatch
-src\base_user_interface.cpp(36): warning C4305: 'argument': truncation from 'double' to 'float'
-src\base_user_interface.cpp(36): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-src\base_user_interface.cpp(59): warning C4018: '<': signed/unsigned mismatch
-  main.cpp
-d:\programming stuff\twentysixteen\twentysixteen\src\techdemos\../base_user_interface.h(60): warning C4018: '>=': signed/unsigned mismatch
-d:\programming stuff\twentysixteen\twentysixteen\src\techdemos\basetechdemo.h(29): warning C4305: 'argument': truncation from 'double' to 'float'
-d:\programming stuff\twentysixteen\twentysixteen\src\techdemos\basetechdemo.h(32): warning C4305: 'argument': truncation from 'double' to 'float'
-src\main.cpp(90): warning C4101: 'type': unreferenced local variable
-src\main.cpp(162): warning C4244: 'initializing': conversion from 'Uint32' to 'float', possible loss of data
-src\main.cpp(171): warning C4244: '=': conversion from 'Uint32' to 'float', possible loss of data
-  model_data.cpp
-src\model_data.cpp(62): warning C4018: '<': signed/unsigned mismatch
-src\model_data.cpp(65): warning C4018: '<': signed/unsigned mismatch
-src\model_data.cpp(38): warning C4101: 'filename': unreferenced local variable
-  paintbrush.cpp
-src\paintbrush.cpp(91): warning C4101: 'i': unreferenced local variable
-src\paintbrush.cpp(135): warning C4018: '<': signed/unsigned mismatch
-src\paintbrush.cpp(137): warning C4018: '<': signed/unsigned mismatch
-  spine_data.cpp
-src\spine_data.cpp(127): warning C4244: '=': conversion from 'Uint32' to 'float', possible loss of data
-  AudioTechDemo.cpp
-d:\programming stuff\twentysixteen\twentysixteen\src\techdemos\../base_user_interface.h(60): warning C4018: '>=': signed/unsigned mismatch
-d:\programming stuff\twentysixteen\twentysixteen\src\techdemos\basetechdemo.h(29): warning C4305: 'argument': truncation from 'double' to 'float'
-d:\programming stuff\twentysixteen\twentysixteen\src\techdemos\basetechdemo.h(32): warning C4305: 'argument': truncation from 'double' to 'float'
-src\techdemos\AudioTechDemo.cpp(6): warning C4305: 'argument': truncation from 'double' to 'float'
-src\techdemos\AudioTechDemo.cpp(8): warning C4305: 'argument': truncation from 'double' to 'float'
-src\techdemos\AudioTechDemo.cpp(9): warning C4305: 'argument': truncation from 'double' to 'float'
-src\techdemos\AudioTechDemo.cpp(10): warning C4305: 'argument': truncation from 'double' to 'float'
-src\techdemos\AudioTechDemo.cpp(12): warning C4305: 'argument': truncation from 'double' to 'float'
-  ModelTechDemo.cpp
-d:\programming stuff\twentysixteen\twentysixteen\src\techdemos\../base_user_interface.h(60): warning C4018: '>=': signed/unsigned mismatch
-d:\programming stuff\twentysixteen\twentysixteen\src\techdemos\basetechdemo.h(29): warning C4305: 'argument': truncation from 'double' to 'float'
-d:\programming stuff\twentysixteen\twentysixteen\src\techdemos\basetechdemo.h(32): warning C4305: 'argument': truncation from 'double' to 'float'
-src\techdemos\ModelTechDemo.cpp(6): warning C4305: 'argument': truncation from 'double' to 'float'
-src\techdemos\ModelTechDemo.cpp(7): warning C4305: 'argument': truncation from 'double' to 'float'
-src\techdemos\ModelTechDemo.cpp(8): warning C4305: 'argument': truncation from 'double' to 'float'
-  SpineTechDemo.cpp
-d:\programming stuff\twentysixteen\twentysixteen\src\techdemos\../base_user_interface.h(60): warning C4018: '>=': signed/unsigned mismatch
-d:\programming stuff\twentysixteen\twentysixteen\src\techdemos\basetechdemo.h(29): warning C4305: 'argument': truncation from 'double' to 'float'
-d:\programming stuff\twentysixteen\twentysixteen\src\techdemos\basetechdemo.h(32): warning C4305: 'argument': truncation from 'double' to 'float'
-src\techdemos\SpineTechDemo.cpp(6): warning C4305: 'argument': truncation from 'double' to 'float'
-src\techdemos\SpineTechDemo.cpp(7): warning C4305: 'argument': truncation from 'double' to 'float'
-  TTFTechDemo.cpp
-d:\programming stuff\twentysixteen\twentysixteen\src\techdemos\../base_user_interface.h(60): warning C4018: '>=': signed/unsigned mismatch
-d:\programming stuff\twentysixteen\twentysixteen\src\techdemos\basetechdemo.h(29): warning C4305: 'argument': truncation from 'double' to 'float'
-d:\programming stuff\twentysixteen\twentysixteen\src\techdemos\basetechdemo.h(32): warning C4305: 'argument': truncation from 'double' to 'float'
-src\techdemos\TTFTechDemo.cpp(6): warning C4305: 'argument': truncation from 'double' to 'float'
-src\techdemos\TTFTechDemo.cpp(7): warning C4305: 'argument': truncation from 'double' to 'float'
+﻿  spine_data.cpp
+src\spine_data.cpp(128): warning C4244: '=': conversion from 'Uint32' to 'float', possible loss of data
   Generating code
   2 of 1254 functions ( 0.2%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
