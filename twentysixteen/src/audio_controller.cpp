@@ -1,7 +1,7 @@
 
 #include "audio_controller.h"
 
-std::map<char*, Mix_Chunk*> AudioController::audio_db = {};
+std::map<char*, Mix_Chunk*, cmp_str> AudioController::audio_db = {};
 
 void AudioController::init()
 {
@@ -30,16 +30,13 @@ void AudioController::play_sound(char *filename)
 
 Mix_Chunk* AudioController::get_sound(char* audio_id)
 {
-	std::map<char*, Mix_Chunk*>::iterator it;
+	std::map<char*, Mix_Chunk*, cmp_str>::iterator it;
 
 	it = audio_db.find(audio_id);
+
 	if (it == audio_db.end())
 	{
 		audio_db[audio_id] = Mix_LoadWAV(audio_id);
-	}
-	else
-	{
-		return audio_db[audio_id];
 	}
 
 	return audio_db[audio_id];

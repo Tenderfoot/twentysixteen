@@ -28,7 +28,7 @@ class AudioController
 {
 public:
 
-	static std::map<char*, Mix_Chunk*> audio_db;
+	static std::map<char*, Mix_Chunk*, cmp_str> audio_db;
 
 	static void init();
 	static void play_sound(char *filename);

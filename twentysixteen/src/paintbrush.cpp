@@ -4,7 +4,7 @@
 
 GLuint Paintbrush::font_texture = 0;
 TTF_Font *Paintbrush::font = NULL;
-std::map<char*, GLuint> Paintbrush::texture_db = {};
+std::map<char*, GLuint, cmp_str> Paintbrush::texture_db = {};
 
 void Paintbrush::init()
 {
@@ -86,11 +86,9 @@ void Paintbrush::draw_text(char *text, float x, float y, float width, float heig
 
 GLuint Paintbrush::get_texture(char* texture_id, bool text)
 {
-	std::map<char*, GLuint>::iterator it;
+	std::map<char*, GLuint, cmp_str>::iterator it;
 	
 	int i;
-
-	it = texture_db.begin();
 
 	it = texture_db.find(texture_id);
 

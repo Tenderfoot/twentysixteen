@@ -38,7 +38,7 @@ public:
 	// texturedb stores and returns already loaded
 	// textures or rendered strings
 	// string -> texture GLuint
-	static std::map<char*, GLuint> texture_db;
+	static std::map<char*, GLuint, cmp_str> texture_db;
 	static GLuint get_texture(char* texture_id, bool text);
 
 	// draw a 3d model
