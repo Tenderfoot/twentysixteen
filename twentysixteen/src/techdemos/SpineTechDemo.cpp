@@ -8,7 +8,7 @@ void SpineTechDemo::init()
 	spineboy.load_spine_data("spineboy");
 }
 
-void SpineTechDemo::run()
+void SpineTechDemo::run(float time_delta)
 {
 	spineboy.update_skeleton();
 }

@@ -12,7 +12,7 @@ void AudioTechDemo::init()
 	TechDemoUI.add_widget(new TextWidget("Press ESCAPE to go back", 0.5, 0.9, 0.5, 0.05));
 }
 
-void AudioTechDemo::run()
+void AudioTechDemo::run(float time_delta)
 {
 }
 

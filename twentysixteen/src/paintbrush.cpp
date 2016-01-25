@@ -114,13 +114,11 @@ void Paintbrush::draw_model(t_3dModel *mymodel)
 {
 	glEnable(GL_TEXTURE_2D);
 
-	glPushMatrix();
 	int i, j = 0;
+
 	//TODO don't use highest possible anistro
 	GLfloat fLargest;
 	glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &fLargest);
-
-	glTranslatef(0.0f, -20.0f, -50.0f);
 
 	float alpha = 1.0f;
 
@@ -131,6 +129,8 @@ void Paintbrush::draw_model(t_3dModel *mymodel)
 	t_vertex cross;
 
 	glColor3f(1.0f, 1.0f, 1.0f);
+
+	glPushMatrix();
 
 	for (i = 0; i<mymodel->meshes.size(); i++)
 	{

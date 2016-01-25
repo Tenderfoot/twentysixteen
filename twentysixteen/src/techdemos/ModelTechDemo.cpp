@@ -9,8 +9,9 @@ void ModelTechDemo::init()
 
 }
 
-void ModelTechDemo::run()
+void ModelTechDemo::run(float time_delta)
 {
+	rotation += (time_delta/10);
 }
 
 void ModelTechDemo::take_input(boundinput input, bool type)
@@ -22,5 +23,10 @@ void ModelTechDemo::take_input(boundinput input, bool type)
 void ModelTechDemo::draw()
 {
 	BaseTechDemo::draw();
-	Paintbrush::draw_model(mymodel);
+	
+	glPushMatrix();
+		glTranslatef(0.0f, -20.0f, -50.0f);
+		glRotatef(rotation, 0.0f, 1.0f, 0.0f);
+		Paintbrush::draw_model(mymodel);
+	glPopMatrix();
 }

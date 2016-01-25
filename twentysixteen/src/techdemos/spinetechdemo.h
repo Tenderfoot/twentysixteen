@@ -11,7 +11,7 @@ public:
 		this->techdemo_title = "Spine Tech Demo";
 	}
 
-	void run();
+	void run(float time_delta);
 	void draw();
 	void init();
 	void take_input(boundinput input, bool type);

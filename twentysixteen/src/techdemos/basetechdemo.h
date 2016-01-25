@@ -72,7 +72,7 @@ public:
 		}
 	}
 
-	void run()
+	void run(float time_delta)
 	{
 	}
 

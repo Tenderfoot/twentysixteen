@@ -11,12 +11,13 @@ public:
 		this->techdemo_title = "Model Tech Demo";
 	}
 
-	void run();
+	void run(float time_delta);
 	void draw();
 	void init();
 	void take_input(boundinput input, bool type);
 
 	t_3dModel *mymodel;
+	float rotation;
 
 	// SOIL test
 	GLuint texture;

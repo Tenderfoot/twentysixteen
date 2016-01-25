@@ -159,13 +159,21 @@ int main(int argc, char *argv[])
 	// set start level
 	current_level = level_map[TECHDEMO_BASE];
 
+	float previous_time = SDL_GetTicks();
+
 	// main loop
 	while (!done)
 	{
 		handle_sdl_event();
-		current_level->run();
+		
+		// Run
+		current_level->run(SDL_GetTicks() - previous_time);
+		previous_time = SDL_GetTicks();
+
+		// Draw
 		draw();
 
+		// Level change request?
 		if (current_level->exit_level != LEVEL_NONE)
 		{
 			levels next_level;
