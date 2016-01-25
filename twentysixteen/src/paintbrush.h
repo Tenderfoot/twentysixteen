@@ -12,6 +12,7 @@
 #include <map>
 
 #include "common.h"
+#include "model_data.h"
 
 class Paintbrush
 {
@@ -39,6 +40,9 @@ public:
 	// string -> texture GLuint
 	static std::map<char*, GLuint> texture_db;
 	static GLuint get_texture(char* texture_id, bool text);
+
+	// draw a 3d model
+	static void draw_model(t_3dModel *mymodel);
 
 };
 
