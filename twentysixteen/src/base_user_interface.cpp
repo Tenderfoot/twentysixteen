@@ -10,8 +10,8 @@ void UIImage::draw()
 {
 	glPushMatrix();
 
-		glTranslatef(0.5*res_width, 500.0f, 0.0f);
-		glScalef(700, 300, 1.0f);
+		glTranslatef(0.5*res_width, 0.6*res_height, 0.0f);
+		glScalef(0.5*res_width, 0.5*res_height, 1.0f);
 
 		glBindTexture(GL_TEXTURE_2D, texture);
 		Paintbrush::draw_quad();

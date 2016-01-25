@@ -97,11 +97,11 @@ GLuint Paintbrush::get_texture(char* texture_id, bool text)
 
 		if (text)
 		{
-			texture_db.insert({ new_string ,TextToTexture(255, 255, 255, texture_id, 14) });
+			texture_db.insert({ new_string, TextToTexture(255, 255, 255, texture_id, 14) });
 		}
 		else
 		{
-			texture_db.insert({ new_string , Soil_Load_Texture(texture_id) });
+			texture_db.insert({ new_string, Soil_Load_Texture(texture_id) });
 		}
 	}
 

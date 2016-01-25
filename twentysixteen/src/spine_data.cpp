@@ -51,14 +51,14 @@ void SpineData::setslots()
 
 void SpineData::load_spine_data(char* spine_folder)
 {
-	char *dir = new char[256];
+	char *dir = new char[64];
 
-	sprintf_s(dir, sizeof(char)*256, "data/spinedata/%s/%s.atlas", spine_folder, spine_folder);
+	sprintf_s(dir, sizeof(char)*64, "data/spinedata/%s/%s.atlas", spine_folder, spine_folder);
 
 	atlas = spAtlas_createFromFile(dir, NULL);
 	spSkeletonJson* skeletonJson = spSkeletonJson_create(atlas);
 
-	sprintf_s(dir, sizeof(char)*256, "data/spinedata/%s/%s.json", spine_folder, spine_folder);
+	sprintf_s(dir, sizeof(char)*64, "data/spinedata/%s/%s.json", spine_folder, spine_folder);
 
 	skeletonData = spSkeletonJson_readSkeletonDataFile(skeletonJson, dir);
 	skeleton = spSkeleton_create(skeletonData);
@@ -68,7 +68,7 @@ void SpineData::load_spine_data(char* spine_folder)
 	spSkeleton_setToSetupPose(skeleton);
 	spSkeleton_updateWorldTransform(skeleton);
 
-	sprintf_s(dir, sizeof(char)*256, "data/spinedata/%s/%s.png", spine_folder, spine_folder);
+	sprintf_s(dir, sizeof(char)*64, "data/spinedata/%s/%s.png", spine_folder, spine_folder);
 
 	texture = Paintbrush::get_texture(dir, false);
 

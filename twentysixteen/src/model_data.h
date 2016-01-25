@@ -43,7 +43,6 @@ typedef struct
 class ModelData
 {
 public:
-
 	static Assimp::Importer importer;
 	static t_3dModel *import(char *filename, float scale);
 };

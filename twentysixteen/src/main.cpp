@@ -192,7 +192,6 @@ int main(int argc, char *argv[])
 	}
 
 	// shut everything down
-	
 	SDL_CloseAudio();
 	TTF_Quit();
 	SDL_GL_DeleteContext(glcontext);
