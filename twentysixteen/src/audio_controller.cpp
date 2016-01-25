@@ -26,6 +26,8 @@ void AudioController::play_sound(char *filename)
 	sprintf_s(dir, sizeof(char) * 256, "data/sounds/%s.wav", filename);
 
 	Mix_PlayChannel(-1, get_sound(dir), 0);
+
+	delete dir;
 }
 
 Mix_Chunk* AudioController::get_sound(char* audio_id)
@@ -36,7 +38,10 @@ Mix_Chunk* AudioController::get_sound(char* audio_id)
 
 	if (it == audio_db.end())
 	{
-		audio_db[audio_id] = Mix_LoadWAV(audio_id);
+		char *new_string = new char[128];
+		strcpy_s(new_string, sizeof(char)*128, audio_id);
+
+		audio_db.insert({ new_string , Mix_LoadWAV(audio_id) });
 	}
 
 	return audio_db[audio_id];

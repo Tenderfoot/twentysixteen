@@ -28,7 +28,7 @@ enum boundinput
 // proper comparison for char* maps
 struct cmp_str
 {
-	bool operator()(char const *a, char const *b) const
+	bool operator()(char *a, char *b) const
 	{
 		return std::strcmp(a, b) < 0;
 	}

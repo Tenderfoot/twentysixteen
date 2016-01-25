@@ -75,6 +75,8 @@ void SpineData::load_spine_data(char* spine_folder)
 	setslots();
 
 	animation_name = "idle";
+
+	delete dir;
 }
 
 void SpineData::draw()
