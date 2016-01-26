@@ -6,7 +6,7 @@
 #pragma comment(lib, "GLU32")
 #pragma comment(lib, "SOIL")
 #pragma comment(lib, "spine-c")
-#pragma comment(lib, "assimp")
+#pragma comment(lib, "assimp-vc140-mt")
 
 #define NO_SDL_GLEXT
 

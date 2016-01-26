@@ -24,7 +24,7 @@ t_3dModel *ModelData::import(char *filename, float scale)
 	// Now we can access the file's contents. 
 	printf("success? %d\n", scene->mNumMeshes);
 
-	int num, i;
+	int num, i, j;
 
 	num = scene->mNumMaterials;
 
@@ -33,8 +33,9 @@ t_3dModel *ModelData::import(char *filename, float scale)
 	for (i = 0; i<num; i++)
 	{
 		aiString name;
-		scene->mMaterials[i]->Get(AI_MATKEY_NAME, name);
-		//	printf("key: %s\n", name.C_Str());
+		scene->mMaterials[i]->GetTexture(aiTextureType_DIFFUSE, 0, &name, NULL, NULL, NULL, NULL, NULL);
+		printf("key: %s\n", name.C_Str());
+
 		char filename[80];
 
 		if (name.C_Str()[0] == 'X')
@@ -54,7 +55,6 @@ t_3dModel *ModelData::import(char *filename, float scale)
 		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	}
 
-	int j;
 	t_mesh *new_mesh;
 	t_face *new_face;
 	t_vertex temp;
