@@ -27,6 +27,7 @@
     <ClCompile Include="src\spine_data.cpp" />
     <ClCompile Include="src\techdemos\AudioTechDemo.cpp" />
     <ClCompile Include="src\techdemos\ModelTechDemo.cpp" />
+    <ClCompile Include="src\techdemos\ShaderTechDemo.cpp" />
     <ClCompile Include="src\techdemos\SpineTechDemo.cpp" />
     <ClCompile Include="src\techdemos\TTFTechDemo.cpp" />
   </ItemGroup>
@@ -41,6 +42,7 @@
     <ClInclude Include="src\techdemos\audiotechdemo.h" />
     <ClInclude Include="src\techdemos\basetechdemo.h" />
     <ClInclude Include="src\techdemos\modeltechdemo.h" />
+    <ClInclude Include="src\techdemos\shadertechdemo.h" />
     <ClInclude Include="src\techdemos\spinetechdemo.h" />
     <ClInclude Include="src\techdemos\ttftechdemo.h" />
   </ItemGroup>

@@ -21,6 +21,7 @@
 #include "techdemos\spinetechdemo.h"
 #include "techdemos\audiotechdemo.h"
 #include "techdemos\modeltechdemo.h"
+#include "techdemos\shadertechdemo.h"
 
 // and a few globals
 bool done = 0; // Quit?
@@ -155,6 +156,7 @@ void init_levels()
 	level_map[TECHDEMO_TTF] = new TTFTechDemo();
 	level_map[TECHDEMO_AUDIO] = new AudioTechDemo();
 	level_map[TECHDEMO_MODEL] = new ModelTechDemo();
+	level_map[TECHDEMO_SHADER] = new ShaderTechDemo();
 
 	for (auto it = std::begin(level_map); it != std::end(level_map); ++it)
 	{
@@ -193,7 +195,7 @@ int main(int argc, char *argv[])
 	init_levels();
 
 	// set start level
-	current_level = level_map[TECHDEMO_BASE];
+	current_level = level_map[TECHDEMO_SHADER];
 
 	float previous_time = SDL_GetTicks();
 

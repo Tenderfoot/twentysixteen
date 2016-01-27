@@ -43,6 +43,7 @@ public:
 
 	// draw a 3d model
 	static void draw_model(t_3dModel *mymodel);
+	static void draw_cube();
 
 };
 

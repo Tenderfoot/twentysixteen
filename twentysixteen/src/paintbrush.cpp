@@ -35,7 +35,7 @@ GLuint Paintbrush::Soil_Load_Texture(char *filename)
 		(	filename,
 			SOIL_LOAD_AUTO,
 			SOIL_CREATE_NEW_ID,
-			SOIL_FLAG_MIPMAPS	);
+			SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y);
 
 	// Make sure texture is set to repeat on wrap
 	glBindTexture(GL_TEXTURE_2D, loaded_texture);
@@ -150,6 +150,7 @@ void Paintbrush::draw_model(t_3dModel *mymodel)
 			temp.z = mymodel->meshes.at(i)->faces.at(j)->verticies.at(2).z - mymodel->meshes.at(i)->faces.at(j)->verticies.at(0).z;
 
 			temp2.x = mymodel->meshes.at(i)->faces.at(j)->verticies.at(2).x - mymodel->meshes.at(i)->faces.at(j)->verticies.at(1).x;
+
 			temp2.y = mymodel->meshes.at(i)->faces.at(j)->verticies.at(2).y - mymodel->meshes.at(i)->faces.at(j)->verticies.at(1).y;
 			temp2.z = mymodel->meshes.at(i)->faces.at(j)->verticies.at(2).z - mymodel->meshes.at(i)->faces.at(j)->verticies.at(1).z;
 
@@ -179,4 +180,56 @@ void Paintbrush::draw_model(t_3dModel *mymodel)
 	}
 
 	glPopMatrix();
+}
+
+void Paintbrush::draw_cube()
+{
+	glBindTexture(GL_TEXTURE_2D, NULL);
+
+	glBegin(GL_QUADS);
+
+	glNormal3f(0.0f, 0.0f, 1.0f);
+	glColor3f(1.0f, 0.0f, 0.0f);
+	glVertex3f(1.0f, 1.0f, 1.0f);
+	glVertex3f(-1.0f, 1.0f, 1.0f);
+	glVertex3f(-1.0f, -1.0f, 1.0f);
+	glVertex3f(1.0f, -1.0f, 1.0f);
+
+	glNormal3f(0.0f, 0.0f, -1.0f);
+	glColor3f(0.0f, 1.0f, 0.0f);
+	glVertex3f(1.0f, 1.0f, -1.0f);
+	glVertex3f(-1.0f, 1.0f, -1.0f);
+	glVertex3f(-1.0f, -1.0f, -1.0f);
+	glVertex3f(1.0f, -1.0f, -1.0f);
+
+	glNormal3f(0.0f, -1.0f, 0.0f);
+	glColor3f(0.0f, 0.0f, 1.0f);
+	glVertex3f(1.0f, -1.0f, 1.0f);
+	glVertex3f(-1.0f, -1.0f, 1.0f);
+	glVertex3f(-1.0f, -1.0f, -1.0f);
+	glVertex3f(1.0f, -1.0f, -1.0f);
+
+	glNormal3f(0.0f, 1.0f, 0.0f);
+	glColor3f(1.0f, 1.0f, 0.0f);
+	glVertex3f(1.0f, 1.0f, 1.0f);
+	glVertex3f(-1.0f, 1.0f, 1.0f);
+	glVertex3f(-1.0f, 1.0f, -1.0f);
+	glVertex3f(1.0f, 1.0f, -1.0f);
+
+	glNormal3f(-1.0f, 0.0f, 0.0f);
+	glColor3f(1.0f, 0.0f, 1.0f);
+	glVertex3f(-1.0f, 1.0f, 1.0f);
+	glVertex3f(-1.0f, -1.0f, 1.0f);
+	glVertex3f(-1.0f, -1.0f, -1.0f);
+	glVertex3f(-1.0f, 1.0f, -1.0f);
+
+	glNormal3f(1.0f, 0.0f, 0.0f);
+	glColor3f(0.0f, 1.0f, 1.0f);
+	glVertex3f(1.0f, 1.0f, 1.0f);
+	glVertex3f(1.0f, -1.0f, 1.0f);
+	glVertex3f(1.0f, -1.0f, -1.0f);
+	glVertex3f(1.0f, 1.0f, -1.0f);
+	glEnd();
+
+	glColor3f(1.0f, 1.0f, 1.0f);
 }

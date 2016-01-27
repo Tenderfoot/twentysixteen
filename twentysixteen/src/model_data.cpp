@@ -13,7 +13,7 @@ t_3dModel *ModelData::import(char *filename, float scale)
 	dir = new char[256];
 	sprintf_s(dir, sizeof(char) * 256, "data/models/%s", filename);
 
-	scene = importer.ReadFile(dir, aiProcess_PreTransformVertices);
+	scene = importer.ReadFile(dir, aiProcess_PreTransformVertices | aiProcess_Triangulate);
 
 	// If the import failed, report it
 	if (!scene)
@@ -35,15 +35,12 @@ t_3dModel *ModelData::import(char *filename, float scale)
 		aiString name;
 		scene->mMaterials[i]->GetTexture(aiTextureType_DIFFUSE, 0, &name, NULL, NULL, NULL, NULL, NULL);
 		printf("key: %s\n", name.C_Str());
-
-		char filename[80];
-
 		if (name.C_Str()[0] == 'X')
 			printf("\n");
 
 		dir = new char[256];
 
-		sprintf_s(dir, sizeof(char) * 256, "data/models/%s", name.C_Str());
+		sprintf_s(dir, sizeof(char)*256, "data/models/%s", name.C_Str());
 		printf("%s\n", dir);
 
 		new_model->textures.push_back(Paintbrush::get_texture(dir, false));
