@@ -11,10 +11,12 @@
 #define NO_SDL_GLEXT
 
 // General Libraries
+#include <GL/glew.h>
 #include <stdio.h>
 #include <SDL.h>
 #include <SDL_opengl.h>
 #include <gl/GLU.h>
+
 
 // Local Headers
 #include "techdemos\ttftechdemo.h"

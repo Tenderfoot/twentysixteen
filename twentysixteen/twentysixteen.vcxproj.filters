@@ -95,5 +95,8 @@
     <ClInclude Include="src\techdemos\shadertechdemo.h">
       <Filter>Header Files\techdemos</Filter>
     </ClInclude>
+    <ClInclude Include="src\glext.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

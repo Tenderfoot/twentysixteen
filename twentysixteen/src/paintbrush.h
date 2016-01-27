@@ -5,14 +5,21 @@
 // of the libraries, and a simple way to store and 
 // access loaded data.
 
+#include <SDL.h>
 #include <SDL_opengl.h>
 #include <SDL_ttf.h>
 #include <SOIL/SOIL.h>
 #include <gl/GLU.h>
+#include <gl/gl.h>     // The GL Header File
 #include <map>
+#include <fstream>
 
 #include "common.h"
 #include "model_data.h"
+
+// shader stuff
+#define uglGetProcAddress(x) wglGetProcAddress(x)
+#define WIN32_OR_X11
 
 class Paintbrush
 {
@@ -20,6 +27,8 @@ public:
 	// initialize fonts...
 	static TTF_Font *font;
 	static void init();
+	// for shaders:
+	static void setup_extensions();
 
 	// draw a unit length quad at origin
 	static void draw_quad();
@@ -44,6 +53,10 @@ public:
 	// draw a 3d model
 	static void draw_model(t_3dModel *mymodel);
 	static void draw_cube();
+
+	static GLenum load_shader(char *shadername);
+	static void use_shader(GLenum shader);
+	static void stop_shader();
 
 };
 

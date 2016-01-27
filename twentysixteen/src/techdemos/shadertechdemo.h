@@ -19,4 +19,6 @@ public:
 	GLuint texture;
 	t_3dModel *test_chamber;
 	float rotation;
+
+	GLenum shader_program;
 };

@@ -1,6 +1,25 @@
 
 #include <stdio.h>
+#include <fstream>
+#include <iostream>
+#include <sstream>
 #include "paintbrush.h"
+
+PFNGLCREATEPROGRAMOBJECTARBPROC     glCreateProgramObjectARB = NULL;
+PFNGLDELETEOBJECTARBPROC            glDeleteObjectARB = NULL;
+PFNGLCREATESHADEROBJECTARBPROC      glCreateShaderObjectARB = NULL;
+PFNGLSHADERSOURCEARBPROC            glShaderSourceARB = NULL;
+PFNGLCOMPILESHADERARBPROC           glCompileShaderARB = NULL;
+PFNGLGETOBJECTPARAMETERIVARBPROC    glGetObjectParameterivARB = NULL;
+PFNGLATTACHOBJECTARBPROC            glAttachObjectARB = NULL;
+PFNGLGETINFOLOGARBPROC              glGetInfoLogARB = NULL;
+PFNGLLINKPROGRAMARBPROC             glLinkProgramARB = NULL;
+PFNGLUSEPROGRAMOBJECTARBPROC        glUseProgramObjectARB = NULL;
+PFNGLGETUNIFORMLOCATIONARBPROC      glGetUniformLocationARB = NULL;
+PFNGLUNIFORM1FARBPROC               glUniform1fARB = NULL;
+PFNGLUNIFORM1IARBPROC               glUniform1iARB = NULL;
+PFNGLGETSHADERIVPROC                glGetShaderiv = NULL;
+PFNGLGETSHADERINFOLOGPROC           glGetShaderInfoLog = NULL;
 
 GLuint Paintbrush::font_texture = 0;
 TTF_Font *Paintbrush::font = NULL;
@@ -13,6 +32,146 @@ void Paintbrush::init()
 	{
 		printf("TTF_OpenFont: %s\n", TTF_GetError());
 	}
+
+	setup_extensions();
+}
+
+void Paintbrush::setup_extensions()
+{
+	char* extensionList = (char*)glGetString(GL_EXTENSIONS);
+
+	glCreateProgramObjectARB = (PFNGLCREATEPROGRAMOBJECTARBPROC)
+		uglGetProcAddress("glCreateProgramObjectARB");
+	glDeleteObjectARB = (PFNGLDELETEOBJECTARBPROC)
+		uglGetProcAddress("glDeleteObjectARB");
+	glCreateShaderObjectARB = (PFNGLCREATESHADEROBJECTARBPROC)
+		uglGetProcAddress("glCreateShaderObjectARB");
+	glShaderSourceARB = (PFNGLSHADERSOURCEARBPROC)
+		uglGetProcAddress("glShaderSourceARB");
+	glCompileShaderARB = (PFNGLCOMPILESHADERARBPROC)
+		uglGetProcAddress("glCompileShaderARB");
+	glGetObjectParameterivARB = (PFNGLGETOBJECTPARAMETERIVARBPROC)
+		uglGetProcAddress("glGetObjectParameterivARB");
+	glAttachObjectARB = (PFNGLATTACHOBJECTARBPROC)
+		uglGetProcAddress("glAttachObjectARB");
+	
+	glGetShaderInfoLog = (PFNGLGETSHADERINFOLOGPROC)
+		uglGetProcAddress("glGetShaderInfoLog");
+	
+	glGetInfoLogARB = (PFNGLGETINFOLOGARBPROC)
+		uglGetProcAddress("glGetInfoLogARB");
+	glLinkProgramARB = (PFNGLLINKPROGRAMARBPROC)
+		uglGetProcAddress("glLinkProgramARB");
+	glUseProgramObjectARB = (PFNGLUSEPROGRAMOBJECTARBPROC)
+		uglGetProcAddress("glUseProgramObjectARB");
+	glGetUniformLocationARB = (PFNGLGETUNIFORMLOCATIONARBPROC)
+		uglGetProcAddress("glGetUniformLocationARB");
+	glUniform1fARB = (PFNGLUNIFORM1FARBPROC)
+		uglGetProcAddress("glUniform1fARB");
+	glUniform1iARB = (PFNGLUNIFORM1IARBPROC)
+		uglGetProcAddress("glUniform1iARB");
+	glGetShaderiv = (PFNGLGETSHADERIVPROC)
+		uglGetProcAddress("glGetShaderiv");
+}
+
+GLenum Paintbrush::load_shader(char *shadername)
+{
+	GLenum shader_program;
+
+	shader_program = glCreateProgramObjectARB();
+
+	GLenum my_fragment_shader = glCreateShaderObjectARB(GL_FRAGMENT_SHADER_ARB);
+	GLenum my_vertex_shader = glCreateShaderObjectARB(GL_VERTEX_SHADER_ARB);
+
+	GLint myUniformLocation = glGetUniformLocationARB(shader_program, "myUniform");
+	glUniform1fARB(myUniformLocation, 2.0f);
+
+
+	// LOAD IN FRAGMENT SHADER
+	std::ifstream myfile("data/shaders/phong.frag");
+	std::stringstream ss;
+	if (myfile.is_open())
+	{
+		ss << myfile.rdbuf();
+		myfile.close();
+	}
+	else
+	{
+		printf("file not found\n");
+		return 0;
+	}
+
+	std::string test(ss.str().c_str());
+	const GLchar *frag_shad_src = test.c_str();
+	glShaderSourceARB(my_fragment_shader, 1, &frag_shad_src, NULL);
+
+	// LOAD IN VERTEX SHADER
+	std::ifstream myfiletwo("data/shaders/phong.vert");
+	std::stringstream sstwo;
+	if (myfiletwo.is_open())
+	{
+		sstwo << myfiletwo.rdbuf();
+		myfiletwo.close();
+	}
+	std::string testtwo(sstwo.str().c_str());
+	const GLchar *vertex_shad_src = testtwo.c_str();
+	glShaderSourceARB(my_vertex_shader, 1, &vertex_shad_src, NULL);
+
+	// Compile The Shaders
+	int i;
+	// VERTEX
+	glCompileShaderARB(my_vertex_shader);
+
+	GLint maxLength = 0;
+	glGetShaderiv(my_vertex_shader, GL_INFO_LOG_LENGTH, &maxLength);
+	if (maxLength > 0)
+	{
+		// The maxLength includes the NULL character
+		std::vector<GLchar> errorLog(maxLength);
+		glGetShaderInfoLog(my_vertex_shader, maxLength, &maxLength, &errorLog[0]);
+		printf("///////// SHADER COMPILER /////////////\n");
+		for (i = 0; i<errorLog.size(); i++)
+		{
+			printf("%c", errorLog.at(i));
+		}
+		printf("///////// END SHADER COMPILER /////////////\n");
+	}
+
+	// FRAGMENT
+	glCompileShaderARB(my_fragment_shader);
+
+	maxLength = 0;
+	glGetShaderiv(my_fragment_shader, GL_INFO_LOG_LENGTH, &maxLength);
+	if (maxLength > 0)
+	{
+		// The maxLength includes the NULL character
+		std::vector<GLchar> errorLog(maxLength);
+		glGetShaderInfoLog(my_fragment_shader, maxLength, &maxLength, &errorLog[0]);
+		printf("///////// SHADER COMPILER /////////////\n");
+		for (i = 0; i<errorLog.size(); i++)
+		{
+			printf("%c", errorLog.at(i));
+		}
+		printf("///////// END SHADER COMPILER /////////////\n");
+	}
+
+	// Attach The Shader Objects To The Program Object
+	glAttachObjectARB(shader_program, my_vertex_shader);
+	glAttachObjectARB(shader_program, my_fragment_shader);
+
+	glLinkProgramARB(shader_program);
+
+	return shader_program;
+}
+
+void Paintbrush::use_shader(GLenum shader)
+{
+	glUseProgramObjectARB(shader);
+}
+
+void Paintbrush::stop_shader()
+{
+	glUseProgramObjectARB(0);
 }
 
 void Paintbrush::draw_quad()
@@ -184,51 +343,54 @@ void Paintbrush::draw_model(t_3dModel *mymodel)
 
 void Paintbrush::draw_cube()
 {
-	glBindTexture(GL_TEXTURE_2D, NULL);
+
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, get_texture("data/images/greybrick.png", false));
 
 	glBegin(GL_QUADS);
 
 	glNormal3f(0.0f, 0.0f, 1.0f);
 	glColor3f(1.0f, 0.0f, 0.0f);
-	glVertex3f(1.0f, 1.0f, 1.0f);
-	glVertex3f(-1.0f, 1.0f, 1.0f);
-	glVertex3f(-1.0f, -1.0f, 1.0f);
-	glVertex3f(1.0f, -1.0f, 1.0f);
+	
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(1.0f, 1.0f, 1.0f);
+	glTexCoord2f(1.0f, 0.0f); glVertex3f(-1.0f, 1.0f, 1.0f);
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(-1.0f, -1.0f, 1.0f);
+	glTexCoord2f(0.0f, 1.0f); glVertex3f(1.0f, -1.0f, 1.0f);
 
 	glNormal3f(0.0f, 0.0f, -1.0f);
 	glColor3f(0.0f, 1.0f, 0.0f);
-	glVertex3f(1.0f, 1.0f, -1.0f);
-	glVertex3f(-1.0f, 1.0f, -1.0f);
-	glVertex3f(-1.0f, -1.0f, -1.0f);
-	glVertex3f(1.0f, -1.0f, -1.0f);
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(1.0f, 1.0f, -1.0f);
+	glTexCoord2f(1.0f, 0.0f); glVertex3f(-1.0f, 1.0f, -1.0f);
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(-1.0f, -1.0f, -1.0f);
+	glTexCoord2f(0.0f, 1.0f); glVertex3f(1.0f, -1.0f, -1.0f);
 
 	glNormal3f(0.0f, -1.0f, 0.0f);
 	glColor3f(0.0f, 0.0f, 1.0f);
-	glVertex3f(1.0f, -1.0f, 1.0f);
-	glVertex3f(-1.0f, -1.0f, 1.0f);
-	glVertex3f(-1.0f, -1.0f, -1.0f);
-	glVertex3f(1.0f, -1.0f, -1.0f);
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(1.0f, -1.0f, 1.0f);
+	glTexCoord2f(1.0f, 0.0f); glVertex3f(-1.0f, -1.0f, 1.0f);
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(-1.0f, -1.0f, -1.0f);
+	glTexCoord2f(0.0f, 1.0f); glVertex3f(1.0f, -1.0f, -1.0f);
 
 	glNormal3f(0.0f, 1.0f, 0.0f);
 	glColor3f(1.0f, 1.0f, 0.0f);
-	glVertex3f(1.0f, 1.0f, 1.0f);
-	glVertex3f(-1.0f, 1.0f, 1.0f);
-	glVertex3f(-1.0f, 1.0f, -1.0f);
-	glVertex3f(1.0f, 1.0f, -1.0f);
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(1.0f, 1.0f, 1.0f);
+	glTexCoord2f(1.0f, 0.0f); glVertex3f(-1.0f, 1.0f, 1.0f);
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(-1.0f, 1.0f, -1.0f);
+	glTexCoord2f(0.0f, 1.0f); glVertex3f(1.0f, 1.0f, -1.0f);
 
 	glNormal3f(-1.0f, 0.0f, 0.0f);
 	glColor3f(1.0f, 0.0f, 1.0f);
-	glVertex3f(-1.0f, 1.0f, 1.0f);
-	glVertex3f(-1.0f, -1.0f, 1.0f);
-	glVertex3f(-1.0f, -1.0f, -1.0f);
-	glVertex3f(-1.0f, 1.0f, -1.0f);
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(-1.0f, 1.0f, 1.0f);
+	glTexCoord2f(1.0f, 0.0f); glVertex3f(-1.0f, -1.0f, 1.0f);
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(-1.0f, -1.0f, -1.0f);
+	glTexCoord2f(0.0f, 1.0f);	glVertex3f(-1.0f, 1.0f, -1.0f);
 
 	glNormal3f(1.0f, 0.0f, 0.0f);
 	glColor3f(0.0f, 1.0f, 1.0f);
-	glVertex3f(1.0f, 1.0f, 1.0f);
-	glVertex3f(1.0f, -1.0f, 1.0f);
-	glVertex3f(1.0f, -1.0f, -1.0f);
-	glVertex3f(1.0f, 1.0f, -1.0f);
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(1.0f, 1.0f, 1.0f);
+	glTexCoord2f(1.0f, 0.0f); glVertex3f(1.0f, -1.0f, 1.0f);
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(1.0f, -1.0f, -1.0f);
+	glTexCoord2f(0.0f, 1.0f); glVertex3f(1.0f, 1.0f, -1.0f);
 	glEnd();
 
 	glColor3f(1.0f, 1.0f, 1.0f);
