@@ -18,7 +18,13 @@
 class UIWidget
 {
 public:
+	UIWidget()
+	{
+		visible = true;
+	}
+
 	float x, y, width, height;
+	bool visible;
 	virtual void draw() = 0;
 };
 
@@ -53,6 +59,15 @@ class ListWidget : public UIWidget
 {
 public:
 	ListWidget(std::vector<char*> list_items) : list_items(list_items) {};
+
+	void set_data(float x, float y, float width, float height, bool visible)
+	{
+		this->x = x;
+		this->y = y;
+		this->width = width;
+		this->height = height;
+		this->visible = visible;
+	}
 
 	void next_item()
 	{

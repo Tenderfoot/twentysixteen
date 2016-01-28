@@ -89,7 +89,10 @@ GLenum Paintbrush::load_shader(char *shadername)
 
 
 	// LOAD IN FRAGMENT SHADER
-	std::ifstream myfile("data/shaders/phong.frag");
+	char *full_path = new char[64];
+	sprintf_s(full_path, sizeof(char) * 64, "data/shaders/%s.frag", shadername);
+
+	std::ifstream myfile(full_path);
 	std::stringstream ss;
 	if (myfile.is_open())
 	{
@@ -107,7 +110,8 @@ GLenum Paintbrush::load_shader(char *shadername)
 	glShaderSourceARB(my_fragment_shader, 1, &frag_shad_src, NULL);
 
 	// LOAD IN VERTEX SHADER
-	std::ifstream myfiletwo("data/shaders/phong.vert");
+	sprintf_s(full_path, sizeof(char) * 64, "data/shaders/%s.vert", shadername);
+	std::ifstream myfiletwo(full_path);
 	std::stringstream sstwo;
 	if (myfiletwo.is_open())
 	{

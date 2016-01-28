@@ -115,7 +115,5 @@ t_3dModel *ModelData::import(char *filename, float scale)
 	// We're done. Everything will be cleaned up by the importer destructor
 	new_model->filename = filename;
 
-	//loaded_models.push_back(new_model);
-
 	return new_model;
 }

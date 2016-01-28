@@ -45,5 +45,9 @@ class ModelData
 public:
 	static Assimp::Importer importer;
 	static t_3dModel *import(char *filename, float scale);
+
+	// local to the model
+	GLenum shader;
+	t_3dModel *model;
 };
 

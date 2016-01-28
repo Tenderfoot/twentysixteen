@@ -17,8 +17,13 @@ public:
 
 	// SOIL test
 	GLuint texture;
-	t_3dModel *test_chamber;
+	ModelData test_chamber;
 	float rotation;
+	GLenum cube_program;
 
-	GLenum shader_program;
+	ListWidget *item_menu;
+	ListWidget *shader_menu;
+	ListWidget *current_list;
+
+	char *chosen_model;
 };

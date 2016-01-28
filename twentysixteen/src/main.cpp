@@ -197,7 +197,7 @@ int main(int argc, char *argv[])
 	init_levels();
 
 	// set start level
-	current_level = level_map[TECHDEMO_SHADER];
+	current_level = level_map[TECHDEMO_BASE];
 
 	float previous_time = SDL_GetTicks();
 

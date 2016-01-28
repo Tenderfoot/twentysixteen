@@ -27,9 +27,11 @@ public:
 	void init()
 	{
 		TechDemoUI.add_widget(new TextWidget("Base Tech Demo", 0.5, 0.2, 0.5, 0.3));
-		my_list = new ListWidget({ "Spine", "TTF/SOIL", "SDL_MIXER", "ASSIMP", "QUIT" });
+		my_list = new ListWidget({ "Spine", "TTF/SOIL", "SDL_MIXER", "ASSIMP", "SHADERS", "QUIT" });
+		my_list->set_data(0.5, 0.35, 0.1, 0.05, true);
+
 		TechDemoUI.add_widget(my_list);
-		TechDemoUI.add_widget(new TextWidget("Use directions (WASD) and A (space) to select", 0.5, 0.9, 0.5, 0.05));
+		TechDemoUI.add_widget(new TextWidget("Use directions (WASD) and A (space) to select", 0.5, 0.95, 0.5, 0.05));
 	}
 
 	void take_input(boundinput input, bool type)
@@ -64,6 +66,10 @@ public:
 				if (strcmp(choice, "ASSIMP") == 0)
 				{
 					exit_level = TECHDEMO_MODEL;
+				}
+				if (strcmp(choice, "SHADERS") == 0)
+				{
+					exit_level = TECHDEMO_SHADER;
 				}
 				if (strcmp(choice, "QUIT") == 0)
 				{
