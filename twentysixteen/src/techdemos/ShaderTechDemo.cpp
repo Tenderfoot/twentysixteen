@@ -8,6 +8,7 @@ void ShaderTechDemo::init()
 	test_chamber = ModelData::import("testchamber.fbx", 0.05);
 
 	shader_program = Paintbrush::load_shader("doesn't matter");
+	Paintbrush::use_shader(shader_program);
 }
 
 void ShaderTechDemo::run(float time_delta)
@@ -17,6 +18,16 @@ void ShaderTechDemo::run(float time_delta)
 
 void ShaderTechDemo::take_input(boundinput input, bool type)
 {
+	if (input == UP && type == true)
+	{
+		Paintbrush::use_shader(shader_program);
+	}
+
+	if (input == DOWN && type == true)
+	{
+		 Paintbrush::stop_shader();
+	}
+
 	if (input == BACK && type == true)
 		exit_level = TECHDEMO_BASE;
 }
@@ -34,9 +45,7 @@ void ShaderTechDemo::draw()
 		glTranslatef(0.0f, 0.0f, -22.0f);
 		glScalef(2.0f, 2.0f, 2.0f);
 		glRotatef(rotation, 1.0f, 1.0f, 0.0f);
-		Paintbrush::use_shader(shader_program);
 		Paintbrush::draw_cube();
-		Paintbrush::stop_shader();
 	glPopMatrix();
 
 	BaseTechDemo::draw();

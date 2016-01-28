@@ -70,7 +70,7 @@ void SpineData::load_spine_data(char* spine_folder)
 
 	sprintf_s(dir, sizeof(char)*64, "data/spinedata/%s/%s.png", spine_folder, spine_folder);
 
-	texture = Paintbrush::get_texture(dir, false);
+	texture = Paintbrush::get_texture(dir, false, false);
 
 	setslots();
 

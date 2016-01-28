@@ -43,7 +43,7 @@ t_3dModel *ModelData::import(char *filename, float scale)
 		sprintf_s(dir, sizeof(char)*256, "data/models/%s", name.C_Str());
 		printf("%s\n", dir);
 
-		new_model->textures.push_back(Paintbrush::get_texture(dir, false));
+		new_model->textures.push_back(Paintbrush::get_texture(dir, false, true));
 
 		glBindTexture(GL_TEXTURE_2D, new_model->textures.at(new_model->textures.size() - 1));
 

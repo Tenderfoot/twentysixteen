@@ -5,6 +5,7 @@
 #include <sstream>
 #include "paintbrush.h"
 
+// binding methods from extenions
 PFNGLCREATEPROGRAMOBJECTARBPROC     glCreateProgramObjectARB = NULL;
 PFNGLDELETEOBJECTARBPROC            glDeleteObjectARB = NULL;
 PFNGLCREATESHADEROBJECTARBPROC      glCreateShaderObjectARB = NULL;
@@ -186,15 +187,21 @@ void Paintbrush::draw_quad()
 	glPopMatrix();
 }
 
-GLuint Paintbrush::Soil_Load_Texture(char *filename)
+GLuint Paintbrush::Soil_Load_Texture(char *filename, bool for_assimp)
 {
 	GLuint loaded_texture;
+	int flags;
+
+	if (for_assimp)
+		flags = SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y;
+	else
+		flags = SOIL_FLAG_MIPMAPS;
 
 	loaded_texture = SOIL_load_OGL_texture
 		(	filename,
 			SOIL_LOAD_AUTO,
 			SOIL_CREATE_NEW_ID,
-			SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y);
+			flags);
 
 	// Make sure texture is set to repeat on wrap
 	glBindTexture(GL_TEXTURE_2D, loaded_texture);
@@ -238,12 +245,12 @@ void Paintbrush::draw_text(char *text, float x, float y, float width, float heig
 		glTranslatef(x, y, 0.0f);
 		glScalef(width, height, 1.0f);
 
-		glBindTexture(GL_TEXTURE_2D, Paintbrush::get_texture(text, true));
+		glBindTexture(GL_TEXTURE_2D, Paintbrush::get_texture(text, true, false));
 		Paintbrush::draw_quad();
 	glPopMatrix();
 }
 
-GLuint Paintbrush::get_texture(char* texture_id, bool text)
+GLuint Paintbrush::get_texture(char* texture_id, bool text, bool flip)
 {
 	std::map<char*, GLuint, cmp_str>::iterator it;
 
@@ -260,7 +267,7 @@ GLuint Paintbrush::get_texture(char* texture_id, bool text)
 		}
 		else
 		{
-			texture_db.insert({ new_string, Soil_Load_Texture(texture_id) });
+			texture_db.insert({ new_string, Soil_Load_Texture(texture_id, flip) });
 		}
 	}
 
@@ -345,7 +352,7 @@ void Paintbrush::draw_cube()
 {
 
 	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, get_texture("data/images/greybrick.png", false));
+	glBindTexture(GL_TEXTURE_2D, get_texture("data/images/greybrick.png", false, false));
 
 	glBegin(GL_QUADS);
 

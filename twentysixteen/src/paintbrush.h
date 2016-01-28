@@ -37,7 +37,7 @@ public:
 	static GLuint TextToTexture(GLubyte r, GLubyte g, GLubyte b, const char* text, int ptsize);
 
 	// Load a texture
-	static GLuint Soil_Load_Texture(char *filename);
+	static GLuint Soil_Load_Texture(char *filename, bool for_assimp);
 
 	static void draw_text(char *text, float x, float y, float width, float height);
 
@@ -48,13 +48,15 @@ public:
 	// textures or rendered strings
 	// string -> texture GLuint
 	static std::map<char*, GLuint, cmp_str> texture_db;
-	static GLuint get_texture(char* texture_id, bool text);
+	static GLuint get_texture(char* texture_id, bool text, bool flip);
 
 	// draw a 3d model
 	static void draw_model(t_3dModel *mymodel);
 	static void draw_cube();
 
+	// assimp needs invert_y soil parameter....
 	static GLenum load_shader(char *shadername);
+
 	static void use_shader(GLenum shader);
 	static void stop_shader();
 
