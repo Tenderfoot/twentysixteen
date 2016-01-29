@@ -1,8 +1,12 @@
-varying vec3 normal;
+varying vec2 texture_coordinate;
+
+uniform float Time;
 
 void main()
 {
-	normal = gl_Normal;
-	gl_Position = ftransform();
-
+    // Transforming The Vertex
+    gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;
+ 
+    // Passing The Texture Coordinate Of Texture Unit 0 To The Fragment Shader
+    texture_coordinate = vec2(gl_MultiTexCoord0);
 }

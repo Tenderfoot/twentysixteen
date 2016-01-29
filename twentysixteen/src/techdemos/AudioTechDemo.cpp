@@ -7,7 +7,7 @@ void AudioTechDemo::init()
 
 	TechDemoUI.add_widget(new TextWidget("press W for tom1", 0.5, 0.4, 0.2, 0.05));
 	TechDemoUI.add_widget(new TextWidget("press S for tom2", 0.5, 0.5, 0.2, 0.05));
-	TechDemoUI.add_widget(new TextWidget("press A/D for tom3", 0.5, 0.6, 0.2, 0.05));
+	TechDemoUI.add_widget(new TextWidget("press SPACE for tom3", 0.5, 0.6, 0.2, 0.05));
 
 	TechDemoUI.add_widget(new TextWidget("Press ESCAPE to go back", 0.5, 0.9, 0.5, 0.05));
 }

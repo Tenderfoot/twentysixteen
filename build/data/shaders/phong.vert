@@ -1,6 +1,7 @@
 varying vec3 N;
 varying vec3 v;
 varying vec2 texture_coordinate;
+uniform float time;
 
 void main(void)  
 {     

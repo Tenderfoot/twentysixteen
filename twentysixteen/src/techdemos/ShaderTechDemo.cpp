@@ -15,7 +15,6 @@ void ShaderTechDemo::init()
 	shader_menu->set_data(0.2, 0.5, 0.1, 0.05, false);
 
 	test_chamber.model = ModelData::import("testchamber.fbx", 0.05);
-	test_chamber.shader = 0;
 
 	current_list = item_menu;
 }

@@ -66,7 +66,7 @@ public:
 	static void draw_model(t_3dModel *mymodel);
 	static void draw_cube();
 
-	// assimp needs invert_y soil parameter....
+	// shader stuff
 	static GLenum load_shader(char *shadername);
 
 	static void use_shader(GLenum shader);
@@ -82,6 +82,5 @@ public:
 	static std::map<std::pair<GLenum, char*>, GLint, cmp_shaderuniform> uniform_db;
 	static GLint get_uniform(GLenum shader, char* uniform_name);
 	static void update_shader_uniforms();
-
 };
 

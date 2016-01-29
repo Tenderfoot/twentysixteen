@@ -1,5 +1,7 @@
 varying vec2 texture_coordinate;
 
+uniform float Time;
+
 void main()
 {
     // Transforming The Vertex

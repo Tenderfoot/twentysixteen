@@ -22,16 +22,42 @@ public:
 
 	char *techdemo_title;
 	BaseUserInterface TechDemoUI;
-	ListWidget *my_list;
+	ListWidget *current_list;
+	ListWidget *initial_list;
+	ListWidget *filetypes_list;
+	ListWidget *vfx_list;
+	ListWidget *prototyping;
 
 	void init()
 	{
 		TechDemoUI.add_widget(new TextWidget("Base Tech Demo", 0.5, 0.2, 0.5, 0.3));
-		my_list = new ListWidget({ "Spine", "TTF/SOIL", "SDL_MIXER", "ASSIMP", "SHADERS", "QUIT" });
-		my_list->set_data(0.5, 0.35, 0.1, 0.05, true);
+		
+		initial_list = new ListWidget({ "DATA IMPORT", "VFX", "PROTOTYPING", "QUIT" });
+		initial_list->set_data(0.5, 0.4, 0.2, 0.1, true);
+		TechDemoUI.add_widget(initial_list);
 
-		TechDemoUI.add_widget(my_list);
+		filetypes_list = new ListWidget({ "Spine", "TTF/SOIL", "SDL_MIXER", "ASSIMP", "BACK" });
+		filetypes_list->set_data(0.5, 0.4, 0.2, 0.1, false);
+		TechDemoUI.add_widget(filetypes_list);
+
+		vfx_list = new ListWidget({ "SHADERS", "PARTICLE EMITTERS", "GRASS", "BACK" });
+		vfx_list->set_data(0.5, 0.4, 0.2, 0.1, false);
+		TechDemoUI.add_widget(vfx_list);
+
+		prototyping = new ListWidget({ "SCENE", "COLLISION", "BACK" });
+		prototyping->set_data(0.5, 0.4, 0.2, 0.1, false);
+		TechDemoUI.add_widget(prototyping);
+
+		current_list = initial_list;
+
 		TechDemoUI.add_widget(new TextWidget("Use directions (WASD) and A (space) to select", 0.5, 0.95, 0.5, 0.05));
+	}
+
+	void switch_to(ListWidget *to_switch)
+	{
+		current_list->visible = false;
+		current_list = to_switch;
+		current_list->visible = true;
 	}
 
 	void take_input(boundinput input, bool type)
@@ -40,17 +66,17 @@ public:
 		{
 			if (input == UP)
 			{
-				my_list->previous_item();
+				current_list->previous_item();
 			}
 
 			if (input == DOWN)
 			{
-				my_list->next_item();
+				current_list->next_item();
 			}
 
 			if (input == ACTION)
 			{
-				char *choice = my_list->list_items[my_list->current_selection];
+				char *choice = current_list->list_items[current_list->current_selection];
 				if (strcmp(choice, "Spine") == 0)
 				{
 					exit_level = TECHDEMO_SPINE;
@@ -75,10 +101,30 @@ public:
 				{
 					exit_level = QUIT;
 				}
+				if (strcmp(choice, "QUIT") == 0)
+				{
+					exit_level = QUIT;
+				}
+				if (strcmp(choice, "DATA IMPORT") == 0)
+				{
+					switch_to(filetypes_list);
+				}
+				if (strcmp(choice, "VFX") == 0)
+				{
+					switch_to(vfx_list);
+				}
+				if (strcmp(choice, "PROTOTYPING") == 0)
+				{
+					switch_to(prototyping);
+				}
+				if (strcmp(choice, "BACK") == 0)
+				{
+					switch_to(initial_list);
+				}
 			}
 
 			if (input == BACK)
-				exit_level = QUIT;
+				switch_to(initial_list);
 		}
 	}
 
