@@ -1,15 +1,6 @@
 
 #include "shadertechdemo.h"
 
-// New plan
-// make it so shaders are loaded in once
-// once you do this, make it so, if you fetch a uniform location
-// it stores it in a hash. 
-//
-// once you do this your initial
-// set_uniform(shader, uniform_NAME, value)
-// should work fine.
-
 void ShaderTechDemo::init()
 {
 	TechDemoUI.add_widget(new TextWidget("Shader Test Chamber", 0.5, 0.1, 0.3, 0.1));

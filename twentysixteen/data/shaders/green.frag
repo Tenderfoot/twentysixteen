@@ -12,5 +12,5 @@ void main()
     // Sampling The Texture And Passing It To The Frame Buffer
 
     vec4 test = texture2D(my_color_texture, texture_coordinate);
-    gl_FragColor = vec4(sin(Time)*test.r, cos(Time)*test.g, cos(Time)+sin(Time), test.a);
+    gl_FragColor = vec4(abs(sin(Time)*test.r), abs(cos(Time)*test.g), abs(cos(Time)+sin(Time)), test.a);
 }
