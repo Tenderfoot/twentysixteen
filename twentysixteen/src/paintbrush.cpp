@@ -22,9 +22,14 @@ PFNGLUNIFORM1IARBPROC               glUniform1iARB = NULL;
 PFNGLGETSHADERIVPROC                glGetShaderiv = NULL;
 PFNGLGETSHADERINFOLOGPROC           glGetShaderInfoLog = NULL;
 
+// texture storage
 GLuint Paintbrush::font_texture = 0;
 TTF_Font *Paintbrush::font = NULL;
 std::map<char*, GLuint, cmp_str> Paintbrush::texture_db = {};
+
+// shaders and uniform storage
+std::map<char*, GLenum, cmp_str> Paintbrush::shader_db = {};
+std::map<std::pair<GLenum, char*>, GLint, cmp_shaderuniform> Paintbrush::uniform_db = {};
 
 void Paintbrush::init()
 {
@@ -73,6 +78,37 @@ void Paintbrush::setup_extensions()
 		uglGetProcAddress("glUniform1iARB");
 	glGetShaderiv = (PFNGLGETSHADERIVPROC)
 		uglGetProcAddress("glGetShaderiv");
+}
+
+GLenum Paintbrush::get_shader(char* shader_id)
+{
+	std::map<char*, GLenum, cmp_str>::iterator it;
+
+	it = shader_db.find(shader_id);
+
+	if (it == shader_db.end())
+	{
+		char *new_string = new char[128];
+		strcpy_s(new_string, sizeof(char) * 128, shader_id);
+
+		shader_db.insert({ new_string, load_shader(shader_id) });
+	}
+
+	return shader_db[shader_id];
+}
+
+GLint Paintbrush::get_uniform(GLenum shader, char* uniform_name)
+{
+	std::map<std::pair<GLenum, char *>, GLint, cmp_str>::iterator it;
+
+	it = uniform_db.find(std::make_pair(shader, uniform_name));
+
+	if (it == uniform_db.end())
+	{
+		uniform_db.insert({ std::make_pair(shader, uniform_name), get_uniform_location(shader, uniform_name) });
+	}
+
+	return uniform_db[std::make_pair(shader, uniform_name)];
 }
 
 GLenum Paintbrush::load_shader(char *shadername)
@@ -177,6 +213,41 @@ void Paintbrush::use_shader(GLenum shader)
 void Paintbrush::stop_shader()
 {
 	glUseProgramObjectARB(0);
+}
+
+GLint Paintbrush::get_uniform_location(GLenum shader, char *variable_name)
+{
+	glUseProgramObjectARB(shader);
+	GLint loc = glGetUniformLocationARB(shader, variable_name);
+	glUseProgramObjectARB(0);
+
+	return loc;
+}
+
+void Paintbrush::set_uniform_location(GLenum shader, GLint uniform_location, float data)
+{
+	glUseProgramObjectARB(shader);
+	if (uniform_location != -1)
+	{
+		glUniform1fARB(uniform_location, data);
+	}
+	glUseProgramObjectARB(0);
+}
+
+void Paintbrush::set_uniform(GLenum shader, char* uniform_name, float data)
+{
+	set_uniform_location(shader, get_uniform(shader, uniform_name), data);
+}
+
+void Paintbrush::update_shader_uniforms()
+{
+	// Iterate through each shader and send time
+	std::map<char*, GLenum, cmp_str>::iterator it;
+
+	for (auto it = shader_db.begin(); it != shader_db.end(); ++it)
+	{
+		set_uniform(it->second, "Time", ((float)SDL_GetTicks())/1000);
+	}
 }
 
 void Paintbrush::draw_quad()

@@ -1,24 +1,14 @@
 
 #include "shadertechdemo.h"
 
-// k talk this out
-// the way I want the shader demo to go
-// is you see a menu with two options:
-// modify:
-// room shader
-// cube shader
-// when you select one, the shader list will come up
-// phong
-// invert
-// green
-// When you select a shader, it will apply that shader to that model,
-// and reset to the object menu
-
-// how I can make that happen
-// store the shader being used on ModelData
-// use that when drawing
-// create the listitem and set up keyboard control for them
-// make it so that selecting shaders applies them to that model
+// New plan
+// make it so shaders are loaded in once
+// once you do this, make it so, if you fetch a uniform location
+// it stores it in a hash. 
+//
+// once you do this your initial
+// set_uniform(shader, uniform_NAME, value)
+// should work fine.
 
 void ShaderTechDemo::init()
 {
@@ -34,14 +24,13 @@ void ShaderTechDemo::init()
 	shader_menu->set_data(0.2, 0.5, 0.1, 0.05, false);
 
 	test_chamber.model = ModelData::import("testchamber.fbx", 0.05);
-	test_chamber.shader = -1;
+	test_chamber.shader = 0;
 
 	current_list = item_menu;
 }
 
 void ShaderTechDemo::run(float time_delta)
 {
-
 	rotation += (time_delta / 10);
 }
 
@@ -84,15 +73,15 @@ void ShaderTechDemo::take_input(boundinput input, bool type)
 				}
 				else if (strcmp(chosen_shader, "Phong") == 0)
 				{
-					shader_to_apply = Paintbrush::load_shader("phong");
+					shader_to_apply = Paintbrush::get_shader("phong");
 				}
 				else if (strcmp(chosen_shader, "Inverter") == 0)
 				{
-					shader_to_apply = Paintbrush::load_shader("inverter");
+					shader_to_apply = Paintbrush::get_shader("inverter");
 				}
 				else if (strcmp(chosen_shader, "Green") == 0)
 				{
-					shader_to_apply = Paintbrush::load_shader("green");
+					shader_to_apply = Paintbrush::get_shader("green");
 				}
 
 				if (strcmp(chosen_model, "Room") == 0)

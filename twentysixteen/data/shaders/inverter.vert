@@ -1,5 +1,6 @@
 varying vec2 texture_coordinate;
-uniform float myUniform;
+
+uniform float time;
 
 void main()
 {

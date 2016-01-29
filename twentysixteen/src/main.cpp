@@ -204,6 +204,7 @@ int main(int argc, char *argv[])
 	// main loop
 	while (!done)
 	{
+		Paintbrush::update_shader_uniforms();
 		handle_sdl_event();
 		
 		// Run

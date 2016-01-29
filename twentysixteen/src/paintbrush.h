@@ -21,6 +21,18 @@
 #define uglGetProcAddress(x) wglGetProcAddress(x)
 #define WIN32_OR_X11
 
+// proper comparison for char* maps
+struct cmp_shaderuniform
+{
+	bool operator()(std::pair<GLenum, char*> a, std::pair<GLenum, char*> b) const
+	{
+		if (a.first == b.first)
+			return std::strcmp(a.second, b.second) < 0;
+		else
+			return 1;
+	}
+};
+
 class Paintbrush
 {
 public:
@@ -59,6 +71,17 @@ public:
 
 	static void use_shader(GLenum shader);
 	static void stop_shader();
+	static void set_uniform(GLenum shader, char* uniform_name, float data);
+	static void set_uniform_location(GLenum shader, GLint uniform_location, float data);
+	static int get_uniform_location(GLenum shader, char *variable_name);
+
+	// I'm going to need a static map of all the shaders, name->shader, for storage and recall
+	// I will also need a std::map<std::pair<GLenum, char*>, GLint> -> this will map <shader,uniform>->uniform location
+	static std::map<char*, GLenum, cmp_str> shader_db;
+	static GLenum get_shader(char* shader_id);
+	static std::map<std::pair<GLenum, char*>, GLint, cmp_shaderuniform> uniform_db;
+	static GLint get_uniform(GLenum shader, char* uniform_name);
+	static void update_shader_uniforms();
 
 };
 
