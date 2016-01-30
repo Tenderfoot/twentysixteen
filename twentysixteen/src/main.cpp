@@ -24,6 +24,7 @@
 #include "techdemos\audiotechdemo.h"
 #include "techdemos\modeltechdemo.h"
 #include "techdemos\shadertechdemo.h"
+#include "techdemos\modeltopolygontechdemo.h"
 
 // and a few globals
 bool done = 0; // Quit?
@@ -159,6 +160,7 @@ void init_levels()
 	level_map[TECHDEMO_AUDIO] = new AudioTechDemo();
 	level_map[TECHDEMO_MODEL] = new ModelTechDemo();
 	level_map[TECHDEMO_SHADER] = new ShaderTechDemo();
+	level_map[TECHDEMO_MODELTOPOLY] = new ModelToPolygonTechDemo();
 
 	for (auto it = std::begin(level_map); it != std::end(level_map); ++it)
 	{

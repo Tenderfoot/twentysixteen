@@ -54,6 +54,12 @@
     <ClCompile Include="src\techdemos\ShaderTechDemo.cpp">
       <Filter>Source Files\techdemos</Filter>
     </ClCompile>
+    <ClCompile Include="src\linear_algebra.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\techdemos\ModelToPolygonTechDemo.cpp">
+      <Filter>Source Files\techdemos</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\level.h">
@@ -97,6 +103,12 @@
     </ClInclude>
     <ClInclude Include="src\glext.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\linear_algebra.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\techdemos\modeltopolygontechdemo.h">
+      <Filter>Header Files\techdemos</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

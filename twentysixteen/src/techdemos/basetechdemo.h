@@ -105,6 +105,11 @@ public:
 				{
 					exit_level = QUIT;
 				}
+				if (strcmp(choice, "COLLISION") == 0)
+				{
+					exit_level = TECHDEMO_MODELTOPOLY;
+				}
+
 				if (strcmp(choice, "DATA IMPORT") == 0)
 				{
 					switch_to(filetypes_list);

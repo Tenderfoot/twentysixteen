@@ -20,5 +20,5 @@ void main()
     float g = fract(Time * texture_coordinate.y);
     float b = fract(Time * dot(texture_coordinate.xy, vec2(12.534, 343.65)));
 
-    gl_FragColor = vec4(r, g, b, 1);
+    gl_FragColor = vec4(r, g, b, test.a);
 }

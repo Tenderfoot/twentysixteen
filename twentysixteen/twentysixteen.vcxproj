@@ -21,12 +21,14 @@
   <ItemGroup>
     <ClCompile Include="src\audio_controller.cpp" />
     <ClCompile Include="src\base_user_interface.cpp" />
+    <ClCompile Include="src\linear_algebra.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\model_data.cpp" />
     <ClCompile Include="src\paintbrush.cpp" />
     <ClCompile Include="src\spine_data.cpp" />
     <ClCompile Include="src\techdemos\AudioTechDemo.cpp" />
     <ClCompile Include="src\techdemos\ModelTechDemo.cpp" />
+    <ClCompile Include="src\techdemos\ModelToPolygonTechDemo.cpp" />
     <ClCompile Include="src\techdemos\ShaderTechDemo.cpp" />
     <ClCompile Include="src\techdemos\SpineTechDemo.cpp" />
     <ClCompile Include="src\techdemos\TTFTechDemo.cpp" />
@@ -37,12 +39,14 @@
     <ClInclude Include="src\common.h" />
     <ClInclude Include="src\glext.h" />
     <ClInclude Include="src\level.h" />
+    <ClInclude Include="src\linear_algebra.h" />
     <ClInclude Include="src\model_data.h" />
     <ClInclude Include="src\paintbrush.h" />
     <ClInclude Include="src\spine_data.h" />
     <ClInclude Include="src\techdemos\audiotechdemo.h" />
     <ClInclude Include="src\techdemos\basetechdemo.h" />
     <ClInclude Include="src\techdemos\modeltechdemo.h" />
+    <ClInclude Include="src\techdemos\modeltopolygontechdemo.h" />
     <ClInclude Include="src\techdemos\shadertechdemo.h" />
     <ClInclude Include="src\techdemos\spinetechdemo.h" />
     <ClInclude Include="src\techdemos\ttftechdemo.h" />

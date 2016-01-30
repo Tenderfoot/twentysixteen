@@ -4,6 +4,9 @@
 #define res_width  1024	
 #define res_height  768
 
+#include <stdio.h>
+#include <string>
+
 enum levels
 {
 	LEVEL_NONE,
@@ -13,6 +16,7 @@ enum levels
 	TECHDEMO_AUDIO,
 	TECHDEMO_MODEL,
 	TECHDEMO_SHADER,
+	TECHDEMO_MODELTOPOLY,
 	QUIT
 };
 
