@@ -182,7 +182,7 @@ int main(int argc, char *argv[])
 		exit(2);
 	}
 
-	window = SDL_CreateWindow("TwentySixteen", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, res_width, res_height, SDL_WINDOW_OPENGL);
+	window = SDL_CreateWindow("TwentySixteen", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, res_width, res_height, SDL_WINDOW_OPENGL | SDL_WINDOW_FULLSCREEN);
 	
 	SDL_GLContext glcontext = SDL_GL_CreateContext(window);
 

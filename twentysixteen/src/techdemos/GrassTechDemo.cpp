@@ -4,7 +4,7 @@
 void GrassTechDemo::init()
 {
 	TechDemoUI.add_widget(new TextWidget("Grass Tech Demo", 0.5, 0.2, 0.5, 0.3));
-	TechDemoUI.add_widget(new TextWidget("Press ESCAPE to go back", 0.5, 0.9, 0.5, 0.05));
+	TechDemoUI.add_widget(new TextWidget("Press ESCAPE to go back", 0.5, 0.5, 0.5, 0.05));
 
 	grass = Paintbrush::get_texture("data/images/grass.png", false, true);
 }
@@ -49,6 +49,7 @@ void GrassTechDemo::draw()
 		glPushMatrix();
 			glTranslatef(1.5f, -2.0f, -7.5f);
 			glScalef(3.0f, 1.0f, 1.0f);
+
 			Paintbrush::draw_quad();
 		glPopMatrix();
 		glPushMatrix();
@@ -92,7 +93,7 @@ void GrassTechDemo::draw()
 			Paintbrush::draw_quad();
 		glPopMatrix();
 		glPushMatrix();
-			glTranslatef(-1.0f, -2.0f, -3.2f);
+			glTranslatef(-1.0f, -2.0f, -3.3f);
 			glScalef(3.0f, 1.0f, 1.0f);
 			Paintbrush::draw_quad();
 		glPopMatrix();
