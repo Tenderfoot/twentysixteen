@@ -2,7 +2,7 @@
 #include "linear_algebra.h"
 #include "paintbrush.h"
 
- std::vector<t_edge> *LinearAlgebra::get_edges_from_plane(t_3dModel from_model)
+ std::vector<t_edge> *LinearAlgebra::get_edges_from_slice(t_3dModel from_model, float plane_z, t_vertex model_transform, int mesh_id)
 {
 	std::vector<t_edge> *edge_set = new std::vector<t_edge>;
 
@@ -11,12 +11,11 @@
 
 	int i, j;
 
-	int mesh_id = 0;
-
-	float plane_distance = (-20);
-	float model_z_translation = -50;
+	float plane_distance = plane_z;
 	int hit_times = 0;
 	
+	//mesh_id = 1;
+
 	for (i = 0; i < from_model.meshes.at(mesh_id)->faces.size(); i++)
 	{
 		new_edge.verticies.clear();
@@ -24,8 +23,8 @@
 		hit_times = 0;
 		for (j = 0; j < 3; j++)
 		{
-			if ((from_model.meshes.at(mesh_id)->faces.at(i)->verticies.at(j).z + model_z_translation < plane_distance && from_model.meshes.at(mesh_id)->faces.at(i)->verticies.at((j + 1) % 3).z + model_z_translation > plane_distance) ||
-				(from_model.meshes.at(mesh_id)->faces.at(i)->verticies.at((j + 1) % 3).z + model_z_translation < plane_distance && from_model.meshes.at(mesh_id)->faces.at(i)->verticies.at(j).z + model_z_translation > plane_distance))
+			if ((from_model.meshes.at(mesh_id)->faces.at(i)->verticies.at(j).z + model_transform.z < plane_distance && from_model.meshes.at(mesh_id)->faces.at(i)->verticies.at((j + 1) % 3).z + model_transform.z > plane_distance) ||
+				(from_model.meshes.at(mesh_id)->faces.at(i)->verticies.at((j + 1) % 3).z + model_transform.z < plane_distance && from_model.meshes.at(mesh_id)->faces.at(i)->verticies.at(j).z + model_transform.z > plane_distance))
 			{
 				hit_times++;
 				
@@ -103,3 +102,29 @@
 
 	 return false;
  }
+
+t_collisiongroup LinearAlgebra::get_collisiongroups_from_model(t_3dModel from_model, float plane_z, t_vertex model_transform)
+ {
+	 t_collisiongroup return_groups;
+	 
+	 int i;
+	 for (i = 0; i < from_model.meshes.size(); i++)
+	 {
+		 return_groups.collision_groups.push_back(*get_edges_from_slice(from_model, plane_z, model_transform, i));
+	 }
+
+	 return return_groups;
+ }
+
+bool  LinearAlgebra::point_in_collisiongroup(t_vertex point, t_collisiongroup group)
+{
+	bool return_value = false;
+
+	for (auto it = group.collision_groups.begin(); it != group.collision_groups.end(); ++it)
+	{
+		if(return_value == false)
+			return_value = point_in_polygon(point, *it);
+	}
+
+	return return_value;
+}

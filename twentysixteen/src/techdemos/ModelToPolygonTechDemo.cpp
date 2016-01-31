@@ -3,41 +3,36 @@
 
 void ModelToPolygonTechDemo::init()
 {
-	TechDemoUI.add_widget(new TextWidget("Model To Polygon Tech Demo", 0.5, 0.1, 0.8, 0.15));
+	test_plane = -20;
+
+	TechDemoUI.add_widget(new TextWidget("Collision Tech Demo", 0.5, 0.1, 0.8, 0.15));
+
+	TechDemoUI.add_widget(new TextWidget("W - toggle draw plane", 0.2, 0.4, 0.15, 0.05));
+	TechDemoUI.add_widget(new TextWidget("S - toggle draw model", 0.2, 0.5, 0.15, 0.05));
 
 	model_data = ModelData::import("testchamber.fbx", 0.05);
-	edge_set = LinearAlgebra::get_edges_from_plane(*model_data);
 
-	draw_plane = true;
+	collision_group = LinearAlgebra::get_collisiongroups_from_model(*model_data, test_plane, t_vertex(0, 0, -50));
+
+	draw_plane = false;
 	draw_model = true;
 }
 
 void ModelToPolygonTechDemo::run(float time_delta)
 {
+	rotation += (time_delta / 10);
 }
 
 void ModelToPolygonTechDemo::draw()
 {
-	float test_plane = -20;
-
-	int i;
+	gluLookAt(sin(rotation / 100) * 3, cos(rotation / 250) * 3, 0, 0, 0, -25, 0, 1, 0);
 
 	glLineWidth(1);
-
-	std::vector<t_edge>::iterator it;
 
 	glEnable(GL_DEPTH_TEST);
 	glBindTexture(GL_TEXTURE_2D, NULL);
 
-	for (auto it = edge_set->begin(); it != edge_set->end(); ++it)
-	{
-		glBindTexture(GL_TEXTURE_2D, NULL);
-		glColor3f(1.0f, 0.0f, 1.0f);
-		glBegin(GL_LINES);
-		glVertex3f(it->verticies.at(0).x, it->verticies.at(0).y, test_plane);
-		glVertex3f(it->verticies.at(1).x, it->verticies.at(1).y, test_plane);
-		glEnd();
-	}
+	Paintbrush::draw_collision_group(collision_group);
 
 	if (draw_model)
 	{
@@ -62,8 +57,8 @@ void ModelToPolygonTechDemo::draw()
 	}
 
 	t_vertex point;
-	point.x = cos(((float)SDL_GetTicks()) / 1000) * 20;
-	point.y = sin(((float)SDL_GetTicks()) / 1000) * 20;
+	point.x = cos(((float)SDL_GetTicks()) / 400) * 20;
+	point.y = sin(((float)SDL_GetTicks()) / 2000) * 10;
 
 	glPushMatrix();
 		glTranslatef(point.x, point.y, test_plane);
@@ -71,9 +66,9 @@ void ModelToPolygonTechDemo::draw()
 		Paintbrush::draw_cube();
 	glPopMatrix();
 
-	if (LinearAlgebra::point_in_polygon(point, *edge_set))
+	if (LinearAlgebra::point_in_collisiongroup(point, collision_group))
 	{
-		printf("collision!\n");
+		printf("collision! %d\n", SDL_GetTicks());
 	}
 	
 	BaseTechDemo::draw();

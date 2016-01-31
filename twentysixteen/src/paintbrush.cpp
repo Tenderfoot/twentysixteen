@@ -423,6 +423,27 @@ void Paintbrush::draw_model(t_3dModel *mymodel)
 	glPopMatrix();
 }
 
+void Paintbrush::draw_collision_group(t_collisiongroup group)
+{
+	int i;
+	std::vector<t_edge> *edge_set;
+	for (i = 0; i < group.collision_groups.size(); i++)
+	{
+		edge_set = &group.collision_groups.at(i);
+
+		for (auto it = edge_set->begin(); it != edge_set->end(); ++it)
+		{
+			glBindTexture(GL_TEXTURE_2D, NULL);
+			glColor3f(1.0f, 0.0f, 1.0f);
+			glBegin(GL_LINES);
+				glVertex3f(it->verticies.at(0).x, it->verticies.at(0).y, -20);
+				glVertex3f(it->verticies.at(1).x, it->verticies.at(1).y, -20);
+			glEnd();
+		}
+	}
+	
+}
+
 void Paintbrush::draw_cube()
 {
 

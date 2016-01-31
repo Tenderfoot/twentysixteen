@@ -22,6 +22,10 @@ public:
 	bool draw_plane;
 	bool draw_model;
 
-	std::vector<t_edge> *edge_set;
+	float rotation;
+
+	t_collisiongroup collision_group;
+
+	float test_plane;
 
 };

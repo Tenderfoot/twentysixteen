@@ -14,12 +14,24 @@
 #include <assimp/scene.h>           // Output data structure
 #include <assimp/postprocess.h>     // Post processing flags
 
-typedef struct
+class t_vertex
 {
+public:
+	t_vertex(float x, float y, float z)
+	{
+		this->x = x;
+		this->y = y;
+		this->z = z;
+	}
+
+	t_vertex()
+	{
+	}
+
 	float texcoord_x, texcoord_y;
 	float x, y, z;
 	float r, g, b;
-} t_vertex;
+};
 
 typedef struct
 {
