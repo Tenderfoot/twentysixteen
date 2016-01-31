@@ -6,6 +6,7 @@
 	std::vector<t_edge> *edge_set = new std::vector<t_edge>;
 
 	t_edge new_edge;
+	t_vertex new_vertex;
 
 	int i, j;
 
@@ -17,6 +18,8 @@
 	
 	for (i = 0; i < from_model.meshes.at(mesh_id)->faces.size(); i++)
 	{
+		new_edge.verticies.clear();
+
 		hit_times = 0;
 		for (j = 0; j < 3; j++)
 		{
@@ -24,17 +27,32 @@
 				(from_model.meshes.at(mesh_id)->faces.at(i)->verticies.at((j + 1) % 3).z + model_z_translation < plane_distance && from_model.meshes.at(mesh_id)->faces.at(i)->verticies.at(j).z + model_z_translation > plane_distance))
 			{
 				hit_times++;
+				
+				t_vertex initial_point, other_point, swap;
+				initial_point = from_model.meshes.at(mesh_id)->faces.at(i)->verticies.at(j);
+				other_point = from_model.meshes.at(mesh_id)->faces.at(i)->verticies.at((j + 1) % 3);
 
-				new_edge.v1.x = from_model.meshes.at(mesh_id)->faces.at(i)->verticies.at(j).x;
-				new_edge.v1.y = from_model.meshes.at(mesh_id)->faces.at(i)->verticies.at(j).y;
+				if (initial_point.z < other_point.z)
+				{
+					swap = initial_point;
+					initial_point = other_point;
+					other_point = swap;
+				}
 
-				new_edge.v2.x = from_model.meshes.at(mesh_id)->faces.at(i)->verticies.at((j + 1) % 3).x;
-				new_edge.v2.y = from_model.meshes.at(mesh_id)->faces.at(i)->verticies.at((j + 1) % 3).y;
 
-				edge_set->push_back(new_edge);
+				float percentage = (plane_distance + initial_point.z) / (other_point.z + initial_point.z);
+
+				new_vertex.x = initial_point.x + ((other_point.x-initial_point.x)*percentage);
+				new_vertex.y = initial_point.y + ((other_point.y - initial_point.y)*percentage);
+
+				new_edge.verticies.push_back(new_vertex);
 			}
 		}
-		printf("hit %d times\n", hit_times);
+
+		if(new_edge.verticies.size() == 2)
+			edge_set->push_back(new_edge);
+
+		//printf("hit %d times\n", hit_times);
 	}
 
 	return edge_set;

@@ -35,18 +35,18 @@ void ModelToPolygonTechDemo::draw()
 	{
 		glColor3f(1.0f, 0.f, 1.0f);
 		glBegin(GL_LINES);
-		glVertex3f(it->v1.x, it->v1.y, test_plane);
-		glVertex3f(it->v2.x, it->v2.y, test_plane);
+		glVertex3f(it->verticies.at(0).x, it->verticies.at(0).y, test_plane);
+		glVertex3f(it->verticies.at(1).x, it->verticies.at(1).y, test_plane);
 		glEnd();
 
 		glPushMatrix();
-		glTranslatef(it->v1.x, it->v1.y, test_plane);
+		glTranslatef(it->verticies.at(0).x, it->verticies.at(0).y, test_plane);
 		glScalef(0.1f, 0.1f, 0.1f);
 		Paintbrush::draw_cube();
 		glPopMatrix();
 
 		glPushMatrix();
-		glTranslatef(it->v2.x, it->v2.y, test_plane);
+		glTranslatef(it->verticies.at(1).x, it->verticies.at(1).y, test_plane);
 		glScalef(0.1f, 0.1f, 0.1f);
 		Paintbrush::draw_cube();
 		glPopMatrix();

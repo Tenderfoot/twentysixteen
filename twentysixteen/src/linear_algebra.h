@@ -13,7 +13,7 @@
 
 typedef struct
 {
-	t_vertex v1, v2;
+	std::vector<t_vertex> verticies;
 } t_edge;
 
 class LinearAlgebra
