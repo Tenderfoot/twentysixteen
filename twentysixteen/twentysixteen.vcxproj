@@ -27,6 +27,7 @@
     <ClCompile Include="src\paintbrush.cpp" />
     <ClCompile Include="src\spine_data.cpp" />
     <ClCompile Include="src\techdemos\AudioTechDemo.cpp" />
+    <ClCompile Include="src\techdemos\GrassTechDemo.cpp" />
     <ClCompile Include="src\techdemos\ModelTechDemo.cpp" />
     <ClCompile Include="src\techdemos\ModelToPolygonTechDemo.cpp" />
     <ClCompile Include="src\techdemos\ShaderTechDemo.cpp" />
@@ -45,6 +46,7 @@
     <ClInclude Include="src\spine_data.h" />
     <ClInclude Include="src\techdemos\audiotechdemo.h" />
     <ClInclude Include="src\techdemos\basetechdemo.h" />
+    <ClInclude Include="src\techdemos\grasstechdemo.h" />
     <ClInclude Include="src\techdemos\modeltechdemo.h" />
     <ClInclude Include="src\techdemos\modeltopolygontechdemo.h" />
     <ClInclude Include="src\techdemos\shadertechdemo.h" />

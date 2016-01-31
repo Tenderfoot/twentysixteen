@@ -109,7 +109,10 @@ public:
 				{
 					exit_level = TECHDEMO_MODELTOPOLY;
 				}
-
+				if (strcmp(choice, "GRASS") == 0)
+				{
+					exit_level = TECHDEMO_GRASS;
+				}
 				if (strcmp(choice, "DATA IMPORT") == 0)
 				{
 					switch_to(filetypes_list);

@@ -60,6 +60,9 @@
     <ClCompile Include="src\techdemos\ModelToPolygonTechDemo.cpp">
       <Filter>Source Files\techdemos</Filter>
     </ClCompile>
+    <ClCompile Include="src\techdemos\GrassTechDemo.cpp">
+      <Filter>Source Files\techdemos</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\level.h">
@@ -108,6 +111,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\techdemos\modeltopolygontechdemo.h">
+      <Filter>Header Files\techdemos</Filter>
+    </ClInclude>
+    <ClInclude Include="src\techdemos\grasstechdemo.h">
       <Filter>Header Files\techdemos</Filter>
     </ClInclude>
   </ItemGroup>

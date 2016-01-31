@@ -46,7 +46,7 @@ void ModelToPolygonTechDemo::draw()
 	{
 		glPushMatrix();
 			glBindTexture(GL_TEXTURE_2D, NULL);
-			glColor3f(1.0f, 1.0f, 1.0f);
+			glColor3f(0.0f, 1.0f, 1.0f);
 			glBegin(GL_QUADS);
 				glVertex3f(-100.0f, -100.0f, test_plane - 0.05);
 				glVertex3f(100.0f, -100.0f, test_plane - 0.05);
