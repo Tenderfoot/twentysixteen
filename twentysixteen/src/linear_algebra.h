@@ -11,6 +11,12 @@
 #include "common.h"
 #include "model_data.h"
 
+struct by_depth {
+	bool operator()(t_vertex left, t_vertex right) {
+		return left.y < right.y;
+	}
+};
+
 typedef struct
 {
 	std::vector<t_vertex> verticies;
@@ -20,6 +26,7 @@ class LinearAlgebra
 {
 public:
 
-	static std::vector<t_edge> *get_edges(t_3dModel from_model);
+	static std::vector<t_edge> *get_edges_from_plane(t_3dModel from_model);
+	static bool point_in_polygon(t_vertex point, std::vector<t_edge> edge_set);
 
 };

@@ -1,7 +1,8 @@
 
 #include "linear_algebra.h"
+#include "paintbrush.h"
 
- std::vector<t_edge> *LinearAlgebra::get_edges(t_3dModel from_model)
+ std::vector<t_edge> *LinearAlgebra::get_edges_from_plane(t_3dModel from_model)
 {
 	std::vector<t_edge> *edge_set = new std::vector<t_edge>;
 
@@ -39,7 +40,6 @@
 					other_point = swap;
 				}
 
-
 				float percentage = (plane_distance + initial_point.z) / (other_point.z + initial_point.z);
 
 				new_vertex.x = initial_point.x + ((other_point.x-initial_point.x)*percentage);
@@ -57,3 +57,49 @@
 
 	return edge_set;
 }
+
+ bool LinearAlgebra::point_in_polygon(t_vertex point, std::vector<t_edge> edge_set)
+ {
+	 // basic idea is to take the x coordinate of the point, and
+	 // get all points of intersection with the edge set. Once this
+	 // is done, sort the points of intersection from bottom to top -
+	 // you can determine if the point is in the plane depending on
+	 // whether the set of points its between is even or odd
+	 // https://en.wikipedia.org/wiki/Point_in_polygon#/media/File:RecursiveEvenPolygon.svg
+
+	 std::vector<t_vertex> matching_points;
+	 std::vector<t_edge>::iterator it;
+	 t_vertex new_vertex;
+
+	 for (auto it = edge_set.begin(); it != edge_set.end(); ++it)
+	 {
+		 if ((it->verticies.at(0).x < point.x && it->verticies.at(1).x > point.x) ||
+			 (it->verticies.at(1).x < point.x && it->verticies.at(0).x > point.x))
+		 {
+			 // Xs match, add intersection point to point set
+			 t_vertex initial_point, other_point, swap;
+			 initial_point = it->verticies.at(0);
+			 other_point = it->verticies.at(1);
+
+			 float percentage = (point.x + initial_point.x) / (other_point.x + initial_point.x);
+
+			 new_vertex.x = point.x;
+			 new_vertex.y = initial_point.y + ((other_point.y - initial_point.y)*percentage);
+			 matching_points.push_back(new_vertex);
+		 }
+	 }
+
+	 std::sort(matching_points.begin(), matching_points.end(), by_depth());
+
+	 bool hit = true;
+	 for (auto it = matching_points.begin(); it != matching_points.end(); ++it)
+	 {
+		if (point.y > it->y && point.y < (it + 1)->y)
+		 {
+			 return hit;
+		 }
+		 hit = !hit;
+	 }
+
+	 return false;
+ }

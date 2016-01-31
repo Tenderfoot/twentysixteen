@@ -17,12 +17,10 @@ void ModelToPolygonTechDemo::run(float time_delta)
 
 void ModelToPolygonTechDemo::draw()
 {
-	BaseTechDemo::draw();
-
 	float test_plane = -20;
 
 	int i;
-	std::vector<t_edge> *edge_set = LinearAlgebra::get_edges(*model_data);
+	std::vector<t_edge> *edge_set = LinearAlgebra::get_edges_from_plane(*model_data);
 
 	glLineWidth(1);
 
@@ -33,7 +31,8 @@ void ModelToPolygonTechDemo::draw()
 
 	for (auto it = edge_set->begin(); it != edge_set->end(); ++it)
 	{
-		glColor3f(1.0f, 0.f, 1.0f);
+		glBindTexture(GL_TEXTURE_2D, NULL);
+		glColor3f(1.0f, 0.0f, 1.0f);
 		glBegin(GL_LINES);
 		glVertex3f(it->verticies.at(0).x, it->verticies.at(0).y, test_plane);
 		glVertex3f(it->verticies.at(1).x, it->verticies.at(1).y, test_plane);
@@ -74,7 +73,24 @@ void ModelToPolygonTechDemo::draw()
 		glPopMatrix();
 	}
 
+	t_vertex point;
+	point.x = cos(((float)SDL_GetTicks()) / 250) * 20;
+	point.y = sin(((float)SDL_GetTicks()) / 1000)*20;
+
+	glPushMatrix();
+		glTranslatef(point.x, point.y, test_plane);
+		glScalef(0.2f, 0.2f, 0.2f);
+		Paintbrush::draw_cube();
+	glPopMatrix();
+
+	if (LinearAlgebra::point_in_polygon(point, *edge_set))
+	{
+		printf("collision!\n");
+	}
+
 	delete edge_set;
+	
+	BaseTechDemo::draw();
 
 }
 
