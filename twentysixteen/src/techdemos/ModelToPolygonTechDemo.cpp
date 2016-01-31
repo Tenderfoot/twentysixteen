@@ -6,6 +6,7 @@ void ModelToPolygonTechDemo::init()
 	TechDemoUI.add_widget(new TextWidget("Model To Polygon Tech Demo", 0.5, 0.1, 0.8, 0.15));
 
 	model_data = ModelData::import("testchamber.fbx", 0.05);
+	edge_set = LinearAlgebra::get_edges_from_plane(*model_data);
 
 	draw_plane = true;
 	draw_model = true;
@@ -20,7 +21,6 @@ void ModelToPolygonTechDemo::draw()
 	float test_plane = -20;
 
 	int i;
-	std::vector<t_edge> *edge_set = LinearAlgebra::get_edges_from_plane(*model_data);
 
 	glLineWidth(1);
 
@@ -37,18 +37,6 @@ void ModelToPolygonTechDemo::draw()
 		glVertex3f(it->verticies.at(0).x, it->verticies.at(0).y, test_plane);
 		glVertex3f(it->verticies.at(1).x, it->verticies.at(1).y, test_plane);
 		glEnd();
-
-		glPushMatrix();
-		glTranslatef(it->verticies.at(0).x, it->verticies.at(0).y, test_plane);
-		glScalef(0.1f, 0.1f, 0.1f);
-		Paintbrush::draw_cube();
-		glPopMatrix();
-
-		glPushMatrix();
-		glTranslatef(it->verticies.at(1).x, it->verticies.at(1).y, test_plane);
-		glScalef(0.1f, 0.1f, 0.1f);
-		Paintbrush::draw_cube();
-		glPopMatrix();
 	}
 
 	if (draw_model)
@@ -74,8 +62,8 @@ void ModelToPolygonTechDemo::draw()
 	}
 
 	t_vertex point;
-	point.x = cos(((float)SDL_GetTicks()) / 250) * 20;
-	point.y = sin(((float)SDL_GetTicks()) / 1000)*20;
+	point.x = cos(((float)SDL_GetTicks()) / 1000) * 20;
+	point.y = sin(((float)SDL_GetTicks()) / 1000) * 20;
 
 	glPushMatrix();
 		glTranslatef(point.x, point.y, test_plane);
@@ -87,8 +75,6 @@ void ModelToPolygonTechDemo::draw()
 	{
 		printf("collision!\n");
 	}
-
-	delete edge_set;
 	
 	BaseTechDemo::draw();
 
@@ -106,6 +92,11 @@ void ModelToPolygonTechDemo::take_input(boundinput input, bool type)
 		if (input == DOWN)
 		{
 			draw_model = !draw_model;
+		}
+
+		if (input == BACK)
+		{
+			exit_level = TECHDEMO_BASE;
 		}
 	}
 

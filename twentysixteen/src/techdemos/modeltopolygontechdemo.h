@@ -22,4 +22,6 @@ public:
 	bool draw_plane;
 	bool draw_model;
 
+	std::vector<t_edge> *edge_set;
+
 };
