@@ -28,10 +28,8 @@ void LightTechDemo::draw()
 {
 	gluLookAt(sin(rotation) * 3, cos(rotation*2) * 3, 0, 0, 0, -25, 0, 1, 0);
 
-	glEnable(GL_LIGHTING);
 	GLfloat light_position[] = { sin(rotation)*10, cos(rotation)*10, -20+(sin(rotation*3)*5), 0.0 };
 	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
-	glEnable(GL_COLOR_MATERIAL);
 
 	glPushMatrix();
 		glTranslatef(0.0f, -5.0f, -50.0f);
@@ -53,8 +51,6 @@ void LightTechDemo::draw()
 		glScalef(0.2f, 0.2f, 0.2f);
 		Paintbrush::draw_cube();
 	glPopMatrix();
-
-	glDisable(GL_LIGHTING);
 
 	BaseTechDemo::draw();
 }
