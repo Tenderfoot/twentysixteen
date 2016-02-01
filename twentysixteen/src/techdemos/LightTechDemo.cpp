@@ -30,6 +30,7 @@ void LightTechDemo::draw()
 
 	GLfloat light_position[] = { sin(rotation)*10, cos(rotation)*10, -20+(sin(rotation*3)*5), 0.0 };
 	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+	
 
 	glPushMatrix();
 		glTranslatef(0.0f, -5.0f, -50.0f);

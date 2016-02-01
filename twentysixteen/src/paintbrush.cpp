@@ -384,32 +384,15 @@ void Paintbrush::draw_model(t_3dModel *mymodel)
 
 			glBegin(GL_TRIANGLES);
 
-			//glNormal3f(mymodel->meshes.at(i)->faces.at(j)->normal.x,mymodel->meshes.at(i)->faces.at(j)->normal.y,mymodel->meshes.at(i)->faces.at(j)->normal.z);
-
-			temp.x = mymodel->meshes.at(i)->faces.at(j)->verticies.at(2).x - mymodel->meshes.at(i)->faces.at(j)->verticies.at(0).x;
-			temp.y = mymodel->meshes.at(i)->faces.at(j)->verticies.at(2).y - mymodel->meshes.at(i)->faces.at(j)->verticies.at(0).y;
-			temp.z = mymodel->meshes.at(i)->faces.at(j)->verticies.at(2).z - mymodel->meshes.at(i)->faces.at(j)->verticies.at(0).z;
-
-			temp2.x = mymodel->meshes.at(i)->faces.at(j)->verticies.at(2).x - mymodel->meshes.at(i)->faces.at(j)->verticies.at(1).x;
-
-			temp2.y = mymodel->meshes.at(i)->faces.at(j)->verticies.at(2).y - mymodel->meshes.at(i)->faces.at(j)->verticies.at(1).y;
-			temp2.z = mymodel->meshes.at(i)->faces.at(j)->verticies.at(2).z - mymodel->meshes.at(i)->faces.at(j)->verticies.at(1).z;
-
-			cross.x = temp.y*temp2.z - temp.z*temp2.y;
-			cross.y = temp.z*temp2.x - temp.x*temp2.z;
-			cross.z = temp.x*temp2.y - temp.y*temp2.x;
-
-			glNormal3f(cross.x, cross.y, cross.z);
-
-			//glColor4f(mymodel->meshes.at(i)->faces.at(j)->verticies.at(0).r, mymodel->meshes.at(i)->faces.at(j)->verticies.at(0).g, mymodel->meshes.at(i)->faces.at(j)->verticies.at(0).b, alpha);
+			glNormal3f(mymodel->meshes.at(i)->faces.at(j)->normal[0].x, mymodel->meshes.at(i)->faces.at(j)->normal[0].y, mymodel->meshes.at(i)->faces.at(j)->normal[0].z);
 			glTexCoord2f(mymodel->meshes.at(i)->faces.at(j)->verticies.at(0).texcoord_x, mymodel->meshes.at(i)->faces.at(j)->verticies.at(0).texcoord_y);
 			glVertex3f(mymodel->meshes.at(i)->faces.at(j)->verticies.at(0).x, mymodel->meshes.at(i)->faces.at(j)->verticies.at(0).y, mymodel->meshes.at(i)->faces.at(j)->verticies.at(0).z);
 
-			//glColor4f(mymodel->meshes.at(i)->faces.at(j)->verticies.at(1).r, mymodel->meshes.at(i)->faces.at(j)->verticies.at(1).g, mymodel->meshes.at(i)->faces.at(j)->verticies.at(1).b, alpha);
+			glNormal3f(mymodel->meshes.at(i)->faces.at(j)->normal[1].x, mymodel->meshes.at(i)->faces.at(j)->normal[1].y, mymodel->meshes.at(i)->faces.at(j)->normal[1].z);
 			glTexCoord2f(mymodel->meshes.at(i)->faces.at(j)->verticies.at(1).texcoord_x, mymodel->meshes.at(i)->faces.at(j)->verticies.at(1).texcoord_y);
 			glVertex3f(mymodel->meshes.at(i)->faces.at(j)->verticies.at(1).x, mymodel->meshes.at(i)->faces.at(j)->verticies.at(1).y, mymodel->meshes.at(i)->faces.at(j)->verticies.at(1).z);
 
-			//glColor4f(mymodel->meshes.at(i)->faces.at(j)->verticies.at(2).r, mymodel->meshes.at(i)->faces.at(j)->verticies.at(2).g, mymodel->meshes.at(i)->faces.at(j)->verticies.at(2).b, alpha);
+			glNormal3f(mymodel->meshes.at(i)->faces.at(j)->normal[2].x, mymodel->meshes.at(i)->faces.at(j)->normal[2].y, mymodel->meshes.at(i)->faces.at(j)->normal[2].z);
 			glTexCoord2f(mymodel->meshes.at(i)->faces.at(j)->verticies.at(2).texcoord_x, mymodel->meshes.at(i)->faces.at(j)->verticies.at(2).texcoord_y);
 			glVertex3f(mymodel->meshes.at(i)->faces.at(j)->verticies.at(2).x, mymodel->meshes.at(i)->faces.at(j)->verticies.at(2).y, mymodel->meshes.at(i)->faces.at(j)->verticies.at(2).z);
 

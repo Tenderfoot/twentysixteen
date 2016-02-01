@@ -76,6 +76,11 @@ t_3dModel *ModelData::import(char *filename, float scale)
 
 			new_face->verticies.push_back(temp);
 
+			temp.x = scene->mMeshes[i]->mNormals[scene->mMeshes[i]->mFaces[j].mIndices[0]].x;
+			temp.y = scene->mMeshes[i]->mNormals[scene->mMeshes[i]->mFaces[j].mIndices[0]].y;
+			temp.z = scene->mMeshes[i]->mNormals[scene->mMeshes[i]->mFaces[j].mIndices[0]].z;
+
+			new_face->normal[0] = temp;
 
 			if (scene->mMeshes[i]->HasTextureCoords(0))
 			{
@@ -88,6 +93,12 @@ t_3dModel *ModelData::import(char *filename, float scale)
 			temp.z = scene->mMeshes[i]->mVertices[scene->mMeshes[i]->mFaces[j].mIndices[1]].z*scale;
 
 			new_face->verticies.push_back(temp);
+
+			temp.x = scene->mMeshes[i]->mNormals[scene->mMeshes[i]->mFaces[j].mIndices[1]].x;
+			temp.y = scene->mMeshes[i]->mNormals[scene->mMeshes[i]->mFaces[j].mIndices[1]].y;
+			temp.z = scene->mMeshes[i]->mNormals[scene->mMeshes[i]->mFaces[j].mIndices[1]].z;
+
+			new_face->normal[1] = temp;
 
 			if (scene->mMeshes[i]->HasTextureCoords(0))
 			{
@@ -105,7 +116,7 @@ t_3dModel *ModelData::import(char *filename, float scale)
 			temp.y = scene->mMeshes[i]->mNormals[scene->mMeshes[i]->mFaces[j].mIndices[2]].y;
 			temp.z = scene->mMeshes[i]->mNormals[scene->mMeshes[i]->mFaces[j].mIndices[2]].z;
 
-			new_face->normal = temp;
+			new_face->normal[2] = temp;
 
 			new_mesh->faces.push_back(new_face);
 		}

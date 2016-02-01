@@ -36,7 +36,7 @@ public:
 typedef struct
 {
 	std::vector<t_vertex> verticies;
-	t_vertex normal;
+	t_vertex normal[3];
 	int material_index;
 } t_face;
 
