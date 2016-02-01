@@ -23,5 +23,9 @@ void SpineTechDemo::draw()
 {
 	BaseTechDemo::draw();
 
+	glPushMatrix();
+	glTranslatef(0.0f, -3.8f, -22.0f);
+	glScalef(0.01f, 0.01f, 0.01f);
 	spineboy.draw();
+	glPopMatrix();
 }
