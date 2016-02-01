@@ -13,13 +13,13 @@ t_3dModel *ModelData::import(char *filename, float scale)
 	dir = new char[256];
 	sprintf_s(dir, sizeof(char) * 256, "data/models/%s", filename);
 
-	scene = importer.ReadFile(dir, aiProcess_PreTransformVertices | aiProcess_Triangulate);
+	scene = importer.ReadFile(dir, aiProcess_PreTransformVertices | aiProcess_Triangulate | aiProcess_GenSmoothNormals);
 
 	// If the import failed, report it
 	if (!scene)
 	{
 		printf("%s", importer.GetErrorString());
-		return false;
+			return false;
 	}
 	// Now we can access the file's contents. 
 	printf("success? %d\n", scene->mNumMeshes);
