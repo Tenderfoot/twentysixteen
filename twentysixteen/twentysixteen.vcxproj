@@ -27,9 +27,13 @@
     <ClCompile Include="src\paintbrush.cpp" />
     <ClCompile Include="src\spine_data.cpp" />
     <ClCompile Include="src\techdemos\AudioTechDemo.cpp" />
+    <ClCompile Include="src\techdemos\EmitterTechDemo.cpp" />
     <ClCompile Include="src\techdemos\GrassTechDemo.cpp" />
+    <ClCompile Include="src\techdemos\LightTechDemo.cpp" />
     <ClCompile Include="src\techdemos\ModelTechDemo.cpp" />
     <ClCompile Include="src\techdemos\ModelToPolygonTechDemo.cpp" />
+    <ClCompile Include="src\techdemos\PhysicsTechDemo.cpp" />
+    <ClCompile Include="src\techdemos\SceneTechDemo.cpp" />
     <ClCompile Include="src\techdemos\ShaderTechDemo.cpp" />
     <ClCompile Include="src\techdemos\SpineTechDemo.cpp" />
     <ClCompile Include="src\techdemos\TTFTechDemo.cpp" />
@@ -46,9 +50,13 @@
     <ClInclude Include="src\spine_data.h" />
     <ClInclude Include="src\techdemos\audiotechdemo.h" />
     <ClInclude Include="src\techdemos\basetechdemo.h" />
+    <ClInclude Include="src\techdemos\emittertechdemo.h" />
     <ClInclude Include="src\techdemos\grasstechdemo.h" />
+    <ClInclude Include="src\techdemos\lighttechdemo.h" />
     <ClInclude Include="src\techdemos\modeltechdemo.h" />
     <ClInclude Include="src\techdemos\modeltopolygontechdemo.h" />
+    <ClInclude Include="src\techdemos\physicstechdemo.h" />
+    <ClInclude Include="src\techdemos\scenetechdemo.h" />
     <ClInclude Include="src\techdemos\shadertechdemo.h" />
     <ClInclude Include="src\techdemos\spinetechdemo.h" />
     <ClInclude Include="src\techdemos\ttftechdemo.h" />

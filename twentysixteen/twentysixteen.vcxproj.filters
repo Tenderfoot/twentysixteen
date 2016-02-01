@@ -63,6 +63,18 @@
     <ClCompile Include="src\techdemos\GrassTechDemo.cpp">
       <Filter>Source Files\techdemos</Filter>
     </ClCompile>
+    <ClCompile Include="src\techdemos\SceneTechDemo.cpp">
+      <Filter>Source Files\techdemos</Filter>
+    </ClCompile>
+    <ClCompile Include="src\techdemos\EmitterTechDemo.cpp">
+      <Filter>Source Files\techdemos</Filter>
+    </ClCompile>
+    <ClCompile Include="src\techdemos\PhysicsTechDemo.cpp">
+      <Filter>Source Files\techdemos</Filter>
+    </ClCompile>
+    <ClCompile Include="src\techdemos\LightTechDemo.cpp">
+      <Filter>Source Files\techdemos</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\level.h">
@@ -114,6 +126,18 @@
       <Filter>Header Files\techdemos</Filter>
     </ClInclude>
     <ClInclude Include="src\techdemos\grasstechdemo.h">
+      <Filter>Header Files\techdemos</Filter>
+    </ClInclude>
+    <ClInclude Include="src\techdemos\scenetechdemo.h">
+      <Filter>Header Files\techdemos</Filter>
+    </ClInclude>
+    <ClInclude Include="src\techdemos\emittertechdemo.h">
+      <Filter>Header Files\techdemos</Filter>
+    </ClInclude>
+    <ClInclude Include="src\techdemos\physicstechdemo.h">
+      <Filter>Header Files\techdemos</Filter>
+    </ClInclude>
+    <ClInclude Include="src\techdemos\lighttechdemo.h">
       <Filter>Header Files\techdemos</Filter>
     </ClInclude>
   </ItemGroup>

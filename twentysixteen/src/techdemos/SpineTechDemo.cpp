@@ -22,7 +22,6 @@ void SpineTechDemo::take_input(boundinput input, bool type)
 void SpineTechDemo::draw()
 {
 	BaseTechDemo::draw();
-	Paintbrush::use_shader(Paintbrush::get_shader("green"));
+
 	spineboy.draw();
-	Paintbrush::stop_shader();
 }

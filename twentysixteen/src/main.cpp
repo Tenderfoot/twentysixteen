@@ -26,6 +26,10 @@
 #include "techdemos\shadertechdemo.h"
 #include "techdemos\modeltopolygontechdemo.h"
 #include "techdemos\grasstechdemo.h"
+#include "techdemos\scenetechdemo.h"
+#include "techdemos\emittertechdemo.h"
+#include "techdemos\physicstechdemo.h"
+#include "techdemos\lighttechdemo.h"
 
 // and a few globals
 bool done = 0; // Quit?
@@ -163,6 +167,10 @@ void init_levels()
 	level_map[TECHDEMO_SHADER] = new ShaderTechDemo();
 	level_map[TECHDEMO_MODELTOPOLY] = new ModelToPolygonTechDemo();
 	level_map[TECHDEMO_GRASS] = new GrassTechDemo();
+	level_map[TECHDEMO_SCENE] = new SceneTechDemo();
+	level_map[TECHDEMO_EMITTER] = new EmitterTechDemo();
+	level_map[TECHDEMO_PHYSICS] = new PhysicsTechDemo();
+	level_map[TECHDEMO_LIGHTS] = new LightTechDemo();
 
 	for (auto it = std::begin(level_map); it != std::end(level_map); ++it)
 	{
@@ -182,7 +190,7 @@ int main(int argc, char *argv[])
 		exit(2);
 	}
 
-	window = SDL_CreateWindow("TwentySixteen", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, res_width, res_height, SDL_WINDOW_OPENGL | SDL_WINDOW_FULLSCREEN);
+	window = SDL_CreateWindow("TwentySixteen", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, res_width, res_height, SDL_WINDOW_OPENGL);
 	
 	SDL_GLContext glcontext = SDL_GL_CreateContext(window);
 

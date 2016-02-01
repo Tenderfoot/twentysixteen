@@ -12,7 +12,7 @@ void ShaderTechDemo::init()
 
 	shader_menu = new
 		
-		ListWidget({ "None", "Phong", "Inverter", "Green" });
+	ListWidget({ "None", "Phong", "Inverter", "Green" });
 	TechDemoUI.add_widget(shader_menu);
 	shader_menu->set_data(0.2, 0.5, 0.1, 0.05, false);
 

@@ -84,7 +84,7 @@ void SpineData::draw()
 	int i;
 	spRegionAttachment *temp;
 
-	glDisable(GL_DEPTH_TEST);
+	//glDisable(GL_DEPTH_TEST);
 	glEnable(GL_BLEND);
 
 	for (i = 0; i < skeleton->slotsCount; i++)
@@ -95,7 +95,7 @@ void SpineData::draw()
 		{
 			glPushMatrix();
 
-			glTranslatef(0.0f, -500.0f, -950.0f);
+			//glTranslatef(0.0f, -500.0f, -950.0f);
 
 			//glNormal3d(0, 0, 1);
 
