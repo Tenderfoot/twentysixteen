@@ -45,7 +45,7 @@ test=test*color;
 }
 else
 {
-test=vec4(test.r*0.2,test.g*0.2,test.b*0.2,1);
+test=vec4(test.r*0.2,test.g*0.2,test.b*0.2,test.a);
 }
     gl_FragColor = test;
 

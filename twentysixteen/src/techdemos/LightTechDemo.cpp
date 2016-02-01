@@ -26,6 +26,8 @@ void LightTechDemo::take_input(boundinput input, bool type)
 
 void LightTechDemo::draw()
 {
+	gluLookAt(sin(rotation) * 3, cos(rotation*2) * 3, 0, 0, 0, -25, 0, 1, 0);
+
 	glEnable(GL_LIGHTING);
 	GLfloat light_position[] = { sin(rotation)*10, cos(rotation)*10, -20+(sin(rotation*3)*5), 0.0 };
 	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
@@ -39,7 +41,7 @@ void LightTechDemo::draw()
 	glPopMatrix();
 
 	glPushMatrix();
-		glTranslatef(0.0f, -3.5f, -22.0f);
+		glTranslatef(0.0f, -3.8f, -22.0f);
 		glScalef(0.01f, 0.01f, 0.01f);
 		Paintbrush::use_shader(level_static.shader);
 		spineboy.draw();
