@@ -3,6 +3,7 @@
 #include "basetechdemo.h"
 #include "../model_data.h"
 #include "../linear_algebra.h"
+#include "../spine_data.h"
 
 class SceneTechDemo : public BaseTechDemo
 {
@@ -19,5 +20,8 @@ public:
 	float rotation;
 
 	ModelData level_static;
+
+	// SOIL test
+	SpineData spineboy;
 
 };
