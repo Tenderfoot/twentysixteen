@@ -79,6 +79,10 @@ boundinput translate_key_input(SDL_Keycode keycode)
 			return ACTION;
 		case SDLK_s:
 			return DOWN;
+		case SDLK_a:
+			return LEFT;
+		case SDLK_d:
+			return RIGHT;
 		case SDLK_w:
 			return UP;
 		case SDLK_ESCAPE:

@@ -1,25 +1,43 @@
 
+varying vec3 N;
+varying vec3 v;
 varying vec2 texture_coordinate; 
 uniform sampler2D my_color_texture;
-uniform float Time;
+uniform float light_radius;
 
-float rand(vec2 co){
-    return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453 * Time);
-}
-
-void main()
+void main(void)
 {
-    // Sampling The Texture And Passing It To The Frame Buffer
+   vec3 L = normalize(gl_LightSource[0].position.xyz - v);   
+   vec4 Idiff = gl_FrontLightProduct[0].diffuse * 1;
 
-    vec4 test = texture2D(my_color_texture, texture_coordinate);
-    //gl_FragColor = vec4(abs(sin(Time)*test.r), abs(cos(Time)*test.g), abs(cos(Time)+sin(Time)), test.a);
+   Idiff = clamp(Idiff, 0.0, 1.0); 
+	
+float dist = distance(v, gl_LightSource[0].position);
 
-    float s = (test.r + test.b + test.g)/3.0;
-
-    float r = s;
-    float g = s;
-    float b = s;
-
-    gl_FragColor = vec4(test.r, test.g, test.b, test.a);
+if(dist<light_radius)
+{
+	float multiplier = (1-(dist/light_radius ));
+	Idiff.r = Idiff.r*multiplier;
+	Idiff.g = Idiff.g*multiplier;
+	Idiff.b = Idiff.b*multiplier;
 }
 
+if(texture2D(my_color_texture, texture_coordinate).a == 0)
+{
+Idiff.a = 0;
+}
+else
+{
+if(Idiff.r<0.1 || dist>light_radius )
+{
+Idiff.r = 0.1;
+Idiff.g = 0.1;
+Idiff.b = 0.1;
+}
+
+Idiff.a = 1;
+}
+
+   gl_FragColor = Idiff*texture2D(my_color_texture, texture_coordinate);
+}
+        

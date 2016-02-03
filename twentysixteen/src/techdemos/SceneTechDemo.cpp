@@ -15,21 +15,46 @@ void SceneTechDemo::run(float time_delta)
 {
 	rotation += (time_delta / 10);
 	spineboy.update_skeleton(time_delta);
+
+	if (keydown_map[LEFT] || keydown_map[RIGHT])
+	{
+		spineboy.animation_name = "walk";
+
+		if (keydown_map[LEFT])
+		{
+			x = x - (time_delta / 300);
+			flip = true;
+		}
+
+		if (keydown_map[RIGHT])
+		{
+			x = x + (time_delta / 300);
+			flip = false;
+		}
+	}
+	else
+		spineboy.animation_name = "idle";
 }
 
 void SceneTechDemo::take_input(boundinput input, bool type)
 {
+	keydown_map[input]=type;
+
 	if (input == BACK && type == true)
 		exit_level = TECHDEMO_BASE;
 }
 
 void SceneTechDemo::draw()
 {
-	gluLookAt(sin(rotation / 200) * 0.5, cos(rotation / 500) * 1, 0, 0, 0, -25, 0, 1, 0);
+	gluLookAt(x+sin(rotation / 200) * 0.5, cos(rotation / 500) * 1, 0, x, 0, -25, 0, 1, 0);
+
+
+	GLfloat light_position[] = { -x+sin(rotation/100) * 4, cos(rotation / 100) * 1, -10 + (sin(rotation / 100 * 3) * 5), 0.0 };
+	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
 
 	glPushMatrix();
 		glTranslatef(0.0f, -10.0f, -10.0f);
-		Paintbrush::use_shader(level_static.shader);
+		Paintbrush::use_shader(Paintbrush::get_shader("point_light"));
 		Paintbrush::draw_model(level_static.model);
 		Paintbrush::stop_shader();
 	glPopMatrix();
@@ -47,9 +72,12 @@ void SceneTechDemo::draw()
 	glPopMatrix();
 
 	glPushMatrix();
-	glTranslatef(0.0f, -3.3f, -10.0f);
+	glTranslatef(x, y-3.3f, -10.0f);
 	glScalef(0.005f, 0.005f, 0.005f);
+	glRotatef(180 * flip, 0, 1, 0);
+	Paintbrush::use_shader(Paintbrush::get_shader("point_light_spine"));
 	spineboy.draw();
+	Paintbrush::stop_shader();
 	glPopMatrix();
 
 	glPushMatrix();

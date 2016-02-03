@@ -91,9 +91,14 @@
 	 std::sort(matching_points.begin(), matching_points.end(), by_depth());
 
 	 bool hit = true;
-	 for (auto it = matching_points.begin(); it != matching_points.end(); ++it)
+
+	 // using iterator here was giving me some flak 
+	 // [debug assertion on dereferencing it, I was trying to get the current item and next item]
+	 // [hook me up if theres a better way to do this]
+	 int i;
+	 for (i=0; i < matching_points.size(); i++)
 	 {
-		if (point.y > it->y && point.y < (it + 1)->y)
+		if (point.y > matching_points.at(i).y && point.y < matching_points.at((i+1)%matching_points.size()).y)
 		 {
 			 return hit;
 		 }

@@ -3,6 +3,7 @@ varying vec3 N;
 varying vec3 v;
 varying vec2 texture_coordinate; 
 uniform sampler2D my_color_texture;
+uniform float light_radius;
 
 void main(void)
 {
@@ -12,8 +13,6 @@ void main(void)
    Idiff = clamp(Idiff, 0.0, 1.0); 
 	
 float dist = distance(v, gl_LightSource[0].position);
-
-float light_radius = 20;
 
 if(dist<light_radius)
 {
@@ -29,11 +28,11 @@ Idiff.a = 0;
 }
 else
 {
-if(Idiff.r<0.2 || dist>light_radius )
+if(Idiff.r<0.1 || dist>light_radius )
 {
-Idiff.r = 0.2;
-Idiff.g = 0.2;
-Idiff.b = 0.2;
+Idiff.r = 0.1;
+Idiff.g = 0.1;
+Idiff.b = 0.1;
 }
 
 Idiff.a = 1;

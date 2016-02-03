@@ -29,7 +29,7 @@ std::map<char*, GLuint, cmp_str> Paintbrush::texture_db = {};
 
 // shaders and uniform storage
 std::map<char*, GLenum, cmp_str> Paintbrush::shader_db = {};
-std::map<std::pair<GLenum, char*>, GLint, cmp_shaderuniform> Paintbrush::uniform_db = {};
+std::map<std::pair<GLenum, char*>, GLint> Paintbrush::uniform_db = {};
 
 void Paintbrush::init()
 {
@@ -41,6 +41,7 @@ void Paintbrush::init()
 
 	setup_extensions();
 }
+
 
 void Paintbrush::setup_extensions()
 {
@@ -100,15 +101,32 @@ GLenum Paintbrush::get_shader(char* shader_id)
 GLint Paintbrush::get_uniform(GLenum shader, char* uniform_name)
 {
 	std::map<std::pair<GLenum, char *>, GLint, cmp_str>::iterator it;
+	std::pair<GLenum, char*> mypair = std::make_pair(shader, uniform_name);
+	GLint return_value;
 
-	it = uniform_db.find(std::make_pair(shader, uniform_name));
-
-	if (it == uniform_db.end())
+	// I tried to overload the comparator so I could use map.find
+	// but it wasn't cooperating with the custom operator I had
+	// so I'm rewriting it to
+	for (auto it = uniform_db.begin(); it != uniform_db.end(); ++it)
 	{
-		uniform_db.insert({ std::make_pair(shader, uniform_name), get_uniform_location(shader, uniform_name) });
+
+		if (shader == it->first.first)
+		{
+			if (strcmp(it->first.second, uniform_name) == 0)
+			{
+				return it->second;
+			}
+		}
+	}
+	
+	return_value = get_uniform_location(shader, uniform_name);
+
+	if (return_value != -1)
+	{
+		uniform_db.insert({ std::make_pair(shader, uniform_name), return_value });
 	}
 
-	return uniform_db[std::make_pair(shader, uniform_name)];
+	return return_value;
 }
 
 GLenum Paintbrush::load_shader(char *shadername)
@@ -247,6 +265,7 @@ void Paintbrush::update_shader_uniforms()
 	for (auto it = shader_db.begin(); it != shader_db.end(); ++it)
 	{
 		set_uniform(it->second, "Time", ((float)SDL_GetTicks())/1000);
+		set_uniform(it->second, "light_radius", 15);
 	}
 }
 
@@ -376,27 +395,27 @@ void Paintbrush::draw_model(t_3dModel *mymodel)
 		for (j = 0; j<mymodel->meshes.at(i)->faces.size(); j++)
 		{
 			glBindTexture(GL_TEXTURE_2D, mymodel->textures[mymodel->meshes.at(i)->faces.at(j)->material_index]);
-
 			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, fLargest);
-
 			glEnable(GL_BLEND);
+
 			glPushMatrix();
 
-			glBegin(GL_TRIANGLES);
+				glBegin(GL_TRIANGLES);
 
-			glNormal3f(mymodel->meshes.at(i)->faces.at(j)->normal[0].x, mymodel->meshes.at(i)->faces.at(j)->normal[0].y, mymodel->meshes.at(i)->faces.at(j)->normal[0].z);
-			glTexCoord2f(mymodel->meshes.at(i)->faces.at(j)->verticies.at(0).texcoord_x, mymodel->meshes.at(i)->faces.at(j)->verticies.at(0).texcoord_y);
-			glVertex3f(mymodel->meshes.at(i)->faces.at(j)->verticies.at(0).x, mymodel->meshes.at(i)->faces.at(j)->verticies.at(0).y, mymodel->meshes.at(i)->faces.at(j)->verticies.at(0).z);
+					glNormal3f(mymodel->meshes.at(i)->faces.at(j)->normal[0].x, mymodel->meshes.at(i)->faces.at(j)->normal[0].y, mymodel->meshes.at(i)->faces.at(j)->normal[0].z);
+					glTexCoord2f(mymodel->meshes.at(i)->faces.at(j)->verticies.at(0).texcoord_x, mymodel->meshes.at(i)->faces.at(j)->verticies.at(0).texcoord_y);
+					glVertex3f(mymodel->meshes.at(i)->faces.at(j)->verticies.at(0).x, mymodel->meshes.at(i)->faces.at(j)->verticies.at(0).y, mymodel->meshes.at(i)->faces.at(j)->verticies.at(0).z);
 
-			glNormal3f(mymodel->meshes.at(i)->faces.at(j)->normal[1].x, mymodel->meshes.at(i)->faces.at(j)->normal[1].y, mymodel->meshes.at(i)->faces.at(j)->normal[1].z);
-			glTexCoord2f(mymodel->meshes.at(i)->faces.at(j)->verticies.at(1).texcoord_x, mymodel->meshes.at(i)->faces.at(j)->verticies.at(1).texcoord_y);
-			glVertex3f(mymodel->meshes.at(i)->faces.at(j)->verticies.at(1).x, mymodel->meshes.at(i)->faces.at(j)->verticies.at(1).y, mymodel->meshes.at(i)->faces.at(j)->verticies.at(1).z);
+					glNormal3f(mymodel->meshes.at(i)->faces.at(j)->normal[1].x, mymodel->meshes.at(i)->faces.at(j)->normal[1].y, mymodel->meshes.at(i)->faces.at(j)->normal[1].z);
+					glTexCoord2f(mymodel->meshes.at(i)->faces.at(j)->verticies.at(1).texcoord_x, mymodel->meshes.at(i)->faces.at(j)->verticies.at(1).texcoord_y);
+					glVertex3f(mymodel->meshes.at(i)->faces.at(j)->verticies.at(1).x, mymodel->meshes.at(i)->faces.at(j)->verticies.at(1).y, mymodel->meshes.at(i)->faces.at(j)->verticies.at(1).z);
 
-			glNormal3f(mymodel->meshes.at(i)->faces.at(j)->normal[2].x, mymodel->meshes.at(i)->faces.at(j)->normal[2].y, mymodel->meshes.at(i)->faces.at(j)->normal[2].z);
-			glTexCoord2f(mymodel->meshes.at(i)->faces.at(j)->verticies.at(2).texcoord_x, mymodel->meshes.at(i)->faces.at(j)->verticies.at(2).texcoord_y);
-			glVertex3f(mymodel->meshes.at(i)->faces.at(j)->verticies.at(2).x, mymodel->meshes.at(i)->faces.at(j)->verticies.at(2).y, mymodel->meshes.at(i)->faces.at(j)->verticies.at(2).z);
+					glNormal3f(mymodel->meshes.at(i)->faces.at(j)->normal[2].x, mymodel->meshes.at(i)->faces.at(j)->normal[2].y, mymodel->meshes.at(i)->faces.at(j)->normal[2].z);
+					glTexCoord2f(mymodel->meshes.at(i)->faces.at(j)->verticies.at(2).texcoord_x, mymodel->meshes.at(i)->faces.at(j)->verticies.at(2).texcoord_y);
+					glVertex3f(mymodel->meshes.at(i)->faces.at(j)->verticies.at(2).x, mymodel->meshes.at(i)->faces.at(j)->verticies.at(2).y, mymodel->meshes.at(i)->faces.at(j)->verticies.at(2).z);
 
-			glEnd();
+				glEnd();
+
 			glPopMatrix();
 
 			glDisable(GL_BLEND);

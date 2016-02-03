@@ -19,6 +19,11 @@ public:
 	void take_input(boundinput input, bool type);
 	float rotation;
 
+	std::map<boundinput, bool> keydown_map;
+
+	float x, y;
+	bool flip;
+
 	ModelData level_static;
 
 	// SOIL test
