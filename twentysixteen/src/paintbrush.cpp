@@ -129,6 +129,8 @@ GLint Paintbrush::get_uniform(GLenum shader, char* uniform_name)
 	return return_value;
 }
 
+// streak
+
 GLenum Paintbrush::load_shader(char *shadername)
 {
 	GLenum shader_program;

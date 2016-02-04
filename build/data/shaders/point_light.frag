@@ -1,52 +1,44 @@
-varying vec4 diffuse,ambientGlobal, ambient, ecPos;
-varying vec3 normal,halfVector;
-uniform float Time; 
+
+varying vec3 N;
+varying vec3 v;
 varying vec2 texture_coordinate; 
 uniform sampler2D my_color_texture;
+uniform float light_radius;
 
-void main()
+void main(void)
 {
-    vec3 n,halfV,viewV,lightDir;
-    float NdotL,NdotHV;
-    vec4 color = ambientGlobal;
-    float att, dist;
-     
-    /* a fragment shader can't write a verying variable, hence we need
-    a new variable to store the normalized interpolated normal */
-    n = normalize(normal);
-     
-    // Compute the ligt direction
-    lightDir = vec3(gl_LightSource[0].position-ecPos);
-     
-    /* compute the distance to the light source to a varying variable*/
-    dist = length(lightDir);
- 
-     
-    /* compute the dot product between normal and ldir */
-    NdotL = max(dot(n,normalize(lightDir)),0.0);
- 
-    if (NdotL > 0.0) {
-     
-        att = 1.0 / (gl_LightSource[0].constantAttenuation +
-                gl_LightSource[0].linearAttenuation * dist +
-                gl_LightSource[0].quadraticAttenuation * dist * dist);
-        color += att * (diffuse * NdotL + ambient);
-     
-         
-        halfV = normalize(halfVector);
-        NdotHV = max(dot(n,halfV),0.0);
-        color += att * gl_FrontMaterial.specular * gl_LightSource[0].specular * pow(NdotHV,gl_FrontMaterial.shininess);
-    }
- 
-	vec4 test = texture2D(my_color_texture, texture_coordinate);
-if(color.r>0 && color.b>0 && color.g>0)
+   vec3 L = normalize(gl_LightSource[0].position.xyz - v);   
+//   vec4 Idiff = gl_FrontLightProduct[0].diffuse * 1;
+
+   vec4 Idiff = gl_FrontLightProduct[0].diffuse * max(dot(N,L), 0.0);  
+   Idiff = clamp(Idiff, 0.0, 1.0); 
+	
+float dist = distance(v, gl_LightSource[0].position);
+
+if(dist<light_radius)
 {
-test=test*color;
+	float multiplier = (1-(dist/light_radius ));
+	Idiff.r = Idiff.r*multiplier;
+	Idiff.g = Idiff.g*multiplier;
+	Idiff.b = Idiff.b*multiplier;
+}
+
+if(texture2D(my_color_texture, texture_coordinate).a == 0)
+{
+Idiff.a = 0;
 }
 else
 {
-test=vec4(test.r*0.2,test.g*0.2,test.b*0.2,test.a);
+if(Idiff.r<0.1 || dist>light_radius )
+{
+Idiff.r = 0.1;
+Idiff.g = 0.1;
+Idiff.b = 0.1;
 }
-    gl_FragColor = test;
 
+Idiff.a = 1;
 }
+
+   gl_FragColor = Idiff*texture2D(my_color_texture, texture_coordinate);
+}
+        
