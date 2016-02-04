@@ -19,6 +19,18 @@
     <Filter Include="Source Files\techdemos">
       <UniqueIdentifier>{6f1509c4-1140-4511-b47e-d8225775ad7d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\entities">
+      <UniqueIdentifier>{d02be0ca-5bc8-47da-b580-62f97140837d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\entities">
+      <UniqueIdentifier>{4c6e18c7-5cb5-4a46-9ec8-632e2233e236}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\VFX">
+      <UniqueIdentifier>{30cec94e-f443-42dd-8177-3b89e1d6e88a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\VFX">
+      <UniqueIdentifier>{6de83922-5078-4b9e-957e-fc619b0501e0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -74,6 +86,12 @@
     </ClCompile>
     <ClCompile Include="src\techdemos\LightTechDemo.cpp">
       <Filter>Source Files\techdemos</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entity.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\light_manager.cpp">
+      <Filter>Source Files\VFX</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -139,6 +157,12 @@
     </ClInclude>
     <ClInclude Include="src\techdemos\lighttechdemo.h">
       <Filter>Header Files\techdemos</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entity.h">
+      <Filter>Header Files\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\light_manager.h">
+      <Filter>Header Files\VFX</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

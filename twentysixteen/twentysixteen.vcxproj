@@ -21,6 +21,8 @@
   <ItemGroup>
     <ClCompile Include="src\audio_controller.cpp" />
     <ClCompile Include="src\base_user_interface.cpp" />
+    <ClCompile Include="src\entity.cpp" />
+    <ClCompile Include="src\light_manager.cpp" />
     <ClCompile Include="src\linear_algebra.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\model_data.cpp" />
@@ -42,8 +44,10 @@
     <ClInclude Include="src\audio_controller.h" />
     <ClInclude Include="src\base_user_interface.h" />
     <ClInclude Include="src\common.h" />
+    <ClInclude Include="src\entity.h" />
     <ClInclude Include="src\glext.h" />
     <ClInclude Include="src\level.h" />
+    <ClInclude Include="src\light_manager.h" />
     <ClInclude Include="src\linear_algebra.h" />
     <ClInclude Include="src\model_data.h" />
     <ClInclude Include="src\paintbrush.h" />
