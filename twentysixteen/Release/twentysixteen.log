@@ -1,5 +1,15 @@
-﻿  entity.cpp
-  light_manager.cpp
+﻿  main.cpp
+  AudioTechDemo.cpp
+  EmitterTechDemo.cpp
+  GrassTechDemo.cpp
+  LightTechDemo.cpp
+  ModelTechDemo.cpp
+  ModelToPolygonTechDemo.cpp
+  PhysicsTechDemo.cpp
+  SceneTechDemo.cpp
+  ShaderTechDemo.cpp
+  SpineTechDemo.cpp
+  TTFTechDemo.cpp
   Generating code
   0 of 2173 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation

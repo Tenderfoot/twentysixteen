@@ -18,8 +18,6 @@
 // The SceneEntity class will include things like Grass or placing lights
 // that have been allocated by the light_manager.
 
-+
-
 #include "common.h"
 #include "model_data.h"
 
@@ -28,5 +26,5 @@ class Entity
 public:
 	t_vertex position;
 	virtual void draw();
-	virtual void update();
+	virtual void update(float delta_time);
 };

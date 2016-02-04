@@ -31,6 +31,13 @@
 #include "techdemos\physicstechdemo.h"
 #include "techdemos\lighttechdemo.h"
 
+// TODO
+// -light_manager
+// -grass
+// -physics
+// -emitters
+
+
 // and a few globals
 bool done = 0; // Quit?
 SDL_Window *window;
