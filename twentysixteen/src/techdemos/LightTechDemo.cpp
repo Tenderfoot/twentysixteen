@@ -24,6 +24,34 @@ void LightTechDemo::take_input(boundinput input, bool type)
 		exit_level = TECHDEMO_BASE;
 }
 
+void LightTechDemo::reset()
+{
+	LightManager::reset();
+	while (LightManager::lights.size() < 3)
+	{
+		// make sure there are actually two lights to manipulate
+		LightManager::lights.push_back(Light(0, 0, 0, 20));
+	}
+
+	// make this motherfucker red
+	LightManager::lights[0].radius = 20;
+	LightManager::lights[0].r = 1;
+	LightManager::lights[0].g = 0;
+	LightManager::lights[0].b = 0;
+
+	// this one green
+	LightManager::lights[1].radius = 20;
+	LightManager::lights[1].g = 1;
+	LightManager::lights[1].r = 0;
+	LightManager::lights[1].b = 0;
+
+	// this one blue
+	LightManager::lights[2].radius = 20;
+	LightManager::lights[2].b = 1;
+	LightManager::lights[2].r = 0;
+	LightManager::lights[2].g = 0;
+}
+
 void LightTechDemo::draw()
 {
 	gluLookAt(sin(rotation) * 3, cos(rotation*2) * 3, 0, 0, 0, -25, 0, 1, 0);
@@ -38,32 +66,16 @@ void LightTechDemo::draw()
 	LightManager::lights[0].x = sin(rotation) * 10;
 	LightManager::lights[0].y = cos(rotation) * 10;
 	LightManager::lights[0].z = -20 + (sin(rotation * 3) * 5);
-	LightManager::lights[0].radius = 20;
-	// make this motherfucker red
-	LightManager::lights[0].r = 1;
-	LightManager::lights[0].g = 0;
-	LightManager::lights[0].b = 0;
-
 
 	// light 2
 	LightManager::lights[1].x = -sin(rotation/2) * 10;
 	LightManager::lights[1].y = cos(rotation/2) * 10;
 	LightManager::lights[1].z = -20 + (sin((rotation/2) * 3) * 5);
-	LightManager::lights[1].radius = 20;
-	// this one green
-	LightManager::lights[1].g = 1;
-	LightManager::lights[1].r = 0;
-	LightManager::lights[1].b = 0;
 
 	// light 3
 	LightManager::lights[2].x = 0;
 	LightManager::lights[2].y = cos(rotation) * 10;
 	LightManager::lights[2].z = -22+sin(rotation) * 10;
-	LightManager::lights[2].radius = 20;
-	// this one blue
-	LightManager::lights[2].b = 1;
-	LightManager::lights[2].r = 0;
-	LightManager::lights[2].g = 0;
 
 	glPushMatrix();
 		glTranslatef(0.0f, -5.0f, -50.0f);
