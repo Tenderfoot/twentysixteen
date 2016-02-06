@@ -17,6 +17,7 @@
 #include "common.h"
 #include "model_data.h"
 #include "linear_algebra.h"
+#include "light_manager.h"
 
 // shader stuff
 #define uglGetProcAddress(x) wglGetProcAddress(x)

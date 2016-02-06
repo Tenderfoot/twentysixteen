@@ -31,6 +31,9 @@
     <Filter Include="Header Files\VFX">
       <UniqueIdentifier>{6de83922-5078-4b9e-957e-fc619b0501e0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\shaders">
+      <UniqueIdentifier>{7c8a4464-4b10-4219-b672-7055ff439cdd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -164,5 +167,49 @@
     <ClInclude Include="src\light_manager.h">
       <Filter>Header Files\VFX</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="data\shaders\grass.frag">
+      <Filter>Resource Files\shaders</Filter>
+    </None>
+    <None Include="data\shaders\grass.vert">
+      <Filter>Resource Files\shaders</Filter>
+    </None>
+    <None Include="data\shaders\green.frag">
+      <Filter>Resource Files\shaders</Filter>
+    </None>
+    <None Include="data\shaders\green.vert">
+      <Filter>Resource Files\shaders</Filter>
+    </None>
+    <None Include="data\shaders\inverter.frag">
+      <Filter>Resource Files\shaders</Filter>
+    </None>
+    <None Include="data\shaders\inverter.vert">
+      <Filter>Resource Files\shaders</Filter>
+    </None>
+    <None Include="data\shaders\monochrome.frag">
+      <Filter>Resource Files\shaders</Filter>
+    </None>
+    <None Include="data\shaders\monochrome.vert">
+      <Filter>Resource Files\shaders</Filter>
+    </None>
+    <None Include="data\shaders\phong.frag">
+      <Filter>Resource Files\shaders</Filter>
+    </None>
+    <None Include="data\shaders\phong.vert">
+      <Filter>Resource Files\shaders</Filter>
+    </None>
+    <None Include="data\shaders\point_light.frag">
+      <Filter>Resource Files\shaders</Filter>
+    </None>
+    <None Include="data\shaders\point_light.vert">
+      <Filter>Resource Files\shaders</Filter>
+    </None>
+    <None Include="data\shaders\point_light_spine.frag">
+      <Filter>Resource Files\shaders</Filter>
+    </None>
+    <None Include="data\shaders\point_light_spine.vert">
+      <Filter>Resource Files\shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

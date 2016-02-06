@@ -65,6 +65,22 @@
     <ClInclude Include="src\techdemos\spinetechdemo.h" />
     <ClInclude Include="src\techdemos\ttftechdemo.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="data\shaders\grass.frag" />
+    <None Include="data\shaders\grass.vert" />
+    <None Include="data\shaders\green.frag" />
+    <None Include="data\shaders\green.vert" />
+    <None Include="data\shaders\inverter.frag" />
+    <None Include="data\shaders\inverter.vert" />
+    <None Include="data\shaders\monochrome.frag" />
+    <None Include="data\shaders\monochrome.vert" />
+    <None Include="data\shaders\phong.frag" />
+    <None Include="data\shaders\phong.vert" />
+    <None Include="data\shaders\point_light.frag" />
+    <None Include="data\shaders\point_light.vert" />
+    <None Include="data\shaders\point_light_spine.frag" />
+    <None Include="data\shaders\point_light_spine.vert" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{16DFC385-0CB3-4E49-B473-0229B82CFDA3}</ProjectGuid>
     <RootNamespace>twentysixteen</RootNamespace>

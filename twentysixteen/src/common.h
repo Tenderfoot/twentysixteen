@@ -36,6 +36,11 @@ enum boundinput
 	BACK
 };
 
+enum light_types
+{
+	POINT_LIGHT
+};
+
 // proper comparison for char* maps
 struct cmp_str
 {

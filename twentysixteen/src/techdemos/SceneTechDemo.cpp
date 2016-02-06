@@ -48,9 +48,10 @@ void SceneTechDemo::draw()
 {
 	gluLookAt(x+sin(rotation / 200) * 0.5, cos(rotation / 500) * 1, 0, x, 0, -25, 0, 1, 0);
 
-
-	GLfloat light_position[] = { -x+sin(rotation/100) * 4, cos(rotation / 100) * 1, -10 + (sin(rotation / 100 * 3) * 5), 0.0 };
-	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+	LightManager::lights[0].x = -x + sin(rotation / 100) * 4;
+	LightManager::lights[0].y = cos(rotation / 100) * 1;
+	LightManager::lights[0].z = -10 + (sin(rotation / 100 * 3) * 5);
+	LightManager::lights[0].radius = 20;
 
 	glPushMatrix();
 		glTranslatef(0.0f, -10.0f, -10.0f);

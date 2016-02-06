@@ -267,8 +267,41 @@ void Paintbrush::update_shader_uniforms()
 	for (auto it = shader_db.begin(); it != shader_db.end(); ++it)
 	{
 		set_uniform(it->second, "Time", ((float)SDL_GetTicks())/1000);
-		set_uniform(it->second, "light_radius", 15);
+		set_uniform(it->second, "num_lights", LightManager::lights.size());
+
+		int i;
+		for (i = 0; i < LightManager::lights.size(); i++)
+		{
+			char *uniform_name = new char[256];
+			sprintf_s(uniform_name, sizeof(char)*255, "scene_lights[%d].radius", i);
+			set_uniform(it->second, uniform_name, LightManager::lights[i].radius);
+			
+			uniform_name = new char[256];
+			sprintf_s(uniform_name, sizeof(char) * 255, "scene_lights[%d].x", i);
+			set_uniform(it->second, uniform_name, LightManager::lights[i].x);
+
+			uniform_name = new char[256];
+			sprintf_s(uniform_name, sizeof(char) * 255, "scene_lights[%d].y", i);
+			set_uniform(it->second, uniform_name, LightManager::lights[i].y);
+
+			uniform_name = new char[256];
+			sprintf_s(uniform_name, sizeof(char) * 255, "scene_lights[%d].z", i);
+			set_uniform(it->second, uniform_name, LightManager::lights[i].z);
+
+			uniform_name = new char[256];
+			sprintf_s(uniform_name, sizeof(char) * 255, "scene_lights[%d].r", i);
+			set_uniform(it->second, uniform_name, LightManager::lights[i].r);
+
+			uniform_name = new char[256];
+			sprintf_s(uniform_name, sizeof(char) * 255, "scene_lights[%d].g", i);
+			set_uniform(it->second, uniform_name, LightManager::lights[i].g);
+
+			uniform_name = new char[256];
+			sprintf_s(uniform_name, sizeof(char) * 255, "scene_lights[%d].b", i);
+			set_uniform(it->second, uniform_name, LightManager::lights[i].b);
+		}
 	}
+
 }
 
 void Paintbrush::draw_quad()

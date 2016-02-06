@@ -214,6 +214,7 @@ int main(int argc, char *argv[])
 	// Initialize Paintrbush (fonts) and AudioController
 	Paintbrush::init();
 	AudioController::init();
+	LightManager::init();
 
 	// set up level map
 	init_levels();
