@@ -40,5 +40,6 @@ class LightManager
 public:
 	static void init();
 	static std::vector<Light> lights;
+	static void reset();
 };
 

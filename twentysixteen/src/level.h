@@ -24,6 +24,7 @@ public:
 	virtual void init() = 0;
 	virtual void run(float time_delta) = 0;
 	virtual void draw() = 0;
+	virtual void reset() = 0;
 
 	// the input, and whether it was pressed or released
 	virtual void take_input(boundinput input, bool type) = 0;

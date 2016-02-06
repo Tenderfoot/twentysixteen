@@ -18,6 +18,7 @@ public:
 	void init();
 	void take_input(boundinput input, bool type);
 	float rotation;
+	void reset();
 
 	std::map<boundinput, bool> keydown_map;
 

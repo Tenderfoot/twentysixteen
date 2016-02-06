@@ -10,3 +10,8 @@ void LightManager::init()
 	new_light.radius = 20;
 	lights.push_back(new_light);
 }
+
+void LightManager::reset()
+{
+	lights.clear();
+}

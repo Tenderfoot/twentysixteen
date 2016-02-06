@@ -249,6 +249,7 @@ int main(int argc, char *argv[])
 			{
 				current_level->exit_level = LEVEL_NONE;
 				current_level = level_map[next_level];
+				current_level->reset();
 			}
 		}
 	}

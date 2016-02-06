@@ -53,6 +53,11 @@ public:
 		TechDemoUI.add_widget(new TextWidget("Use directions (WASD) and A (space) to select", 0.5, 0.95, 0.5, 0.05));
 	}
 
+	void reset()
+	{
+
+	}
+
 	void switch_to(ListWidget *to_switch)
 	{
 		current_list->visible = false;

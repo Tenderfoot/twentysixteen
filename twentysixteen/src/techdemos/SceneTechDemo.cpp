@@ -36,6 +36,16 @@ void SceneTechDemo::run(float time_delta)
 		spineboy.animation_name = "idle";
 }
 
+void SceneTechDemo::reset()
+{
+	LightManager::reset();
+	while (LightManager::lights.size() < 1)
+	{
+		// make sure there are actually two lights to manipulate
+		LightManager::lights.push_back(Light(0, 0, 0, 20));
+	}
+}
+
 void SceneTechDemo::take_input(boundinput input, bool type)
 {
 	keydown_map[input]=type;

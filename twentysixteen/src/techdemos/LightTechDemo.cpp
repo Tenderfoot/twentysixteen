@@ -28,9 +28,6 @@ void LightTechDemo::draw()
 {
 	gluLookAt(sin(rotation) * 3, cos(rotation*2) * 3, 0, 0, 0, -25, 0, 1, 0);
 
-	//GLfloat light_position[] = { sin(rotation)*10, cos(rotation)*10, -20+(sin(rotation*3)*5), 0.0 };
-	//glLightfv(GL_LIGHT0, GL_POSITION, light_position);
-
 	while (LightManager::lights.size() < 3)
 	{
 		// make sure there are actually two lights to manipulate
