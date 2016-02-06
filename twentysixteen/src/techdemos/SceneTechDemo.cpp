@@ -53,6 +53,10 @@ void SceneTechDemo::draw()
 	LightManager::lights[0].z = -10 + (sin(rotation / 100 * 3) * 5);
 	LightManager::lights[0].radius = 20;
 
+	LightManager::lights[0].r = 1;
+	LightManager::lights[0].g = 0;
+	LightManager::lights[0].b = 0;
+
 	glPushMatrix();
 		glTranslatef(0.0f, -10.0f, -10.0f);
 		Paintbrush::use_shader(Paintbrush::get_shader("point_light"));
