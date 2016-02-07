@@ -25,6 +25,6 @@ class Entity
 {
 public:
 	t_vertex position;
-	virtual void draw();
-	virtual void update(float delta_time);
+	virtual void draw()=0;
+	virtual void update(float delta_time)=0;
 };

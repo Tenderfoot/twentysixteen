@@ -39,6 +39,7 @@
     <ClCompile Include="src\techdemos\ShaderTechDemo.cpp" />
     <ClCompile Include="src\techdemos\SpineTechDemo.cpp" />
     <ClCompile Include="src\techdemos\TTFTechDemo.cpp" />
+    <ClCompile Include="src\vfxgrass.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\audio_controller.h" />
@@ -46,6 +47,7 @@
     <ClInclude Include="src\common.h" />
     <ClInclude Include="src\entity.h" />
     <ClInclude Include="src\glext.h" />
+    <ClInclude Include="src\grass_entity.h" />
     <ClInclude Include="src\level.h" />
     <ClInclude Include="src\light_manager.h" />
     <ClInclude Include="src\linear_algebra.h" />
@@ -64,6 +66,7 @@
     <ClInclude Include="src\techdemos\shadertechdemo.h" />
     <ClInclude Include="src\techdemos\spinetechdemo.h" />
     <ClInclude Include="src\techdemos\ttftechdemo.h" />
+    <ClInclude Include="src\vfxgrass.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="data\shaders\grass.frag" />

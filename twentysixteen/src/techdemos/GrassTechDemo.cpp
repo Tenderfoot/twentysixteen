@@ -5,8 +5,6 @@ void GrassTechDemo::init()
 {
 	TechDemoUI.add_widget(new TextWidget("Grass Tech Demo", 0.5, 0.2, 0.5, 0.3));
 	TechDemoUI.add_widget(new TextWidget("Press ESCAPE to go back", 0.5, 0.5, 0.5, 0.05));
-
-	grass = Paintbrush::get_texture("data/images/grass.png", false, true);
 }
 
 void GrassTechDemo::run(float time_delta)

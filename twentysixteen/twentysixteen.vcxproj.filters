@@ -96,6 +96,9 @@
     <ClCompile Include="src\light_manager.cpp">
       <Filter>Source Files\VFX</Filter>
     </ClCompile>
+    <ClCompile Include="src\vfxgrass.cpp">
+      <Filter>Source Files\VFX</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\level.h">
@@ -166,6 +169,12 @@
     </ClInclude>
     <ClInclude Include="src\light_manager.h">
       <Filter>Header Files\VFX</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vfxgrass.h">
+      <Filter>Header Files\VFX</Filter>
+    </ClInclude>
+    <ClInclude Include="src\grass_entity.h">
+      <Filter>Header Files\entities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

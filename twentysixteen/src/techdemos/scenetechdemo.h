@@ -4,6 +4,7 @@
 #include "../model_data.h"
 #include "../linear_algebra.h"
 #include "../spine_data.h"
+#include "../VFXGrass.h"
 
 class SceneTechDemo : public BaseTechDemo
 {
@@ -19,6 +20,9 @@ public:
 	void take_input(boundinput input, bool type);
 	float rotation;
 	void reset();
+
+	// Level Entities
+	std::vector<Entity*> entities;
 
 	std::map<boundinput, bool> keydown_map;
 

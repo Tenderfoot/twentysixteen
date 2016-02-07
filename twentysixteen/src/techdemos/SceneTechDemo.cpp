@@ -9,6 +9,26 @@ void SceneTechDemo::init()
 	level_static.model = ModelData::import("scenetest.fbx", 0.01);
 
 	spineboy.load_spine_data("spineboy");
+
+	// so basically what you're gunna want to do.... is iterate through the faces in the level, and create a series of SceneEntities based on
+	// the grass textured faces
+	// then, iterating through and drawing these in draw - you can z-sort
+	
+	// now that you have it drawing a quad based on an entity -
+	// now, plane slice the level and make grass entities for each edge
+	// from grass textured faces...
+
+	std::vector<Entity*> grass_entities = VFXGrass::generate_grass(*level_static.model, t_vertex(0, 0, -10), 0);
+
+	int i;
+	printf("=========\n");
+	printf("grass entities generated: %d\n", grass_entities.size());
+	printf("=========\n");
+
+	for (i = 0; i < grass_entities.size(); i++)
+	{
+		entities.push_back(grass_entities.at(i));
+	}
 }
 
 void SceneTechDemo::run(float time_delta)
@@ -64,9 +84,9 @@ void SceneTechDemo::draw()
 	LightManager::lights[0].radius = 20;
 
 	LightManager::lights[0].r = 1;
-	LightManager::lights[0].g = 0;
-	LightManager::lights[0].b = 0;
-
+	LightManager::lights[0].g = 1;
+	LightManager::lights[0].b = 1;
+	
 	glPushMatrix();
 		glTranslatef(0.0f, -10.0f, -10.0f);
 		Paintbrush::use_shader(Paintbrush::get_shader("point_light"));
@@ -75,37 +95,27 @@ void SceneTechDemo::draw()
 	glPopMatrix();
 
 	glPushMatrix();
-		glTranslatef(-5.0f, 1.5f, -7.0f);
-		glScalef(2.0f, 2.0f, 2.0f);
-		Paintbrush::draw_some_grass();
+		glTranslatef(x, y-3.3f, -10.0f);
+		glScalef(0.005f, 0.005f, 0.005f);
+		glRotatef(180 * flip, 0, 1, 0);
+		Paintbrush::use_shader(Paintbrush::get_shader("point_light_spine"));
+		spineboy.draw();
+		Paintbrush::stop_shader();
+	glPopMatrix();
+	
+
+	glEnable(GL_DEPTH_TEST);
+
+	int i;
+	glPushMatrix();
+	glTranslatef(0.0f, -10.0f, 0.0f);
+	for (i = 0; i < entities.size(); i++)
+	{
+		entities.at(i)->draw();
+	}
+
 	glPopMatrix();
 
-	glPushMatrix();
-		glTranslatef(5.0f, 1.5f, -7.0f);
-		glScalef(2.0f, 2.0f, 2.0f);
-		Paintbrush::draw_some_grass();
-	glPopMatrix();
-
-	glPushMatrix();
-	glTranslatef(x, y-3.3f, -10.0f);
-	glScalef(0.005f, 0.005f, 0.005f);
-	glRotatef(180 * flip, 0, 1, 0);
-	Paintbrush::use_shader(Paintbrush::get_shader("point_light_spine"));
-	spineboy.draw();
-	Paintbrush::stop_shader();
-	glPopMatrix();
-
-	glPushMatrix();
-	glTranslatef(-5.0f, 1.5f, 9.0f);
-	glScalef(2.0f, 2.0f, 2.0f);
-	Paintbrush::draw_some_grass();
-	glPopMatrix();
-
-	glPushMatrix();
-	glTranslatef(5.0f, 1.5f, 9.0f);
-	glScalef(2.0f, 2.0f, 2.0f);
-	Paintbrush::draw_some_grass();
-	glPopMatrix();
 
 	BaseTechDemo::draw();
 }
