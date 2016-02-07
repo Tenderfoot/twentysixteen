@@ -85,7 +85,7 @@ void SceneTechDemo::draw()
 	LightManager::lights[0].x = -x;
 	LightManager::lights[0].y = 1;
 	LightManager::lights[0].z = -10;
-	LightManager::lights[0].radius = 20;
+	LightManager::lights[0].radius = 50;
 
 	LightManager::lights[0].r = abs(sin(rotation/500));
 	LightManager::lights[0].g = abs(cos(rotation/250));

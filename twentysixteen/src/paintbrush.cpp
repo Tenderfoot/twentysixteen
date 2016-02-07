@@ -272,32 +272,32 @@ void Paintbrush::update_shader_uniforms()
 		int i;
 		for (i = 0; i < LightManager::lights.size(); i++)
 		{
-			char *uniform_name = new char[256];
-			sprintf_s(uniform_name, sizeof(char)*255, "scene_lights[%d].radius", i);
+			char *uniform_name = new char[24];
+			sprintf_s(uniform_name, sizeof(char)*24, "scene_lights[%d].radius", i);
 			set_uniform(it->second, uniform_name, LightManager::lights[i].radius);
-			
-			uniform_name = new char[256];
-			sprintf_s(uniform_name, sizeof(char) * 255, "scene_lights[%d].x", i);
+
+			uniform_name = new char[24];
+			sprintf_s(uniform_name, sizeof(char) * 24, "scene_lights[%d].x", i);
 			set_uniform(it->second, uniform_name, LightManager::lights[i].x);
 
-			uniform_name = new char[256];
-			sprintf_s(uniform_name, sizeof(char) * 255, "scene_lights[%d].y", i);
+			uniform_name = new char[24];
+			sprintf_s(uniform_name, sizeof(char) * 24, "scene_lights[%d].y", i);
 			set_uniform(it->second, uniform_name, LightManager::lights[i].y);
 
-			uniform_name = new char[256];
-			sprintf_s(uniform_name, sizeof(char) * 255, "scene_lights[%d].z", i);
+			uniform_name = new char[24];
+			sprintf_s(uniform_name, sizeof(char) * 24, "scene_lights[%d].z", i);
 			set_uniform(it->second, uniform_name, LightManager::lights[i].z);
 
-			uniform_name = new char[256];
-			sprintf_s(uniform_name, sizeof(char) * 255, "scene_lights[%d].r", i);
+			uniform_name = new char[24];
+			sprintf_s(uniform_name, sizeof(char) * 24, "scene_lights[%d].r", i);
 			set_uniform(it->second, uniform_name, LightManager::lights[i].r);
 
-			uniform_name = new char[256];
-			sprintf_s(uniform_name, sizeof(char) * 255, "scene_lights[%d].g", i);
+			uniform_name = new char[24];
+			sprintf_s(uniform_name, sizeof(char) * 24, "scene_lights[%d].g", i);
 			set_uniform(it->second, uniform_name, LightManager::lights[i].g);
 
-			uniform_name = new char[256];
-			sprintf_s(uniform_name, sizeof(char) * 255, "scene_lights[%d].b", i);
+			uniform_name = new char[24];
+			sprintf_s(uniform_name, sizeof(char) * 24, "scene_lights[%d].b", i);
 			set_uniform(it->second, uniform_name, LightManager::lights[i].b);
 		}
 	}

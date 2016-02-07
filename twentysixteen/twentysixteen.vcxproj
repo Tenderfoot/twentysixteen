@@ -22,6 +22,7 @@
     <ClCompile Include="src\audio_controller.cpp" />
     <ClCompile Include="src\base_user_interface.cpp" />
     <ClCompile Include="src\entity.cpp" />
+    <ClCompile Include="src\game_entity.cpp" />
     <ClCompile Include="src\light_manager.cpp" />
     <ClCompile Include="src\linear_algebra.cpp" />
     <ClCompile Include="src\main.cpp" />
@@ -47,6 +48,7 @@
     <ClInclude Include="src\base_user_interface.h" />
     <ClInclude Include="src\common.h" />
     <ClInclude Include="src\entity.h" />
+    <ClInclude Include="src\game_entity.h" />
     <ClInclude Include="src\glext.h" />
     <ClInclude Include="src\grass_entity.h" />
     <ClInclude Include="src\level.h" />

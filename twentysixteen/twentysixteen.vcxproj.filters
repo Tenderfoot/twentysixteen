@@ -102,6 +102,9 @@
     <ClCompile Include="src\particles.cpp">
       <Filter>Source Files\VFX</Filter>
     </ClCompile>
+    <ClCompile Include="src\game_entity.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\level.h">
@@ -181,6 +184,9 @@
     </ClInclude>
     <ClInclude Include="src\particles.h">
       <Filter>Header Files\VFX</Filter>
+    </ClInclude>
+    <ClInclude Include="src\game_entity.h">
+      <Filter>Header Files\entities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

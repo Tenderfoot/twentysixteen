@@ -24,8 +24,6 @@ public:
 	// Level Entities
 	std::vector<Entity*> entities;
 
-	std::map<boundinput, bool> keydown_map;
-
 	float x, y;
 	bool flip;
 
