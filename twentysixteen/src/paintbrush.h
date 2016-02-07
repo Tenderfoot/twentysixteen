@@ -74,7 +74,7 @@ public:
 	static void update_shader_uniforms();
 
 	// draw collisiongroups
-	static void draw_collision_group(t_collisiongroup group);
+	static void draw_collision_group(t_collisiongroup group, float distance);
 
 	static void draw_some_grass();
 };

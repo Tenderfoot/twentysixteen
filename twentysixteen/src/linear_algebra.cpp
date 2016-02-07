@@ -39,18 +39,21 @@
 					other_point = swap;
 				}
 
-				float percentage = (plane_distance + initial_point.z) / (other_point.z + initial_point.z);
-
-				new_vertex.x = initial_point.x + ((other_point.x-initial_point.x)*percentage);
+				float percentage = (other_point.z - initial_point.z)/(plane_distance - initial_point.z);
+	
+				new_vertex.x = initial_point.x + ((other_point.x - initial_point.x)*percentage);
 				new_vertex.y = initial_point.y + ((other_point.y - initial_point.y)*percentage);
+				new_vertex.z = plane_z;
 
 				new_edge.verticies.push_back(new_vertex);
 			}
 		}
 
-		if(new_edge.verticies.size() == 2)
+		if (new_edge.verticies.size() == 2)
+		{
+			new_edge.material_id = from_model.meshes.at(mesh_id)->faces.at(i)->material_index;
 			edge_set->push_back(new_edge);
-
+		}
 		//printf("hit %d times\n", hit_times);
 	}
 
@@ -88,7 +91,7 @@
 		 }
 	 }
 
-	 std::sort(matching_points.begin(), matching_points.end(), by_depth());
+	 std::sort(matching_points.begin(), matching_points.end(), by_height());
 
 	 bool hit = true;
 

@@ -76,7 +76,11 @@ void SceneTechDemo::take_input(boundinput input, bool type)
 
 void SceneTechDemo::draw()
 {
-	gluLookAt(x+sin(rotation / 200) * 0.5, cos(rotation / 500) * 1, 0, x, 0, -25, 0, 1, 0);
+	int i;
+
+	//gluLookAt(x+sin(rotation / 200) * 0.5, cos(rotation / 500) * 1, 0, x, 0, -25, 0, 1, 0);
+
+	std::sort(entities.begin(), entities.end(), by_depth());
 
 	LightManager::lights[0].x = -x + sin(rotation / 100) * 4;
 	LightManager::lights[0].y = cos(rotation / 100) * 1;
@@ -94,6 +98,17 @@ void SceneTechDemo::draw()
 		Paintbrush::stop_shader();
 	glPopMatrix();
 
+	glDisable(GL_DEPTH_TEST);
+	glEnable(GL_BLEND);
+	glPushMatrix();
+		glTranslatef(0.0f, -10.0f, 0.0f);
+		for (i = 0; i < entities.size(); i++)
+		{
+			if (entities.at(i)->position.z < -10)
+				entities.at(i)->draw();
+		}
+	glPopMatrix();
+
 	glPushMatrix();
 		glTranslatef(x, y-3.3f, -10.0f);
 		glScalef(0.005f, 0.005f, 0.005f);
@@ -103,17 +118,21 @@ void SceneTechDemo::draw()
 		Paintbrush::stop_shader();
 	glPopMatrix();
 	
-
-	glEnable(GL_DEPTH_TEST);
-
-	int i;
+	/*
 	glPushMatrix();
-	glTranslatef(0.0f, -10.0f, 0.0f);
-	for (i = 0; i < entities.size(); i++)
-	{
-		entities.at(i)->draw();
-	}
+		glTranslatef(0.0f, -10.0f, 0.0f);
+		Paintbrush::draw_collision_group(LinearAlgebra::get_collisiongroups_from_model(*level_static.model, -10, t_vertex(0,0,-10)), -10);
+	glPopMatrix();
+	*/
 
+	glDisable(GL_DEPTH_TEST);
+	glPushMatrix();
+		glTranslatef(0.0f,-10.0f, 0.0f);
+		for (i = 0; i < entities.size(); i++)
+		{
+			if(entities.at(i)->position.z > -10)
+				entities.at(i)->draw();
+		}
 	glPopMatrix();
 
 

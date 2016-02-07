@@ -11,7 +11,7 @@
 #include "common.h"
 #include "model_data.h"
 
-struct by_depth {
+struct by_height {
 	bool operator()(t_vertex left, t_vertex right) {
 		return left.y < right.y;
 	}
@@ -20,6 +20,10 @@ struct by_depth {
 typedef struct
 {
 	std::vector<t_vertex> verticies;
+	
+	// knowing what material the face it comes from is
+	// is going to help with VFXGrass
+	int material_id;
 } t_edge;
 
 // edge sets are cool and all, but....

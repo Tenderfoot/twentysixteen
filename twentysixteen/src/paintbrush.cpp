@@ -460,7 +460,7 @@ void Paintbrush::draw_model(t_3dModel *mymodel)
 	glPopMatrix();
 }
 
-void Paintbrush::draw_collision_group(t_collisiongroup group)
+void Paintbrush::draw_collision_group(t_collisiongroup group, float distance)
 {
 	int i;
 	std::vector<t_edge> *edge_set;
@@ -473,8 +473,8 @@ void Paintbrush::draw_collision_group(t_collisiongroup group)
 			glBindTexture(GL_TEXTURE_2D, NULL);
 			glColor3f(1.0f, 0.0f, 1.0f);
 			glBegin(GL_LINES);
-				glVertex3f(it->verticies.at(0).x, it->verticies.at(0).y, -20);
-				glVertex3f(it->verticies.at(1).x, it->verticies.at(1).y, -20);
+				glVertex3f(it->verticies.at(0).x, it->verticies.at(0).y, distance);
+				glVertex3f(it->verticies.at(1).x, it->verticies.at(1).y, distance);
 			glEnd();
 		}
 	}

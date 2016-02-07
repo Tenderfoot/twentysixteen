@@ -21,10 +21,17 @@
 #include "common.h"
 #include "model_data.h"
 
+
 class Entity
 {
 public:
 	t_vertex position;
 	virtual void draw()=0;
 	virtual void update(float delta_time)=0;
+};
+
+struct by_depth {
+	bool operator()(Entity *left, Entity *right) {
+		return left->position.z < right->position.z;
+	}
 };

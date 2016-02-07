@@ -32,7 +32,7 @@ void ModelToPolygonTechDemo::draw()
 	glEnable(GL_DEPTH_TEST);
 	glBindTexture(GL_TEXTURE_2D, NULL);
 
-	Paintbrush::draw_collision_group(collision_group);
+	Paintbrush::draw_collision_group(collision_group, -20);
 
 	if (draw_model)
 	{
