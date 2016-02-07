@@ -27,6 +27,7 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\model_data.cpp" />
     <ClCompile Include="src\paintbrush.cpp" />
+    <ClCompile Include="src\particles.cpp" />
     <ClCompile Include="src\spine_data.cpp" />
     <ClCompile Include="src\techdemos\AudioTechDemo.cpp" />
     <ClCompile Include="src\techdemos\EmitterTechDemo.cpp" />
@@ -53,6 +54,7 @@
     <ClInclude Include="src\linear_algebra.h" />
     <ClInclude Include="src\model_data.h" />
     <ClInclude Include="src\paintbrush.h" />
+    <ClInclude Include="src\particles.h" />
     <ClInclude Include="src\spine_data.h" />
     <ClInclude Include="src\techdemos\audiotechdemo.h" />
     <ClInclude Include="src\techdemos\basetechdemo.h" />

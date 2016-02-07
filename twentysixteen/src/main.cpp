@@ -17,7 +17,6 @@
 #include <SDL_opengl.h>
 #include <gl/GLU.h>
 
-
 // Local Headers
 #include "techdemos\ttftechdemo.h"
 #include "techdemos\spinetechdemo.h"

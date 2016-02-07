@@ -3,6 +3,9 @@
 #include "basetechdemo.h"
 #include "../model_data.h"
 #include "../linear_algebra.h"
+#include "../particles.h"
+
+
 
 class EmitterTechDemo : public BaseTechDemo
 {
@@ -18,5 +21,7 @@ public:
 	void take_input(boundinput input, bool type);
 
 	ModelData level_static;
+
+	ParticleEmitter myemitter;
 
 };

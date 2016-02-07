@@ -99,6 +99,9 @@
     <ClCompile Include="src\vfxgrass.cpp">
       <Filter>Source Files\VFX</Filter>
     </ClCompile>
+    <ClCompile Include="src\particles.cpp">
+      <Filter>Source Files\VFX</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\level.h">
@@ -175,6 +178,9 @@
     </ClInclude>
     <ClInclude Include="src\grass_entity.h">
       <Filter>Header Files\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\particles.h">
+      <Filter>Header Files\VFX</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

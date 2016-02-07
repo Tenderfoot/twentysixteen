@@ -78,18 +78,18 @@ void SceneTechDemo::draw()
 {
 	int i;
 
-	gluLookAt(x+sin(rotation / 200) * 0.5, cos(rotation / 500) * 1, 0, x, 0, -25, 0, 1, 0);
+	gluLookAt(x, 1, 0, x, 0, -25, 0, 1, 0);
 
 	std::sort(entities.begin(), entities.end(), by_depth());
 
-	LightManager::lights[0].x = -x + sin(rotation / 100) * 4;
-	LightManager::lights[0].y = cos(rotation / 100) * 1;
-	LightManager::lights[0].z = -10 + (sin(rotation / 100 * 3) * 5);
-	LightManager::lights[0].radius = 50;
+	LightManager::lights[0].x = -x;
+	LightManager::lights[0].y = 1;
+	LightManager::lights[0].z = -10;
+	LightManager::lights[0].radius = 20;
 
-	LightManager::lights[0].r = 1;
-	LightManager::lights[0].g = 0;
-	LightManager::lights[0].b = 1;
+	LightManager::lights[0].r = abs(sin(rotation/500));
+	LightManager::lights[0].g = abs(cos(rotation/250));
+	LightManager::lights[0].b = sin(rotation / 250) + cos(rotation / 250);
 	
 	glPushMatrix();
 		glTranslatef(0.0f, -10.0f, -10.0f);

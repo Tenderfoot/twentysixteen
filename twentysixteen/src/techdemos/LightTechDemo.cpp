@@ -3,13 +3,13 @@
 
 void LightTechDemo::init()
 {
-	TechDemoUI.add_widget(new TextWidget("Lights Tech Demo", 0.5, 0.2, 0.5, 0.3));
-	TechDemoUI.add_widget(new TextWidget("Press ESCAPE to go back", 0.5, 0.9, 0.5, 0.05));
+	TechDemoUI.add_widget(new TextWidget("Lights Tech Demo", 0.5, 0.1, 0.5, 0.15));
+	TechDemoUI.add_widget(new TextWidget("Press ESCAPE to go back", 0.5, 0.95, 0.5, 0.05));
 
 	level_static.model = ModelData::import("testchamber.fbx", 0.05);
 	level_static.shader = Paintbrush::get_shader("point_light");
 
-	spineboy.load_spine_data("spineboy");
+	spineboy.load_spine_data("skeleton");
 }
 
 void LightTechDemo::run(float time_delta)
@@ -85,7 +85,7 @@ void LightTechDemo::draw()
 	glPopMatrix();
 
 	glPushMatrix();
-		glTranslatef(0.0f, -3.8f, -22.0f);
+		glTranslatef(0.0f, -2.0f, -22.0f);
 		glScalef(0.01f, 0.01f, 0.01f);
 		Paintbrush::use_shader(Paintbrush::get_shader("point_light_spine"));
 		spineboy.draw();
