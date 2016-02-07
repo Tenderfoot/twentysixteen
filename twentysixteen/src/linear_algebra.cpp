@@ -11,7 +11,7 @@
 
 	int i, j;
 
-	float plane_distance = plane_z;
+	float plane_distance = plane_z - model_transform.z;
 	int hit_times = 0;
 	
 	//mesh_id = 1;
@@ -23,8 +23,8 @@
 		hit_times = 0;
 		for (j = 0; j < 3; j++)
 		{
-			if ((from_model.meshes.at(mesh_id)->faces.at(i)->verticies.at(j).z + model_transform.z < plane_distance && from_model.meshes.at(mesh_id)->faces.at(i)->verticies.at((j + 1) % 3).z + model_transform.z > plane_distance) ||
-				(from_model.meshes.at(mesh_id)->faces.at(i)->verticies.at((j + 1) % 3).z + model_transform.z < plane_distance && from_model.meshes.at(mesh_id)->faces.at(i)->verticies.at(j).z + model_transform.z > plane_distance))
+			if ((from_model.meshes.at(mesh_id)->faces.at(i)->verticies.at(j).z < plane_distance && from_model.meshes.at(mesh_id)->faces.at(i)->verticies.at((j + 1) % 3).z > plane_distance) ||
+				(from_model.meshes.at(mesh_id)->faces.at(i)->verticies.at((j + 1) % 3).z  < plane_distance && from_model.meshes.at(mesh_id)->faces.at(i)->verticies.at(j).z  > plane_distance))
 			{
 				hit_times++;
 				
@@ -32,15 +32,15 @@
 				initial_point = from_model.meshes.at(mesh_id)->faces.at(i)->verticies.at(j);
 				other_point = from_model.meshes.at(mesh_id)->faces.at(i)->verticies.at((j + 1) % 3);
 
-				if (initial_point.z < other_point.z)
+				if (initial_point.z > other_point.z)
 				{
 					swap = initial_point;
 					initial_point = other_point;
 					other_point = swap;
 				}
 
-				float percentage = (other_point.z - initial_point.z)/(plane_distance - initial_point.z);
-	
+				float percentage = (plane_distance - initial_point.z) / (other_point.z - initial_point.z);
+
 				new_vertex.x = initial_point.x + ((other_point.x - initial_point.x)*percentage);
 				new_vertex.y = initial_point.y + ((other_point.y - initial_point.y)*percentage);
 				new_vertex.z = plane_z;

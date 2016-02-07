@@ -21,11 +21,11 @@ void main()
 	 
 	 if(texture_coordinate.x < 0.1)
 	 {
-		 gl_Vertex.x += sin(Time)/10;
+		 gl_Vertex.x += sin(Time)/2;
 	 }
 	 else
 	 {
-		 gl_Vertex.x -= sin(Time)/10;
+		 gl_Vertex.x -= sin(Time)/2;
 	 }
 
 	 gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;

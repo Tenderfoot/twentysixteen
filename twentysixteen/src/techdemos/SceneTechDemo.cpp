@@ -118,13 +118,16 @@ void SceneTechDemo::draw()
 		Paintbrush::stop_shader();
 	glPopMatrix();
 	
-	/*
-	glPushMatrix();
+	
+/*	float z;
+	for (z = 0; z > -40; z -= 1)
+	{
+		glPushMatrix();
 		glTranslatef(0.0f, -10.0f, 0.0f);
-		Paintbrush::draw_collision_group(LinearAlgebra::get_collisiongroups_from_model(*level_static.model, -10, t_vertex(0,0,-10)), -10);
-	glPopMatrix();
-	*/
-
+		Paintbrush::draw_collision_group(LinearAlgebra::get_collisiongroups_from_model(*level_static.model, z, t_vertex(0, 0, -10)), z);
+		glPopMatrix();
+	}
+*/
 	glDisable(GL_DEPTH_TEST);
 	glPushMatrix();
 		glTranslatef(0.0f,-10.0f, 0.0f);
