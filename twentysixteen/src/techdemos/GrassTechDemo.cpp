@@ -30,7 +30,7 @@ void GrassTechDemo::draw()
 		Paintbrush::draw_quad();
 	glPopMatrix();
 	
-	Paintbrush::draw_some_grass();
+	//Paintbrush::draw_some_grass();
 
 	BaseTechDemo::draw();
 }

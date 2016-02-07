@@ -75,7 +75,5 @@ public:
 
 	// draw collisiongroups
 	static void draw_collision_group(t_collisiongroup group, float distance);
-
-	static void draw_some_grass();
 };
 
