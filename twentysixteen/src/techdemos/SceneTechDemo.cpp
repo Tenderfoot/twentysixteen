@@ -8,7 +8,7 @@ void SceneTechDemo::init()
 
 	level_static.model = ModelData::import("scenetest.fbx", 0.01);
 
-	spineboy.load_spine_data("spineboy");
+	spineboy.load_spine_data("skeleton");
 
 	// so basically what you're gunna want to do.... is iterate through the faces in the level, and create a series of SceneEntities based on
 	// the grass textured faces
@@ -38,18 +38,18 @@ void SceneTechDemo::run(float time_delta)
 
 	if (keydown_map[LEFT] || keydown_map[RIGHT])
 	{
-		spineboy.animation_name = "walk";
+		spineboy.animation_name = "walk_two";
 
 		if (keydown_map[LEFT])
 		{
 			x = x - (time_delta / 300);
-			flip = true;
+			flip = false;
 		}
 
 		if (keydown_map[RIGHT])
 		{
 			x = x + (time_delta / 300);
-			flip = false;
+			flip = true;
 		}
 	}
 	else
@@ -85,10 +85,10 @@ void SceneTechDemo::draw()
 	LightManager::lights[0].x = -x + sin(rotation / 100) * 4;
 	LightManager::lights[0].y = cos(rotation / 100) * 1;
 	LightManager::lights[0].z = -10 + (sin(rotation / 100 * 3) * 5);
-	LightManager::lights[0].radius = 20;
+	LightManager::lights[0].radius = 50;
 
 	LightManager::lights[0].r = 1;
-	LightManager::lights[0].g = 1;
+	LightManager::lights[0].g = 0;
 	LightManager::lights[0].b = 1;
 	
 	glPushMatrix();
@@ -109,9 +109,10 @@ void SceneTechDemo::draw()
 		}
 	glPopMatrix();
 
+	
 	glPushMatrix();
-		glTranslatef(x, y-3.3f, -10.0f);
-		glScalef(0.005f, 0.005f, 0.005f);
+		glTranslatef(x, y-2.4, -10.0f);
+		glScalef(0.006f, 0.006f, 0.006f);
 		glRotatef(180 * flip, 0, 1, 0);
 		Paintbrush::use_shader(Paintbrush::get_shader("point_light_spine"));
 		spineboy.draw();

@@ -30,8 +30,6 @@ std::vector<Entity*> VFXGrass::generate_grass(t_3dModel from_model, t_vertex mod
 				new_entity->v2 = v1;
 				new_entity->position.z = z;
 
-				printf("%d %d\n", grass_group.collision_groups.at(i).at(j).material_id, Paintbrush::get_texture("data/models/grass.png", false, true));
-
 				if (grass_group.collision_groups.at(i).at(j).material_id != Paintbrush::get_texture("data/models/grass.png", false, true))
 				{
 					grass_polygons.push_back(new_entity);

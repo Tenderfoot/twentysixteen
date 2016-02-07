@@ -154,8 +154,10 @@ void handle_sdl_event()
 		if (event.type == SDL_JOYBUTTONUP)
 			current_level->take_input(translate_joy_input(event.jbutton.button, false), false);
 
-		if(event.type == SDL_JOYHATMOTION)
+		if (event.type == SDL_JOYHATMOTION)
+		{
 			current_level->take_input(translate_joy_input(SDL_JoystickGetHat(joy, 0), true), true);
+		}
 
 
 		// quit event

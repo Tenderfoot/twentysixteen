@@ -40,9 +40,9 @@ void SpineData::setslots()
 	
 				spRegionAttachment* attch = (spRegionAttachment*)skeleton->slots[i]->attachment;
 				float width1 = float(test->x) / 1024;
-				float height1 = (float(test->y)) / 1024;
+				float height1 = (float(test->y)) / 512;
 				float width2 = (float(test->x) + float(test->width)) / 1024;
-				float height2 = (float(test->y) + float(test->height)) / 1024;
+				float height2 = (float(test->y) + float(test->height)) / 512;
 				spRegionAttachment_setUVs(attch, width1, height1, width2, height2, 0);
 			}
 		}
@@ -121,7 +121,7 @@ void SpineData::draw()
 
 void SpineData::update_skeleton(float delta_time)
 {
-	spAnimation_apply(spSkeletonData_findAnimation(skeletonData, animation_name), skeleton, current_time/1000, (current_time+delta_time)/1000, true, NULL, NULL);
+	spAnimation_apply(spSkeletonData_findAnimation(skeletonData, animation_name), skeleton, current_time/750, (current_time+delta_time)/750, true, NULL, NULL);
 	spSkeleton_updateWorldTransform(skeleton);
 
 	// this only probably needs to happen when animation changes
