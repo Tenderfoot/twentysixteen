@@ -32,7 +32,6 @@
 #include "techdemos\lighttechdemo.h"
 
 // TODO
-// -grass
 // -physics
 // -emitters
 
