@@ -78,7 +78,7 @@ void SceneTechDemo::draw()
 {
 	int i;
 
-	//gluLookAt(x+sin(rotation / 200) * 0.5, cos(rotation / 500) * 1, 0, x, 0, -25, 0, 1, 0);
+	gluLookAt(x+sin(rotation / 200) * 0.5, cos(rotation / 500) * 1, 0, x, 0, -25, 0, 1, 0);
 
 	std::sort(entities.begin(), entities.end(), by_depth());
 
