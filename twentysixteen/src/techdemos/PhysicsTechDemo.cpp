@@ -14,8 +14,9 @@ void PhysicsTechDemo::init()
 	level_static.model = ModelData::import("testcollision.fbx", 0.05);
 	collision_group = LinearAlgebra::get_collisiongroups_from_model(*level_static.model, -20, t_vertex(0, 0, -50));
 
-	box.position = t_vertex(0, 3, -20);
-
+	box.position = t_vertex(0, 5, -20);
+	box.size = t_vertex(1, 3, 1);
+	box.velocity = t_vertex(0, 0, 0);
 }
 
 void PhysicsTechDemo::run(float time_delta)
@@ -28,22 +29,45 @@ void PhysicsTechDemo::run(float time_delta)
 	if (keydown_map[RIGHT] == true)
 		box.position.x += 0.01*time_delta;
 
+	if (keydown_map[UP] == true)
+	{
+		if (box.velocity.y == 0)
+			box.velocity.y = -0.05;
+	}
+
 	if (check_collision())
 		box.position.x = original_pos.x;
 
-	if (keydown_map[UP] == true)
-		box.position.y+= 0.01*time_delta;
-	
-	if (keydown_map[DOWN] == true)
-		box.position.y-= 0.01*time_delta;
+	box.position.y -= box.velocity.y*time_delta;
+
+	if (box.velocity.y < 0.03)
+		box.velocity.y += 0.0001*time_delta;
 
 	if (check_collision())
+	{
 		box.position.y = original_pos.y;
+		box.velocity.y = 0;
+	}
 }
 
 bool PhysicsTechDemo::check_collision()
 {
-	return LinearAlgebra::point_in_collisiongroup(box.position, collision_group);
+	// check all 4 points
+	bool to_return = false;
+
+	if (LinearAlgebra::point_in_collisiongroup(t_vertex(box.position.x - (box.size.x/2), box.position.y - (box.size.y / 2), 0.0f), collision_group))
+		to_return = true;
+
+	if (LinearAlgebra::point_in_collisiongroup(t_vertex(box.position.x + (box.size.x / 2), box.position.y - (box.size.y / 2), 0.0f), collision_group))
+		to_return = true;
+
+	if (LinearAlgebra::point_in_collisiongroup(t_vertex(box.position.x + (box.size.x / 2), box.position.y + (box.size.y / 2), 0.0f), collision_group))
+		to_return = true;
+
+	if (LinearAlgebra::point_in_collisiongroup(t_vertex(box.position.x - (box.size.x / 2), box.position.y + (box.size.y / 2), 0.0f), collision_group))
+		to_return = true;
+
+	return to_return;
 }
 
 void PhysicsTechDemo::take_input(boundinput input, bool type)
@@ -56,7 +80,6 @@ void PhysicsTechDemo::take_input(boundinput input, bool type)
 
 void PhysicsTechDemo::draw()
 {
-
 	gluLookAt(box.position.x, box.position.y, 0, box.position.x, box.position.y, -25, 0, 1, 0);
 	
 	glPushMatrix();
@@ -69,6 +92,7 @@ void PhysicsTechDemo::draw()
 	glPushMatrix();
 		glTranslatef(box.position.x, box.position.y, -20);
 		glColor3f(1.0f, 1.0f, 1.0f);
+		glScalef(box.size.x, box.size.y, 1);
 		glBindTexture(GL_TEXTURE_2D, NULL);
 		Paintbrush::draw_quad();
 	glPopMatrix();
