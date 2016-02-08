@@ -29,7 +29,6 @@ public:
 
 	ModelData level_static;
 
-	// SOIL test
 	SpineData spineboy;
 
 };

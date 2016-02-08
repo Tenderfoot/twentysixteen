@@ -8,11 +8,12 @@
 
 void PhysicsTechDemo::init()
 {
-	TechDemoUI.add_widget(new TextWidget("Physics Tech Demo", 0.5, 0.2, 0.5, 0.3));
+	TechDemoUI.add_widget(new TextWidget("Physics Tech Demo", 0.5, 0.15, 0.5, 0.15));
 	TechDemoUI.add_widget(new TextWidget("Press ESCAPE to go back", 0.5, 0.9, 0.5, 0.05));
 
 	level_static.model = ModelData::import("testcollision.fbx", 0.05);
 	collision_group = LinearAlgebra::get_collisiongroups_from_model(*level_static.model, -20, t_vertex(0, 0, -50));
+	spineboy.load_spine_data("skeleton");
 
 	box.position = t_vertex(0, 5, -20);
 	box.size = t_vertex(1, 3, 1);
@@ -21,6 +22,8 @@ void PhysicsTechDemo::init()
 
 void PhysicsTechDemo::run(float time_delta)
 {
+	spineboy.update_skeleton(time_delta);
+
 	t_vertex original_pos = box.position;
 
 	if (keydown_map[LEFT] == true)
@@ -32,7 +35,7 @@ void PhysicsTechDemo::run(float time_delta)
 	if (keydown_map[UP] == true)
 	{
 		if (box.velocity.y == 0)
-			box.velocity.y = -0.05;
+			box.velocity.y = -0.035;
 	}
 
 	if (check_collision())
@@ -67,6 +70,23 @@ bool PhysicsTechDemo::check_collision()
 	if (LinearAlgebra::point_in_collisiongroup(t_vertex(box.position.x - (box.size.x / 2), box.position.y + (box.size.y / 2), 0.0f), collision_group))
 		to_return = true;
 
+	if (keydown_map[LEFT] || keydown_map[RIGHT])
+	{
+		spineboy.animation_name = "walk";
+
+		if (keydown_map[LEFT])
+		{
+			flip = false;
+		}
+
+		if (keydown_map[RIGHT])
+		{
+			flip = true;
+		}
+	}
+	else
+		spineboy.animation_name = "idle";
+
 	return to_return;
 }
 
@@ -89,12 +109,22 @@ void PhysicsTechDemo::draw()
 		Paintbrush::stop_shader();
 	glPopMatrix();
 
+/*
 	glPushMatrix();
 		glTranslatef(box.position.x, box.position.y, -20);
 		glColor3f(1.0f, 1.0f, 1.0f);
 		glScalef(box.size.x, box.size.y, 1);
 		glBindTexture(GL_TEXTURE_2D, NULL);
 		Paintbrush::draw_quad();
+	glPopMatrix();
+*/
+
+	glPushMatrix();
+		glTranslatef(box.position.x, box.position.y-0.5, -20);
+		glColor3f(1.0f, 1.0f, 1.0f);
+		glScalef(0.006f, 0.006f, 0.006f);
+		glRotatef(180 * flip, 0, 1, 0);
+		spineboy.draw();
 	glPopMatrix();
 
 	BaseTechDemo::draw();

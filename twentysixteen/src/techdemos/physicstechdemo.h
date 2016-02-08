@@ -4,6 +4,7 @@
 #include "../model_data.h"
 #include "../linear_algebra.h"
 #include "../game_entity.h"
+#include "../spine_data.h"
 
 class PhysicsTechDemo : public BaseTechDemo
 {
@@ -22,6 +23,9 @@ public:
 
 	ModelData level_static;
 	t_collisiongroup collision_group;
+	SpineData spineboy;
+
+	bool flip;
 
 	GameEntity box;
 
