@@ -51,24 +51,6 @@ void PhysicsTechDemo::run(float time_delta)
 		box.position.y = original_pos.y;
 		box.velocity.y = 0;
 	}
-}
-
-bool PhysicsTechDemo::check_collision()
-{
-	// check all 4 points
-	bool to_return = false;
-
-	if (LinearAlgebra::point_in_collisiongroup(t_vertex(box.position.x - (box.size.x/2), box.position.y - (box.size.y / 2), 0.0f), collision_group))
-		to_return = true;
-
-	if (LinearAlgebra::point_in_collisiongroup(t_vertex(box.position.x + (box.size.x / 2), box.position.y - (box.size.y / 2), 0.0f), collision_group))
-		to_return = true;
-
-	if (LinearAlgebra::point_in_collisiongroup(t_vertex(box.position.x + (box.size.x / 2), box.position.y + (box.size.y / 2), 0.0f), collision_group))
-		to_return = true;
-
-	if (LinearAlgebra::point_in_collisiongroup(t_vertex(box.position.x - (box.size.x / 2), box.position.y + (box.size.y / 2), 0.0f), collision_group))
-		to_return = true;
 
 	if (keydown_map[LEFT] || keydown_map[RIGHT])
 	{
@@ -86,6 +68,46 @@ bool PhysicsTechDemo::check_collision()
 	}
 	else
 		spineboy.animation_name = "idle";
+}
+
+bool PhysicsTechDemo::check_collision()
+{
+	// check all 4 points
+	bool to_return = false;
+
+	// check all four points of me against the collision group
+	if (LinearAlgebra::point_in_collisiongroup(t_vertex(box.position.x - (box.size.x/2), box.position.y - (box.size.y / 2), 0.0f), collision_group))
+		to_return = true;
+
+	if (LinearAlgebra::point_in_collisiongroup(t_vertex(box.position.x + (box.size.x / 2), box.position.y - (box.size.y / 2), 0.0f), collision_group))
+		to_return = true;
+
+	if (LinearAlgebra::point_in_collisiongroup(t_vertex(box.position.x + (box.size.x / 2), box.position.y + (box.size.y / 2), 0.0f), collision_group))
+		to_return = true;
+
+	if (LinearAlgebra::point_in_collisiongroup(t_vertex(box.position.x - (box.size.x / 2), box.position.y + (box.size.y / 2), 0.0f), collision_group))
+		to_return = true;
+
+	// Then check to make sure none of the collision group is inside me!
+	int i, j, k;
+	t_vertex the_vertex;
+	for (i = 0; i < collision_group.collision_groups.size(); i++)
+	{
+		for (j = 0; j < collision_group.collision_groups.at(i).size(); j++)
+		{
+			for (k = 0; k < collision_group.collision_groups.at(i).at(j).verticies.size(); k++)
+			{
+				the_vertex = collision_group.collision_groups.at(i).at(j).verticies.at(k);
+				if (the_vertex.x > box.position.x - (box.size.x / 2) &&
+					the_vertex.x < box.position.x + (box.size.x / 2) &&
+					the_vertex.y > box.position.y - (box.size.y / 2) &&
+					the_vertex.y < box.position.y + (box.size.y / 2))
+				{
+					return true;
+				}
+			}
+		}
+	}
 
 	return to_return;
 }

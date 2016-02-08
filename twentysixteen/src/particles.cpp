@@ -13,3 +13,12 @@ void ParticleEmitter::init(GLuint texture)
 void ParticleEmitter::reset()
 {
 }
+
+void ParticleEmitter::update(float time_delta)
+{
+	int i;
+	for (i = 0; i < particles.size(); i++)
+	{
+		particles.at(i)->update(time_delta);
+	}
+}

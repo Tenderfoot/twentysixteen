@@ -24,4 +24,6 @@ public:
 
 	ParticleEmitter myemitter;
 
+	float rotation;
+
 };

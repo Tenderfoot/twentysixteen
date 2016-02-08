@@ -7,7 +7,7 @@ void EmitterTechDemo::init()
 	TechDemoUI.add_widget(new TextWidget("Press ESCAPE to go back", 0.5, 0.9, 0.5, 0.05));
 
 	level_static.model = ModelData::import("testchamber.fbx", 0.05);
-	level_static.shader = Paintbrush::get_shader("inverter");
+	level_static.shader = Paintbrush::get_shader("point_light");
 
 	while (myemitter.particles.size() < 50)
 	{
@@ -20,11 +20,9 @@ void EmitterTechDemo::init()
 
 void EmitterTechDemo::run(float time_delta)
 {
-	int i;
-	for (i = 0; i < myemitter.particles.size(); i++)
-	{
-		myemitter.particles.at(i)->update(time_delta);
-	}
+	rotation += time_delta/500;
+	LightManager::lights[0].radius = 15 + abs(sin(rotation)) * 5;
+	myemitter.update(time_delta);
 }
 
 void EmitterTechDemo::take_input(boundinput input, bool type)
@@ -36,6 +34,14 @@ void EmitterTechDemo::take_input(boundinput input, bool type)
 void EmitterTechDemo::draw()
 {
 	
+	LightManager::lights[0].r = 1;
+	LightManager::lights[0].g = 0;
+	LightManager::lights[0].b = 0;
+
+	LightManager::lights[0].x = 0;
+	LightManager::lights[0].y = 2;
+	LightManager::lights[0].z = -22;
+
 	glPushMatrix();
 		glTranslatef(0.0f, -5.0f, -50.0f);
 		Paintbrush::use_shader(level_static.shader);

@@ -44,6 +44,7 @@ class ParticleEmitter
 public:
 	void init(GLuint texture);
 	void reset();
+	void update(float time_delta);
 	std::vector<Particle*> particles;
 };
 
