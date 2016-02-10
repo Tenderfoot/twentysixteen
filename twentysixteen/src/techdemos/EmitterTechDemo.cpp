@@ -25,6 +25,16 @@ void EmitterTechDemo::run(float time_delta)
 	myemitter.update(time_delta);
 }
 
+void EmitterTechDemo::reset()
+{
+	LightManager::reset();
+	while (LightManager::lights.size() < 1)
+	{
+		// make sure there are actually two lights to manipulate
+		LightManager::lights.push_back(Light(0, 0, 0, 20));
+	}
+}
+
 void EmitterTechDemo::take_input(boundinput input, bool type)
 {
 	if (input == BACK && type == true)

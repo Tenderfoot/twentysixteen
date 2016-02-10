@@ -19,6 +19,7 @@ public:
 	void draw();
 	void init();
 	void take_input(boundinput input, bool type);
+	void reset();
 
 	ModelData level_static;
 

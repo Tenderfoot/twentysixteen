@@ -1,11 +1,6 @@
 
 #include "physicstechdemo.h"
 
-// K, to build the physics tech demo, you are going to
-// -make GameEntity which extends entity
-// -make physicsdemo control the gameentity (box)
-// -make sure the box can't go in the shapes
-
 void PhysicsTechDemo::init()
 {
 	TechDemoUI.add_widget(new TextWidget("Physics Tech Demo", 0.5, 0.15, 0.5, 0.15));
@@ -54,7 +49,7 @@ void PhysicsTechDemo::run(float time_delta)
 
 	if (keydown_map[LEFT] || keydown_map[RIGHT])
 	{
-		spineboy.animation_name = "walk";
+		spineboy.animation_name = "walk_two";
 
 		if (keydown_map[LEFT])
 		{
