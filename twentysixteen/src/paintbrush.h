@@ -57,20 +57,20 @@ public:
 	static void draw_cube();
 
 	// shader stuff
-	static GLenum load_shader(char *shadername);
+	static GLenum load_shader(std::string shadername);
 
 	static void use_shader(GLenum shader);
 	static void stop_shader();
-	static void set_uniform(GLenum shader, char* uniform_name, float data);
+	static void set_uniform(GLenum shader, std::string uniform_name, float data);
 	static void set_uniform_location(GLenum shader, GLint uniform_location, float data);
-	static int get_uniform_location(GLenum shader, char *variable_name);
+	static int get_uniform_location(GLenum shader, std::string variable_name);
 
 	// I'm going to need a static map of all the shaders, name->shader, for storage and recall
 	// I will also need a std::map<std::pair<GLenum, char*>, GLint> -> this will map <shader,uniform>->uniform location
-	static std::map<char*, GLenum, cmp_str> shader_db;
-	static GLenum get_shader(char* shader_id);
-	static std::map<std::pair<GLenum, char*>, GLint> uniform_db;
-	static GLint get_uniform(GLenum shader, char* uniform_name);
+	static std::map<std::string, GLenum> shader_db;
+	static GLenum get_shader(std::string shader_id);
+	static std::map<std::pair<GLenum, std::string>, GLint> uniform_db;
+	static GLint get_uniform(GLenum shader, std::string uniform_name);
 	static void update_shader_uniforms();
 
 	// draw collisiongroups

@@ -28,8 +28,8 @@ TTF_Font *Paintbrush::font = NULL;
 std::map<char*, GLuint, cmp_str> Paintbrush::texture_db = {};
 
 // shaders and uniform storage
-std::map<char*, GLenum, cmp_str> Paintbrush::shader_db = {};
-std::map<std::pair<GLenum, char*>, GLint> Paintbrush::uniform_db = {};
+std::map<std::string, GLenum> Paintbrush::shader_db = {};
+std::map<std::pair<GLenum, std::string>, GLint> Paintbrush::uniform_db = {};
 
 void Paintbrush::init()
 {
@@ -81,27 +81,24 @@ void Paintbrush::setup_extensions()
 		uglGetProcAddress("glGetShaderiv");
 }
 
-GLenum Paintbrush::get_shader(char* shader_id)
+GLenum Paintbrush::get_shader(std::string shader_id)
 {
-	std::map<char*, GLenum, cmp_str>::iterator it;
+	std::map<std::string, GLenum, cmp_str>::iterator it;
 
 	it = shader_db.find(shader_id);
 
 	if (it == shader_db.end())
 	{
-		char *new_string = new char[128];
-		strcpy_s(new_string, sizeof(char) * 128, shader_id);
-
-		shader_db.insert({ new_string, load_shader(shader_id) });
+		shader_db.insert({ shader_id, load_shader(shader_id) });
 	}
 
 	return shader_db[shader_id];
 }
 
-GLint Paintbrush::get_uniform(GLenum shader, char* uniform_name)
+GLint Paintbrush::get_uniform(GLenum shader, std::string uniform_name)
 {
-	std::map<std::pair<GLenum, char *>, GLint, cmp_str>::iterator it;
-	std::pair<GLenum, char*> mypair = std::make_pair(shader, uniform_name);
+	std::map<std::pair<GLenum, std::string>, GLint>::iterator it;
+	std::pair<GLenum, std::string> mypair = std::make_pair(shader, uniform_name);
 	GLint return_value;
 
 	// I tried to overload the comparator so I could use map.find
@@ -112,7 +109,7 @@ GLint Paintbrush::get_uniform(GLenum shader, char* uniform_name)
 
 		if (shader == it->first.first)
 		{
-			if (strcmp(it->first.second, uniform_name) == 0)
+			if (it->first.second == uniform_name)
 			{
 				return it->second;
 			}
@@ -131,7 +128,7 @@ GLint Paintbrush::get_uniform(GLenum shader, char* uniform_name)
 
 // streak
 
-GLenum Paintbrush::load_shader(char *shadername)
+GLenum Paintbrush::load_shader(std::string shadername)
 {
 	GLenum shader_program;
 
@@ -140,15 +137,10 @@ GLenum Paintbrush::load_shader(char *shadername)
 	GLenum my_fragment_shader = glCreateShaderObjectARB(GL_FRAGMENT_SHADER_ARB);
 	GLenum my_vertex_shader = glCreateShaderObjectARB(GL_VERTEX_SHADER_ARB);
 
-	GLint myUniformLocation = glGetUniformLocationARB(shader_program, "myUniform");
-	glUniform1fARB(myUniformLocation, 2.0f);
+	std::ostringstream full_path;
+	full_path << "data/shaders/" << shadername << ".frag";
 
-
-	// LOAD IN FRAGMENT SHADER
-	char *full_path = new char[64];
-	sprintf_s(full_path, sizeof(char) * 64, "data/shaders/%s.frag", shadername);
-
-	std::ifstream myfile(full_path);
+	std::ifstream myfile(full_path.str().c_str());
 	std::stringstream ss;
 	if (myfile.is_open())
 	{
@@ -166,8 +158,10 @@ GLenum Paintbrush::load_shader(char *shadername)
 	glShaderSourceARB(my_fragment_shader, 1, &frag_shad_src, NULL);
 
 	// LOAD IN VERTEX SHADER
-	sprintf_s(full_path, sizeof(char) * 64, "data/shaders/%s.vert", shadername);
-	std::ifstream myfiletwo(full_path);
+	full_path.str("");
+	full_path << "data/shaders/" << shadername << ".vert";
+
+	std::ifstream myfiletwo(full_path.str().c_str());
 	std::stringstream sstwo;
 	if (myfiletwo.is_open())
 	{
@@ -235,10 +229,10 @@ void Paintbrush::stop_shader()
 	glUseProgramObjectARB(0);
 }
 
-GLint Paintbrush::get_uniform_location(GLenum shader, char *variable_name)
+GLint Paintbrush::get_uniform_location(GLenum shader, std::string variable_name)
 {
 	glUseProgramObjectARB(shader);
-	GLint loc = glGetUniformLocationARB(shader, variable_name);
+	GLint loc = glGetUniformLocationARB(shader, variable_name.c_str());
 	glUseProgramObjectARB(0);
 
 	return loc;
@@ -254,7 +248,7 @@ void Paintbrush::set_uniform_location(GLenum shader, GLint uniform_location, flo
 	glUseProgramObjectARB(0);
 }
 
-void Paintbrush::set_uniform(GLenum shader, char* uniform_name, float data)
+void Paintbrush::set_uniform(GLenum shader, std::string uniform_name, float data)
 {
 	set_uniform_location(shader, get_uniform(shader, uniform_name), data);
 }
@@ -270,35 +264,38 @@ void Paintbrush::update_shader_uniforms()
 		set_uniform(it->second, "num_lights", LightManager::lights.size());
 
 		int i;
+
+		std::ostringstream variable_to_set;
+
 		for (i = 0; i < LightManager::lights.size(); i++)
 		{
-			char *uniform_name = new char[24];
-			sprintf_s(uniform_name, sizeof(char)*24, "scene_lights[%d].radius", i);
-			set_uniform(it->second, uniform_name, LightManager::lights[i].radius);
+			variable_to_set.str("");
+			variable_to_set << "scene_lights[" << i << "].radius";
+			set_uniform(it->second, variable_to_set.str(), LightManager::lights[i].radius);
 
-			uniform_name = new char[24];
-			sprintf_s(uniform_name, sizeof(char) * 24, "scene_lights[%d].x", i);
-			set_uniform(it->second, uniform_name, LightManager::lights[i].x);
+			variable_to_set.str("");
+			variable_to_set << "scene_lights[" << i << "].x";
+			set_uniform(it->second, variable_to_set.str(), LightManager::lights[i].x);
 
-			uniform_name = new char[24];
-			sprintf_s(uniform_name, sizeof(char) * 24, "scene_lights[%d].y", i);
-			set_uniform(it->second, uniform_name, LightManager::lights[i].y);
+			variable_to_set.str("");
+			variable_to_set << "scene_lights[" << i << "].y";
+			set_uniform(it->second, variable_to_set.str(), LightManager::lights[i].y);
 
-			uniform_name = new char[24];
-			sprintf_s(uniform_name, sizeof(char) * 24, "scene_lights[%d].z", i);
-			set_uniform(it->second, uniform_name, LightManager::lights[i].z);
+			variable_to_set.str("");
+			variable_to_set << "scene_lights[" << i << "].z";
+			set_uniform(it->second, variable_to_set.str(), LightManager::lights[i].z);
 
-			uniform_name = new char[24];
-			sprintf_s(uniform_name, sizeof(char) * 24, "scene_lights[%d].r", i);
-			set_uniform(it->second, uniform_name, LightManager::lights[i].r);
+			variable_to_set.str("");
+			variable_to_set << "scene_lights[" << i << "].r";
+			set_uniform(it->second, variable_to_set.str(), LightManager::lights[i].r);
 
-			uniform_name = new char[24];
-			sprintf_s(uniform_name, sizeof(char) * 24, "scene_lights[%d].g", i);
-			set_uniform(it->second, uniform_name, LightManager::lights[i].g);
+			variable_to_set.str("");
+			variable_to_set << "scene_lights[" << i << "].g";
+			set_uniform(it->second, variable_to_set.str(), LightManager::lights[i].g);
 
-			uniform_name = new char[24];
-			sprintf_s(uniform_name, sizeof(char) * 24, "scene_lights[%d].b", i);
-			set_uniform(it->second, uniform_name, LightManager::lights[i].b);
+			variable_to_set.str("");
+			variable_to_set << "scene_lights[" << i << "].b";
+			set_uniform(it->second, variable_to_set.str(), LightManager::lights[i].b);
 		}
 	}
 
