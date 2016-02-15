@@ -10,6 +10,16 @@
 
 #define NO_SDL_GLEXT
 
+// whats next
+// inclines
+// demo cleanup
+// emitter/level cohesian
+// fix grass demo
+// water
+// cubemap reflections
+// fix spine clamp-to-edge
+// spine skins
+
 // General Libraries
 #include <GL/glew.h>
 #include <stdio.h>

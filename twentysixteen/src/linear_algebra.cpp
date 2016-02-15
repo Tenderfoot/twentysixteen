@@ -2,6 +2,8 @@
 #include "linear_algebra.h"
 #include "paintbrush.h"
 
+#include <math.h>
+
  std::vector<t_edge> *LinearAlgebra::get_edges_from_slice(t_3dModel from_model, float plane_z, t_vertex model_transform, int mesh_id)
 {
 	std::vector<t_edge> *edge_set = new std::vector<t_edge>;
@@ -109,6 +111,77 @@
 	 }
 
 	 return false;
+ }
+
+ t_vertex LinearAlgebra::line_segment_cross_polygon(t_vertex start_point, t_vertex end_point, std::vector<t_edge> edge_set)
+ {
+	 // check to see if there is a line segment / polygon collision
+
+	 // so what you're going to do is get the slope of line A
+	 // take the x coordinate of line B, and use it to find x/y collision point
+	 // then see if that point lies in the y range of line A
+
+	 t_vertex collision_point(0,0,0);
+	 
+	 // these are verticies of an edge not edges....
+	 t_vertex edge_one = edge_set.at(0).verticies.at(0);
+	 t_vertex edge_two = edge_set.at(0).verticies.at(1);
+	 bool hit = false;
+
+	 int i;
+	 for (i = 0; i < edge_set.size(); i++)
+	 {
+		 if (!hit)
+		 {
+			 edge_one = edge_set.at(i).verticies.at(0);
+			 edge_two = edge_set.at(i).verticies.at(1);
+
+			 float slope_one = (edge_two.y - edge_one.y) / (edge_two.x - edge_one.x);
+			 float b_one = edge_two.y - (slope_one*edge_two.x);
+
+			 float slope_two = (end_point.y - start_point.y) / (end_point.x - start_point.x);
+			 float b_two = end_point.y - (slope_two*end_point.x);
+
+			 collision_point.x = (b_two - b_one) / (slope_one - slope_two);
+			 collision_point.y = slope_one*collision_point.x + b_one;
+
+			 float small_x = std::min(start_point.x, end_point.x);
+			 float big_x = std::max(start_point.x, end_point.x);
+			 float small_y = std::min(start_point.y, end_point.y);
+			 float big_y = std::max(start_point.y, end_point.y);
+
+			 if (collision_point.y > small_y && collision_point.y < big_y &&
+				 collision_point.x > small_x && collision_point.x < big_x)
+			 {
+				 hit = true;
+			 }
+		 }
+	 }
+
+	 if (!hit)
+	 {
+		 collision_point.x = 0;
+		 collision_point.y = 0;
+	 }
+
+	 return collision_point;
+ }
+
+
+ t_vertex LinearAlgebra::get_collision_correction(t_vertex start_point, t_vertex end_point, t_collisiongroup group)
+ {
+	 t_vertex correction(0,0,0);
+
+	 for (auto it = group.collision_groups.begin(); it != group.collision_groups.end(); ++it)
+	 {
+		 if (point_in_polygon(end_point, *it))
+		 {
+			 correction = line_segment_cross_polygon(start_point, end_point, *it);
+			 correction.z = -1;
+		 }
+	 }
+	
+	 return correction;
  }
 
 t_collisiongroup LinearAlgebra::get_collisiongroups_from_model(t_3dModel from_model, float plane_z, t_vertex model_transform)

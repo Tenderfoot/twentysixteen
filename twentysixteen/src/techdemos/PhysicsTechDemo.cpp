@@ -18,8 +18,8 @@ void PhysicsTechDemo::init()
 void PhysicsTechDemo::run(float time_delta)
 {
 	spineboy.update_skeleton(time_delta);
-
-	t_vertex original_pos = box.position;
+	
+	original_pos = box.position;
 
 	if (keydown_map[LEFT] == true)
 		box.position.x-=0.01*time_delta;
@@ -33,19 +33,10 @@ void PhysicsTechDemo::run(float time_delta)
 			box.velocity.y = -0.035;
 	}
 
-	if (check_collision())
-		box.position.x = original_pos.x;
-
 	box.position.y -= box.velocity.y*time_delta;
 
 	if (box.velocity.y < 0.03)
 		box.velocity.y += 0.0001*time_delta;
-
-	if (check_collision())
-	{
-		box.position.y = original_pos.y;
-		box.velocity.y = 0;
-	}
 
 	if (keydown_map[LEFT] || keydown_map[RIGHT])
 	{
@@ -65,23 +56,72 @@ void PhysicsTechDemo::run(float time_delta)
 		spineboy.animation_name = "idle";
 }
 
-bool PhysicsTechDemo::check_collision()
+bool PhysicsTechDemo::check_collision(t_vertex previous_position, t_vertex new_position)
 {
 	// check all 4 points
 	bool to_return = false;
 
 	// check all four points of me against the collision group
-	if (LinearAlgebra::point_in_collisiongroup(t_vertex(box.position.x - (box.size.x/2), box.position.y - (box.size.y / 2), 0.0f), collision_group))
+	t_vertex correction_vertex;
+	
+	correction_vertex = LinearAlgebra::get_collision_correction(t_vertex(previous_position.x - (box.size.x / 2), previous_position.y - (box.size.y / 2), 0.0f), t_vertex(new_position.x - (box.size.x / 2), new_position.y - (box.size.y / 2), 0.0f), collision_group);
+	if(correction_vertex.z == -1)
 		to_return = true;
 
-	if (LinearAlgebra::point_in_collisiongroup(t_vertex(box.position.x + (box.size.x / 2), box.position.y - (box.size.y / 2), 0.0f), collision_group))
+	
+	if (correction_vertex.z == -1)
+	{
+		glEnable(GL_DEPTH_TEST);
+		glPushMatrix();
+			glTranslatef(correction_vertex.x, correction_vertex.y, -20);
+			glScalef(0.2f, 0.2f, 0.2f);
+			Paintbrush::draw_cube();
+		glPopMatrix();
+	}
+
+	correction_vertex = LinearAlgebra::get_collision_correction(t_vertex(previous_position.x + (box.size.x / 2), previous_position.y - (box.size.y / 2), 0.0f), t_vertex(new_position.x + (box.size.x / 2), new_position.y - (box.size.y / 2), 0.0f), collision_group);
+	if (correction_vertex.z == -1)
 		to_return = true;
 
-	if (LinearAlgebra::point_in_collisiongroup(t_vertex(box.position.x + (box.size.x / 2), box.position.y + (box.size.y / 2), 0.0f), collision_group))
+
+	if (correction_vertex.z == -1)
+	{
+		glEnable(GL_DEPTH_TEST);
+		glPushMatrix();
+		glTranslatef(correction_vertex.x, correction_vertex.y, -20);
+			glScalef(0.2f, 0.2f, 0.2f);
+		Paintbrush::draw_cube();
+		glPopMatrix();
+	}
+
+	correction_vertex = LinearAlgebra::get_collision_correction(t_vertex(previous_position.x + (box.size.x / 2), previous_position.y + (box.size.y / 2), 0.0f), t_vertex(new_position.x + (box.size.x / 2), new_position.y + (box.size.y / 2), 0.0f), collision_group);
+	if (correction_vertex.z == -1)
 		to_return = true;
 
-	if (LinearAlgebra::point_in_collisiongroup(t_vertex(box.position.x - (box.size.x / 2), box.position.y + (box.size.y / 2), 0.0f), collision_group))
+
+	if (correction_vertex.z == -1)
+	{
+		glEnable(GL_DEPTH_TEST);
+		glPushMatrix();
+		glTranslatef(correction_vertex.x, correction_vertex.y, -20);
+		glScalef(0.2f, 0.2f, 0.2f);
+		Paintbrush::draw_cube();
+		glPopMatrix();
+	}
+
+	correction_vertex = LinearAlgebra::get_collision_correction(t_vertex(previous_position.x - (box.size.x / 2), previous_position.y + (box.size.y / 2), 0.0f), t_vertex(new_position.x + (box.size.x / 2), new_position.y - (box.size.y / 2), 0.0f), collision_group);
+	if (correction_vertex.z == -1)
 		to_return = true;
+
+	if (correction_vertex.z == -1)
+	{
+		glEnable(GL_DEPTH_TEST);
+		glPushMatrix();
+			glTranslatef(correction_vertex.x, correction_vertex.y, -20);
+			glScalef(0.2f, 0.2f, 0.2f);
+			Paintbrush::draw_cube();
+		glPopMatrix();
+	}
 
 	// Then check to make sure none of the collision group is inside me!
 	int i, j, k;
@@ -103,7 +143,7 @@ bool PhysicsTechDemo::check_collision()
 			}
 		}
 	}
-
+	
 	return to_return;
 }
 
@@ -143,6 +183,13 @@ void PhysicsTechDemo::draw()
 		glRotatef(180 * flip, 0, 1, 0);
 		spineboy.draw();
 	glPopMatrix();
+
+	if (check_collision(original_pos, box.position))
+	{
+		box.position.x = original_pos.x;
+		box.position.y = original_pos.y;
+		box.velocity.y = 0;
+	}
 
 	BaseTechDemo::draw();
 }

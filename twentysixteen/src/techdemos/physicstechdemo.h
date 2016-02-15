@@ -18,8 +18,10 @@ public:
 	void draw();
 	void init();
 	void take_input(boundinput input, bool type);
-	bool check_collision();
+	bool check_collision(t_vertex previous_position, t_vertex new_position);
 
+
+	t_vertex original_pos;
 
 	ModelData level_static;
 	t_collisiongroup collision_group;
