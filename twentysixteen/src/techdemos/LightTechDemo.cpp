@@ -9,7 +9,7 @@ void LightTechDemo::init()
 	level_static.model = ModelData::import("testchamber.fbx", 0.05);
 	level_static.shader = Paintbrush::get_shader("point_light");
 
-	spineboy.load_spine_data("skeleton");
+	spineboy.load_spine_data("everybody");
 }
 
 void LightTechDemo::run(float time_delta)

@@ -8,7 +8,7 @@ void PhysicsTechDemo::init()
 
 	level_static.model = ModelData::import("testcollision.fbx", 0.05);
 	collision_group = LinearAlgebra::get_collisiongroups_from_model(*level_static.model, -20, t_vertex(0, 0, -50));
-	spineboy.load_spine_data("skeleton");
+	spineboy.load_spine_data("everybody");
 
 	box.position = t_vertex(0, 5, -20);
 	box.size = t_vertex(1, 3, 1);
@@ -55,7 +55,7 @@ void PhysicsTechDemo::run(float time_delta)
 
 	if (keydown_map[LEFT] || keydown_map[RIGHT])
 	{
-		spineboy.animation_name = "walk_two";
+		spineboy.animation_name = "walk";
 
 		if (keydown_map[LEFT])
 		{

@@ -30,6 +30,7 @@ char* _spUtil_readFile(const char* path, int* length) {
 void SpineData::setslots()
 {
 	int i;
+
 	for (i = 0; i < skeleton->slotsCount; i++)
 	{
 		if (skeleton->slots[i] != NULL)
@@ -37,11 +38,11 @@ void SpineData::setslots()
 			if (skeleton->slots[i]->attachment != NULL)
 			{
 				spAtlasRegion *test = spAtlas_findRegion(atlas, skeleton->slots[i]->attachment->name);
-	
+				
 				spRegionAttachment* attch = (spRegionAttachment*)skeleton->slots[i]->attachment;
-				float width1 = float(test->x) / 1024;
+				float width1 = float(test->x) / 4096;
 				float height1 = (float(test->y)) / 512;
-				float width2 = (float(test->x) + float(test->width)) / 1024;
+				float width2 = (float(test->x) + float(test->width)) / 4096;
 				float height2 = (float(test->y) + float(test->height)) / 512;
 				spRegionAttachment_setUVs(attch, width1, height1, width2, height2, 0);
 			}
@@ -53,22 +54,25 @@ void SpineData::load_spine_data(char* spine_folder)
 {
 	char *dir = new char[64];
 
-	sprintf_s(dir, sizeof(char)*64, "data/spinedata/%s/%s.atlas", spine_folder, spine_folder);
+	sprintf_s(dir, sizeof(char)*64, "data/spinedata/%s/skeleton.atlas", spine_folder);
 
 	atlas = spAtlas_createFromFile(dir, NULL);
 	spSkeletonJson* skeletonJson = spSkeletonJson_create(atlas);
 
-	sprintf_s(dir, sizeof(char)*64, "data/spinedata/%s/%s.json", spine_folder, spine_folder);
+	sprintf_s(dir, sizeof(char)*64, "data/spinedata/%s/skeleton.json", spine_folder);
 
 	skeletonData = spSkeletonJson_readSkeletonDataFile(skeletonJson, dir);
 	skeleton = spSkeleton_create(skeletonData);
 	if (!skeletonData) printf("Error: %s\n", skeletonJson->error);
 	spSkeletonJson_dispose(skeletonJson);
 
+
 	spSkeleton_setToSetupPose(skeleton);
+	spSkeleton_setSkinByName(skeleton, "gym");
+//	spSkeleton_setAttachment(skeleton, "right_hand", "staff");
 	spSkeleton_updateWorldTransform(skeleton);
 
-	sprintf_s(dir, sizeof(char)*64, "data/spinedata/%s/%s.png", spine_folder, spine_folder);
+	sprintf_s(dir, sizeof(char)*64, "data/spinedata/%s/skeleton.png", spine_folder);
 
 	texture = Paintbrush::get_texture(dir, false, false);
 
@@ -117,6 +121,9 @@ void SpineData::draw()
 			glPopMatrix();
 		}
 	}
+
+	glEnable(GL_DEPTH_TEST);
+	glDisable(GL_BLEND);
 }
 
 void SpineData::update_skeleton(float delta_time)

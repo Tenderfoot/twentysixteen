@@ -1,24 +1,22 @@
+uniform sampler2D bgl_RenderedTexture;
+uniform sampler2D bgl_DepthTexture;
 
-varying vec2 texture_coordinate; 
-uniform sampler2D my_color_texture;
-uniform float Time;
-
-float rand(vec2 co){
-    return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453 * Time);
-}
-
-void main()
+void main(void)
 {
-    // Sampling The Texture And Passing It To The Frame Buffer
+  vec4 texcolor = texture2D(bgl_RenderedTexture, gl_TexCoord[0].st);
+  float x =  gl_TexCoord[0].st.x - .5;
+  float y =  gl_TexCoord[0].st.y - .5;   
 
-    vec4 test = texture2D(my_color_texture, texture_coordinate);
-    //gl_FragColor = vec4(abs(sin(Time)*test.r), abs(cos(Time)*test.g), abs(cos(Time)+sin(Time)), test.a);
+  vec4 depth = texture2D(bgl_DepthTexture,gl_TexCoord[0].st);
 
-    float s = (test.r + test.b + test.g)/3.0;
+  float value = 0.0015 * depth.r;
 
-    float r = fract(Time * texture_coordinate.x);
-    float g = fract(Time * texture_coordinate.y);
-    float b = fract(Time * dot(texture_coordinate.xy, vec2(12.534, 343.65)));
+  vec4 color = texture2D(bgl_RenderedTexture, vec2(gl_TexCoord[0].st.x + value, gl_TexCoord[0].st.y + value)); // Sample area around current pixel
+  color += texture2D(bgl_RenderedTexture, vec2(gl_TexCoord[0].st.x - value, gl_TexCoord[0].st.y - value));
+  color += texture2D(bgl_RenderedTexture, vec2(gl_TexCoord[0].st.x + value, gl_TexCoord[0].st.y - value));
+  color += texture2D(bgl_RenderedTexture, vec2(gl_TexCoord[0].st.x - value, gl_TexCoord[0].st.y + value));
+  color /= 4.0;        
+  gl_FragColor = color;
 
-    gl_FragColor = vec4(r, g, b, test.a);
+   
 }

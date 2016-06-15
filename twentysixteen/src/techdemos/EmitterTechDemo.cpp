@@ -50,7 +50,7 @@ void EmitterTechDemo::draw()
 
 	LightManager::lights[0].x = 0;
 	LightManager::lights[0].y = 2;
-	LightManager::lights[0].z = -22;
+	LightManager::lights[0].z = -15;
 
 	glPushMatrix();
 		glTranslatef(0.0f, -5.0f, -50.0f);

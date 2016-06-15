@@ -8,7 +8,7 @@ void SceneTechDemo::init()
 
 	level_static.model = ModelData::import("scenetest.fbx", 0.01);
 
-	spineboy.load_spine_data("skeleton");
+	spineboy.load_spine_data("everybody");
 
 	// so basically what you're gunna want to do.... is iterate through the faces in the level, and create a series of SceneEntities based on
 	// the grass textured faces
@@ -38,7 +38,7 @@ void SceneTechDemo::run(float time_delta)
 
 	if (keydown_map[LEFT] || keydown_map[RIGHT])
 	{
-		spineboy.animation_name = "walk_two";
+		spineboy.animation_name = "walk";
 
 		if (keydown_map[LEFT])
 		{
@@ -62,7 +62,7 @@ void SceneTechDemo::reset()
 	while (LightManager::lights.size() < 1)
 	{
 		// make sure there are actually two lights to manipulate
-		LightManager::lights.push_back(Light(0, 0, 0, 20));
+		LightManager::lights.push_back(Light(0, 0, 0, 100));
 	}
 }
 
@@ -82,14 +82,14 @@ void SceneTechDemo::draw()
 
 	std::sort(entities.begin(), entities.end(), by_depth());
 
-	LightManager::lights[0].x = -x;
-	LightManager::lights[0].y = 1;
+	LightManager::lights[0].x = 0;
+	LightManager::lights[0].y = 10;
 	LightManager::lights[0].z = -10;
 	LightManager::lights[0].radius = 50;
 
-	LightManager::lights[0].r = abs(sin(rotation/500));
-	LightManager::lights[0].g = abs(cos(rotation/250));
-	LightManager::lights[0].b = sin(rotation / 250) + cos(rotation / 250);
+	LightManager::lights[0].r = 1;
+	LightManager::lights[0].g = 1;
+	LightManager::lights[0].b = 1;
 	
 	glPushMatrix();
 		glTranslatef(0.0f, -10.0f, -10.0f);
@@ -130,6 +130,7 @@ void SceneTechDemo::draw()
 	}
 */
 	glDisable(GL_DEPTH_TEST);
+	glEnable(GL_BLEND);
 	glPushMatrix();
 		glTranslatef(0.0f,-10.0f, 0.0f);
 		for (i = 0; i < entities.size(); i++)

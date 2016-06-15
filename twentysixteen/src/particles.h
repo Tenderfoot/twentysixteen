@@ -29,6 +29,7 @@ public:
 
 	t_vertex position;
 	t_vertex velocity;
+	t_vertex size;
 
 	// emitter stuff...
 	t_vertex emission_position;
@@ -73,6 +74,12 @@ public:
 
 		position.x = emission_size.x*x + emission_position.x;
 
+		x = (rand() % 250) + 100;
+		x = x / 100;
+
+		size.x = x;
+
+
 		x = rand() % 100;
 		x = x / 100;
 
@@ -100,7 +107,7 @@ public:
 
 			// transform
 			glTranslatef(position.x, position.y, 0.0f);
-			glScalef(3, 3, 0.0f);
+			glScalef(size.x, size.x, 0.0f);
 
 			// draw
 			glBegin(GL_QUADS);
