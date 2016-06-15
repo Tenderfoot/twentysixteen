@@ -63,7 +63,7 @@ void init_opengl()
 	glViewport(0, 0, res_width, res_height);
 	glMatrixMode(GL_PROJECTION);  // Select The Projection Matrix
 	glLoadIdentity();                // Reset The Projection Matrix
-	gluPerspective(80, res_width / res_height, 1.0, 1000.0);
+	gluPerspective(90, res_width / res_height, 1.0, 1000.0);
 	glMatrixMode(GL_MODELVIEW);  // Select The Model View Matrix
 	glLoadIdentity();    // Reset The Model View Matrix
 
@@ -205,7 +205,7 @@ int main(int argc, char *argv[])
 		exit(2);
 	}
 
-	window = SDL_CreateWindow("TwentySixteen", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, res_width, res_height, SDL_WINDOW_OPENGL);
+	window = SDL_CreateWindow("TwentySixteen", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, res_width, res_height, SDL_WINDOW_OPENGL | SDL_WINDOW_BORDERLESS);
 	
 	SDL_GLContext glcontext = SDL_GL_CreateContext(window);
 

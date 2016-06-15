@@ -3,7 +3,7 @@
 
 void SceneTechDemo::init()
 {
-	TechDemoUI.add_widget(new TextWidget("Scene Tech Demo", 0.5, 0.2, 0.5, 0.3));
+//	TechDemoUI.add_widget(new TextWidget("Scene Tech Demo", 0.5, 0.2, 0.5, 0.3));
 	TechDemoUI.add_widget(new TextWidget("Press ESCAPE to go back", 0.5, 0.9, 0.5, 0.05));
 
 	level_static.model = ModelData::import("scenetest.fbx", 0.01);

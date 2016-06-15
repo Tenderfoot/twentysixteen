@@ -27,13 +27,28 @@ void PhysicsTechDemo::run(float time_delta)
 	if (keydown_map[RIGHT] == true)
 		box.position.x += 0.01*time_delta;
 
+	// check x
+	if (check_collision(original_pos, box.position))
+	{
+		box.position.x = original_pos.x;
+		box.velocity = t_vertex(0, box.velocity.y, 0);
+	}
+
+	box.position.y -= box.velocity.y*time_delta;
+
+	// check y
+	if (check_collision(original_pos, box.position))
+	{
+		box.position.y = original_pos.y;
+		box.velocity = t_vertex(box.velocity.x, 0, 0);
+	}
+
+	// jump
 	if (keydown_map[UP] == true)
 	{
 		if (box.velocity.y == 0)
 			box.velocity.y = -0.035;
 	}
-
-	box.position.y -= box.velocity.y*time_delta;
 
 	if (box.velocity.y < 0.03)
 		box.velocity.y += 0.0001*time_delta;
@@ -63,68 +78,20 @@ bool PhysicsTechDemo::check_collision(t_vertex previous_position, t_vertex new_p
 
 	// check all four points of me against the collision group
 	t_vertex correction_vertex;
-	
-	correction_vertex = LinearAlgebra::get_collision_correction(t_vertex(previous_position.x - (box.size.x / 2), previous_position.y - (box.size.y / 2), 0.0f), t_vertex(new_position.x - (box.size.x / 2), new_position.y - (box.size.y / 2), 0.0f), collision_group);
-	if(correction_vertex.z == -1)
-		to_return = true;
 
-	
-	if (correction_vertex.z == -1)
+	int i;
+	for (i = 0; i < collision_group.collision_groups.size(); i++)
 	{
-		glEnable(GL_DEPTH_TEST);
-		glPushMatrix();
-			glTranslatef(correction_vertex.x, correction_vertex.y, -20);
-			glScalef(0.2f, 0.2f, 0.2f);
-			Paintbrush::draw_cube();
-		glPopMatrix();
+		if (LinearAlgebra::point_in_polygon(t_vertex(new_position.x, new_position.y+2, 0.0f), collision_group.collision_groups.at(i)) || 
+			LinearAlgebra::point_in_polygon(t_vertex(new_position.x, new_position.y-2, 0.0f), collision_group.collision_groups.at(i)) ||
+			LinearAlgebra::point_in_polygon(t_vertex(new_position.x+1, new_position.y, 0.0f), collision_group.collision_groups.at(i)) ||
+			LinearAlgebra::point_in_polygon(t_vertex(new_position.x-1, new_position.y, 0.0f), collision_group.collision_groups.at(i)))
+		{
+			return true;
+		}
 	}
-
-	correction_vertex = LinearAlgebra::get_collision_correction(t_vertex(previous_position.x + (box.size.x / 2), previous_position.y - (box.size.y / 2), 0.0f), t_vertex(new_position.x + (box.size.x / 2), new_position.y - (box.size.y / 2), 0.0f), collision_group);
-	if (correction_vertex.z == -1)
-		to_return = true;
-
-
-	if (correction_vertex.z == -1)
-	{
-		glEnable(GL_DEPTH_TEST);
-		glPushMatrix();
-		glTranslatef(correction_vertex.x, correction_vertex.y, -20);
-			glScalef(0.2f, 0.2f, 0.2f);
-		Paintbrush::draw_cube();
-		glPopMatrix();
-	}
-
-	correction_vertex = LinearAlgebra::get_collision_correction(t_vertex(previous_position.x + (box.size.x / 2), previous_position.y + (box.size.y / 2), 0.0f), t_vertex(new_position.x + (box.size.x / 2), new_position.y + (box.size.y / 2), 0.0f), collision_group);
-	if (correction_vertex.z == -1)
-		to_return = true;
-
-
-	if (correction_vertex.z == -1)
-	{
-		glEnable(GL_DEPTH_TEST);
-		glPushMatrix();
-		glTranslatef(correction_vertex.x, correction_vertex.y, -20);
-		glScalef(0.2f, 0.2f, 0.2f);
-		Paintbrush::draw_cube();
-		glPopMatrix();
-	}
-
-	correction_vertex = LinearAlgebra::get_collision_correction(t_vertex(previous_position.x - (box.size.x / 2), previous_position.y + (box.size.y / 2), 0.0f), t_vertex(new_position.x + (box.size.x / 2), new_position.y - (box.size.y / 2), 0.0f), collision_group);
-	if (correction_vertex.z == -1)
-		to_return = true;
-
-	if (correction_vertex.z == -1)
-	{
-		glEnable(GL_DEPTH_TEST);
-		glPushMatrix();
-			glTranslatef(correction_vertex.x, correction_vertex.y, -20);
-			glScalef(0.2f, 0.2f, 0.2f);
-			Paintbrush::draw_cube();
-		glPopMatrix();
-	}
-
 	// Then check to make sure none of the collision group is inside me!
-	int i, j, k;
+	int j, k;
 	t_vertex the_vertex;
 	for (i = 0; i < collision_group.collision_groups.size(); i++)
 	{
@@ -183,13 +150,6 @@ void PhysicsTechDemo::draw()
 		glRotatef(180 * flip, 0, 1, 0);
 		spineboy.draw();
 	glPopMatrix();
-
-	if (check_collision(original_pos, box.position))
-	{
-		box.position.x = original_pos.x;
-		box.position.y = original_pos.y;
-		box.velocity.y = 0;
-	}
 
 	BaseTechDemo::draw();
 }
