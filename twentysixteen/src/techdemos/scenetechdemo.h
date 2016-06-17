@@ -3,9 +3,9 @@
 #include "basetechdemo.h"
 #include "../model_data.h"
 #include "../linear_algebra.h"
+#include "../particles.h"
 #include "../spine_data.h"
 #include "../VFXGrass.h"
-#include "../particles.h"
 
 class SceneTechDemo : public BaseTechDemo
 {
@@ -28,10 +28,8 @@ public:
 	float x, y;
 	bool flip;
 
+	ParticleEmitter myemitter;
 	ModelData level_static;
-
 	SpineData spineboy;
-
-	ParticleEmitter star_emitter;
 
 };

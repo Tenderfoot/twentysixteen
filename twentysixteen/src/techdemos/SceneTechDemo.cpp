@@ -3,6 +3,13 @@
 
 void SceneTechDemo::init()
 {
+	while (myemitter.particles.size() < 1000)
+	{
+		myemitter.particles.push_back(new Star);
+	}
+
+	myemitter.init(Paintbrush::get_texture("data/images/fire.png", false, false), t_vertex(-100, 0, 0), t_vertex(200, 75, 0));
+
 	//	TechDemoUI.add_widget(new TextWidget("Scene Tech Demo", 0.5, 0.2, 0.5, 0.3));
 	TechDemoUI.add_widget(new TextWidget("Press ESCAPE to go back", 0.5, 0.9, 0.5, 0.05));
 
@@ -29,7 +36,6 @@ void SceneTechDemo::init()
 	{
 		entities.push_back(grass_entities.at(i));
 	}
-
 }
 
 void SceneTechDemo::run(float time_delta)
@@ -56,7 +62,7 @@ void SceneTechDemo::run(float time_delta)
 	else
 		spineboy.animation_name = "idle";
 
-	//star_emitter.update(time_delta);
+	myemitter.update(time_delta);
 }
 
 void SceneTechDemo::reset()
@@ -93,8 +99,17 @@ void SceneTechDemo::draw()
 	LightManager::lights[0].r = 1;
 	LightManager::lights[0].g = 1;
 	LightManager::lights[0].b = 1;
-	
-	// Draw Star Particle Emitter first... so background stuff here
+
+	// Star Field
+
+	glPushMatrix();
+		glTranslatef(x/1.5, 0.0f, -50.0f);
+		for (i = 0; i < myemitter.particles.size(); i++)
+		{
+			myemitter.particles.at(i)->draw();
+		}
+	glPopMatrix();
+
 
 	// The Level
 

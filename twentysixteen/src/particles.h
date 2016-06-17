@@ -19,6 +19,14 @@ public:
 
 	Particle()
 	{
+		r = 0;
+		g = 0;
+		b = 0;
+		life = 0;
+		dir = false;
+		position = t_vertex(0, 0, 0);
+		velocity = t_vertex(0, 0, 0);
+		size = t_vertex(0, 0, 0);
 	}
 
 	void reset()
@@ -132,6 +140,8 @@ class Star : public Particle
 {
 public:
 
+	float speed;
+
 	void init(GLuint particle_texture, t_vertex emission_position, t_vertex emission_size)
 	{
 		texture = particle_texture;
@@ -156,8 +166,11 @@ public:
 
 		x = rand() % 100;
 		x = x / 100;
-
 		size.x = x;
+
+		x = rand() % 100;
+		x = x / 100;
+		speed = x*10+10;
 
 		x = rand() % 100;
 		x = x / 100;
@@ -168,9 +181,9 @@ public:
 	virtual void update(float time_delta)
 	{
 		if(dir)
-			life = life + 1 * (time_delta / 10);
+			life = life + 1 * (time_delta / speed);
 		else
-			life = life - 1 * (time_delta / 10);
+			life = life - 1 * (time_delta / speed);
 
 		if (life < 0 || life > 100)
 			dir = !dir;
