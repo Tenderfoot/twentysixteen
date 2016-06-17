@@ -34,7 +34,7 @@ void main(void)
 	{
 		light_pos = vec3(scene_lights[i].x,scene_lights[i].y,scene_lights[i].z);
 		L = normalize(light_pos - v);   
-		Idiff = 1; 
+		Idiff = gl_FrontLightProduct[0].diffuse * max(dot(N,L), 0.0); 
 		Idiff = clamp(Idiff, 0.0, 1.0); 
 	
 		float dist = distance(v, light_pos);

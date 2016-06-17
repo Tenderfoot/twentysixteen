@@ -144,7 +144,7 @@ void PhysicsTechDemo::draw()
 */
 
 	glPushMatrix();
-		glTranslatef(box.position.x, box.position.y-1.7, -20);
+		glTranslatef(box.position.x, box.position.y-1.9, -20);
 		glColor3f(1.0f, 1.0f, 1.0f);
 		glScalef(0.006f, 0.006f, 0.006f);
 		glRotatef(180 * flip, 0, 1, 0);

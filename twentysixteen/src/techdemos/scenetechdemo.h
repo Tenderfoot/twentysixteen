@@ -6,6 +6,7 @@
 #include "../particles.h"
 #include "../spine_data.h"
 #include "../VFXGrass.h"
+#include "../modelprop_entity.h"
 
 class SceneTechDemo : public BaseTechDemo
 {

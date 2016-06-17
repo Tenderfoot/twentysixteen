@@ -12,7 +12,7 @@ std::vector<Entity*> VFXGrass::generate_grass(t_3dModel from_model, t_vertex mod
 
 	float z;
 
-	for (z = 0; z > -50; z -= 1)
+	for (z = 10; z > -50; z -= 1)
 	{
 		grass_group = LinearAlgebra::get_collisiongroups_from_model(from_model, z, model_transform);
 
@@ -30,7 +30,9 @@ std::vector<Entity*> VFXGrass::generate_grass(t_3dModel from_model, t_vertex mod
 				new_entity->v2 = v1;
 				new_entity->position.z = z;
 
-				if (grass_group.collision_groups.at(i).at(j).material_id != Paintbrush::get_texture("data/models/grass.png", false, true))
+				printf("%d\n", grass_group.collision_groups.at(i).at(j).material_id);
+
+				if (grass_group.collision_groups.at(i).at(j).material_id == 0)
 				{
 					grass_polygons.push_back(new_entity);
 				}

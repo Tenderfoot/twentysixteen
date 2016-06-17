@@ -54,6 +54,7 @@
     <ClInclude Include="src\level.h" />
     <ClInclude Include="src\light_manager.h" />
     <ClInclude Include="src\linear_algebra.h" />
+    <ClInclude Include="src\modelprop_entity.h" />
     <ClInclude Include="src\model_data.h" />
     <ClInclude Include="src\paintbrush.h" />
     <ClInclude Include="src\particles.h" />

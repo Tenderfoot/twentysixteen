@@ -23,6 +23,9 @@ public:
 
 		float diff = abs(v2.x - v1.x)/5;
 
+		glDisable(GL_DEPTH_TEST);
+		glEnable(GL_BLEND);
+
 		glPushMatrix();
 			Paintbrush::use_shader(Paintbrush::get_shader("grass"));
 			glBegin(GL_QUADS);
@@ -33,6 +36,9 @@ public:
 			glEnd();
 			Paintbrush::stop_shader();
 		glPopMatrix();
+
+		glEnable(GL_DEPTH_TEST);
+		glDisable(GL_BLEND);
 	}
 
 	void update(float delta_time)

@@ -85,7 +85,7 @@ void LightTechDemo::draw()
 	glPopMatrix();
 
 	glPushMatrix();
-		glTranslatef(0.0f, -2.0f, -22.0f);
+		glTranslatef(0.0f, -3.9f, -22.0f);
 		glScalef(0.01f, 0.01f, 0.01f);
 		Paintbrush::use_shader(Paintbrush::get_shader("point_light_spine"));
 		spineboy.draw();

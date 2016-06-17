@@ -21,7 +21,6 @@ void ParticleEmitter::init(GLuint texture, t_vertex position, t_vertex size)
 	}
 }
 
-
 void ParticleEmitter::reset()
 {
 }

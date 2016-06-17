@@ -10,9 +10,6 @@ void SceneTechDemo::init()
 
 	myemitter.init(Paintbrush::get_texture("data/images/fire.png", false, false), t_vertex(-100, 0, 0), t_vertex(200, 75, 0));
 
-	//	TechDemoUI.add_widget(new TextWidget("Scene Tech Demo", 0.5, 0.2, 0.5, 0.3));
-	TechDemoUI.add_widget(new TextWidget("Press ESCAPE to go back", 0.5, 0.9, 0.5, 0.05));
-
 	level_static.model = ModelData::import("scenetest.fbx", 0.01);
 
 	spineboy.load_spine_data("everybody");
@@ -28,7 +25,7 @@ void SceneTechDemo::init()
 	std::vector<Entity*> grass_entities = VFXGrass::generate_grass(*level_static.model, t_vertex(0, 0, -10), 0);
 
 	int i;
-	printf("=========\n");
+	printf("=========\n"); 
 	printf("grass entities generated: %d\n", grass_entities.size());
 	printf("=========\n");
 
@@ -36,6 +33,11 @@ void SceneTechDemo::init()
 	{
 		entities.push_back(grass_entities.at(i));
 	}
+
+	// Test Modelprop
+	ModelPropEntity *NewEntity = new ModelPropEntity;
+	NewEntity->init();
+	entities.push_back(NewEntity);
 }
 
 void SceneTechDemo::run(float time_delta)
@@ -87,18 +89,18 @@ void SceneTechDemo::draw()
 {
 	int i;
 
-	gluLookAt(x, 1, 0, x, 0, -25, 0, 1, 0);
+	gluLookAt(x, 2, 0, x, 0, -25, 0, 1, 0);
 
 	std::sort(entities.begin(), entities.end(), by_depth());
 
 	LightManager::lights[0].x = 0;
-	LightManager::lights[0].y = 10;
-	LightManager::lights[0].z = -10;
-	LightManager::lights[0].radius = 50;
+	LightManager::lights[0].y = 5;
+	LightManager::lights[0].z = -2;
+	LightManager::lights[0].radius = 25;
 
-	LightManager::lights[0].r = 1;
-	LightManager::lights[0].g = 1;
-	LightManager::lights[0].b = 1;
+	LightManager::lights[0].r = 0.9;
+	LightManager::lights[0].g = 0.9;
+	LightManager::lights[0].b = 0.9;
 
 	// Star Field
 
@@ -121,9 +123,6 @@ void SceneTechDemo::draw()
 	glPopMatrix();
 
 	// Entities pre-game plane
-
-	glDisable(GL_DEPTH_TEST);
-	glEnable(GL_BLEND);
 	glPushMatrix();
 		glTranslatef(0.0f, -10.0f, 0.0f);
 		for (i = 0; i < entities.size(); i++)
@@ -136,7 +135,7 @@ void SceneTechDemo::draw()
 	// Gameplane drawing
 
 	glPushMatrix();
-		glTranslatef(x, y-3.5, -10.0f);
+		glTranslatef(x, y-3.5, -12.0f);
 		glScalef(0.006f, 0.006f, 0.006f);
 		glRotatef(180 * flip, 0, 1, 0);
 		Paintbrush::use_shader(Paintbrush::get_shader("point_light_spine"));
@@ -146,8 +145,6 @@ void SceneTechDemo::draw()
 
 	// Post-gameplane entities
 
-	glDisable(GL_DEPTH_TEST);
-	glEnable(GL_BLEND);
 	glPushMatrix();
 		glTranslatef(0.0f,-10.0f, 0.0f);
 		for (i = 0; i < entities.size(); i++)
