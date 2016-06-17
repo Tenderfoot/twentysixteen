@@ -68,8 +68,8 @@ void SpineData::load_spine_data(char* spine_folder)
 
 
 	spSkeleton_setToSetupPose(skeleton);
-	spSkeleton_setSkinByName(skeleton, "gym");
-//	spSkeleton_setAttachment(skeleton, "right_hand", "staff");
+	spSkeleton_setSkinByName(skeleton, "witch");
+
 	spSkeleton_updateWorldTransform(skeleton);
 
 	sprintf_s(dir, sizeof(char)*64, "data/spinedata/%s/skeleton.png", spine_folder);

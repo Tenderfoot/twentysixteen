@@ -6,7 +6,7 @@ filter: Linear,Linear
 repeat: none
 cheer_arm
   rotate: false
-  xy: 2505, 117
+  xy: 2501, 117
   size: 44, 157
   orig: 44, 157
   offset: 0, 0
@@ -27,14 +27,14 @@ cheer_head
   index: -1
 cheer_leg
   rotate: false
-  xy: 1929, 83
+  xy: 1816, 83
   size: 82, 176
   orig: 82, 176
   offset: 0, 0
   index: -1
 farm_arm
   rotate: false
-  xy: 2327, 119
+  xy: 2445, 117
   size: 54, 157
   orig: 54, 157
   offset: 0, 0
@@ -62,7 +62,7 @@ farm_leg
   index: -1
 fro_arm
   rotate: false
-  xy: 2612, 160
+  xy: 2336, 119
   size: 46, 157
   orig: 46, 157
   offset: 0, 0
@@ -90,7 +90,7 @@ fro_leg
   index: -1
 gym_arm
   rotate: false
-  xy: 2660, 160
+  xy: 2593, 160
   size: 44, 157
   orig: 44, 157
   offset: 0, 0
@@ -111,14 +111,14 @@ gym_head
   index: -1
 gym_leg
   rotate: false
-  xy: 2013, 107
+  xy: 1900, 83
   size: 82, 176
   orig: 82, 176
   offset: 0, 0
   index: -1
 knight_arm
   rotate: false
-  xy: 2383, 116
+  xy: 2139, 125
   size: 59, 158
   orig: 59, 158
   offset: 0, 0
@@ -146,7 +146,7 @@ knight_leg
   index: -1
 matt_arm
   rotate: false
-  xy: 2444, 117
+  xy: 2275, 119
   size: 59, 157
   orig: 59, 157
   offset: 0, 0
@@ -174,7 +174,7 @@ matt_leg
   index: -1
 mo_arm
   rotate: false
-  xy: 2706, 160
+  xy: 2639, 160
   size: 44, 157
   orig: 44, 157
   offset: 0, 0
@@ -195,14 +195,14 @@ mo_head
   index: -1
 mo_leg
   rotate: false
-  xy: 1671, 72
+  xy: 1558, 72
   size: 84, 177
   orig: 84, 177
   offset: 0, 0
   index: -1
 ninja_arm
   rotate: false
-  xy: 2752, 170
+  xy: 2547, 159
   size: 44, 158
   orig: 44, 158
   offset: 0, 0
@@ -230,7 +230,7 @@ ninja_leg
   index: -1
 old_arm
   rotate: false
-  xy: 2551, 160
+  xy: 2384, 117
   size: 59, 157
   orig: 59, 157
   offset: 0, 0
@@ -251,14 +251,14 @@ old_head
   index: -1
 old_leg
   rotate: false
-  xy: 1757, 72
+  xy: 1644, 72
   size: 84, 177
   orig: 84, 177
   offset: 0, 0
   index: -1
 rasta_arm
   rotate: false
-  xy: 2798, 171
+  xy: 2685, 160
   size: 44, 157
   orig: 44, 157
   offset: 0, 0
@@ -279,7 +279,7 @@ rasta_head
   index: -1
 rasta_leg
   rotate: false
-  xy: 1843, 82
+  xy: 1730, 72
   size: 84, 177
   orig: 84, 177
   offset: 0, 0
@@ -293,7 +293,7 @@ robe
   index: -1
 skel_arm
   rotate: false
-  xy: 2844, 168
+  xy: 2731, 157
   size: 42, 160
   orig: 42, 160
   offset: 0, 0
@@ -314,21 +314,14 @@ skel_head
   index: -1
 skel_leg
   rotate: false
-  xy: 2181, 103
+  xy: 2068, 110
   size: 69, 173
   orig: 69, 173
   offset: 0, 0
   index: -1
-staff
-  rotate: false
-  xy: 1558, 110
-  size: 111, 139
-  orig: 111, 139
-  offset: 0, 0
-  index: -1
 witch_arm
   rotate: false
-  xy: 2252, 119
+  xy: 2200, 119
   size: 73, 157
   orig: 73, 157
   offset: 0, 0
@@ -356,7 +349,7 @@ witch_head
   index: -1
 witch_leg
   rotate: false
-  xy: 2097, 107
+  xy: 1984, 83
   size: 82, 176
   orig: 82, 176
   offset: 0, 0

@@ -5,6 +5,7 @@
 #include "../linear_algebra.h"
 #include "../spine_data.h"
 #include "../VFXGrass.h"
+#include "../particles.h"
 
 class SceneTechDemo : public BaseTechDemo
 {
@@ -30,5 +31,7 @@ public:
 	ModelData level_static;
 
 	SpineData spineboy;
+
+	ParticleEmitter star_emitter;
 
 };

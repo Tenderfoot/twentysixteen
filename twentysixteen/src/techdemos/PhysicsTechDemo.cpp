@@ -55,7 +55,7 @@ void PhysicsTechDemo::run(float time_delta)
 
 	if (keydown_map[LEFT] || keydown_map[RIGHT])
 	{
-		spineboy.animation_name = "walk";
+		spineboy.animation_name = "walk_two";
 
 		if (keydown_map[LEFT])
 		{
@@ -144,7 +144,7 @@ void PhysicsTechDemo::draw()
 */
 
 	glPushMatrix();
-		glTranslatef(box.position.x, box.position.y-0.5, -20);
+		glTranslatef(box.position.x, box.position.y-1.7, -20);
 		glColor3f(1.0f, 1.0f, 1.0f);
 		glScalef(0.006f, 0.006f, 0.006f);
 		glRotatef(180 * flip, 0, 1, 0);

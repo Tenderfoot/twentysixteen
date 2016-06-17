@@ -3,7 +3,7 @@
 
 void SceneTechDemo::init()
 {
-//	TechDemoUI.add_widget(new TextWidget("Scene Tech Demo", 0.5, 0.2, 0.5, 0.3));
+	//	TechDemoUI.add_widget(new TextWidget("Scene Tech Demo", 0.5, 0.2, 0.5, 0.3));
 	TechDemoUI.add_widget(new TextWidget("Press ESCAPE to go back", 0.5, 0.9, 0.5, 0.05));
 
 	level_static.model = ModelData::import("scenetest.fbx", 0.01);
@@ -29,6 +29,7 @@ void SceneTechDemo::init()
 	{
 		entities.push_back(grass_entities.at(i));
 	}
+
 }
 
 void SceneTechDemo::run(float time_delta)
@@ -38,7 +39,7 @@ void SceneTechDemo::run(float time_delta)
 
 	if (keydown_map[LEFT] || keydown_map[RIGHT])
 	{
-		spineboy.animation_name = "walk";
+		spineboy.animation_name = "walk_two";
 
 		if (keydown_map[LEFT])
 		{
@@ -54,6 +55,8 @@ void SceneTechDemo::run(float time_delta)
 	}
 	else
 		spineboy.animation_name = "idle";
+
+	//star_emitter.update(time_delta);
 }
 
 void SceneTechDemo::reset()
@@ -91,12 +94,18 @@ void SceneTechDemo::draw()
 	LightManager::lights[0].g = 1;
 	LightManager::lights[0].b = 1;
 	
+	// Draw Star Particle Emitter first... so background stuff here
+
+	// The Level
+
 	glPushMatrix();
 		glTranslatef(0.0f, -10.0f, -10.0f);
 		Paintbrush::use_shader(Paintbrush::get_shader("point_light"));
 		Paintbrush::draw_model(level_static.model);
 		Paintbrush::stop_shader();
 	glPopMatrix();
+
+	// Entities pre-game plane
 
 	glDisable(GL_DEPTH_TEST);
 	glEnable(GL_BLEND);
@@ -109,26 +118,19 @@ void SceneTechDemo::draw()
 		}
 	glPopMatrix();
 
-	
+	// Gameplane drawing
+
 	glPushMatrix();
-		glTranslatef(x, y-2.4, -10.0f);
+		glTranslatef(x, y-3.5, -10.0f);
 		glScalef(0.006f, 0.006f, 0.006f);
 		glRotatef(180 * flip, 0, 1, 0);
 		Paintbrush::use_shader(Paintbrush::get_shader("point_light_spine"));
 		spineboy.draw();
 		Paintbrush::stop_shader();
 	glPopMatrix();
-	
-	
-/*	float z;
-	for (z = 0; z > -40; z -= 1)
-	{
-		glPushMatrix();
-		glTranslatef(0.0f, -10.0f, 0.0f);
-		Paintbrush::draw_collision_group(LinearAlgebra::get_collisiongroups_from_model(*level_static.model, z, t_vertex(0, 0, -10)), z);
-		glPopMatrix();
-	}
-*/
+
+	// Post-gameplane entities
+
 	glDisable(GL_DEPTH_TEST);
 	glEnable(GL_BLEND);
 	glPushMatrix();

@@ -11,11 +11,10 @@ void EmitterTechDemo::init()
 
 	while (myemitter.particles.size() < 50)
 	{
-		myemitter.particles.push_back(new FireParticle);
+		myemitter.particles.push_back(new Star);
 	}
 	
-	myemitter.init(Paintbrush::get_texture("data/images/fire.png", false, false));
-
+	myemitter.init(Paintbrush::get_texture("data/images/fire.png", false, false), t_vertex(0, 0, 0), t_vertex(50, 50, 0));
 }
 
 void EmitterTechDemo::run(float time_delta)
