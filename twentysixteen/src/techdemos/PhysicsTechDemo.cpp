@@ -87,7 +87,11 @@ bool PhysicsTechDemo::check_collision(float time_delta)
 			box.position.x += real_velocity.x + r.MinimumTranslationVector.x*1.05;
 			box.position.y += real_velocity.y + r.MinimumTranslationVector.y*1.05;
 
-			box.velocity.y = 0;
+			if(r.MinimumTranslationVector.y > 0)
+				box.velocity.y = 0;
+
+			if (r.MinimumTranslationVector.y < 0)
+				box.velocity.y = -0.001;
 
 			intersected = true;
 		}
