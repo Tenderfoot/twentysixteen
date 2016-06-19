@@ -85,12 +85,12 @@ bool PhysicsTechDemo::check_collision(float time_delta)
 	{
 		PolygonCollisionResult r = LinearAlgebra::PolygonCollision(box.return_polygon(), collision_group.collision_groups.at(i), real_velocity);
 
-		if (r.WillIntersect && intersected == false) {
+		if (r.WillIntersect) {
 			// Move the polygon by its velocity, then move
 			// the polygons appart using the Minimum Translation Vector
 
-			box.position.x += real_velocity.x + r.MinimumTranslationVector.x;
-			box.position.y += real_velocity.y + r.MinimumTranslationVector.y;
+			box.position.x += r.MinimumTranslationVector.x;
+			box.position.y += r.MinimumTranslationVector.y;
 
 			if(r.MinimumTranslationVector.y > 0)
 				box.velocity.y = 0;
@@ -102,11 +102,8 @@ bool PhysicsTechDemo::check_collision(float time_delta)
 		}
 	}
 
-	if (intersected == false)
-	{
-		box.position.x += (box.velocity.x*time_delta);
-		box.position.y += (box.velocity.y*time_delta);
-	}
+	box.position.x += real_velocity.x;
+	box.position.y += real_velocity.y;
 
 	box.was_zero = false;
 
