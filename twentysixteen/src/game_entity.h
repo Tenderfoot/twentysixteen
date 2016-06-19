@@ -22,6 +22,8 @@ public:
 	void draw();
 	void update(float delta_time);
 
+	bool was_zero;
+
 	t_polygon return_polygon()
 	{
 		t_polygon to_return;

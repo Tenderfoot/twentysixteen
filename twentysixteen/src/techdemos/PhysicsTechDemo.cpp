@@ -14,7 +14,7 @@ void PhysicsTechDemo::init()
 
 	spineboy.load_spine_data("everybody");
 
-	box.position = t_vertex(0, 10, -20);
+	box.position = t_vertex(0, 6, -20);
 	box.size = t_vertex(1, 2, 1);
 	box.velocity = t_vertex(0, 0, 0);
 }
@@ -40,8 +40,13 @@ void PhysicsTechDemo::run(float time_delta)
 	}
 
 	if (box.velocity.y > -0.03)
+	{
+		if (box.velocity.y == 0)
+		{
+			box.was_zero = true;
+		}
 		box.velocity.y -= 0.0001*time_delta;
-
+	}
 	if (keydown_map[LEFT] || keydown_map[RIGHT])
 	{
 		spineboy.animation_name = "walk_two";
@@ -71,7 +76,7 @@ bool PhysicsTechDemo::check_collision(float time_delta)
 	t_vertex correction_vertex;
 
 	t_vertex polygonATranslation = t_vertex(0, 0, 0);
-	t_vertex real_velocity = t_vertex(0, 0, 0.0f);
+	t_vertex real_velocity = t_vertex(box.velocity.x*time_delta, box.velocity.y*time_delta, 0.0f);
 
 	bool intersected = false;
 
@@ -84,8 +89,8 @@ bool PhysicsTechDemo::check_collision(float time_delta)
 			// Move the polygon by its velocity, then move
 			// the polygons appart using the Minimum Translation Vector
 
-			box.position.x += real_velocity.x + r.MinimumTranslationVector.x*1.05;
-			box.position.y += real_velocity.y + r.MinimumTranslationVector.y*1.05;
+			box.position.x += real_velocity.x + r.MinimumTranslationVector.x;
+			box.position.y += real_velocity.y + r.MinimumTranslationVector.y;
 
 			if(r.MinimumTranslationVector.y > 0)
 				box.velocity.y = 0;
@@ -102,6 +107,8 @@ bool PhysicsTechDemo::check_collision(float time_delta)
 		box.position.x += (box.velocity.x*time_delta);
 		box.position.y += (box.velocity.y*time_delta);
 	}
+
+	box.was_zero = false;
 
 	return to_return;
 }
