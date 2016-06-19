@@ -469,12 +469,12 @@ void Paintbrush::draw_model(t_3dModel *mymodel)
 void Paintbrush::draw_collision_group(t_collisiongroup group, float distance)
 {
 	int i;
-	std::vector<t_edge> *edge_set;
+	t_polygon *edge_set;
 	for (i = 0; i < group.collision_groups.size(); i++)
 	{
 		edge_set = &group.collision_groups.at(i);
 
-		for (auto it = edge_set->begin(); it != edge_set->end(); ++it)
+		for (auto it = edge_set->edges.begin(); it != edge_set->edges.end(); ++it)
 		{
 			glBindTexture(GL_TEXTURE_2D, NULL);
 			glColor3f(1.0f, 0.0f, 1.0f);

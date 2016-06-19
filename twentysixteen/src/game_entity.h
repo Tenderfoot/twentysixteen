@@ -6,6 +6,7 @@
 
 #include "common.h"
 #include "model_data.h"
+#include "linear_algebra.h"
 #include "entity.h"
 
 class GameEntity : public Entity
@@ -20,4 +21,35 @@ public:
 
 	void draw();
 	void update(float delta_time);
+
+	t_polygon return_polygon()
+	{
+		t_polygon to_return;
+
+		t_edge edge;
+
+		edge.verticies.push_back(t_vertex(position.x + (size.x / 2), position.y + (size.y / 2),0));
+		edge.verticies.push_back(t_vertex(position.x + (size.x / 2), position.y - (size.y / 2), 0));
+		to_return.edges.push_back(edge);
+		edge.verticies.clear();
+
+		edge.verticies.push_back(t_vertex(position.x + (size.x / 2), position.y - (size.y / 2), 0));
+		edge.verticies.push_back(t_vertex(position.x - (size.x / 2), position.y - (size.y / 2), 0));
+		to_return.edges.push_back(edge);
+		edge.verticies.clear();
+
+		edge.verticies.push_back(t_vertex(position.x - (size.x / 2), position.y - (size.y / 2), 0));
+		edge.verticies.push_back(t_vertex(position.x - (size.x / 2), position.y + (size.y / 2), 0));
+		to_return.edges.push_back(edge);
+		edge.verticies.clear();
+
+		edge.verticies.push_back(t_vertex(position.x - (size.x / 2), position.y + (size.y / 2), 0));
+		edge.verticies.push_back(t_vertex(position.x + (size.x / 2), position.y + (size.y / 2), 0));
+		to_return.edges.push_back(edge);
+		edge.verticies.clear();
+		 
+
+		return to_return;
+	};
+
 };

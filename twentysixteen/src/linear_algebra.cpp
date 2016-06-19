@@ -4,9 +4,9 @@
 
 #include <math.h>
 
- std::vector<t_edge> *LinearAlgebra::get_edges_from_slice(t_3dModel from_model, float plane_z, t_vertex model_transform, int mesh_id)
+t_polygon *LinearAlgebra::get_edges_from_slice(t_3dModel from_model, float plane_z, t_vertex model_transform, int mesh_id)
 {
-	std::vector<t_edge> *edge_set = new std::vector<t_edge>;
+	t_polygon *edge_set = new t_polygon;
 
 	t_edge new_edge;
 	t_vertex new_vertex;
@@ -54,15 +54,16 @@
 		if (new_edge.verticies.size() == 2)
 		{
 			new_edge.material_id = from_model.meshes.at(mesh_id)->faces.at(i)->material_index;
-			edge_set->push_back(new_edge);
+			edge_set->edges.push_back(new_edge);
 		}
-		//printf("hit %d times\n", hit_times);
 	}
+
+
 
 	return edge_set;
 }
 
- bool LinearAlgebra::point_in_polygon(t_vertex point, std::vector<t_edge> edge_set)
+ bool LinearAlgebra::point_in_polygon(t_vertex point, t_polygon edge_set)
  {
 	 // basic idea is to take the x coordinate of the point, and
 	 // get all points of intersection with the edge set. Once this
@@ -75,7 +76,7 @@
 	 std::vector<t_edge>::iterator it;
 	 t_vertex new_vertex;
 
-	 for (auto it = edge_set.begin(); it != edge_set.end(); ++it)
+	 for (auto it = edge_set.edges.begin(); it != edge_set.edges.end(); ++it)
 	 {
 		 if ((it->verticies.at(0).x < point.x && it->verticies.at(1).x > point.x) ||
 			 (it->verticies.at(1).x < point.x && it->verticies.at(0).x > point.x))
@@ -113,18 +114,192 @@
 	 return false;
  }
 
+ t_vertex LinearAlgebra::ProjectPolygon(t_vertex axis, t_polygon polygon) 
+ {
+	 // To project a point on an axis use the dot product
+	 float dotProduct = axis.DotProduct(polygon.edges.at(0).verticies.at(0));
+
+	 t_vertex minmax;
+	 minmax.x = dotProduct;
+	 minmax.y = dotProduct;
+	 for (int i = 0; i < polygon.edges.size(); i++) {
+		 dotProduct = polygon.edges.at(i).verticies.at(0).DotProduct(axis);
+		 if (dotProduct < minmax.x) {
+			 minmax.x = dotProduct;
+		 }
+		 else {
+			 if (dotProduct >  minmax.y) {
+				 minmax.y = dotProduct;
+			 }
+		 }
+	}
+	 
+	 return minmax;
+ }
+
+ float LinearAlgebra::IntervalDistance(float minA, float maxA, float minB, float maxB) 
+ {
+	 if (minA < minB) {
+		 return minB - maxA;
+	 }
+	 else {
+		 return minA - maxB;
+	 }
+ }
+
+ PolygonCollisionResult LinearAlgebra::PolygonCollision(t_polygon polygonA, t_polygon polygonB, t_vertex velocity)
+ {
+	 PolygonCollisionResult result = PolygonCollisionResult();
+	 result.Intersect = true;
+	 result.WillIntersect = true;
+
+	 int edgeCountA = polygonA.edges.size();
+	 int edgeCountB = polygonB.edges.size();
+	 float minIntervalDistance = 999999999;
+	 t_vertex translationAxis = t_vertex();
+	 t_vertex edge;
+
+	 // Loop through all the edges of both polygons
+	 for (int edgeIndex = 0; edgeIndex < edgeCountA + edgeCountB; edgeIndex++) {
+		 if (edgeIndex < edgeCountA) {
+			 edge = polygonA.edges.at(edgeIndex).as_vertex();
+		 }
+		 else {
+			 edge = polygonB.edges.at(edgeIndex - edgeCountA).as_vertex();
+		 }
+
+		 // ===== 1. Find if the polygons are currently intersecting =====
+
+		 // Find the axis perpendicular to the current edge
+		 t_vertex axis = t_vertex(-edge.y, edge.x, 0);
+		 axis.Normalize();
+		 
+		 // Find the projection of the polygon on the current axis
+		 float minA = 0; float minB = 0; float maxA = 0; float maxB = 0;
+		 minA = ProjectPolygon(axis, polygonA).x;
+		 maxA = ProjectPolygon(axis, polygonA).y;
+		 minB = ProjectPolygon(axis, polygonB).x;
+		 maxB = ProjectPolygon(axis, polygonB).y;
+
+		 // Check if the polygon projections are currentlty intersecting
+		 if (IntervalDistance(minA, maxA, minB, maxB) > 0)
+		 {
+			 result.Intersect = false;
+		 }
+
+		 // ===== 2. Now find if the polygons *will* intersect =====
+
+		 // Project the velocity on the current axis
+		 float velocityProjection = axis.DotProduct(velocity);
+
+		 // Get the projection of polygon A during the movement
+		 if (velocityProjection < 0) {
+			 minA += velocityProjection;
+		 }
+		 else {
+			 maxA += velocityProjection;
+		 }
+
+		 // Do the same test as above for the new projection
+		 float intervalDistance = IntervalDistance(minA, maxA, minB, maxB);
+		 if (intervalDistance > 0) result.WillIntersect = false;
+
+		 // If the polygons are not intersecting and won't intersect, exit the loop
+		 if (!result.Intersect && !result.WillIntersect) break;
+
+		 // Check if the current interval distance is the minimum one. If so store
+		 // the interval distance and the current distance.
+		 // This will be used to calculate the minimum translation vector
+		 intervalDistance = abs(intervalDistance);
+		 if (intervalDistance < minIntervalDistance) {
+			 minIntervalDistance = intervalDistance;
+			 translationAxis = axis;
+
+			 t_vertex d = t_vertex(polygonA.center().x - polygonB.center().x, polygonA.center().y - polygonB.center().y, 0);
+			 if (d.DotProduct(translationAxis) < 0)
+			 {
+				 translationAxis.x = -translationAxis.x;
+				 translationAxis.y = -translationAxis.y;
+			 }
+		}
+	 }
+
+	 // The minimum translation vector
+	 // can be used to push the polygons appart.
+	 if (result.WillIntersect)
+		 result.MinimumTranslationVector =
+		 t_vertex(translationAxis.x * minIntervalDistance, translationAxis.y * minIntervalDistance,0);
+
+	 return result;
+ }
+
+ bool LinearAlgebra::close_by(t_vertex a, t_vertex b)
+ {
+	 float threshhold = 0.1;
+
+	 if (a.x > b.x - threshhold && a.x < b.x + threshhold && a.y > b.y - threshhold && a.y < b.y + threshhold)
+		 return true;
+	 else
+		 return false;
+ }
+
+ bool LinearAlgebra::is_edge_in_groups(t_edge edge, t_polygon polygon)
+ {
+	 int i, j;
+	 t_edge test_edge;
+
+	 for (i = 0; i < polygon.edges.size(); i++)
+	 {
+		 test_edge = polygon.edges.at(i);
+		 if (close_by(edge.verticies.at(0),test_edge.verticies.at(0)) ||
+			 close_by(edge.verticies.at(1), test_edge.verticies.at(0)) ||
+			 close_by(edge.verticies.at(1), test_edge.verticies.at(1)) ||
+			 close_by(edge.verticies.at(0), test_edge.verticies.at(1)))
+		 {
+			 return true;
+		 }
+	 }
+	 return false;
+}
 
 t_collisiongroup LinearAlgebra::get_collisiongroups_from_model(t_3dModel from_model, float plane_z, t_vertex model_transform)
  {
-	 t_collisiongroup return_groups;
+	 t_collisiongroup return_groups, split_groups;
 	 
-	 int i;
+	 int i,j;
+
 	 for (i = 0; i < from_model.meshes.size(); i++)
 	 {
 		 return_groups.collision_groups.push_back(*get_edges_from_slice(from_model, plane_z, model_transform, i));
 	 }
 
-	 return return_groups;
+	 // now we have the edges of everything mashed together, since seperate meshes aren't seperate meshes apparently...
+	 
+	 bool found = false;
+	 t_edge the_edge;
+	 // for every edge in the set
+	 for (i = 0; i < return_groups.collision_groups.at(0).edges.size(); i++)
+	 {
+		 found = false;
+		 the_edge = return_groups.collision_groups.at(0).edges.at(i);
+		 // for every existing polygon, see if it contains the edge; if not, create a new polygon and add the new edge
+		 for (j = 0; j < split_groups.collision_groups.size(); j++)
+		 {
+			 if (is_edge_in_groups(the_edge, split_groups.collision_groups.at(j)))
+			 {
+				 split_groups.collision_groups.at(j).edges.push_back(the_edge);
+				 found = true;
+			 }
+		 }
+		 // if not found, make a new one
+		 if(found == false)
+		 {
+			 split_groups.collision_groups.push_back(t_polygon());
+			 split_groups.collision_groups.at(split_groups.collision_groups.size() - 1).edges.push_back(the_edge);
+		 }
+	 }
+
+	 return split_groups;
  }
 
 bool  LinearAlgebra::point_in_collisiongroup(t_vertex point, t_collisiongroup group)

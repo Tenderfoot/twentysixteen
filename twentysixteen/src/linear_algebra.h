@@ -24,7 +24,34 @@ typedef struct
 	// knowing what material the face it comes from is
 	// is going to help with VFXGrass
 	int material_id;
+
+	t_vertex as_vertex()
+	{
+		return t_vertex(verticies.at(1).x - verticies.at(0).x, verticies.at(1).y - verticies.at(0).y, 0);
+	}
+
 } t_edge;
+
+typedef struct
+{
+	std::vector<t_edge> edges;
+
+	t_vertex center()
+	{
+		int i;
+		float total_x=0;
+		
+		float total_y=0;
+		for (i = 0; i < edges.size(); i++)
+		{
+			total_x += edges.at(i).verticies.at(0).x;
+			total_y += edges.at(i).verticies.at(0).y;
+		}
+
+		return t_vertex(total_x / edges.size(), total_y / edges.size(), 0);
+	}
+
+}t_polygon;
 
 // edge sets are cool and all, but....
 // its probably better for long-term design if
@@ -41,22 +68,37 @@ typedef struct
 typedef struct
 {
 	// a vector, that contains edge_sets, which are vectors of t_edge.
-	std::vector<std::vector<t_edge>> collision_groups;
+	std::vector<t_polygon> collision_groups;
 } t_collisiongroup;
+
+// collision result
+typedef struct {
+	// Are the polygons going to intersect forward in time?
+	bool WillIntersect;
+	// Are the polygons currently intersecting?
+	bool Intersect;
+	// The translation to apply to the first polygon to push the polygons apart.
+	t_vertex MinimumTranslationVector;
+} PolygonCollisionResult;
 
 class LinearAlgebra
 {
 public:
 
-	static std::vector<t_edge> *get_edges_from_slice(t_3dModel from_model, float plane_z, t_vertex model_transform, int mesh_id);
+	static t_polygon *get_edges_from_slice(t_3dModel from_model, float plane_z, t_vertex model_transform, int mesh_id);
+	static bool is_edge_in_groups(t_edge edge, t_polygon group);
+	static bool close_by(t_vertex a, t_vertex b);
 	static t_collisiongroup get_collisiongroups_from_model(t_3dModel from_model, float plane_z, t_vertex model_transform);
 
-	static bool point_in_polygon(t_vertex point, std::vector<t_edge> edge_set);
+	static bool LinearAlgebra::point_in_polygon(t_vertex point, t_polygon edge_set);
 	// this returns whether or not a point is in a collision group:
 	static bool point_in_collisiongroup(t_vertex point, t_collisiongroup group);
 	// this checks the line segment created from the start and end points, against the collision group. If intersections are found, it takes the closest,
 	// and returns the vector of translation required to remove the vertex from the collisiongroup
 	static t_vertex get_collision_correction(t_vertex start_point, t_vertex end_point, t_collisiongroup group);
 	static t_vertex line_segment_cross_polygon(t_vertex start_point, t_vertex end_point, std::vector<t_edge> edge_set);
-
+	
+	static t_vertex ProjectPolygon(t_vertex axis, t_polygon polygon);
+	static float IntervalDistance(float minA, float maxA, float minB, float maxB);
+	static PolygonCollisionResult PolygonCollision(t_polygon polygonA, t_polygon polygonB, t_vertex velocity);
 };

@@ -28,6 +28,21 @@ public:
 	{
 	}
 
+	float DotProduct(t_vertex other) {
+		return x * other.x + y * other.y;
+	}
+
+	float Magnitude()
+	{
+		return (float)sqrt(x * x + y * y);
+	}
+
+	void Normalize() {
+		float magnitude = Magnitude();
+		x = x / magnitude;
+		y = y / magnitude;
+	}
+
 	float texcoord_x, texcoord_y;
 	float x, y, z;
 	float r, g, b;

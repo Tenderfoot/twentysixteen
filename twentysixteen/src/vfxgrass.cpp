@@ -19,10 +19,10 @@ std::vector<Entity*> VFXGrass::generate_grass(t_3dModel from_model, t_vertex mod
 		int i, j;
 		for (i = 0; i < grass_group.collision_groups.size(); i++)
 		{
-			for (j = 0; j < grass_group.collision_groups.at(i).size(); j++)
+			for (j = 0; j < grass_group.collision_groups.at(i).edges.size(); j++)
 			{
-				t_vertex v0 = grass_group.collision_groups.at(i).at(j).verticies.at(0);
-				t_vertex v1 = grass_group.collision_groups.at(i).at(j).verticies.at(1);
+				t_vertex v0 = grass_group.collision_groups.at(i).edges.at(j).verticies.at(0);
+				t_vertex v1 = grass_group.collision_groups.at(i).edges.at(j).verticies.at(1);
 
 				new_entity = new GrassEntity;
 
@@ -30,9 +30,7 @@ std::vector<Entity*> VFXGrass::generate_grass(t_3dModel from_model, t_vertex mod
 				new_entity->v2 = v1;
 				new_entity->position.z = z;
 
-				printf("%d\n", grass_group.collision_groups.at(i).at(j).material_id);
-
-				if (grass_group.collision_groups.at(i).at(j).material_id == 0)
+				if (grass_group.collision_groups.at(i).edges.at(j).material_id == 0)
 				{
 					grass_polygons.push_back(new_entity);
 				}

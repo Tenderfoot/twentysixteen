@@ -60,6 +60,9 @@ t_3dModel *ModelData::import(char *filename, float scale)
 	for (i = 0; i<scene->mNumMeshes; i++)
 	{
 		new_mesh = new t_mesh();
+
+		printf("num meshes: %d\n", scene->mNumMeshes);
+
 		for (j = 0; j<scene->mMeshes[i]->mNumFaces; j++)
 		{
 			new_face = new t_face();
