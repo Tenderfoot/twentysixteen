@@ -29,6 +29,7 @@ public:
 		glPushMatrix();
 			Paintbrush::use_shader(Paintbrush::get_shader("grass"));
 			glBegin(GL_QUADS);
+				glNormal3f(0.0f, 1.0f, 0.0f);
 				glTexCoord2f(1*diff, 1.00f);	glVertex3f(v2.x, v2.y+2, v2.z);
 				glTexCoord2f(0, 1.00f);	glVertex3f(v1.x, v1.y+2, v1.z);
 				glTexCoord2f(0, 0.0f);		glVertex3f(v1.x, v1.y, v1.z);

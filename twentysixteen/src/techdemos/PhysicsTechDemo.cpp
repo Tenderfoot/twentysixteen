@@ -10,7 +10,7 @@ void PhysicsTechDemo::init()
 
 	collision_group = LinearAlgebra::get_collisiongroups_from_model(*level_static.model, -20, t_vertex(0, 0, -50));
 
-	printf("=======this====== %d\n", collision_group.collision_groups.size());
+	printf("==== test : %d\n", collision_group.collision_groups.size());
 
 	spineboy.load_spine_data("everybody");
 
@@ -95,10 +95,6 @@ void PhysicsTechDemo::draw()
 
 	Paintbrush::draw_collision_group(collision_group, -20);
 
-	/*t_collisiongroup testbox;
-	testbox.collision_groups.push_back(box.return_polygon());
-	Paintbrush::draw_collision_group(testbox, -20);*/
-
 	glPushMatrix();
 		glTranslatef(box.position.x, box.position.y-1.5, -20);
 		glColor3f(1.0f, 1.0f, 1.0f);
@@ -107,15 +103,6 @@ void PhysicsTechDemo::draw()
 		glScalef(0.005, 0.005, 1);
 		spineboy.draw();
 	glPopMatrix();
-
-	/*
-	glPushMatrix();
-		glTranslatef(box.position.x, box.position.y, -20);
-		glColor3f(1.0f, 1.0f, 1.0f);
-		glScalef(box.size.x, box.size.y, 0.006f);
-		Paintbrush::draw_quad();
-	glPopMatrix();
-	*/
 
 	BaseTechDemo::draw();
 }

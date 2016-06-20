@@ -409,6 +409,56 @@ GLuint Paintbrush::get_texture(char* texture_id, bool text, bool flip)
 	return texture_db[texture_id];
 }
 
+void Paintbrush::draw_face(t_face face_to_draw, GLuint texture)
+{
+	glEnable(GL_TEXTURE_2D);
+
+	int i, j = 0;
+
+	//TODO don't use highest possible anistro
+	GLfloat fLargest;
+	glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &fLargest);
+
+	float alpha = 1.0f;
+
+	glEnable(GL_DEPTH_TEST);
+
+	t_vertex temp;
+	t_vertex temp2;
+	t_vertex cross;
+
+	glColor3f(1.0f, 1.0f, 1.0f);
+
+	glPushMatrix();
+
+		glBindTexture(GL_TEXTURE_2D, texture);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, fLargest);
+		glEnable(GL_BLEND);
+		glPushMatrix();
+
+		glBegin(GL_TRIANGLES);
+
+			glNormal3f(face_to_draw.normal[0].x, face_to_draw.normal[0].y, face_to_draw.normal[0].z);
+			glTexCoord2f(face_to_draw.verticies.at(0).texcoord_x, face_to_draw.verticies.at(0).texcoord_y);
+			glVertex3f(face_to_draw.verticies.at(0).x, face_to_draw.verticies.at(0).y, face_to_draw.verticies.at(0).z);
+
+			glNormal3f(face_to_draw.normal[1].x, face_to_draw.normal[1].y, face_to_draw.normal[1].z);
+			glTexCoord2f(face_to_draw.verticies.at(1).texcoord_x, face_to_draw.verticies.at(1).texcoord_y);
+			glVertex3f(face_to_draw.verticies.at(1).x, face_to_draw.verticies.at(1).y, face_to_draw.verticies.at(1).z);
+
+			glNormal3f(face_to_draw.normal[2].x, face_to_draw.normal[2].y, face_to_draw.normal[2].z);
+			glTexCoord2f(face_to_draw.verticies.at(2).texcoord_x, face_to_draw.verticies.at(2).texcoord_y);
+			glVertex3f(face_to_draw.verticies.at(2).x, face_to_draw.verticies.at(2).y, face_to_draw.verticies.at(2).z);
+
+		glEnd();
+
+		glPopMatrix();
+
+		glDisable(GL_BLEND);
+
+	glPopMatrix();
+}
+
 void Paintbrush::draw_model(t_3dModel *mymodel)
 {
 	glEnable(GL_TEXTURE_2D);

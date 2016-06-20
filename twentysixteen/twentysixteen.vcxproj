@@ -52,6 +52,7 @@
     <ClInclude Include="src\glext.h" />
     <ClInclude Include="src\grass_entity.h" />
     <ClInclude Include="src\level.h" />
+    <ClInclude Include="src\level_data.h" />
     <ClInclude Include="src\light_manager.h" />
     <ClInclude Include="src\linear_algebra.h" />
     <ClInclude Include="src\modelprop_entity.h" />

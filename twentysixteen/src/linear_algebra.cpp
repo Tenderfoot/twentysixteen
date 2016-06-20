@@ -273,36 +273,8 @@ t_collisiongroup LinearAlgebra::get_collisiongroups_from_model(t_3dModel from_mo
 		 return_groups.collision_groups.push_back(*get_edges_from_slice(from_model, plane_z, model_transform, i));
 	 }
 
-	 // now we have the edges of everything mashed together, since seperate meshes aren't seperate meshes apparently...
-	 
-	 bool found = false;
-	 t_edge the_edge;
-	 // for every edge in the set
-	 for (k = 0; k < return_groups.collision_groups.size(); k++)
-	 {
-		 for (i = 0; i < return_groups.collision_groups.at(k).edges.size(); i++)
-		 {
-			 found = false;
-			 the_edge = return_groups.collision_groups.at(k).edges.at(i);
-			 // for every existing polygon, see if it contains the edge; if not, create a new polygon and add the new edge
-			 for (j = 0; j < split_groups.collision_groups.size(); j++)
-			 {
-				 if (is_edge_in_groups(the_edge, split_groups.collision_groups.at(j)))
-				 {
-					 split_groups.collision_groups.at(j).edges.push_back(the_edge);
-					 found = true;
-				 }
-			 }
-			 // if not found, make a new one
-			 if (found == false)
-			 {
-				 split_groups.collision_groups.push_back(t_polygon());
-				 split_groups.collision_groups.at(split_groups.collision_groups.size() - 1).edges.push_back(the_edge);
-			 }
-		 }
-	 }
 
-	 return split_groups;
+	 return return_groups;
  }
 
 bool  LinearAlgebra::point_in_collisiongroup(t_vertex point, t_collisiongroup group)

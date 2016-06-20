@@ -191,6 +191,9 @@
     <ClInclude Include="src\modelprop_entity.h">
       <Filter>Header Files\entities</Filter>
     </ClInclude>
+    <ClInclude Include="src\level_data.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="data\shaders\grass.frag">

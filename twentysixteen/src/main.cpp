@@ -11,10 +11,9 @@
 #define NO_SDL_GLEXT
 
 // whats next
-// emitter/level cohesian
-// fix grass demo
-// global lights
-// load models static
+// Make a level importer that inherits from modeldata
+// load in the level the same way but parse out entities
+// add entities to the scene after
 
 // General Libraries
 #include <GL/glew.h>

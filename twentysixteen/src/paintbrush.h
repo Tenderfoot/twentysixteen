@@ -54,6 +54,7 @@ public:
 
 	// draw a 3d model
 	static void draw_model(t_3dModel *mymodel);
+	static void draw_face(t_face face_to_draw, GLuint texture);
 	static void draw_cube();
 
 	// shader stuff
