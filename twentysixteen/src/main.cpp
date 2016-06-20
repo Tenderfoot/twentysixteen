@@ -11,9 +11,10 @@
 #define NO_SDL_GLEXT
 
 // whats next
-// Make a level importer that inherits from modeldata
-// load in the level the same way but parse out entities
-// add entities to the scene after
+// make a spine entity
+// make a player entity
+// sort the player entity into the scene demo
+// handle keypress on the player entity
 
 // General Libraries
 #include <GL/glew.h>

@@ -7,6 +7,7 @@
 #include "../spine_data.h"
 #include "../VFXGrass.h"
 #include "../modelprop_entity.h"
+#include "../spine_entity.h"
 
 typedef enum
 {
@@ -51,12 +52,8 @@ public:
 		}
 	};
 
-
-	float x, y;
-	bool flip;
-
 	ParticleEmitter myemitter;
 	ModelData level_static;
-	SpineData spineboy;
+	SpineEntity spineboy;
 
 };
