@@ -266,7 +266,7 @@ t_collisiongroup LinearAlgebra::get_collisiongroups_from_model(t_3dModel from_mo
  {
 	 t_collisiongroup return_groups, split_groups;
 	 
-	 int i,j;
+	 int i,j,k;
 
 	 for (i = 0; i < from_model.meshes.size(); i++)
 	 {
@@ -278,24 +278,27 @@ t_collisiongroup LinearAlgebra::get_collisiongroups_from_model(t_3dModel from_mo
 	 bool found = false;
 	 t_edge the_edge;
 	 // for every edge in the set
-	 for (i = 0; i < return_groups.collision_groups.at(0).edges.size(); i++)
+	 for (k = 0; k < return_groups.collision_groups.size(); k++)
 	 {
-		 found = false;
-		 the_edge = return_groups.collision_groups.at(0).edges.at(i);
-		 // for every existing polygon, see if it contains the edge; if not, create a new polygon and add the new edge
-		 for (j = 0; j < split_groups.collision_groups.size(); j++)
+		 for (i = 0; i < return_groups.collision_groups.at(k).edges.size(); i++)
 		 {
-			 if (is_edge_in_groups(the_edge, split_groups.collision_groups.at(j)))
+			 found = false;
+			 the_edge = return_groups.collision_groups.at(k).edges.at(i);
+			 // for every existing polygon, see if it contains the edge; if not, create a new polygon and add the new edge
+			 for (j = 0; j < split_groups.collision_groups.size(); j++)
 			 {
-				 split_groups.collision_groups.at(j).edges.push_back(the_edge);
-				 found = true;
+				 if (is_edge_in_groups(the_edge, split_groups.collision_groups.at(j)))
+				 {
+					 split_groups.collision_groups.at(j).edges.push_back(the_edge);
+					 found = true;
+				 }
 			 }
-		 }
-		 // if not found, make a new one
-		 if(found == false)
-		 {
-			 split_groups.collision_groups.push_back(t_polygon());
-			 split_groups.collision_groups.at(split_groups.collision_groups.size() - 1).edges.push_back(the_edge);
+			 // if not found, make a new one
+			 if (found == false)
+			 {
+				 split_groups.collision_groups.push_back(t_polygon());
+				 split_groups.collision_groups.at(split_groups.collision_groups.size() - 1).edges.push_back(the_edge);
+			 }
 		 }
 	 }
 

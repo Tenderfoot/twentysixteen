@@ -15,7 +15,7 @@ void PhysicsTechDemo::init()
 	spineboy.load_spine_data("everybody");
 
 	box.position = t_vertex(0, 6, -20);
-	box.size = t_vertex(1, 2, 1);
+	box.size = t_vertex(1, 3, 1);
 	box.velocity = t_vertex(0, 0, 0);
 }
 
@@ -38,15 +38,12 @@ void PhysicsTechDemo::run(float time_delta)
 		if (box.velocity.y == 0)
 			box.velocity.y = +0.035;
 	}
-
+	
 	if (box.velocity.y > -0.03)
 	{
-		if (box.velocity.y == 0)
-		{
-			box.was_zero = true;
-		}
 		box.velocity.y -= 0.0001*time_delta;
 	}
+
 	if (keydown_map[LEFT] || keydown_map[RIGHT])
 	{
 		spineboy.animation_name = "walk_two";
@@ -62,52 +59,19 @@ void PhysicsTechDemo::run(float time_delta)
 		}
 	}
 	else
+	{
 		spineboy.animation_name = "idle";
+	}
 
 	check_collision(time_delta);
 }
 
 bool PhysicsTechDemo::check_collision(float time_delta)
 {
-	// check all 4 points
-	bool to_return = false;
+	box.correct_against_collisiongroup(collision_group, time_delta);
+	box.update(time_delta);
 
-	// check all four points of me against the collision group
-	t_vertex correction_vertex;
-
-	t_vertex polygonATranslation = t_vertex(0, 0, 0);
-	t_vertex real_velocity = t_vertex(box.velocity.x*time_delta, box.velocity.y*time_delta, 0.0f);
-
-	bool intersected = false;
-
-	int i,j;
-	for (i = 0; i < collision_group.collision_groups.size(); i++)
-	{
-		PolygonCollisionResult r = LinearAlgebra::PolygonCollision(box.return_polygon(), collision_group.collision_groups.at(i), real_velocity);
-
-		if (r.WillIntersect) {
-			// Move the polygon by its velocity, then move
-			// the polygons appart using the Minimum Translation Vector
-
-			box.position.x += r.MinimumTranslationVector.x;
-			box.position.y += r.MinimumTranslationVector.y;
-
-			if(r.MinimumTranslationVector.y > 0)
-				box.velocity.y = 0;
-
-			if (r.MinimumTranslationVector.y < 0)
-				box.velocity.y = -0.001;
-
-			intersected = true;
-		}
-	}
-
-	box.position.x += real_velocity.x;
-	box.position.y += real_velocity.y;
-
-	box.was_zero = false;
-
-	return to_return;
+	return true;
 }
 
 void PhysicsTechDemo::take_input(boundinput input, bool type)
@@ -121,7 +85,6 @@ void PhysicsTechDemo::take_input(boundinput input, bool type)
 void PhysicsTechDemo::draw()
 {
 	gluLookAt(box.position.x, box.position.y, 0, box.position.x, box.position.y, -25, 0, 1, 0);
-
 	
 	glPushMatrix();
 		glTranslatef(0.0f, 0.0f, -50.0f);
@@ -129,23 +92,22 @@ void PhysicsTechDemo::draw()
 		Paintbrush::draw_model(level_static.model);
 		Paintbrush::stop_shader();
 	glPopMatrix();
-	
 
 	Paintbrush::draw_collision_group(collision_group, -20);
 
-	t_collisiongroup testbox;
+	/*t_collisiongroup testbox;
 	testbox.collision_groups.push_back(box.return_polygon());
-	Paintbrush::draw_collision_group(testbox, -20);
+	Paintbrush::draw_collision_group(testbox, -20);*/
 
-/*
 	glPushMatrix();
-		glTranslatef(box.position.x, box.position.y, -20);
+		glTranslatef(box.position.x, box.position.y-1.5, -20);
 		glColor3f(1.0f, 1.0f, 1.0f);
-		glScalef(box.size.x, box.size.y, 1);
-		glBindTexture(GL_TEXTURE_2D, NULL);
-		Paintbrush::draw_quad();
+		if(flip)
+			glRotatef(180, 0, 1, 0);
+		glScalef(0.005, 0.005, 1);
+		spineboy.draw();
 	glPopMatrix();
-*/
+
 	/*
 	glPushMatrix();
 		glTranslatef(box.position.x, box.position.y, -20);

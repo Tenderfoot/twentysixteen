@@ -18,16 +18,16 @@ public:
 	// -velocty
 	t_vertex size;
 	t_vertex velocity;
+	t_vertex real_velocity;
 
 	void draw();
-	void update(float delta_time);
+	void update(float time_delta);
 
-	bool was_zero;
+	void correct_against_collisiongroup(t_collisiongroup collision_group, float time_delta);
 
 	t_polygon return_polygon()
 	{
 		t_polygon to_return;
-
 		t_edge edge;
 
 		edge.verticies.push_back(t_vertex(position.x + (size.x / 2), position.y + (size.y / 2),0));
@@ -49,7 +49,6 @@ public:
 		edge.verticies.push_back(t_vertex(position.x + (size.x / 2), position.y + (size.y / 2), 0));
 		to_return.edges.push_back(edge);
 		edge.verticies.clear();
-		 
 
 		return to_return;
 	};

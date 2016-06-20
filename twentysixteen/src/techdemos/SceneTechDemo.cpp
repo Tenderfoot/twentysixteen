@@ -51,13 +51,13 @@ void SceneTechDemo::run(float time_delta)
 
 		if (keydown_map[LEFT])
 		{
-			x = x - (time_delta / 300);
+			x = x - (time_delta / 200);
 			flip = false;
 		}
 
 		if (keydown_map[RIGHT])
 		{
-			x = x + (time_delta / 300);
+			x = x + (time_delta / 200);
 			flip = true;
 		}
 	}
@@ -105,7 +105,7 @@ void SceneTechDemo::draw()
 	// Star Field
 
 	glPushMatrix();
-		glTranslatef(x/1.5, 0.0f, -50.0f);
+		glTranslatef(x/1.25, 0.0f, -50.0f);
 		for (i = 0; i < myemitter.particles.size(); i++)
 		{
 			myemitter.particles.at(i)->draw();
