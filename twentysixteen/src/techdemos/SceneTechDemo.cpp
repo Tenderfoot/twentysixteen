@@ -145,9 +145,9 @@ void SceneTechDemo::draw()
 	gluLookAt(x, 12, 10, x, 10, -25, 0, 1, 0);
 
 	LightManager::lights[0].x = 0;
-	LightManager::lights[0].y = 3;
-	LightManager::lights[0].z = -13;
-	LightManager::lights[0].radius = 12;
+	LightManager::lights[0].y = 10;
+	LightManager::lights[0].z = -10;
+	LightManager::lights[0].radius = 18;
 
 	LightManager::lights[0].r = 0.9;
 	LightManager::lights[0].g = 0.9;
