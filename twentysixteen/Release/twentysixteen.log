@@ -1,7 +1,9 @@
-﻿  spine_entity.cpp
+﻿  main.cpp
+  player_entity.cpp
+  SceneTechDemo.cpp
   Generating code
-  1 of 2803 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
+  89 of 2807 functions ( 3.2%) were compiled, the rest were copied from previous compilation.
+    4 functions were new in current compilation
+    6 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   twentysixteen.vcxproj -> D:\programming stuff\twentysixteen\Release\twentysixteen.exe

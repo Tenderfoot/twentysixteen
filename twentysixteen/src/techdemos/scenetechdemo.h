@@ -7,7 +7,7 @@
 #include "../spine_data.h"
 #include "../VFXGrass.h"
 #include "../modelprop_entity.h"
-#include "../spine_entity.h"
+#include "../player_entity.h"
 
 typedef enum
 {
@@ -54,6 +54,5 @@ public:
 
 	ParticleEmitter myemitter;
 	ModelData level_static;
-	SpineEntity spineboy;
-
+	PlayerEntity spineboy;
 };

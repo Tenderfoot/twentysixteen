@@ -93,31 +93,11 @@ void SceneTechDemo::init()
 	*/
 }
 
-
-
 void SceneTechDemo::run(float time_delta)
 {
 	rotation += (time_delta / 10);
 	spineboy.spine_data.update_skeleton(time_delta);
-
-	if (keydown_map[LEFT] || keydown_map[RIGHT])
-	{
-		spineboy.spine_data.animation_name = "walk_two";
-
-		if (keydown_map[LEFT])
-		{
-			spineboy.position.x = spineboy.position.x - (time_delta / 200);
-			spineboy.flip = false;
-		}
-
-		if (keydown_map[RIGHT])
-		{
-			spineboy.position.x = spineboy.position.x + (time_delta / 200);
-			spineboy.flip = true;
-		}
-	}
-	else
-		spineboy.spine_data.animation_name = "idle";
+	spineboy.player_update(time_delta);
 
 	myemitter.update(time_delta);
 }
@@ -135,6 +115,7 @@ void SceneTechDemo::reset()
 void SceneTechDemo::take_input(boundinput input, bool type)
 {
 	keydown_map[input]=type;
+	spineboy.handle_keypress(input, type);
 
 	if (input == BACK && type == true)
 		exit_level = TECHDEMO_BASE;
@@ -164,17 +145,6 @@ void SceneTechDemo::draw()
 			myemitter.particles.at(i)->draw();
 		}
 	glPopMatrix();
-
-
-	// The Level
-	/*
-	glPushMatrix();
-		glTranslatef(0.0f, -10.0f, -10.0f);
-		Paintbrush::use_shader(Paintbrush::get_shader("point_light"));
-		Paintbrush::draw_model(level_static.model);
-		Paintbrush::stop_shader();
-	glPopMatrix();
-	*/
 
 	glPushMatrix();
 		for (i = 0; i < render_targets.size(); i++)
