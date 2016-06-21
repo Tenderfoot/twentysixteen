@@ -22,6 +22,9 @@ void SceneTechDemo::init()
 		entities.push_back(grass_entities.at(i));
 	}
 
+	spineboy.init();
+	spineboy.position.z -= 1.0f;
+
 	build_render_targets();
 }
 
@@ -68,9 +71,6 @@ void SceneTechDemo::build_render_targets()
 	}
 
 	printf("rendertargets size: %d\n", render_targets.size());
-
-	spineboy.init();
-	spineboy.position.z -= 2.0f;
 
 	current_target.type = TYPE_ENTITY;
 	current_target.the_entity = &spineboy;
