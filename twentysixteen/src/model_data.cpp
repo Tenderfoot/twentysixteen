@@ -35,14 +35,11 @@ t_3dModel *ModelData::import(char *filename, float scale)
 	{
 		aiString name;
 		scene->mMaterials[i]->GetTexture(aiTextureType_DIFFUSE, 0, &name, NULL, NULL, NULL, NULL, NULL);
-		printf("key: %s\n", name.C_Str());
 		if (name.C_Str()[0] == 'X')
 			printf("\n");
 
 		dir = new char[256];
-
 		sprintf_s(dir, sizeof(char)*256, "data/models/%s", name.C_Str());
-		printf("%s\n", dir);
 
 		new_model->textures.push_back(Paintbrush::get_texture(dir, false, true));
 
@@ -60,8 +57,6 @@ t_3dModel *ModelData::import(char *filename, float scale)
 	for (i = 0; i<scene->mNumMeshes; i++)
 	{
 		new_mesh = new t_mesh();
-
-		printf("num meshes: %d\n", scene->mNumMeshes);
 
 		for (j = 0; j<scene->mMeshes[i]->mNumFaces; j++)
 		{

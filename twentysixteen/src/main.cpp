@@ -59,7 +59,7 @@ void init_opengl()
 	glMatrixMode(GL_MODELVIEW);  // Select The Model View Matrix
 	glLoadIdentity();    // Reset The Model View Matrix
 
-	glClearColor(0.1f, 0.1f, 0.1f, 0.5f);
+	glClearColor(0.0f, 0.0f, 0.0f, 0.5f);
 }
 
 void draw()

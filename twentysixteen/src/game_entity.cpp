@@ -7,6 +7,27 @@ void GameEntity::draw()
 
 void GameEntity::update(float delta_time)
 {
+	if (apply_friction)
+	{
+		if (velocity.x > 0)
+		{
+			velocity.x -= (delta_time*0.0000125);
+			if (velocity.x < 0)
+			{
+				velocity.x = 0;
+			}
+		}
+		if (velocity.x < 0)
+		{
+			velocity.x += (delta_time*0.0000125);
+			if (velocity.x > 0)
+			{
+				velocity.x = 0;
+			}
+		}
+	}
+	apply_friction = false;
+
 	position.x += real_velocity.x;
 	position.y += real_velocity.y;
 }
@@ -30,8 +51,10 @@ void GameEntity::correct_against_collisiongroup(t_collisiongroup collision_group
 			position.y += r.MinimumTranslationVector.y;
 
 			if (r.MinimumTranslationVector.y > 0)
+			{
 				velocity.y = 0;
-
+				apply_friction = true;
+			}
 			if (r.MinimumTranslationVector.y < 0)
 				velocity.y = -0.001;
 

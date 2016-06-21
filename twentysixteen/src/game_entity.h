@@ -20,6 +20,8 @@ public:
 	t_vertex velocity;
 	t_vertex real_velocity;
 
+	bool apply_friction;
+
 	void draw();
 	void update(float time_delta);
 

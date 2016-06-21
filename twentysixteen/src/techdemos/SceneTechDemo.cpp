@@ -86,18 +86,6 @@ void SceneTechDemo::build_render_targets()
 void SceneTechDemo::run(float time_delta)
 {
 	rotation += (time_delta / 10);
-	
-	// jump
-	if (keydown_map[UP] == true)
-	{
-		if (spineboy.velocity.y == 0)
-			spineboy.velocity.y = +0.034;
-	}
-
-	if (spineboy.velocity.y > -0.03)
-	{
-		spineboy.velocity.y -= 0.0001*time_delta;
-	}
 
 	spineboy.correct_against_collisiongroup(collision_group, time_delta);
 	spineboy.update(time_delta);
@@ -120,7 +108,7 @@ void SceneTechDemo::reset()
 	LightManager::lights[0].x = 0;
 	LightManager::lights[0].y = 10;
 	LightManager::lights[0].z = -15;
-	LightManager::lights[0].radius = 18;
+	LightManager::lights[0].radius = 15;
 
 	LightManager::lights[0].r = 0.9;
 	LightManager::lights[0].g = 0.9;
@@ -143,9 +131,17 @@ void SceneTechDemo::draw()
 
 	gluLookAt(spineboy.position.x, spineboy.position.y+5, 15, spineboy.position.x, spineboy.position.y, -25, 0, 1, 0);
 
-	LightManager::lights[0].y = 10;
+	LightManager::lights[0].y = 5;
 
 	// Star Field
+	glPushMatrix();
+		glTranslatef(spineboy.position.x / 1.25, 0.0f, -55.0f);
+		glScalef(1000.0f, 1000.0f, 1000.0f);
+		glBindTexture(GL_TEXTURE_2D, NULL);
+		glColor3f(0.1f, 0.1f, 0.1f);
+		Paintbrush::draw_quad();
+	glPopMatrix();
+
 	glPushMatrix();
 		glTranslatef(spineboy.position.x/1.25, 0.0f, -50.0f);
 		for (i = 0; i < myemitter.particles.size(); i++)
@@ -154,7 +150,9 @@ void SceneTechDemo::draw()
 		}
 	glPopMatrix();
 
-	Paintbrush::draw_collision_group(collision_group, 0);
+
+//	Paintbrush::draw_collision_group(collision_group, 0);
+
 /*
 	t_collisiongroup test;
 	test.collision_groups.push_back(spineboy.return_polygon());

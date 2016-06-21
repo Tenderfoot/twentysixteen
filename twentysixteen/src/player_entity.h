@@ -18,4 +18,5 @@ public:
 	std::map<boundinput, bool> keydown_map;
 
 	void player_update(float time_delta);
+	void update(float delta_time);
 };
