@@ -56,4 +56,5 @@ public:
 	ParticleEmitter myemitter;
 	ModelData level_static;
 	PlayerEntity spineboy;
+	t_collisiongroup collision_group;
 };

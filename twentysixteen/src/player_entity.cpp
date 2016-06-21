@@ -14,13 +14,13 @@ void PlayerEntity::player_update(float time_delta)
 
 		if (keydown_map[LEFT])
 		{
-			position.x = position.x - (time_delta / 200);
+			position.x = position.x - (time_delta*0.005);
 			flip = false;
 		}
 
 		if (keydown_map[RIGHT])
 		{
-			position.x = position.x + (time_delta / 200);
+			position.x = position.x + (time_delta*0.005);
 			flip = true;
 		}
 	}

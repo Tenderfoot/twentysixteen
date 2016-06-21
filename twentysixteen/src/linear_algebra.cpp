@@ -117,24 +117,28 @@ t_polygon *LinearAlgebra::get_edges_from_slice(t_3dModel from_model, float plane
  t_vertex LinearAlgebra::ProjectPolygon(t_vertex axis, t_polygon polygon) 
  {
 	 // To project a point on an axis use the dot product
-	 float dotProduct = axis.DotProduct(polygon.edges.at(0).verticies.at(0));
+	 if (polygon.edges.size() > 0)
+	 {
+		 float dotProduct = axis.DotProduct(polygon.edges.at(0).verticies.at(0));
 
-	 t_vertex minmax;
-	 minmax.x = dotProduct;
-	 minmax.y = dotProduct;
-	 for (int i = 0; i < polygon.edges.size(); i++) {
-		 dotProduct = polygon.edges.at(i).verticies.at(0).DotProduct(axis);
-		 if (dotProduct < minmax.x) {
-			 minmax.x = dotProduct;
-		 }
-		 else {
-			 if (dotProduct >  minmax.y) {
-				 minmax.y = dotProduct;
+		 t_vertex minmax;
+		 minmax.x = dotProduct;
+		 minmax.y = dotProduct;
+		 for (int i = 0; i < polygon.edges.size(); i++) {
+			 dotProduct = polygon.edges.at(i).verticies.at(0).DotProduct(axis);
+			 if (dotProduct < minmax.x) {
+				 minmax.x = dotProduct;
+			 }
+			 else {
+				 if (dotProduct > minmax.y) {
+					 minmax.y = dotProduct;
+				 }
 			 }
 		 }
-	}
-	 
-	 return minmax;
+
+		 return minmax;
+	 }
+	 return t_vertex(0, 0, 0);
  }
 
  float LinearAlgebra::IntervalDistance(float minA, float maxA, float minB, float maxB) 
