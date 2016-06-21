@@ -90,8 +90,8 @@ void SceneTechDemo::run(float time_delta)
 	// jump
 	if (keydown_map[UP] == true)
 	{
-		//if (spineboy.velocity.y == 0)
-			spineboy.velocity.y = +0.035;
+		if (spineboy.velocity.y == 0)
+			spineboy.velocity.y = +0.034;
 	}
 
 	if (spineboy.velocity.y > -0.03)
@@ -142,6 +142,8 @@ void SceneTechDemo::draw()
 	int i;
 
 	gluLookAt(spineboy.position.x, spineboy.position.y+5, 15, spineboy.position.x, spineboy.position.y, -25, 0, 1, 0);
+
+	LightManager::lights[0].y = 10;
 
 	// Star Field
 	glPushMatrix();
