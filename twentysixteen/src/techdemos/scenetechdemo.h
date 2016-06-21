@@ -39,6 +39,7 @@ public:
 	void take_input(boundinput input, bool type);
 	float rotation;
 	void reset();
+	void build_render_targets();
 
 	// Level Entities
 	std::vector<Entity*> entities;

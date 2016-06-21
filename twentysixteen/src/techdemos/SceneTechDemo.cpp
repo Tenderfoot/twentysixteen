@@ -14,27 +14,21 @@ void SceneTechDemo::init()
 
 	level_static.model = ModelData::import("scenetest.fbx", 0.01);
 
-	// so basically what you're gunna want to do.... is iterate through the faces in the level, and create a series of SceneEntities based on
-	// the grass textured faces
-	// then, iterating through and drawing these in draw - you can z-sort
-	
-	// now that you have it drawing a quad based on an entity -
-	// now, plane slice the level and make grass entities for each edge
-	// from grass textured faces...
-
+	// build grass
+	int i;
 	std::vector<Entity*> grass_entities = VFXGrass::generate_grass(*level_static.model, t_vertex(0, 0, 0), 0);
-
-	int i, j, k;
-	printf("=========\n"); 
-	printf("grass entities generated: %d\n", grass_entities.size());
-	printf("=========\n");
-
 	for (i = 0; i < grass_entities.size(); i++)
 	{
 		entities.push_back(grass_entities.at(i));
 	}
 
+	build_render_targets();
+}
+
+void SceneTechDemo::build_render_targets()
+{
 	render_target current_target;
+	int i, j, k;
 	float x, y, z;
 	for (i = 0; i < level_static.model->meshes.size(); i++)
 	{
@@ -52,13 +46,13 @@ void SceneTechDemo::init()
 				x += current_target.face.verticies.at(k).x;
 				y += current_target.face.verticies.at(k).y;
 
-				if(z>current_target.face.verticies.at(k).z)
+				if (z>current_target.face.verticies.at(k).z)
 					z = current_target.face.verticies.at(k).z;
 			}
 			x = x / current_target.face.verticies.size();
 			y = y / current_target.face.verticies.size();
 			//z = z / current_target.face.verticies.size();
-			
+
 			current_target.position = t_vertex(x, y, z);
 
 			render_targets.push_back(current_target);
@@ -84,13 +78,6 @@ void SceneTechDemo::init()
 	render_targets.push_back(current_target);
 
 	std::sort(render_targets.begin(), render_targets.end(), SceneTechDemo::by_depth_rendertarget());
-
-	/* I still might need this later
-	// Test Modelprop
-	ModelPropEntity *NewEntity = new ModelPropEntity;
-	NewEntity->init();
-	entities.push_back(NewEntity);
-	*/
 }
 
 void SceneTechDemo::run(float time_delta)
@@ -110,6 +97,16 @@ void SceneTechDemo::reset()
 		// make sure there are actually two lights to manipulate
 		LightManager::lights.push_back(Light(0, 0, 0, 100));
 	}
+
+	LightManager::lights[0].x = 0;
+	LightManager::lights[0].y = 10;
+	LightManager::lights[0].z = -12.5;
+	LightManager::lights[0].radius = 18;
+
+	LightManager::lights[0].r = 0.9;
+	LightManager::lights[0].g = 0.9;
+	LightManager::lights[0].b = 0.9;
+
 }
 
 void SceneTechDemo::take_input(boundinput input, bool type)
@@ -127,17 +124,7 @@ void SceneTechDemo::draw()
 
 	gluLookAt(spineboy.position.x, 12, 10, spineboy.position.x, 10, -25, 0, 1, 0);
 
-	LightManager::lights[0].x = 0;
-	LightManager::lights[0].y = 10;
-	LightManager::lights[0].z = -12.5;
-	LightManager::lights[0].radius = 18;
-
-	LightManager::lights[0].r = 0.9;
-	LightManager::lights[0].g = 0.9;
-	LightManager::lights[0].b = 0.9;
-
 	// Star Field
-
 	glPushMatrix();
 		glTranslatef(spineboy.position.x/1.25, 0.0f, -50.0f);
 		for (i = 0; i < myemitter.particles.size(); i++)

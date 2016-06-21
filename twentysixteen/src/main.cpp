@@ -11,10 +11,6 @@
 #define NO_SDL_GLEXT
 
 // whats next
-// make a spine entity
-// make a player entity
-// sort the player entity into the scene demo
-// handle keypress on the player entity
 
 // General Libraries
 #include <GL/glew.h>
