@@ -206,6 +206,9 @@
     <ClInclude Include="src\player_entity.h">
       <Filter>Header Files\entities</Filter>
     </ClInclude>
+    <ClInclude Include="src\render_target.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="data\shaders\grass.frag">

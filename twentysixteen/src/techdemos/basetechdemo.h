@@ -26,14 +26,16 @@ public:
 	ListWidget *initial_list;
 	ListWidget *filetypes_list;
 	ListWidget *vfx_list;
+	ListWidget *physics_list;
+	ListWidget *scene_list;
 	ListWidget *prototyping;
 
 	void init()
 	{
-		TechDemoUI.add_widget(new TextWidget("Base Tech Demo", 0.5, 0.2, 0.5, 0.3));
+		TechDemoUI.add_widget(new TextWidget("Base Tech Demo", 0.5, 0.175, 0.5, 0.3));
 		
-		initial_list = new ListWidget({ "DATA IMPORT", "VFX", "PROTOTYPING", "QUIT" });
-		initial_list->set_data(0.5, 0.4, 0.2, 0.1, true);
+		initial_list = new ListWidget({ "DATA IMPORT", "VFX", "PHYSICS", "SCENES", "PROTOTYPING", "QUIT" });
+		initial_list->set_data(0.5, 0.35, 0.2, 0.1, true);
 		TechDemoUI.add_widget(initial_list);
 
 		filetypes_list = new ListWidget({ "Spine", "TTF/SOIL", "SDL_MIXER", "ASSIMP", "BACK" });
@@ -44,13 +46,21 @@ public:
 		vfx_list->set_data(0.5, 0.4, 0.2, 0.1, false);
 		TechDemoUI.add_widget(vfx_list);
 
-		prototyping = new ListWidget({"COLLISION", "PHYSICS", "SCENE", "BACK" });
+		physics_list = new ListWidget({ "COLLISION", "PHYS", "BACK" });
+		physics_list->set_data(0.5, 0.4, 0.2, 0.1, false);
+		TechDemoUI.add_widget(physics_list);
+
+		scene_list = new ListWidget({ "BASE SCENE", "BACK" });
+		scene_list->set_data(0.5, 0.4, 0.2, 0.1, false);
+		TechDemoUI.add_widget(scene_list);
+
+		prototyping = new ListWidget({"BACK" });
 		prototyping->set_data(0.5, 0.4, 0.2, 0.1, false);
 		TechDemoUI.add_widget(prototyping);
 
 		current_list = initial_list;
 
-		TechDemoUI.add_widget(new TextWidget("Use directions (WASD) and A (space) to select", 0.5, 0.95, 0.5, 0.05));
+		TechDemoUI.add_widget(new TextWidget("Use directions (WASD) and A (space) to select", 0.5, 0.975, 0.5, 0.05));
 	}
 
 	void reset()
@@ -106,10 +116,6 @@ public:
 				{
 					exit_level = QUIT;
 				}
-				if (strcmp(choice, "QUIT") == 0)
-				{
-					exit_level = QUIT;
-				}
 				if (strcmp(choice, "COLLISION") == 0)
 				{
 					exit_level = TECHDEMO_MODELTOPOLY;
@@ -118,7 +124,7 @@ public:
 				{
 					exit_level = TECHDEMO_GRASS;
 				}
-				if (strcmp(choice, "SCENE") == 0)
+				if (strcmp(choice, "BASE SCENE") == 0)
 				{
 					exit_level = TECHDEMO_SCENE;
 				}
@@ -126,7 +132,7 @@ public:
 				{
 					exit_level = TECHDEMO_EMITTER;
 				}
-				if (strcmp(choice, "PHYSICS") == 0)
+				if (strcmp(choice, "PHYS") == 0)
 				{
 					exit_level = TECHDEMO_PHYSICS;
 				}
@@ -142,9 +148,17 @@ public:
 				{
 					switch_to(vfx_list);
 				}
+				if (strcmp(choice, "PHYSICS") == 0)
+				{
+					switch_to(physics_list);
+				}
 				if (strcmp(choice, "PROTOTYPING") == 0)
 				{
 					switch_to(prototyping);
+				}
+				if (strcmp(choice, "SCENES") == 0)
+				{
+					switch_to(scene_list);
 				}
 				if (strcmp(choice, "BACK") == 0)
 				{

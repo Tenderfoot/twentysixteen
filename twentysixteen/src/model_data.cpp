@@ -22,14 +22,11 @@ t_3dModel *ModelData::import(char *filename, float scale)
 		printf("%s", importer.GetErrorString());
 			return false;
 	}
+	
 	// Now we can access the file's contents. 
-	printf("success? %d\n", scene->mNumMeshes);
 
 	int num, i, j;
-
 	num = scene->mNumMaterials;
-
-	printf("Number of Materials: %d\n", num);
 
 	for (i = 0; i<num; i++)
 	{

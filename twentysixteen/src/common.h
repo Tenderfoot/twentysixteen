@@ -36,6 +36,12 @@ enum boundinput
 	BACK
 };
 
+enum rendertarget_types
+{
+	TYPE_ENTITY,
+	TYPE_FACE
+};
+
 enum light_types
 {
 	POINT_LIGHT

@@ -62,6 +62,7 @@
     <ClInclude Include="src\paintbrush.h" />
     <ClInclude Include="src\particles.h" />
     <ClInclude Include="src\player_entity.h" />
+    <ClInclude Include="src\render_target.h" />
     <ClInclude Include="src\spine_data.h" />
     <ClInclude Include="src\spine_entity.h" />
     <ClInclude Include="src\techdemos\audiotechdemo.h" />

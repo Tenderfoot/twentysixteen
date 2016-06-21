@@ -8,22 +8,7 @@
 #include "../VFXGrass.h"
 #include "../modelprop_entity.h"
 #include "../player_entity.h"
-
-typedef enum
-{
-	TYPE_ENTITY,
-	TYPE_FACE
-}rendertarget_types;
-
-class render_target
-{
-public:
-	rendertarget_types type;
-	t_vertex position;
-	Entity *the_entity;
-	t_face face;
-	GLuint texture;
-};
+#include "../render_target.h"
 
 class SceneTechDemo : public BaseTechDemo
 {

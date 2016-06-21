@@ -11,10 +11,10 @@ void EmitterTechDemo::init()
 
 	while (myemitter.particles.size() < 50)
 	{
-		myemitter.particles.push_back(new Star);
+		myemitter.particles.push_back(new FireParticle);
 	}
 	
-	myemitter.init(Paintbrush::get_texture("data/images/fire.png", false, false), t_vertex(0, 0, 0), t_vertex(50, 50, 0));
+	myemitter.init(Paintbrush::get_texture("data/images/fire.png", false, false), t_vertex(0, 0, 0), t_vertex(3, 1, 0));
 }
 
 void EmitterTechDemo::run(float time_delta)
@@ -60,7 +60,7 @@ void EmitterTechDemo::draw()
 	
 
 	glPushMatrix();
-		glTranslatef(-2.0f, -4.0f, -22.0f);
+		glTranslatef(-1.0f, -3.0f, -22.0f);
 		int i;
 		for (i = 0; i < myemitter.particles.size(); i++)
 		{

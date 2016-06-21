@@ -150,14 +150,8 @@ void SceneTechDemo::draw()
 		}
 	glPopMatrix();
 
-
+//  this line draws the level collision group as lines
 //	Paintbrush::draw_collision_group(collision_group, 0);
-
-/*
-	t_collisiongroup test;
-	test.collision_groups.push_back(spineboy.return_polygon());
-	Paintbrush::draw_collision_group(test, 0);
-*/
 
 	glPushMatrix();
 		for (i = 0; i < render_targets.size(); i++)

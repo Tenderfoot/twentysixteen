@@ -92,7 +92,7 @@ public:
 		x = rand() % 100;
 		x = x / 100;
 
-		position.y = emission_size.y*x + emission_position.y;
+		position.y = emission_position.y;
 	}
 
 	virtual void update(float time_delta)
@@ -135,7 +135,7 @@ public:
 	}
 };
 
-// Fire Particle
+// star Particle
 class Star : public Particle
 {
 public:
