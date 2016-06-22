@@ -13,27 +13,16 @@ void EditorTechDemo::init()
 	level_static.model = ModelData::import("brandnewscene.fbx", 0.005);
 	collision_group = LinearAlgebra::get_collisiongroups_from_model(*level_static.model, 0, t_vertex(0, 0, 0));
 
-	// initialize player
-	spineboy.init();
-	spineboy.position = t_vertex(0, 10, 0);
-	spineboy.size = t_vertex(1, 3, 1);
-	spineboy.velocity = t_vertex(0, 0, 0);
-
-	entities.push_back(&spineboy);
 	entities.push_back(&myemitter);
 
 	// Point the editor to the entity list
 	test_editor.entities = &entities;
-	test_editor.current_entity = 30;
+	test_editor.current_entity = 0;
+	test_editor.read_level();
 
 	// add the player and emitter to rendertargets
 	render_target new_entity;
 	new_entity.type = TYPE_ENTITY;
-
-	// spine player
-	new_entity.the_entity = &spineboy;
-	new_entity.position = spineboy.position;
-	render_targets.push_back(new_entity);
 
 	// star emitter
 	new_entity.the_entity = &myemitter;
@@ -54,9 +43,17 @@ void EditorTechDemo::run(float time_delta)
 	//set_camera(t_vertex(spineboy.position.x, spineboy.position.y + 5, 15), t_vertex(spineboy.position.x, spineboy.position.y, -25));
 	set_camera(t_vertex(test_editor.camera_position.x, test_editor.camera_position.y+5, 15), t_vertex(test_editor.camera_position.x, test_editor.camera_position.y, -25));
 
-	spineboy.correct_against_collisiongroup(collision_group, time_delta);
-	spineboy.update(time_delta);
-	spineboy.player_update(time_delta);
+	//spineboy.correct_against_collisiongroup(collision_group, time_delta);
+	//spineboy.update(time_delta);
+
+	int i;
+	for(i = 0; i < entities.size(); i++)
+	{
+		if (entities.at(i)->type == PLAYER_ENTITY)
+		{
+			((PlayerEntity*)entities.at(i))->player_update(time_delta);
+		}
+	}
 
 	myemitter.update(time_delta);
 	test_editor.update();

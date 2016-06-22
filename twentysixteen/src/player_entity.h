@@ -14,6 +14,11 @@
 class PlayerEntity : public SpineEntity
 {
 public:
+	PlayerEntity()
+	{
+		type = PLAYER_ENTITY;
+	}
+
 	void handle_keypress(boundinput input, bool type);
 	std::map<boundinput, bool> keydown_map;
 

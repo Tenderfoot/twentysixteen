@@ -91,6 +91,12 @@ boundinput translate_key_input(SDL_Keycode keycode)
 			return UP;
 		case SDLK_ESCAPE:
 			return BACK;
+		case SDLK_PAGEUP:
+			return NEXT;
+		case SDLK_PAGEDOWN:
+			return PREVIOUS;
+		case SDLK_F12:
+			return EDITOR_SAVE;
 	}
 
 	return NO_BIND;

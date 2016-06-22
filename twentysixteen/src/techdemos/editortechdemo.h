@@ -26,6 +26,5 @@ public:
 	void reset();
 
 	ParticleEmitter myemitter;
-	PlayerEntity spineboy;
 	LevelEditor test_editor;
 };

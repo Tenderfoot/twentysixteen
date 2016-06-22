@@ -36,7 +36,10 @@ enum boundinput
 	LEFT,
 	RIGHT,
 	ACTION,
-	BACK
+	BACK,
+	NEXT,
+	PREVIOUS,
+	EDITOR_SAVE
 };
 
 enum rendertarget_types
@@ -53,7 +56,8 @@ enum light_types
 enum entity_types
 {
 	ENTITY,
-	GRASS_ENTITY
+	GRASS_ENTITY,
+	PLAYER_ENTITY
 };
 
 // proper comparison for char* maps
