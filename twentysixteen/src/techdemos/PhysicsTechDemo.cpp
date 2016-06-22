@@ -13,6 +13,7 @@ void PhysicsTechDemo::init()
 	printf("==== test : %d\n", collision_group.collision_groups.size());
 
 	spineboy.load_spine_data("everybody");
+	spSkeleton_setSkinByName(spineboy.skeleton, "mo");
 
 	box.position = t_vertex(0, 6, -20);
 	box.size = t_vertex(1, 3, 1);

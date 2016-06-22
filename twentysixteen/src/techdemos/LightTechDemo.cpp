@@ -10,6 +10,7 @@ void LightTechDemo::init()
 	level_static.shader = Paintbrush::get_shader("point_light");
 
 	spineboy.load_spine_data("everybody");
+	spSkeleton_setSkinByName(spineboy.skeleton, "mo");
 }
 
 void LightTechDemo::run(float time_delta)
