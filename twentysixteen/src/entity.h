@@ -29,13 +29,16 @@ public:
 	t_vertex size;
 	t_vertex color;
 	GLuint texture;
+	entity_types type;
 	
 	Entity()
 	{
+		type = ENTITY;
 	}
 
 	Entity(t_vertex new_pos, t_vertex new_size, t_vertex new_color)
 	{
+		type = ENTITY;
 		position = new_pos;
 		size = new_size;
 		color = new_color;

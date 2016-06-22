@@ -19,7 +19,7 @@ void EnemyTechDemo::init()
 	spineboy.velocity = t_vertex(0, 0, 0);
 
 	knight.init("knight");
-	knight.position = t_vertex(10, 50, 0);
+	knight.position = t_vertex(10, 30, 0);
 	knight.size = t_vertex(1, 3, 1);
 	knight.velocity = t_vertex(0, 0, 0);
 

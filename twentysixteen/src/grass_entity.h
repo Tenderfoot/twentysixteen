@@ -11,6 +11,11 @@
 class GrassEntity : public Entity
 {
 public:
+
+	GrassEntity()
+	{
+		type = GRASS_ENTITY;
+	}
 	
 	// the left and right vertex
 	t_vertex v1, v2;

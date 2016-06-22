@@ -33,6 +33,7 @@
 #include "techdemos\lighttechdemo.h"
 #include "techdemos\postprocessdemo.h"
 #include "techdemos\enemytechdemo.h"
+#include "techdemos\editortechdemo.h"
 
 // and a few globals
 bool done = 0; // Quit?
@@ -182,6 +183,7 @@ void init_levels()
 	level_map[TECHDEMO_LIGHTS] = new LightTechDemo();
 	level_map[TECHDEMO_POSTPROCESS] = new PostProcessDemo();
 	level_map[TECHDEMO_ENEMY] = new EnemyTechDemo();
+	level_map[TECHDEMO_EDITOR] = new EditorTechDemo();
 
 	for (auto it = std::begin(level_map); it != std::end(level_map); ++it)
 	{
@@ -201,7 +203,7 @@ int main(int argc, char *argv[])
 		exit(2);
 	}
 
-	window = SDL_CreateWindow("TwentySixteen", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, res_width, res_height, SDL_WINDOW_OPENGL | SDL_WINDOW_BORDERLESS);
+	window = SDL_CreateWindow("TwentySixteen", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, res_width, res_height, SDL_WINDOW_OPENGL);
 	
 	SDL_GLContext glcontext = SDL_GL_CreateContext(window);
 

@@ -28,6 +28,9 @@ std::vector<Entity*> VFXGrass::generate_grass(t_3dModel from_model, t_vertex mod
 
 				new_entity->v1 = v0;
 				new_entity->v2 = v1;
+
+				new_entity->position.x = v0.x;
+				new_entity->position.y = v0.y;
 				new_entity->position.z = z;
 
 				if (grass_group.collision_groups.at(i).edges.at(j).material_id == 4)

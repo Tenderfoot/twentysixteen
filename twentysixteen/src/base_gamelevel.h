@@ -4,6 +4,7 @@
 #include "level.h"
 #include "render_target.h"
 #include "vfxgrass.h"
+#include "leveleditor.h"
 
 // BaseGameLevel
 // This is the base for all the scenes in the game.

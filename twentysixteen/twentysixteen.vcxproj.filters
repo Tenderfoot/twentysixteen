@@ -129,6 +129,12 @@
     <ClCompile Include="src\npc_entity.cpp">
       <Filter>Source Files\entities</Filter>
     </ClCompile>
+    <ClCompile Include="src\techdemos\EditorTechDemo.cpp">
+      <Filter>Source Files\techdemos</Filter>
+    </ClCompile>
+    <ClCompile Include="src\leveleditor.cpp">
+      <Filter>Source Files\scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\level.h">
@@ -215,9 +221,6 @@
     <ClInclude Include="src\modelprop_entity.h">
       <Filter>Header Files\entities</Filter>
     </ClInclude>
-    <ClInclude Include="src\level_data.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\spine_entity.h">
       <Filter>Header Files\entities</Filter>
     </ClInclude>
@@ -241,6 +244,12 @@
     </ClInclude>
     <ClInclude Include="src\npc_entity.h">
       <Filter>Header Files\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\techdemos\editortechdemo.h">
+      <Filter>Header Files\techdemos</Filter>
+    </ClInclude>
+    <ClInclude Include="src\leveleditor.h">
+      <Filter>Header Files\scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

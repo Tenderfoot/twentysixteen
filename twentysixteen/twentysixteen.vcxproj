@@ -24,6 +24,7 @@
     <ClCompile Include="src\base_user_interface.cpp" />
     <ClCompile Include="src\entity.cpp" />
     <ClCompile Include="src\game_entity.cpp" />
+    <ClCompile Include="src\leveleditor.cpp" />
     <ClCompile Include="src\light_manager.cpp" />
     <ClCompile Include="src\linear_algebra.cpp" />
     <ClCompile Include="src\main.cpp" />
@@ -35,6 +36,7 @@
     <ClCompile Include="src\spine_data.cpp" />
     <ClCompile Include="src\spine_entity.cpp" />
     <ClCompile Include="src\techdemos\AudioTechDemo.cpp" />
+    <ClCompile Include="src\techdemos\EditorTechDemo.cpp" />
     <ClCompile Include="src\techdemos\EmitterTechDemo.cpp" />
     <ClCompile Include="src\techdemos\EnemyTechDemo.cpp" />
     <ClCompile Include="src\techdemos\GrassTechDemo.cpp" />
@@ -59,7 +61,7 @@
     <ClInclude Include="src\glext.h" />
     <ClInclude Include="src\grass_entity.h" />
     <ClInclude Include="src\level.h" />
-    <ClInclude Include="src\level_data.h" />
+    <ClInclude Include="src\leveleditor.h" />
     <ClInclude Include="src\light_manager.h" />
     <ClInclude Include="src\linear_algebra.h" />
     <ClInclude Include="src\modelprop_entity.h" />
@@ -74,6 +76,7 @@
     <ClInclude Include="src\spine_entity.h" />
     <ClInclude Include="src\techdemos\audiotechdemo.h" />
     <ClInclude Include="src\techdemos\basetechdemo.h" />
+    <ClInclude Include="src\techdemos\editortechdemo.h" />
     <ClInclude Include="src\techdemos\emittertechdemo.h" />
     <ClInclude Include="src\techdemos\enemytechdemo.h" />
     <ClInclude Include="src\techdemos\grasstechdemo.h" />

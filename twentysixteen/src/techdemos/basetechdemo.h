@@ -50,7 +50,7 @@ public:
 		physics_list->set_data(0.5, 0.4, 0.2, 0.1, false);
 		TechDemoUI.add_widget(physics_list);
 
-		scene_list = new ListWidget({ "BASE SCENE", "BACK" });
+		scene_list = new ListWidget({ "BASE SCENE", "EDITOR", "BACK" });
 		scene_list->set_data(0.5, 0.4, 0.2, 0.1, false);
 		TechDemoUI.add_widget(scene_list);
 
@@ -147,6 +147,10 @@ public:
 				if (strcmp(choice, "ENEMY") == 0)
 				{
 					exit_level = TECHDEMO_ENEMY;
+				}
+				if (strcmp(choice, "EDITOR") == 0)
+				{
+					exit_level = TECHDEMO_EDITOR;
 				}
 				if (strcmp(choice, "DATA IMPORT") == 0)
 				{
