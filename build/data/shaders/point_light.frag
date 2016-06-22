@@ -52,17 +52,17 @@ void main(void)
 		}
 		else
 		{
-			if(Idiff.r<0.1 || dist>scene_lights[i].radius)
+			if(dist>scene_lights[i].radius)
 			{
 				Idiff.r = 0.0;
 			}
 
-			if(Idiff.g<0.1 || dist>scene_lights[i].radius)
+			if( dist>scene_lights[i].radius)
 			{
 				Idiff.g = 0.0;
 			}
 
-			if(Idiff.b<0.1 || dist>scene_lights[i].radius)
+			if(dist>scene_lights[i].radius)
 			{
 				Idiff.b = 0.0;
 			}
@@ -74,17 +74,17 @@ void main(void)
 	}
 
 	// ambient light
-	if(diff_total.r<0.1)
+	if(diff_total.r<0.0)
 	{
-		diff_total.r = 0.1;
+		diff_total.r = 0.0;
 	}
-	if(diff_total.g<0.1)
+	if(diff_total.g<0.0)
 	{
-		diff_total.g = 0.1;
+		diff_total.g = 0.0;
 	}
-	if(diff_total.b<0.1)
+	if(diff_total.b<0.0)
 	{
-		diff_total.b = 0.1;
+		diff_total.b = 0.0;
 	}
 
    gl_FragColor = diff_total*texture2D(my_color_texture, texture_coordinate);

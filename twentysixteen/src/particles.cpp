@@ -15,6 +15,7 @@ void ParticleEmitter::init(GLuint texture)
 void ParticleEmitter::init(GLuint texture, t_vertex position, t_vertex size)
 {
 	int i;
+	this->position = position;
 	for (i = 0; i < particles.size(); i++)
 	{
 		particles.at(i)->init(texture, position, size);
@@ -31,5 +32,13 @@ void ParticleEmitter::update(float time_delta)
 	for (i = 0; i < particles.size(); i++)
 	{
 		particles.at(i)->update(time_delta);
+	}
+}
+void ParticleEmitter::draw()
+{
+	int i;
+	for (i = 0; i < particles.size(); i++)
+	{
+		particles.at(i)->draw();
 	}
 }

@@ -36,6 +36,8 @@ void PlayerEntity::update(float delta_time)
 
 void PlayerEntity::player_update(float time_delta)
 {
+	spine_data.update_skeleton(time_delta);
+
 	if (keydown_map[LEFT] || keydown_map[RIGHT])
 	{
 		spine_data.animation_name = "walk_two";

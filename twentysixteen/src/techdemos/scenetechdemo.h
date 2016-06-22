@@ -24,7 +24,6 @@ public:
 	void draw();
 	void init();
 	void take_input(boundinput input, bool type);
-	float rotation;
 	void reset();
 
 	static t_vertex camera_position;

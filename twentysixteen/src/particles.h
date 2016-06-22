@@ -49,12 +49,13 @@ public:
 	bool dir;
 };
 
-class ParticleEmitter
+class ParticleEmitter : public Entity
 {
 public:
 	void init(GLuint texture);
 	void init(GLuint texture, t_vertex position, t_vertex size);
 	void reset();
+	void draw();
 	void update(float time_delta);
 	std::vector<Particle*> particles;
 };
@@ -115,7 +116,7 @@ public:
 			glColor4f(1.0f, (100 - life) / 80, 0.0f, life / 100);
 
 			// transform
-			glTranslatef(position.x, position.y, 0.0f);
+			glTranslatef(position.x, position.y, position.z);
 			glScalef(size.x, size.x, 0.0f);
 
 			// draw
@@ -176,6 +177,8 @@ public:
 		x = x / 100;
 
 		position.y = emission_size.y*x + emission_position.y;
+
+		position.z = emission_position.z;
 	}
 
 	virtual void update(float time_delta)
@@ -200,7 +203,7 @@ public:
 		glColor4f(1.0f, 1.0, 1.0, life / 100);
 
 		// transform
-		glTranslatef(position.x, position.y, 0.0f);
+		glTranslatef(position.x, position.y, position.z);
 		glScalef(size.x, size.x, 0.0f);
 
 		// draw

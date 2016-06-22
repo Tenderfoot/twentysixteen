@@ -10,7 +10,7 @@ void SceneTechDemo::init()
 		myemitter.particles.push_back(new Star);
 	}
 
-	myemitter.init(Paintbrush::get_texture("data/images/fire.png", false, false), t_vertex(-100, 0, 0), t_vertex(200, 75, 0));
+	myemitter.init(Paintbrush::get_texture("data/images/fire.png", false, false), t_vertex(-100, 0, -50), t_vertex(200, 75, 0));
 
 	level_static.model = ModelData::import("brandnewscene.fbx", 0.005);
 	collision_group = LinearAlgebra::get_collisiongroups_from_model(*level_static.model, 0, t_vertex(0, 0, 0));
@@ -20,26 +20,28 @@ void SceneTechDemo::init()
 	spineboy.size = t_vertex(1, 3, 1);
 	spineboy.velocity = t_vertex(0, 0, 0);
 
-	render_target spine_entity;
-	spine_entity.type = TYPE_ENTITY;
-	spine_entity.the_entity = &spineboy;
-	spine_entity.position = spineboy.position;
-	render_targets.push_back(spine_entity);
+	render_target new_entity;
+	new_entity.type = TYPE_ENTITY;
+	new_entity.the_entity = &spineboy;
+	new_entity.position = spineboy.position;
+	render_targets.push_back(new_entity);
+
+	new_entity.the_entity = &myemitter;
+	new_entity.position = myemitter.position;
+	render_targets.push_back(new_entity);
 
 	build_render_targets();
 }
 
 void SceneTechDemo::run(float time_delta)
 {
-	rotation += (time_delta / 10);
-
 	spineboy.correct_against_collisiongroup(collision_group, time_delta);
 	spineboy.update(time_delta);
-	
-	spineboy.spine_data.update_skeleton(time_delta);
 	spineboy.player_update(time_delta);
 
 	myemitter.update(time_delta);
+
+	LightManager::lights[0].y = 5;
 }
 
 void SceneTechDemo::reset()
@@ -77,28 +79,19 @@ void SceneTechDemo::draw()
 
 	gluLookAt(spineboy.position.x, spineboy.position.y+5, 15, spineboy.position.x, spineboy.position.y, -25, 0, 1, 0);
 
-	LightManager::lights[0].y = 5;
-
-	// Star Field
+	// StarField background
 	glPushMatrix();
-		glTranslatef(spineboy.position.x / 1.25, 0.0f, -55.0f);
+		glTranslatef(0.0f, 0.0f, -55.0f);
 		glScalef(1000.0f, 1000.0f, 1000.0f);
 		glBindTexture(GL_TEXTURE_2D, NULL);
 		glColor3f(0.1f, 0.1f, 0.1f);
 		Paintbrush::draw_quad();
 	glPopMatrix();
 
-	glPushMatrix();
-		glTranslatef(spineboy.position.x/1.25, 0.0f, -50.0f);
-		for (i = 0; i < myemitter.particles.size(); i++)
-		{
-			myemitter.particles.at(i)->draw();
-		}
-	glPopMatrix();
-
 //  this line draws the level collision group as lines
 //	Paintbrush::draw_collision_group(collision_group, 0);
 
+	// draw the rendertargets
 	glPushMatrix();
 		for (i = 0; i < render_targets.size(); i++)
 		{
