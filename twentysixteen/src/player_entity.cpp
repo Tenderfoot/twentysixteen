@@ -44,7 +44,7 @@ void PlayerEntity::player_update(float time_delta)
 
 		if (keydown_map[LEFT])
 		{
-			velocity.x -= (time_delta*0.000025);
+			velocity.x -= (time_delta*0.00003);
 			flip = false;
 		}
 
@@ -53,7 +53,7 @@ void PlayerEntity::player_update(float time_delta)
 
 		if (keydown_map[RIGHT])
 		{
-			velocity.x += (time_delta*0.000025);
+			velocity.x += (time_delta*0.00003);
 			flip = true;
 		}
 

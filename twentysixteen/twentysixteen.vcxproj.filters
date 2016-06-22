@@ -120,6 +120,15 @@
     <ClCompile Include="src\base_gamelevel.cpp">
       <Filter>Source Files\scenes</Filter>
     </ClCompile>
+    <ClCompile Include="src\techdemos\PostProcessDemo.cpp">
+      <Filter>Source Files\techdemos</Filter>
+    </ClCompile>
+    <ClCompile Include="src\techdemos\EnemyTechDemo.cpp">
+      <Filter>Source Files\techdemos</Filter>
+    </ClCompile>
+    <ClCompile Include="src\npc_entity.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\level.h">
@@ -220,6 +229,18 @@
     </ClInclude>
     <ClInclude Include="src\base_gamelevel.h">
       <Filter>Header Files\scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\postprocess.h">
+      <Filter>Header Files\VFX</Filter>
+    </ClInclude>
+    <ClInclude Include="src\techdemos\postprocessdemo.h">
+      <Filter>Header Files\techdemos</Filter>
+    </ClInclude>
+    <ClInclude Include="src\techdemos\enemytechdemo.h">
+      <Filter>Header Files\techdemos</Filter>
+    </ClInclude>
+    <ClInclude Include="src\npc_entity.h">
+      <Filter>Header Files\entities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

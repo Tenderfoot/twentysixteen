@@ -31,6 +31,8 @@
 #include "techdemos\emittertechdemo.h"
 #include "techdemos\physicstechdemo.h"
 #include "techdemos\lighttechdemo.h"
+#include "techdemos\postprocessdemo.h"
+#include "techdemos\enemytechdemo.h"
 
 // and a few globals
 bool done = 0; // Quit?
@@ -178,6 +180,8 @@ void init_levels()
 	level_map[TECHDEMO_EMITTER] = new EmitterTechDemo();
 	level_map[TECHDEMO_PHYSICS] = new PhysicsTechDemo();
 	level_map[TECHDEMO_LIGHTS] = new LightTechDemo();
+	level_map[TECHDEMO_POSTPROCESS] = new PostProcessDemo();
+	level_map[TECHDEMO_ENEMY] = new EnemyTechDemo();
 
 	for (auto it = std::begin(level_map); it != std::end(level_map); ++it)
 	{

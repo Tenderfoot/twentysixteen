@@ -20,14 +20,18 @@ void SceneTechDemo::init()
 
 	render_target new_entity;
 	new_entity.type = TYPE_ENTITY;
+
+	// spine player
 	new_entity.the_entity = &spineboy;
 	new_entity.position = spineboy.position;
 	render_targets.push_back(new_entity);
 
+	// star emitter
 	new_entity.the_entity = &myemitter;
 	new_entity.position = myemitter.position;
 	render_targets.push_back(new_entity);
 
+	// star background (0.1 gray)
 	new_entity.the_entity = new Entity(t_vertex(-100.0f,0.0f,-55.0f), t_vertex(1000.0f,1000.0f,1000.0f), t_vertex(0.1f,0.1f,0.1f));
 	new_entity.the_entity->texture = NULL;
 	new_entity.position = new_entity.the_entity->position;

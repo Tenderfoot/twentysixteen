@@ -42,8 +42,8 @@ public:
 		filetypes_list->set_data(0.5, 0.4, 0.2, 0.1, false);
 		TechDemoUI.add_widget(filetypes_list);
 
-		vfx_list = new ListWidget({ "SHADERS", "EMITTERS", "GRASS", "LIGHTS", "BACK" });
-		vfx_list->set_data(0.5, 0.4, 0.2, 0.1, false);
+		vfx_list = new ListWidget({ "SHADERS", "EMITTERS", "GRASS", "LIGHTS", "POST", "BACK" });
+		vfx_list->set_data(0.5, 0.35, 0.2, 0.1, false);
 		TechDemoUI.add_widget(vfx_list);
 
 		physics_list = new ListWidget({ "COLLISION", "PHYS", "BACK" });
@@ -54,7 +54,7 @@ public:
 		scene_list->set_data(0.5, 0.4, 0.2, 0.1, false);
 		TechDemoUI.add_widget(scene_list);
 
-		prototyping = new ListWidget({"BACK" });
+		prototyping = new ListWidget({"ENEMY", "BACK" });
 		prototyping->set_data(0.5, 0.4, 0.2, 0.1, false);
 		TechDemoUI.add_widget(prototyping);
 
@@ -139,6 +139,14 @@ public:
 				if (strcmp(choice, "LIGHTS") == 0)
 				{
 					exit_level = TECHDEMO_LIGHTS;
+				}
+				if (strcmp(choice, "POST") == 0)
+				{
+					exit_level = TECHDEMO_POSTPROCESS;
+				}
+				if (strcmp(choice, "ENEMY") == 0)
+				{
+					exit_level = TECHDEMO_ENEMY;
 				}
 				if (strcmp(choice, "DATA IMPORT") == 0)
 				{

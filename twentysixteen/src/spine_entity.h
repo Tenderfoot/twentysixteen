@@ -16,6 +16,7 @@ class SpineEntity : public GameEntity
 public:
 	void draw();
 	void init();
+	void init(char *who);
 
 	bool flip;
 

@@ -1,12 +1,18 @@
 
 #include "spine_entity.h"
 
-
 void SpineEntity::init()
 {
 	spine_data.load_spine_data("everybody");
+	spSkeleton_setSkinByName(spine_data.skeleton, "witch");
 }
 
+
+void SpineEntity::init(char *who)
+{
+	spine_data.load_spine_data("everybody");
+	spSkeleton_setSkinByName(spine_data.skeleton, who);
+}
 
 void SpineEntity::draw()
 {

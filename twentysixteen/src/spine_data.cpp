@@ -66,9 +66,7 @@ void SpineData::load_spine_data(char* spine_folder)
 	if (!skeletonData) printf("Error: %s\n", skeletonJson->error);
 	spSkeletonJson_dispose(skeletonJson);
 
-
 	spSkeleton_setToSetupPose(skeleton);
-	spSkeleton_setSkinByName(skeleton, "witch");
 
 	spSkeleton_updateWorldTransform(skeleton);
 
