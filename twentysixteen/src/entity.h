@@ -20,14 +20,42 @@
 
 #include "common.h"
 #include "model_data.h"
-
+#include "paintbrush.h"
 
 class Entity
 {
 public:
 	t_vertex position;
-	virtual void draw()=0;
-	virtual void update(float delta_time)=0;
+	t_vertex size;
+	t_vertex color;
+	GLuint texture;
+	
+	Entity()
+	{
+	}
+
+	Entity(t_vertex new_pos, t_vertex new_size, t_vertex new_color)
+	{
+		position = new_pos;
+		size = new_size;
+		color = new_color;
+	}
+
+	virtual void draw()
+	{
+		// StarField background
+		glPushMatrix();
+			glTranslatef(position.x, position.y, position.z);
+			glScalef(size.x, size.y, size.z);
+			glBindTexture(GL_TEXTURE_2D, texture);
+			glColor3f(color.x, color.y, color.z);
+			Paintbrush::draw_quad();
+		glPopMatrix();
+	}
+
+	virtual void update(float delta_time)
+	{
+	}
 };
 
 struct by_depth {

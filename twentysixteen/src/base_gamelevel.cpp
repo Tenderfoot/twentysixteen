@@ -54,3 +54,39 @@ void BaseGameLevel::build_render_targets()
 
 	std::sort(render_targets.begin(), render_targets.end(), by_depth_rendertarget());
 }
+
+void BaseGameLevel::set_camera(t_vertex position, t_vertex lookat)
+{
+	camera_position = position;
+	camera_lookat = lookat;
+}
+
+void BaseGameLevel::draw()
+{
+	gluLookAt(camera_position.x, camera_position.y, camera_position.z, camera_lookat.x, camera_lookat.y, camera_lookat.z, 0, 1, 0);
+
+	//  this line draws the level collision group as lines
+	//	Paintbrush::draw_collision_group(collision_group, 0);
+
+	// draw the rendertargets
+	glPushMatrix();
+	int i;
+	for (i = 0; i < render_targets.size(); i++)
+	{
+		if (render_targets.at(i).type == TYPE_FACE)
+		{
+			Paintbrush::use_shader(Paintbrush::get_shader("point_light"));
+			glPushMatrix();
+			Paintbrush::draw_face(render_targets.at(i).face, render_targets.at(i).texture);
+			glPopMatrix();
+			Paintbrush::stop_shader();
+		}
+		else
+		{
+			glPushMatrix();
+			render_targets.at(i).the_entity->draw();
+			glPopMatrix();
+		}
+	}
+	glPopMatrix();
+}

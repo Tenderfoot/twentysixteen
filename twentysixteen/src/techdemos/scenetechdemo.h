@@ -21,12 +21,9 @@ public:
 	}
 
 	void run(float time_delta);
-	void draw();
 	void init();
 	void take_input(boundinput input, bool type);
 	void reset();
-
-	static t_vertex camera_position;
 
 	ParticleEmitter myemitter;
 	PlayerEntity spineboy;

@@ -1,8 +1,6 @@
 
 #include "scenetechdemo.h"
 
-t_vertex SceneTechDemo::camera_position = t_vertex(0, 0, 0);
-
 void SceneTechDemo::init()
 {
 	while (myemitter.particles.size() < 1000)
@@ -30,11 +28,18 @@ void SceneTechDemo::init()
 	new_entity.position = myemitter.position;
 	render_targets.push_back(new_entity);
 
+	new_entity.the_entity = new Entity(t_vertex(-100.0f,0.0f,-55.0f), t_vertex(1000.0f,1000.0f,1000.0f), t_vertex(0.1f,0.1f,0.1f));
+	new_entity.the_entity->texture = NULL;
+	new_entity.position = new_entity.the_entity->position;
+	render_targets.push_back(new_entity);
+
 	build_render_targets();
 }
 
 void SceneTechDemo::run(float time_delta)
 {
+	set_camera(t_vertex(spineboy.position.x, spineboy.position.y + 5, 15), t_vertex(spineboy.position.x, spineboy.position.y, -25));
+
 	spineboy.correct_against_collisiongroup(collision_group, time_delta);
 	spineboy.update(time_delta);
 	spineboy.player_update(time_delta);
@@ -71,44 +76,4 @@ void SceneTechDemo::take_input(boundinput input, bool type)
 
 	if (input == BACK && type == true)
 		exit_level = TECHDEMO_BASE;
-}
-
-void SceneTechDemo::draw()
-{
-	int i;
-
-	gluLookAt(spineboy.position.x, spineboy.position.y+5, 15, spineboy.position.x, spineboy.position.y, -25, 0, 1, 0);
-
-	// StarField background
-	glPushMatrix();
-		glTranslatef(0.0f, 0.0f, -55.0f);
-		glScalef(1000.0f, 1000.0f, 1000.0f);
-		glBindTexture(GL_TEXTURE_2D, NULL);
-		glColor3f(0.1f, 0.1f, 0.1f);
-		Paintbrush::draw_quad();
-	glPopMatrix();
-
-//  this line draws the level collision group as lines
-//	Paintbrush::draw_collision_group(collision_group, 0);
-
-	// draw the rendertargets
-	glPushMatrix();
-		for (i = 0; i < render_targets.size(); i++)
-		{
-			if (render_targets.at(i).type == TYPE_FACE)
-			{
-				Paintbrush::use_shader(Paintbrush::get_shader("point_light"));
-				glPushMatrix();
-					Paintbrush::draw_face(render_targets.at(i).face, render_targets.at(i).texture);
-				glPopMatrix();
-				Paintbrush::stop_shader();
-			}
-			else
-			{
-				glPushMatrix();
-					render_targets.at(i).the_entity->draw();
-				glPopMatrix();
-			}
-		}
-	glPopMatrix();
 }

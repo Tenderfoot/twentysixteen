@@ -18,10 +18,15 @@ class BaseGameLevel : public Level
 public:
 
 	void build_render_targets();
+	void set_camera(t_vertex position, t_vertex lookat);
+	void draw();
 
 	// Model for area
 	ModelData level_static;
 	t_collisiongroup collision_group;
+
+	// camera
+	t_vertex camera_position, camera_lookat;
 
 	// Level Entities
 	std::vector<Entity*> entities;

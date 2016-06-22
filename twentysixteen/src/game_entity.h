@@ -16,7 +16,6 @@ public:
 	// An Entity has a position - a GameEntity also has:
 	// -a width and height
 	// -velocty
-	t_vertex size;
 	t_vertex velocity;
 	t_vertex real_velocity;
 
