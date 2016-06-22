@@ -26,6 +26,9 @@ public:
 	ModelData level_static;
 	t_collisiongroup collision_group;
 
+	// Level Editor
+	LevelEditor level_editor;
+
 	// camera
 	t_vertex camera_position, camera_lookat;
 

@@ -26,5 +26,4 @@ public:
 	void reset();
 
 	ParticleEmitter myemitter;
-	LevelEditor test_editor;
 };

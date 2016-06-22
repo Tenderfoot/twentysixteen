@@ -16,9 +16,9 @@ void EditorTechDemo::init()
 	entities.push_back(&myemitter);
 
 	// Point the editor to the entity list
-	test_editor.entities = &entities;
-	test_editor.current_entity = 0;
-	test_editor.read_level();
+	level_editor.entities = &entities;
+	level_editor.current_entity = 0;
+	level_editor.read_level();
 
 	// add the player and emitter to rendertargets
 	render_target new_entity;
@@ -41,7 +41,7 @@ void EditorTechDemo::init()
 void EditorTechDemo::run(float time_delta)
 {
 	//set_camera(t_vertex(spineboy.position.x, spineboy.position.y + 5, 15), t_vertex(spineboy.position.x, spineboy.position.y, -25));
-	set_camera(t_vertex(test_editor.camera_position.x, test_editor.camera_position.y+5, 15), t_vertex(test_editor.camera_position.x, test_editor.camera_position.y, -25));
+	set_camera(t_vertex(level_editor.camera_position.x, level_editor.camera_position.y+5, 15), t_vertex(level_editor.camera_position.x, level_editor.camera_position.y, -25));
 
 	//spineboy.correct_against_collisiongroup(collision_group, time_delta);
 	//spineboy.update(time_delta);
@@ -56,7 +56,7 @@ void EditorTechDemo::run(float time_delta)
 	}
 
 	myemitter.update(time_delta);
-	test_editor.update();
+	level_editor.update();
 
 	LightManager::lights[0].y = 5;
 }
@@ -86,7 +86,7 @@ void EditorTechDemo::take_input(boundinput input, bool type)
 	keydown_map[input] = type;
 	
 	//spineboy.handle_keypress(input, type);
-	test_editor.take_input(input, type);
+	level_editor.take_input(input, type);
 
 	if (input == BACK && type == true)
 		exit_level = TECHDEMO_BASE;

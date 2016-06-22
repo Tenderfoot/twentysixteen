@@ -88,5 +88,7 @@ void BaseGameLevel::draw()
 			glPopMatrix();
 		}
 	}
+
+	level_editor.draw();
 	glPopMatrix();
 }

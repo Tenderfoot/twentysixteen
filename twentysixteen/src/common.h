@@ -39,7 +39,9 @@ enum boundinput
 	BACK,
 	NEXT,
 	PREVIOUS,
-	EDITOR_SAVE
+	EDITOR_SAVE,
+	EDITOR_CREATE_MODE,
+	EDITOR_EDIT_MODE
 };
 
 enum rendertarget_types

@@ -97,6 +97,10 @@ boundinput translate_key_input(SDL_Keycode keycode)
 			return PREVIOUS;
 		case SDLK_F12:
 			return EDITOR_SAVE;
+		case SDLK_F1:
+			return EDITOR_CREATE_MODE;
+		case SDLK_F2:
+			return EDITOR_EDIT_MODE;
 	}
 
 	return NO_BIND;

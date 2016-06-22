@@ -6,57 +6,45 @@
 
 void LevelEditor::take_input(boundinput input, bool type)
 {
-	if (input == NEXT && type == true)
+	if (create_mode)
 	{
-		current_entity += 1;
-		current_entity = current_entity % entities->size();
-		while (entities->at(current_entity)->type == 1)
-		{
-			current_entity += 1;
-			current_entity = current_entity % entities->size();
-		}
+		input_create(input, type);
 	}
-	if (input == PREVIOUS && type == true)
+	else
 	{
-		current_entity -= 1;
-		current_entity = current_entity % entities->size();
-		while (entities->at(current_entity)->type == 1)
-		{
-			current_entity += 1;
-			current_entity = current_entity % entities->size();
-		}
-	}
-
-	if (input == RIGHT && type == true)
-	{
-		entities->at(current_entity)->position.x += 1;
-	}
-
-	if (input == LEFT && type == true)
-	{
-		entities->at(current_entity)->position.x -= 1;
-	}
-
-	if (input == UP && type == true)
-	{
-		entities->at(current_entity)->position.y += 1;
-	}
-
-	if (input == DOWN && type == true)
-	{
-		entities->at(current_entity)->position.y -= 1;
+		input_edit(input, type);
 	}
 
 	if (input == EDITOR_SAVE && type == true)
 	{
 		write_level();
 	}
+
+	if (input == EDITOR_CREATE_MODE && type == true)
+	{
+		create_mode_entity->position = entities->at(current_entity)->position;
+		create_mode = true;
+	}
+
+	if (input == EDITOR_EDIT_MODE && type == true)
+	{
+		create_mode = false;
+	}
 }
 
 void LevelEditor::update()
 {
-	camera_position.x = entities->at(current_entity)->position.x;
-	camera_position.y = entities->at(current_entity)->position.y;
+	if (create_mode)
+	{
+		camera_position.x = create_mode_entity->position.x;
+		camera_position.y = create_mode_entity->position.y;
+	}
+	else
+	{
+		// edit mode
+		camera_position.x = entities->at(current_entity)->position.x;
+		camera_position.y = entities->at(current_entity)->position.y;
+	}
 }
 
 void LevelEditor::read_level()
@@ -119,4 +107,117 @@ void LevelEditor::write_level()
 	}
 
 	myfile.close();
+}
+
+void LevelEditor::input_edit(boundinput input, bool type)
+{
+	if (input == NEXT && type == true)
+	{
+		current_entity += 1;
+		current_entity = current_entity % entities->size();
+		while (entities->at(current_entity)->type == 1)
+		{
+			current_entity += 1;
+			current_entity = current_entity % entities->size();
+		}
+	}
+	if (input == PREVIOUS && type == true)
+	{
+		current_entity -= 1;
+		current_entity = current_entity % entities->size();
+		while (entities->at(current_entity)->type == 1)
+		{
+			current_entity += 1;
+			current_entity = current_entity % entities->size();
+		}
+	}
+
+	if (input == RIGHT && type == true)
+	{
+		entities->at(current_entity)->position.x += 1;
+	}
+
+	if (input == LEFT && type == true)
+	{
+		entities->at(current_entity)->position.x -= 1;
+	}
+
+	if (input == UP && type == true)
+	{
+		entities->at(current_entity)->position.y += 1;
+	}
+
+	if (input == DOWN && type == true)
+	{
+		entities->at(current_entity)->position.y -= 1;
+	}
+}
+
+void LevelEditor::build_entity()
+{
+	t_vertex pos;
+	pos = create_mode_entity->position;
+	delete create_mode_entity;
+	switch (current_type)
+	{
+		case ENTITY:
+			create_mode_entity = new Entity(t_vertex(pos.x, pos.y, 0), t_vertex(5, 5, 5), t_vertex(1, 0, 1));
+			break;
+		case PLAYER_ENTITY:
+			create_mode_entity = new PlayerEntity();
+			((PlayerEntity*)create_mode_entity)->init();
+			((PlayerEntity*)create_mode_entity)->position = pos;
+			((PlayerEntity*)create_mode_entity)->spine_data.setslots();
+			break;
+		default:
+			create_mode_entity = new Entity(t_vertex(pos.x, pos.y, 0), t_vertex(5, 5, 5), t_vertex(1, 0, 1));
+			break;
+	}
+}
+
+void LevelEditor::input_create(boundinput input, bool type)
+{
+	// these should change the entity type
+	if (input == NEXT && type == true)
+	{
+		current_type = (current_type + 1) % 3;
+		build_entity();
+	}
+
+	if (input == PREVIOUS && type == true)
+	{
+		current_type = (current_type - 1) % 3;
+		build_entity();
+	}
+
+	// movement
+	if (input == RIGHT && type == true)
+	{
+		create_mode_entity->position.x += 1;
+	}
+
+	if (input == LEFT && type == true)
+	{
+		create_mode_entity->position.x -= 1;
+	}
+
+	if (input == UP && type == true)
+	{
+		create_mode_entity->position.y += 1;
+	}
+
+	if (input == DOWN && type == true)
+	{
+		create_mode_entity->position.y -= 1;
+	}
+}
+
+void LevelEditor::draw()
+{
+	if (create_mode)
+	{
+		glPushMatrix();
+			create_mode_entity->draw();
+		glPopMatrix();
+	}
 }
