@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\audio_controller.cpp" />
+    <ClCompile Include="src\base_gamelevel.cpp" />
     <ClCompile Include="src\base_user_interface.cpp" />
     <ClCompile Include="src\entity.cpp" />
     <ClCompile Include="src\game_entity.cpp" />
@@ -47,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\audio_controller.h" />
+    <ClInclude Include="src\base_gamelevel.h" />
     <ClInclude Include="src\base_user_interface.h" />
     <ClInclude Include="src\common.h" />
     <ClInclude Include="src\entity.h" />

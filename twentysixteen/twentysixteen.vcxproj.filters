@@ -34,6 +34,12 @@
     <Filter Include="Resource Files\shaders">
       <UniqueIdentifier>{7c8a4464-4b10-4219-b672-7055ff439cdd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\scenes">
+      <UniqueIdentifier>{01ed94cf-614c-4155-b6a6-37ea5b47e083}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\scenes">
+      <UniqueIdentifier>{b26ed3a9-8ec5-4b3c-ae15-dbe20e17114e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -110,6 +116,9 @@
     </ClCompile>
     <ClCompile Include="src\player_entity.cpp">
       <Filter>Source Files\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\base_gamelevel.cpp">
+      <Filter>Source Files\scenes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -208,6 +217,9 @@
     </ClInclude>
     <ClInclude Include="src\render_target.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\base_gamelevel.h">
+      <Filter>Header Files\scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

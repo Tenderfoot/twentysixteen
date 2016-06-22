@@ -15,72 +15,18 @@ void SceneTechDemo::init()
 	level_static.model = ModelData::import("brandnewscene.fbx", 0.005);
 	collision_group = LinearAlgebra::get_collisiongroups_from_model(*level_static.model, 0, t_vertex(0, 0, 0));
 
-	// build grass
-	int i;
-	std::vector<Entity*> grass_entities = VFXGrass::generate_grass(*level_static.model, t_vertex(0, 0, 0), 0);
-	for (i = 0; i < grass_entities.size(); i++)
-	{
-		entities.push_back(grass_entities.at(i));
-	}
-
 	spineboy.init();
 	spineboy.position = t_vertex(0, 10, 0);
 	spineboy.size = t_vertex(1, 3, 1);
 	spineboy.velocity = t_vertex(0, 0, 0);
 
+	render_target spine_entity;
+	spine_entity.type = TYPE_ENTITY;
+	spine_entity.the_entity = &spineboy;
+	spine_entity.position = spineboy.position;
+	render_targets.push_back(spine_entity);
+
 	build_render_targets();
-}
-
-void SceneTechDemo::build_render_targets()
-{
-	render_target current_target;
-	int i, j, k;
-	float x, y, z;
-	for (i = 0; i < level_static.model->meshes.size(); i++)
-	{
-		for (j = 0; j < level_static.model->meshes.at(i)->faces.size(); j++)
-		{
-			current_target.type = TYPE_FACE;
-			current_target.face = *level_static.model->meshes.at(i)->faces.at(j);
-			current_target.texture = level_static.model->textures[level_static.model->meshes.at(i)->faces.at(j)->material_index];
-
-			// calculate position of face
-			x = y = z = 0;
-			z = 9999999999;
-			for (k = 0; k < current_target.face.verticies.size(); k++)
-			{
-				x += current_target.face.verticies.at(k).x;
-				y += current_target.face.verticies.at(k).y;
-
-				if (z>current_target.face.verticies.at(k).z)
-					z = current_target.face.verticies.at(k).z;
-			}
-			x = x / current_target.face.verticies.size();
-			y = y / current_target.face.verticies.size();
-			//z = z / current_target.face.verticies.size();
-
-			current_target.position = t_vertex(x, y, z);
-
-			render_targets.push_back(current_target);
-		}
-	}
-
-	for (i = 0; i < entities.size(); i++)
-	{
-		current_target.type = TYPE_ENTITY;
-		current_target.the_entity = entities.at(i);
-		current_target.position = entities.at(i)->position;
-		render_targets.push_back(current_target);
-	}
-
-	printf("rendertargets size: %d\n", render_targets.size());
-
-	current_target.type = TYPE_ENTITY;
-	current_target.the_entity = &spineboy;
-	current_target.position = spineboy.position;
-	render_targets.push_back(current_target);
-
-	std::sort(render_targets.begin(), render_targets.end(), SceneTechDemo::by_depth_rendertarget());
 }
 
 void SceneTechDemo::run(float time_delta)
@@ -172,6 +118,4 @@ void SceneTechDemo::draw()
 			}
 		}
 	glPopMatrix();
-	
-	BaseTechDemo::draw();
 }

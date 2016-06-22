@@ -17,6 +17,7 @@
 // for example taking controller inputs or keyboard inputs, and sending them to the base levels as the same input.
 
 #include "common.h"
+#include <map>
 
 class Level
 {
@@ -29,7 +30,7 @@ public:
 	// the input, and whether it was pressed or released
 	virtual void take_input(boundinput input, bool type) = 0;
 	std::map<boundinput, bool> keydown_map;
-
+	
 	// Exit level
 	levels exit_level = LEVEL_NONE;
 };

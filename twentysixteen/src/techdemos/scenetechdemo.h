@@ -1,6 +1,7 @@
 #pragma once
 
 #include "basetechdemo.h"
+#include "../base_gamelevel.h"
 #include "../model_data.h"
 #include "../linear_algebra.h"
 #include "../particles.h"
@@ -8,14 +9,15 @@
 #include "../VFXGrass.h"
 #include "../modelprop_entity.h"
 #include "../player_entity.h"
-#include "../render_target.h"
 
-class SceneTechDemo : public BaseTechDemo
+// This used to inherit from basetechdemo, but
+// it makes more sense to make it inherit from basegamelevel.
+
+class SceneTechDemo : public BaseGameLevel
 {
 public:
 	SceneTechDemo()
 	{
-		this->techdemo_title = "Model to Polygon Tech Demo";
 	}
 
 	void run(float time_delta);
@@ -24,22 +26,9 @@ public:
 	void take_input(boundinput input, bool type);
 	float rotation;
 	void reset();
-	void build_render_targets();
-
-	// Level Entities
-	std::vector<Entity*> entities;
-	std::vector<render_target> render_targets;
 
 	static t_vertex camera_position;
 
-	struct by_depth_rendertarget {
-		bool operator()(render_target left, render_target right) {
-			return left.position.z < right.position.z;
-		}
-	};
-
 	ParticleEmitter myemitter;
-	ModelData level_static;
 	PlayerEntity spineboy;
-	t_collisiongroup collision_group;
 };
