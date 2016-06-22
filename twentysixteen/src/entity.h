@@ -41,21 +41,8 @@ public:
 		color = new_color;
 	}
 
-	virtual void draw()
-	{
-		// StarField background
-		glPushMatrix();
-			glTranslatef(position.x, position.y, position.z);
-			glScalef(size.x, size.y, size.z);
-			glBindTexture(GL_TEXTURE_2D, texture);
-			glColor3f(color.x, color.y, color.z);
-			Paintbrush::draw_quad();
-		glPopMatrix();
-	}
-
-	virtual void update(float delta_time)
-	{
-	}
+	virtual void draw();
+	virtual void update(float delta_time);
 };
 
 struct by_depth {

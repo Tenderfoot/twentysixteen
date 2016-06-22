@@ -1,4 +1,18 @@
 
 #include "entity.h"
 
-// I don't know why I made this file, I'm a retard
+void Entity::draw()
+{
+	// StarField background
+	glPushMatrix();
+		glTranslatef(position.x, position.y, position.z);
+		glScalef(size.x, size.y, size.z);
+		glBindTexture(GL_TEXTURE_2D, texture);
+		glColor3f(color.x, color.y, color.z);
+		Paintbrush::draw_quad();
+	glPopMatrix();
+}
+
+void Entity::update(float delta_time)
+{
+}
