@@ -17,6 +17,7 @@ void EditorTechDemo::init()
 
 	// Point the editor to the entity list
 	level_editor.entities = &entities;
+	level_editor.render_targets = &render_targets;
 	level_editor.current_entity = 0;
 	level_editor.read_level();
 
@@ -40,18 +41,31 @@ void EditorTechDemo::init()
 
 void EditorTechDemo::run(float time_delta)
 {
-	//set_camera(t_vertex(spineboy.position.x, spineboy.position.y + 5, 15), t_vertex(spineboy.position.x, spineboy.position.y, -25));
-	set_camera(t_vertex(level_editor.camera_position.x, level_editor.camera_position.y+5, 15), t_vertex(level_editor.camera_position.x, level_editor.camera_position.y, -25));
-
-	//spineboy.correct_against_collisiongroup(collision_group, time_delta);
-	//spineboy.update(time_delta);
-
-	int i;
-	for(i = 0; i < entities.size(); i++)
+	if (level_editor.editor_mode == CREATE_MODE)
 	{
-		if (entities.at(i)->type == PLAYER_ENTITY)
+		set_camera(t_vertex(level_editor.camera_position.x, level_editor.camera_position.y + 5, 15), t_vertex(level_editor.camera_position.x, level_editor.camera_position.y, -25));
+	}
+	else if(level_editor.editor_mode == EDIT_MODE)
+	{
+		set_camera(t_vertex(level_editor.camera_position.x, level_editor.camera_position.y + 5, 15), t_vertex(level_editor.camera_position.x, level_editor.camera_position.y, -25));
+	}
+	else
+	{
+		int i;
+		for (i = 0; i < entities.size(); i++)
 		{
-			((PlayerEntity*)entities.at(i))->player_update(time_delta);
+			if (entities.at(i)->type == GAME_ENTITY)
+			{
+				((GameEntity*)entities.at(i))->correct_against_collisiongroup(collision_group, time_delta);
+				((GameEntity*)entities.at(i))->update(time_delta);
+			}
+			if (entities.at(i)->type == PLAYER_ENTITY)
+			{
+				set_camera(t_vertex(((PlayerEntity*)entities.at(i))->position.x, ((PlayerEntity*)entities.at(i))->position.y + 5, 15), t_vertex(((PlayerEntity*)entities.at(i))->position.x, ((PlayerEntity*)entities.at(i))->position.y, -25));
+				((PlayerEntity*)entities.at(i))->player_update(time_delta);
+				((PlayerEntity*)entities.at(i))->correct_against_collisiongroup(collision_group, time_delta);
+				((PlayerEntity*)entities.at(i))->update(time_delta);
+			}
 		}
 	}
 
@@ -84,9 +98,24 @@ void EditorTechDemo::reset()
 void EditorTechDemo::take_input(boundinput input, bool type)
 {
 	keydown_map[input] = type;
-	
-	//spineboy.handle_keypress(input, type);
 	level_editor.take_input(input, type);
+	
+	if (level_editor.editor_mode == PLAY_MODE)
+	{
+		int i;
+		for (i = 0; i < entities.size(); i++)
+		{
+			if (entities.at(i)->type == PLAYER_ENTITY)
+			{
+				((PlayerEntity*)entities.at(i))->handle_keypress(input, type);
+			}
+		}
+	}
+
+	if (input == EDITOR_PLAY_MODE && type == true)
+	{
+		std::sort(render_targets.begin(), render_targets.end(), by_depth_rendertarget());
+	}
 
 	if (input == BACK && type == true)
 		exit_level = TECHDEMO_BASE;

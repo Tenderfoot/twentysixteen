@@ -41,7 +41,8 @@ enum boundinput
 	PREVIOUS,
 	EDITOR_SAVE,
 	EDITOR_CREATE_MODE,
-	EDITOR_EDIT_MODE
+	EDITOR_EDIT_MODE,
+	EDITOR_PLAY_MODE
 };
 
 enum rendertarget_types
@@ -55,11 +56,21 @@ enum light_types
 	POINT_LIGHT
 };
 
+// Entity - a textured QUAD
+// Game_Entity - a quad with physics
 enum entity_types
 {
 	ENTITY,
+	GAME_ENTITY,
 	GRASS_ENTITY,
 	PLAYER_ENTITY
+};
+
+enum EDITOR_MODES
+{
+	CREATE_MODE,
+	EDIT_MODE,
+	PLAY_MODE
 };
 
 // proper comparison for char* maps

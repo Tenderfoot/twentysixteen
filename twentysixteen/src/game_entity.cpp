@@ -1,10 +1,6 @@
 
 #include "game_entity.h"
 
-void GameEntity::draw()
-{
-}
-
 void GameEntity::update(float delta_time)
 {
 	if (apply_friction)
@@ -27,6 +23,11 @@ void GameEntity::update(float delta_time)
 		}
 	}
 	apply_friction = false;
+
+	if (velocity.y > -0.03)
+	{
+		velocity.y -= 0.0001*delta_time;
+	}
 
 	position.x += real_velocity.x;
 	position.y += real_velocity.y;

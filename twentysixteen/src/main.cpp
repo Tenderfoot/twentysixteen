@@ -101,6 +101,8 @@ boundinput translate_key_input(SDL_Keycode keycode)
 			return EDITOR_CREATE_MODE;
 		case SDLK_F2:
 			return EDITOR_EDIT_MODE;
+		case SDLK_F3:
+			return EDITOR_PLAY_MODE;
 	}
 
 	return NO_BIND;

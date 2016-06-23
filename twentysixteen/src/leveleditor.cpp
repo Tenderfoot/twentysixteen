@@ -6,11 +6,11 @@
 
 void LevelEditor::take_input(boundinput input, bool type)
 {
-	if (create_mode)
+	if (editor_mode == CREATE_MODE)
 	{
 		input_create(input, type);
 	}
-	else
+	else if(editor_mode == EDIT_MODE)
 	{
 		input_edit(input, type);
 	}
@@ -23,18 +23,23 @@ void LevelEditor::take_input(boundinput input, bool type)
 	if (input == EDITOR_CREATE_MODE && type == true)
 	{
 		create_mode_entity->position = entities->at(current_entity)->position;
-		create_mode = true;
+		editor_mode = CREATE_MODE;
 	}
 
 	if (input == EDITOR_EDIT_MODE && type == true)
 	{
-		create_mode = false;
+		editor_mode = EDIT_MODE;
+	}
+
+	if (input == EDITOR_PLAY_MODE && type == true)
+	{
+		editor_mode = PLAY_MODE;
 	}
 }
 
 void LevelEditor::update()
 {
-	if (create_mode)
+	if (editor_mode == CREATE_MODE)
 	{
 		camera_position.x = create_mode_entity->position.x;
 		camera_position.y = create_mode_entity->position.y;
@@ -115,7 +120,7 @@ void LevelEditor::input_edit(boundinput input, bool type)
 	{
 		current_entity += 1;
 		current_entity = current_entity % entities->size();
-		while (entities->at(current_entity)->type == 1)
+		while (entities->at(current_entity)->type == GRASS_ENTITY)
 		{
 			current_entity += 1;
 			current_entity = current_entity % entities->size();
@@ -125,7 +130,7 @@ void LevelEditor::input_edit(boundinput input, bool type)
 	{
 		current_entity -= 1;
 		current_entity = current_entity % entities->size();
-		while (entities->at(current_entity)->type == 1)
+		while (entities->at(current_entity)->type == GRASS_ENTITY)
 		{
 			current_entity += 1;
 			current_entity = current_entity % entities->size();
@@ -161,7 +166,10 @@ void LevelEditor::build_entity()
 	switch (current_type)
 	{
 		case ENTITY:
-			create_mode_entity = new Entity(t_vertex(pos.x, pos.y, 0), t_vertex(5, 5, 5), t_vertex(1, 0, 1));
+			create_mode_entity = new Entity(t_vertex(pos.x, pos.y, 0), t_vertex(5, 5, 5), t_vertex(1, 0, 0));
+			break;
+		case GAME_ENTITY:
+			create_mode_entity = new GameEntity(t_vertex(pos.x, pos.y, 0), t_vertex(5, 5, 5), t_vertex(1, 0, 1));
 			break;
 		case PLAYER_ENTITY:
 			create_mode_entity = new PlayerEntity();
@@ -170,7 +178,7 @@ void LevelEditor::build_entity()
 			((PlayerEntity*)create_mode_entity)->spine_data.setslots();
 			break;
 		default:
-			create_mode_entity = new Entity(t_vertex(pos.x, pos.y, 0), t_vertex(5, 5, 5), t_vertex(1, 0, 1));
+			create_mode_entity = new Entity(t_vertex(pos.x, pos.y, 0), t_vertex(5, 5, 5), t_vertex(1, 0, 0));
 			break;
 	}
 }
@@ -180,13 +188,13 @@ void LevelEditor::input_create(boundinput input, bool type)
 	// these should change the entity type
 	if (input == NEXT && type == true)
 	{
-		current_type = (current_type + 1) % 3;
+		current_type = (current_type + 1) % 4;
 		build_entity();
 	}
 
 	if (input == PREVIOUS && type == true)
 	{
-		current_type = (current_type - 1) % 3;
+		current_type = (current_type - 1) % 4;
 		build_entity();
 	}
 
@@ -210,11 +218,26 @@ void LevelEditor::input_create(boundinput input, bool type)
 	{
 		create_mode_entity->position.y -= 1;
 	}
+
+	if (input == ACTION && type == true)
+	{
+		entities->push_back(create_mode_entity);
+
+		render_target new_entity;
+		new_entity.type = TYPE_ENTITY;
+		create_mode_entity->position = create_mode_entity->position;
+		new_entity.the_entity = create_mode_entity;
+		render_targets->push_back(new_entity);
+
+		current_entity = entities->size() - 1;
+		editor_mode = EDIT_MODE;
+		create_mode_entity = new Entity(t_vertex(0, 0, 0), t_vertex(5, 5, 5), t_vertex(1, 0, 0));
+	}
 }
 
 void LevelEditor::draw()
 {
-	if (create_mode)
+	if (editor_mode == CREATE_MODE)
 	{
 		glPushMatrix();
 			create_mode_entity->draw();

@@ -21,7 +21,7 @@ public:
 
 	LevelEditor()
 	{
-		create_mode_entity = new Entity(t_vertex(0,0,0), t_vertex(5,5,5), t_vertex(1,0,1));
+		create_mode_entity = new Entity(t_vertex(0,0,0), t_vertex(5,5,5), t_vertex(1,0,0));
 		current_type = 0;
 	}
 	void take_input(boundinput input, bool type);
@@ -36,12 +36,13 @@ public:
 	void write_level();
 	
 	// create or edit mode?
-	bool create_mode;
+	EDITOR_MODES editor_mode;
 	Entity *create_mode_entity;
 	int current_type;
 
 	// The BaseGameLevel's entity list
 	std::vector<Entity*> *entities;
+	std::vector<render_target> *render_targets;
 
 	// camera position
 	t_vertex camera_position;

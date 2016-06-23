@@ -14,6 +14,7 @@
 class PlayerEntity : public SpineEntity
 {
 public:
+
 	PlayerEntity()
 	{
 		type = PLAYER_ENTITY;

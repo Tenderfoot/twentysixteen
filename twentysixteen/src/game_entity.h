@@ -12,6 +12,18 @@
 class GameEntity : public Entity
 {
 public:
+	
+	GameEntity()
+	{
+	}
+
+	GameEntity(t_vertex new_pos, t_vertex new_size, t_vertex new_color)
+	{
+		type = GAME_ENTITY;
+		position = new_pos;
+		size = new_size;
+		color = new_color;
+	}
 
 	// An Entity has a position - a GameEntity also has:
 	// -a width and height
@@ -20,8 +32,6 @@ public:
 	t_vertex real_velocity;
 
 	bool apply_friction;
-
-	void draw();
 	void update(float time_delta);
 
 	void correct_against_collisiongroup(t_collisiongroup collision_group, float time_delta);
