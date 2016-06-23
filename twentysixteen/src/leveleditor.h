@@ -23,6 +23,7 @@ public:
 	{
 		create_mode_entity = new Entity(t_vertex(0,0,0), t_vertex(5,5,5), t_vertex(1,0,0));
 		current_type = 0;
+		current_entity = 0;
 	}
 	void take_input(boundinput input, bool type);
 	void input_edit(boundinput input, bool type);
@@ -33,7 +34,7 @@ public:
 	void reset_entities();
 
 	// file IO to save entity information
-	void read_level();
+	void read_level(std::string level_name);
 	void write_level();
 	
 	// create or edit mode?

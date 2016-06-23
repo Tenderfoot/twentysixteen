@@ -77,7 +77,7 @@ void BaseGameLevel::draw()
 		{
 			Paintbrush::use_shader(Paintbrush::get_shader("point_light"));
 			glPushMatrix();
-			Paintbrush::draw_face(render_targets.at(i).face, render_targets.at(i).texture);
+				Paintbrush::draw_face(render_targets.at(i).face, render_targets.at(i).texture);
 			glPopMatrix();
 			Paintbrush::stop_shader();
 		}

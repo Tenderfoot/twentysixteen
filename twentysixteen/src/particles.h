@@ -13,7 +13,7 @@
 class Particle : public Entity
 {
 public:
-	Particle(t_vertex position, t_vertex velocity): position(position), velocity(velocity)
+	Particle(t_vertex position, t_vertex size, t_vertex velocity): position(position), velocity(velocity)
 	{
 	}
 
@@ -52,6 +52,12 @@ public:
 class ParticleEmitter : public Entity
 {
 public:
+
+	ParticleEmitter()
+	{
+		type = EMITTER_ENTITY;
+	}
+
 	void init(GLuint texture);
 	void init(GLuint texture, t_vertex position, t_vertex size);
 	void reset();

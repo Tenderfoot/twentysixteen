@@ -3,6 +3,7 @@
 #include <iostream>
 #include <sstream>
 #include <fstream>
+#include "particles.h"
 
 void LevelEditor::take_input(boundinput input, bool type)
 {
@@ -70,9 +71,11 @@ void LevelEditor::update()
 	}
 }
 
-void LevelEditor::read_level()
+void LevelEditor::read_level(std::string level_name)
 {
-	std::ifstream in("data/levels/test.txt");
+	std::stringstream filename;
+	filename << "data/levels/" << level_name.c_str() << ".txt";
+	std::ifstream in(filename.str());
 	std::string line;
 
 	Entity *new_entity;
@@ -82,7 +85,7 @@ void LevelEditor::read_level()
 	int number = std::stoi(line);
 	printf("number of entities: %d\n", number);
 	
-	t_vertex new_pos, new_size;
+	t_vertex new_pos, new_size, new_color;
 
 	while (std::getline(in, line))
 	{
@@ -111,7 +114,6 @@ void LevelEditor::read_level()
 			((PlayerEntity*)new_entity)->init();
 			entities->push_back(new_entity);
 		}
-		// for each entity
 		if (line == "GameEntity")
 		{
 			// position information
@@ -137,6 +139,64 @@ void LevelEditor::read_level()
 
 			entities->push_back(new_entity);
 		}
+		if (line == "Entity")
+		{
+			// position information
+			std::getline(in, line, ',');
+			new_pos.x = std::stoi(line);
+			std::getline(in, line, ',');
+			new_pos.y = std::stoi(line);
+			std::getline(in, line, ',');
+			new_pos.z = std::stoi(line);
+
+			// size information
+			std::getline(in, line, ',');
+			new_size.x = std::stoi(line);
+			std::getline(in, line, ',');
+			new_size.y = std::stoi(line);
+			std::getline(in, line, ',');
+			new_size.z = std::stoi(line);
+			
+			// color information
+			std::getline(in, line, ',');
+			new_color.x = std::stof(line);
+			std::getline(in, line, ',');
+			new_color.y = std::stof(line);
+			std::getline(in, line, ',');
+			new_color.z = std::stof(line);
+
+			new_entity = new Entity(new_pos, new_size, new_color);
+			new_entity->texture = NULL;
+
+			entities->push_back(new_entity);
+		}
+		if (line == "EmitterEntity")
+		{
+			// position information
+			std::getline(in, line, ',');
+			new_pos.x = std::stof(line);
+			std::getline(in, line, ',');
+			new_pos.y = std::stof(line);
+			std::getline(in, line, ',');
+			new_pos.z = std::stof(line);
+
+			// size information
+			std::getline(in, line, ',');
+			new_size.x = std::stof(line);
+			std::getline(in, line, ',');
+			new_size.y = std::stof(line);
+			std::getline(in, line, ',');
+			new_size.z = std::stof(line);
+
+			new_entity = new ParticleEmitter();
+			while (((ParticleEmitter*)new_entity)->particles.size() < 1000)
+			{
+				((ParticleEmitter*)new_entity)->particles.push_back(new Star);
+			}
+			((ParticleEmitter*)new_entity)->init(Paintbrush::get_texture("data/images/fire.png", false, false), new_pos, new_size);
+
+			entities->push_back(new_entity);
+		}
 	}
 }
 
@@ -158,6 +218,19 @@ void LevelEditor::write_level()
 		if (entities->at(i)->type == GAME_ENTITY)
 		{
 			myfile << "GameEntity\n";
+			myfile << entities->at(i)->initial_position.x << "," << entities->at(i)->initial_position.y << "," << entities->at(i)->initial_position.z << ",";
+			myfile << entities->at(i)->size.x << "," << entities->at(i)->size.y << "," << entities->at(i)->size.z << "," << "\n";
+		}
+		if (entities->at(i)->type == ENTITY)
+		{
+			myfile << "Entity\n";
+			myfile << entities->at(i)->initial_position.x << "," << entities->at(i)->initial_position.y << "," << entities->at(i)->initial_position.z << ",";
+			myfile << entities->at(i)->size.x << "," << entities->at(i)->size.y << "," << entities->at(i)->size.z << ",";
+			myfile << entities->at(i)->color.x << "," << entities->at(i)->color.y << "," << entities->at(i)->color.z << "," << "\n";
+		}
+		if (entities->at(i)->type == EMITTER_ENTITY)
+		{
+			myfile << "EmitterEntity\n";
 			myfile << entities->at(i)->initial_position.x << "," << entities->at(i)->initial_position.y << "," << entities->at(i)->initial_position.z << ",";
 			myfile << entities->at(i)->size.x << "," << entities->at(i)->size.y << "," << entities->at(i)->size.z << "," << "\n";
 		}

@@ -3,37 +3,13 @@
 
 void EditorTechDemo::init()
 {
-	while (myemitter.particles.size() < 1000)
-	{
-		myemitter.particles.push_back(new Star);
-	}
-
-	myemitter.init(Paintbrush::get_texture("data/images/fire.png", false, false), t_vertex(-100, 0, -50), t_vertex(200, 75, 0));
-
 	level_static.model = ModelData::import("brandnewscene.fbx", 0.005);
 	collision_group = LinearAlgebra::get_collisiongroups_from_model(*level_static.model, 0, t_vertex(0, 0, 0));
-
-	entities.push_back(&myemitter);
 
 	// Point the editor to the entity list
 	level_editor.entities = &entities;
 	level_editor.render_targets = &render_targets;
-	level_editor.current_entity = 0;
-	level_editor.read_level();
-
-
-	render_target new_entity;
-	new_entity.type = TYPE_ENTITY;
-	// star emitter
-	new_entity.the_entity = &myemitter;
-	new_entity.position = myemitter.position;
-	render_targets.push_back(new_entity);
-
-	// star background (0.1 gray)
-	new_entity.the_entity = new Entity(t_vertex(-100.0f, 0.0f, -55.0f), t_vertex(1000.0f, 1000.0f, 1000.0f), t_vertex(0.1f, 0.1f, 0.1f));
-	new_entity.the_entity->texture = NULL;
-	new_entity.position = new_entity.the_entity->position;
-	render_targets.push_back(new_entity);
+	level_editor.read_level("test");
 
 	build_render_targets();
 }
@@ -65,10 +41,13 @@ void EditorTechDemo::run(float time_delta)
 				((PlayerEntity*)entities.at(i))->correct_against_collisiongroup(collision_group, time_delta);
 				((PlayerEntity*)entities.at(i))->update(time_delta);
 			}
+			if (entities.at(i)->type == EMITTER_ENTITY)
+			{
+				((ParticleEmitter*)entities.at(i))->update(time_delta);
+			}
 		}
 	}
 
-	myemitter.update(time_delta);
 	level_editor.update();
 
 	LightManager::lights[0].y = 5;

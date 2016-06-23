@@ -16,6 +16,8 @@ void ParticleEmitter::init(GLuint texture, t_vertex position, t_vertex size)
 {
 	int i;
 	this->position = position;
+	this->size = size;
+	this->initial_position = position;
 	for (i = 0; i < particles.size(); i++)
 	{
 		particles.at(i)->init(texture, position, size);
