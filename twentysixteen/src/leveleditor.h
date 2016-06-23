@@ -25,7 +25,7 @@ public:
 
 	LevelEditor()
 	{
-		create_mode_entity = new Entity(t_vertex(0,0,0), t_vertex(5,5,5), t_vertex(1,0,0));
+		create_mode_entity = new Entity(t_vertex(0,15,0), t_vertex(5,5,5), t_vertex(1,0,0));
 		current_type = 0;
 		current_entity = 0;
 	}

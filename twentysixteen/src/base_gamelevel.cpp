@@ -61,6 +61,43 @@ void BaseGameLevel::set_camera(t_vertex position, t_vertex lookat)
 	camera_lookat = lookat;
 }
 
+void BaseGameLevel::run(float time_delta)
+{
+	if (level_editor.editor_mode == CREATE_MODE)
+	{
+		set_camera(t_vertex(level_editor.camera_position.x, level_editor.camera_position.y + 5, 15), t_vertex(level_editor.camera_position.x, level_editor.camera_position.y, -25));
+	}
+	else if (level_editor.editor_mode == EDIT_MODE)
+	{
+		set_camera(t_vertex(level_editor.camera_position.x, level_editor.camera_position.y + 5, 15), t_vertex(level_editor.camera_position.x, level_editor.camera_position.y, -25));
+	}
+	else
+	{
+		int i;
+		for (i = 0; i < entities.size(); i++)
+		{
+			if (entities.at(i)->type == GAME_ENTITY)
+			{
+				((GameEntity*)entities.at(i))->correct_against_collisiongroup(collision_group, time_delta);
+				((GameEntity*)entities.at(i))->update(time_delta);
+			}
+			if (entities.at(i)->type == PLAYER_ENTITY)
+			{
+				set_camera(t_vertex(((PlayerEntity*)entities.at(i))->position.x, ((PlayerEntity*)entities.at(i))->position.y + 5, 15), t_vertex(((PlayerEntity*)entities.at(i))->position.x, ((PlayerEntity*)entities.at(i))->position.y, -25));
+				((PlayerEntity*)entities.at(i))->player_update(time_delta);
+				((PlayerEntity*)entities.at(i))->correct_against_collisiongroup(collision_group, time_delta);
+				((PlayerEntity*)entities.at(i))->update(time_delta);
+			}
+			if (entities.at(i)->type == EMITTER_ENTITY)
+			{
+				((ParticleEmitter*)entities.at(i))->update(time_delta);
+			}
+		}
+	}
+
+	level_editor.update();
+}
+
 void BaseGameLevel::draw()
 {
 	gluLookAt(camera_position.x, camera_position.y, camera_position.z, camera_lookat.x, camera_lookat.y, camera_lookat.z, 0, 1, 0);

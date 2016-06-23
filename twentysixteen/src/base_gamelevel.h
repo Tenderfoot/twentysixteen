@@ -5,6 +5,7 @@
 #include "render_target.h"
 #include "vfxgrass.h"
 #include "leveleditor.h"
+#include "particles.h"
 
 // BaseGameLevel
 // This is the base for all the scenes in the game.
@@ -20,6 +21,7 @@ public:
 
 	void build_render_targets();
 	void set_camera(t_vertex position, t_vertex lookat);
+	void run(float time_delta);
 	void draw();
 
 	// Model for area

@@ -112,6 +112,7 @@ void LevelEditor::read_level(std::string level_name)
 			new_entity = new PlayerEntity(new_pos, new_size, t_vertex(1.0f,1.0f,1.0f));
 
 			((PlayerEntity*)new_entity)->init();
+			((PlayerEntity*)new_entity)->spine_data.setslots();
 			entities->push_back(new_entity);
 		}
 		if (line == "GameEntity")
