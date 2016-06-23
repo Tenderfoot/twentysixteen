@@ -33,7 +33,7 @@ std::vector<Entity*> VFXGrass::generate_grass(t_3dModel from_model, t_vertex mod
 				new_entity->position.y = v0.y;
 				new_entity->position.z = z;
 
-				if (grass_group.collision_groups.at(i).edges.at(j).material_id == 4)
+				if (grass_group.collision_groups.at(i).edges.at(j).material_id == from_model.grass_index)
 				{
 					grass_polygons.push_back(new_entity);
 				}

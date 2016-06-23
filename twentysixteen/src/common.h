@@ -1,8 +1,8 @@
 #pragma once
 
 // some globals
-#define res_width  1920		
-#define res_height  1080
+#define res_width  1024		
+#define res_height  768
 
 #include <stdio.h>
 #include <string>
@@ -24,7 +24,11 @@ enum levels
 	TECHDEMO_LIGHTS,
 	TECHDEMO_POSTPROCESS,
 	TECHDEMO_ENEMY,
-	TECHDEMO_EDITOR,
+	TECHDEMO_GRAVEYARD,
+	TECHDEMO_MEADOW,
+	TECHDEMO_MARSH,
+	TECHDEMO_TOWN,
+	TECHDEMO_DUNGEON,
 	QUIT
 };
 

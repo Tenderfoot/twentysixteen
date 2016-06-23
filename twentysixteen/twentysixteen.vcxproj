@@ -36,11 +36,14 @@
     <ClCompile Include="src\spine_data.cpp" />
     <ClCompile Include="src\spine_entity.cpp" />
     <ClCompile Include="src\techdemos\AudioTechDemo.cpp" />
-    <ClCompile Include="src\techdemos\EditorTechDemo.cpp" />
+    <ClCompile Include="src\techdemos\DungeonTechDemo.cpp" />
     <ClCompile Include="src\techdemos\EmitterTechDemo.cpp" />
     <ClCompile Include="src\techdemos\EnemyTechDemo.cpp" />
     <ClCompile Include="src\techdemos\GrassTechDemo.cpp" />
+    <ClCompile Include="src\techdemos\GraveyardTechDemo.cpp" />
     <ClCompile Include="src\techdemos\LightTechDemo.cpp" />
+    <ClCompile Include="src\techdemos\MarshTechDemo.cpp" />
+    <ClCompile Include="src\techdemos\MeadowTechDemo.cpp" />
     <ClCompile Include="src\techdemos\ModelTechDemo.cpp" />
     <ClCompile Include="src\techdemos\ModelToPolygonTechDemo.cpp" />
     <ClCompile Include="src\techdemos\PhysicsTechDemo.cpp" />
@@ -48,6 +51,7 @@
     <ClCompile Include="src\techdemos\SceneTechDemo.cpp" />
     <ClCompile Include="src\techdemos\ShaderTechDemo.cpp" />
     <ClCompile Include="src\techdemos\SpineTechDemo.cpp" />
+    <ClCompile Include="src\techdemos\TownTechDemo.cpp" />
     <ClCompile Include="src\techdemos\TTFTechDemo.cpp" />
     <ClCompile Include="src\vfxgrass.cpp" />
   </ItemGroup>
@@ -76,11 +80,14 @@
     <ClInclude Include="src\spine_entity.h" />
     <ClInclude Include="src\techdemos\audiotechdemo.h" />
     <ClInclude Include="src\techdemos\basetechdemo.h" />
-    <ClInclude Include="src\techdemos\editortechdemo.h" />
+    <ClInclude Include="src\techdemos\dungeontechdemo.h" />
     <ClInclude Include="src\techdemos\emittertechdemo.h" />
     <ClInclude Include="src\techdemos\enemytechdemo.h" />
     <ClInclude Include="src\techdemos\grasstechdemo.h" />
+    <ClInclude Include="src\techdemos\graveyardtechdemo.h" />
     <ClInclude Include="src\techdemos\lighttechdemo.h" />
+    <ClInclude Include="src\techdemos\marshtechdemo.h" />
+    <ClInclude Include="src\techdemos\meadowtechdemo.h" />
     <ClInclude Include="src\techdemos\modeltechdemo.h" />
     <ClInclude Include="src\techdemos\modeltopolygontechdemo.h" />
     <ClInclude Include="src\techdemos\physicstechdemo.h" />
@@ -88,6 +95,7 @@
     <ClInclude Include="src\techdemos\scenetechdemo.h" />
     <ClInclude Include="src\techdemos\shadertechdemo.h" />
     <ClInclude Include="src\techdemos\spinetechdemo.h" />
+    <ClInclude Include="src\techdemos\towntechdemo.h" />
     <ClInclude Include="src\techdemos\ttftechdemo.h" />
     <ClInclude Include="src\vfxgrass.h" />
   </ItemGroup>

@@ -11,6 +11,13 @@
 #define NO_SDL_GLEXT
 
 // whats next
+// set up scene tech demos
+// Meadow
+// Graveyard
+// Marsh
+// Town
+// Dungeon
+
 
 // General Libraries
 #include <GL/glew.h>
@@ -33,7 +40,11 @@
 #include "techdemos\lighttechdemo.h"
 #include "techdemos\postprocessdemo.h"
 #include "techdemos\enemytechdemo.h"
-#include "techdemos\editortechdemo.h"
+#include "techdemos\graveyardtechdemo.h"
+#include "techdemos\meadowtechdemo.h"
+#include "techdemos\marshtechdemo.h"
+#include "techdemos\towntechdemo.h"
+#include "techdemos\dungeontechdemo.h"
 
 // and a few globals
 bool done = 0; // Quit?
@@ -197,7 +208,11 @@ void init_levels()
 	level_map[TECHDEMO_LIGHTS] = new LightTechDemo();
 	level_map[TECHDEMO_POSTPROCESS] = new PostProcessDemo();
 	level_map[TECHDEMO_ENEMY] = new EnemyTechDemo();
-	level_map[TECHDEMO_EDITOR] = new EditorTechDemo();
+	level_map[TECHDEMO_GRAVEYARD] = new GraveyardTechDemo();
+	level_map[TECHDEMO_MEADOW] = new MeadowTechDemo();
+	level_map[TECHDEMO_MARSH] = new MarshTechDemo();
+	level_map[TECHDEMO_TOWN] = new TownTechDemo();
+	level_map[TECHDEMO_DUNGEON] = new DungeonTechDemo();
 
 	for (auto it = std::begin(level_map); it != std::end(level_map); ++it)
 	{
@@ -217,7 +232,7 @@ int main(int argc, char *argv[])
 		exit(2);
 	}
 
-	window = SDL_CreateWindow("TwentySixteen", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, res_width, res_height, SDL_WINDOW_OPENGL | SDL_WINDOW_FULLSCREEN);
+	window = SDL_CreateWindow("TwentySixteen", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, res_width, res_height, SDL_WINDOW_OPENGL);
 	
 	SDL_GLContext glcontext = SDL_GL_CreateContext(window);
 

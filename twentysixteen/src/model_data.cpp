@@ -38,6 +38,11 @@ t_3dModel *ModelData::import(char *filename, float scale)
 		dir = new char[256];
 		sprintf_s(dir, sizeof(char)*256, "data/models/%s", name.C_Str());
 
+		if (strcmp(name.C_Str(), "grass.jpg") == 0)
+		{
+			new_model->grass_index = i;
+		}
+
 		new_model->textures.push_back(Paintbrush::get_texture(dir, false, true));
 
 		glBindTexture(GL_TEXTURE_2D, new_model->textures.at(new_model->textures.size() - 1));

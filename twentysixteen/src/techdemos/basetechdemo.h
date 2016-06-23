@@ -50,8 +50,8 @@ public:
 		physics_list->set_data(0.5, 0.4, 0.2, 0.1, false);
 		TechDemoUI.add_widget(physics_list);
 
-		scene_list = new ListWidget({ "BASE SCENE", "EDITOR", "BACK" });
-		scene_list->set_data(0.5, 0.4, 0.2, 0.1, false);
+		scene_list = new ListWidget({ "MEADOW", "MARSH", "GRAVEYARD", "TOWN", "DUNGEON", "BACK" });
+		scene_list->set_data(0.5, 0.35, 0.2, 0.1, false);
 		TechDemoUI.add_widget(scene_list);
 
 		prototyping = new ListWidget({"ENEMY", "BACK" });
@@ -148,9 +148,25 @@ public:
 				{
 					exit_level = TECHDEMO_ENEMY;
 				}
-				if (strcmp(choice, "EDITOR") == 0)
+				if (strcmp(choice, "GRAVEYARD") == 0)
 				{
-					exit_level = TECHDEMO_EDITOR;
+					exit_level = TECHDEMO_GRAVEYARD;
+				}
+				if (strcmp(choice, "MEADOW") == 0)
+				{
+					exit_level = TECHDEMO_MEADOW;
+				}
+				if (strcmp(choice, "MARSH") == 0)
+				{
+					exit_level = TECHDEMO_MARSH;
+				}
+				if (strcmp(choice, "TOWN") == 0)
+				{
+					exit_level = TECHDEMO_TOWN;
+				}
+				if (strcmp(choice, "DUNGEON") == 0)
+				{
+					exit_level = TECHDEMO_DUNGEON;
 				}
 				if (strcmp(choice, "DATA IMPORT") == 0)
 				{

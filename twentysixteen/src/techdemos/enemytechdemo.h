@@ -23,10 +23,6 @@ public:
 
 	void run(float time_delta);
 	void init();
-	void take_input(boundinput input, bool type);
-	void reset();
 
-	ParticleEmitter myemitter;
-	PlayerEntity spineboy;
 	NPCEntity knight;
 };

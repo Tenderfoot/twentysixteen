@@ -10,19 +10,15 @@
 #include "../modelprop_entity.h"
 #include "../player_entity.h"
 
-// This used to inherit from basetechdemo, but
-// it makes more sense to make it inherit from basegamelevel.
+// TOWN
+// Town is like meadow but with buildings
 
-class EditorTechDemo : public BaseGameLevel
+class TownTechDemo : public BaseGameLevel
 {
 public:
-	EditorTechDemo()
+	TownTechDemo()
 	{
 	}
 
 	void init();
-	void take_input(boundinput input, bool type);
-	void reset();
-
-	ParticleEmitter myemitter;
 };

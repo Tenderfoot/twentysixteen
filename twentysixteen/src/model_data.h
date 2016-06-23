@@ -65,6 +65,7 @@ typedef struct
 	std::vector<t_mesh*> meshes;
 	std::vector<GLuint> textures;
 	char *filename;
+	int grass_index;
 }t_3dModel;
 
 class ModelData

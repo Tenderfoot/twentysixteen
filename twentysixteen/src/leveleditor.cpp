@@ -85,9 +85,12 @@ t_vertex LevelEditor::get_vertex_from_buffer(std::ifstream *in)
 
 void LevelEditor::read_level(std::string level_name)
 {
+	this->level_name = level_name;
+
 	std::stringstream filename;
 	filename << "data/levels/" << level_name.c_str() << ".txt";
 	std::ifstream in(filename.str());
+	printf("%s\n", filename.str().c_str());
 	std::string line;
 
 	Entity *new_entity;
@@ -159,7 +162,9 @@ void LevelEditor::read_level(std::string level_name)
 void LevelEditor::write_level() 
 {
 	std::ofstream myfile;
-	myfile.open("data/levels/test.txt");
+	std::stringstream filename;
+	filename << "data/levels/" << level_name.c_str() << ".txt";
+	myfile.open(filename.str());
 	myfile << "1\n";
 
 	int i;

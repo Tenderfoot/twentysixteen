@@ -40,6 +40,7 @@ public:
 	t_vertex get_vertex_from_buffer(std::ifstream *in);
 
 	// file IO to save entity information
+	std::string level_name;
 	void read_level(std::string level_name);
 	void write_level();
 	

@@ -129,10 +129,22 @@
     <ClCompile Include="src\npc_entity.cpp">
       <Filter>Source Files\entities</Filter>
     </ClCompile>
-    <ClCompile Include="src\techdemos\EditorTechDemo.cpp">
-      <Filter>Source Files\techdemos</Filter>
-    </ClCompile>
     <ClCompile Include="src\leveleditor.cpp">
+      <Filter>Source Files\scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\techdemos\GraveyardTechDemo.cpp">
+      <Filter>Source Files\scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\techdemos\MeadowTechDemo.cpp">
+      <Filter>Source Files\scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\techdemos\MarshTechDemo.cpp">
+      <Filter>Source Files\scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\techdemos\DungeonTechDemo.cpp">
+      <Filter>Source Files\scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\techdemos\TownTechDemo.cpp">
       <Filter>Source Files\scenes</Filter>
     </ClCompile>
   </ItemGroup>
@@ -245,10 +257,22 @@
     <ClInclude Include="src\npc_entity.h">
       <Filter>Header Files\entities</Filter>
     </ClInclude>
-    <ClInclude Include="src\techdemos\editortechdemo.h">
-      <Filter>Header Files\techdemos</Filter>
-    </ClInclude>
     <ClInclude Include="src\leveleditor.h">
+      <Filter>Header Files\scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\techdemos\graveyardtechdemo.h">
+      <Filter>Header Files\scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\techdemos\meadowtechdemo.h">
+      <Filter>Header Files\scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\techdemos\towntechdemo.h">
+      <Filter>Header Files\scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\techdemos\marshtechdemo.h">
+      <Filter>Header Files\scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\techdemos\dungeontechdemo.h">
       <Filter>Header Files\scenes</Filter>
     </ClInclude>
   </ItemGroup>

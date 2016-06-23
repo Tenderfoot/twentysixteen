@@ -129,3 +129,47 @@ void BaseGameLevel::draw()
 	level_editor.draw();
 	glPopMatrix();
 }
+
+void BaseGameLevel::take_input(boundinput input, bool type)
+{
+	keydown_map[input] = type;
+	level_editor.take_input(input, type);
+
+	if (level_editor.editor_mode == PLAY_MODE)
+	{
+		int i;
+		for (i = 0; i < entities.size(); i++)
+		{
+			if (entities.at(i)->type == PLAYER_ENTITY)
+			{
+				((PlayerEntity*)entities.at(i))->handle_keypress(input, type);
+			}
+		}
+	}
+
+	if (input == EDITOR_PLAY_MODE && type == true)
+	{
+		std::sort(render_targets.begin(), render_targets.end(), by_depth_rendertarget());
+	}
+
+	if (input == BACK && type == true)
+		exit_level = TECHDEMO_BASE;
+}
+
+void BaseGameLevel::reset()
+{
+	LightManager::reset();
+	while (LightManager::lights.size() < 1)
+	{
+		LightManager::lights.push_back(Light(0, 0, 0, 100));
+	}
+
+	LightManager::lights[0].x = 0;
+	LightManager::lights[0].y = 5;
+	LightManager::lights[0].z = -15;
+	LightManager::lights[0].radius = 25;
+
+	LightManager::lights[0].r = 0.9;
+	LightManager::lights[0].g = 0.9;
+	LightManager::lights[0].b = 0.9;
+}

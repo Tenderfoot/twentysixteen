@@ -36,8 +36,7 @@ void PhysicsTechDemo::run(float time_delta)
 	// jump
 	if (keydown_map[UP] == true)
 	{
-		if (box.velocity.y == 0)
-			box.velocity.y = +0.035;
+		box.velocity.y = +0.035;
 	}
 	
 	if (box.velocity.y > -0.03)

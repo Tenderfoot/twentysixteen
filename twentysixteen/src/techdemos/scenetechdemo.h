@@ -21,9 +21,4 @@ public:
 	}
 
 	void init();
-	void take_input(boundinput input, bool type);
-	void reset();
-
-	ParticleEmitter myemitter;
-	PlayerEntity spineboy;
 };
