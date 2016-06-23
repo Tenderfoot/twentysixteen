@@ -1,5 +1,9 @@
 #pragma once
 
+#include <iostream>
+#include <sstream>
+#include <fstream>
+
 #include "common.h"
 #include "level.h"
 #include "render_target.h"
@@ -32,6 +36,8 @@ public:
 	void draw();
 	void build_entity();
 	void reset_entities();
+
+	t_vertex get_vertex_from_buffer(std::ifstream *in);
 
 	// file IO to save entity information
 	void read_level(std::string level_name);

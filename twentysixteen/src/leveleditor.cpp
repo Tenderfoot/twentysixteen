@@ -1,8 +1,5 @@
 
 #include "leveleditor.h"
-#include <iostream>
-#include <sstream>
-#include <fstream>
 #include "particles.h"
 
 void LevelEditor::take_input(boundinput input, bool type)
@@ -71,6 +68,21 @@ void LevelEditor::update()
 	}
 }
 
+t_vertex LevelEditor::get_vertex_from_buffer(std::ifstream *in)
+{
+	t_vertex to_return;
+	std::string line;
+
+	std::getline(*in, line, ',');
+	to_return.x = std::stof(line);
+	std::getline(*in, line, ',');
+	to_return.y = std::stof(line);
+	std::getline(*in, line, ',');
+	to_return.z = std::stof(line);
+
+	return to_return;
+}
+
 void LevelEditor::read_level(std::string level_name)
 {
 	std::stringstream filename;
@@ -93,21 +105,9 @@ void LevelEditor::read_level(std::string level_name)
 		// for each entity
 		if (line == "PlayerEntity")
 		{
-			// position information
-			std::getline(in, line, ',');
-			new_pos.x = std::stoi(line);
-			std::getline(in, line, ',');
-			new_pos.y = std::stoi(line);
-			std::getline(in, line, ',');
-			new_pos.z = std::stoi(line);
-
-			// size information
-			std::getline(in, line, ',');
-			new_size.x = std::stoi(line);
-			std::getline(in, line, ',');
-			new_size.y = std::stoi(line);
-			std::getline(in, line, ',');
-			new_size.z = std::stoi(line);
+			// gather information
+			new_pos = get_vertex_from_buffer(&in);
+			new_size = get_vertex_from_buffer(&in);
 
 			new_entity = new PlayerEntity(new_pos, new_size, t_vertex(1.0f,1.0f,1.0f));
 
@@ -116,21 +116,8 @@ void LevelEditor::read_level(std::string level_name)
 		}
 		if (line == "GameEntity")
 		{
-			// position information
-			std::getline(in, line, ',');
-			new_pos.x = std::stoi(line);
-			std::getline(in, line, ',');
-			new_pos.y = std::stoi(line);
-			std::getline(in, line, ',');
-			new_pos.z = std::stoi(line);
-
-			// size information
-			std::getline(in, line, ',');
-			new_size.x = std::stoi(line);
-			std::getline(in, line, ',');
-			new_size.y = std::stoi(line);
-			std::getline(in, line, ',');
-			new_size.z = std::stoi(line);
+			new_pos = get_vertex_from_buffer(&in);
+			new_size = get_vertex_from_buffer(&in);
 
 			new_entity = new GameEntity(new_pos, new_size, t_vertex(1.0f,1.0f,1.0f));
 
@@ -141,29 +128,9 @@ void LevelEditor::read_level(std::string level_name)
 		}
 		if (line == "Entity")
 		{
-			// position information
-			std::getline(in, line, ',');
-			new_pos.x = std::stoi(line);
-			std::getline(in, line, ',');
-			new_pos.y = std::stoi(line);
-			std::getline(in, line, ',');
-			new_pos.z = std::stoi(line);
-
-			// size information
-			std::getline(in, line, ',');
-			new_size.x = std::stoi(line);
-			std::getline(in, line, ',');
-			new_size.y = std::stoi(line);
-			std::getline(in, line, ',');
-			new_size.z = std::stoi(line);
-			
-			// color information
-			std::getline(in, line, ',');
-			new_color.x = std::stof(line);
-			std::getline(in, line, ',');
-			new_color.y = std::stof(line);
-			std::getline(in, line, ',');
-			new_color.z = std::stof(line);
+			new_pos = get_vertex_from_buffer(&in);
+			new_size = get_vertex_from_buffer(&in);
+			new_color = get_vertex_from_buffer(&in);
 
 			new_entity = new Entity(new_pos, new_size, new_color);
 			new_entity->texture = NULL;
@@ -172,21 +139,9 @@ void LevelEditor::read_level(std::string level_name)
 		}
 		if (line == "EmitterEntity")
 		{
-			// position information
-			std::getline(in, line, ',');
-			new_pos.x = std::stof(line);
-			std::getline(in, line, ',');
-			new_pos.y = std::stof(line);
-			std::getline(in, line, ',');
-			new_pos.z = std::stof(line);
-
-			// size information
-			std::getline(in, line, ',');
-			new_size.x = std::stof(line);
-			std::getline(in, line, ',');
-			new_size.y = std::stof(line);
-			std::getline(in, line, ',');
-			new_size.z = std::stof(line);
+			// gather information
+			new_pos = get_vertex_from_buffer(&in);
+			new_size = get_vertex_from_buffer(&in);
 
 			new_entity = new ParticleEmitter();
 			while (((ParticleEmitter*)new_entity)->particles.size() < 1000)
