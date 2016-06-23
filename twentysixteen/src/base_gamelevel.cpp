@@ -84,7 +84,7 @@ void BaseGameLevel::draw()
 		else
 		{
 			glPushMatrix();
-			render_targets.at(i).the_entity->draw();
+				render_targets.at(i).the_entity->draw();
 			glPopMatrix();
 		}
 	}

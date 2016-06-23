@@ -20,6 +20,16 @@ public:
 		type = PLAYER_ENTITY;
 	}
 
+	PlayerEntity(t_vertex new_pos, t_vertex new_size, t_vertex new_color)
+	{
+		type = PLAYER_ENTITY;
+		position = new_pos;
+		size = new_size;
+		color = new_color;
+		initial_position = new_pos;
+		velocity = t_vertex(0, 0, 0);
+	}
+
 	void handle_keypress(boundinput input, bool type);
 	std::map<boundinput, bool> keydown_map;
 

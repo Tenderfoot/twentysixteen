@@ -21,10 +21,9 @@ void EditorTechDemo::init()
 	level_editor.current_entity = 0;
 	level_editor.read_level();
 
-	// add the player and emitter to rendertargets
+
 	render_target new_entity;
 	new_entity.type = TYPE_ENTITY;
-
 	// star emitter
 	new_entity.the_entity = &myemitter;
 	new_entity.position = myemitter.position;

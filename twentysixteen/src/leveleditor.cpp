@@ -22,18 +22,36 @@ void LevelEditor::take_input(boundinput input, bool type)
 
 	if (input == EDITOR_CREATE_MODE && type == true)
 	{
+		if (editor_mode == PLAY_MODE)
+		{
+			reset_entities();
+		}
+
 		create_mode_entity->position = entities->at(current_entity)->position;
 		editor_mode = CREATE_MODE;
 	}
 
 	if (input == EDITOR_EDIT_MODE && type == true)
 	{
+		if (editor_mode == PLAY_MODE)
+		{
+			reset_entities();
+		}
 		editor_mode = EDIT_MODE;
 	}
 
 	if (input == EDITOR_PLAY_MODE && type == true)
 	{
 		editor_mode = PLAY_MODE;
+	}
+}
+
+void LevelEditor::reset_entities()
+{
+	int i;
+	for (i = 0; i < entities->size(); i++)
+	{
+		entities->at(i)->reset();
 	}
 }
 
@@ -64,31 +82,59 @@ void LevelEditor::read_level()
 	int number = std::stoi(line);
 	printf("number of entities: %d\n", number);
 	
+	t_vertex new_pos, new_size;
+
 	while (std::getline(in, line))
 	{
+		printf("%s\n", line.c_str());
 		// for each entity
 		if (line == "PlayerEntity")
 		{
-			new_entity = new PlayerEntity();
 			// position information
 			std::getline(in, line, ',');
-			new_entity->position.x = std::stoi(line);
+			new_pos.x = std::stoi(line);
 			std::getline(in, line, ',');
-			new_entity->position.y = std::stoi(line);
+			new_pos.y = std::stoi(line);
 			std::getline(in, line, ',');
-			new_entity->position.z = std::stoi(line);
-			printf("Position: %f, %f, %f\n", new_entity->position.x, new_entity->position.y, new_entity->position.z);
-			
+			new_pos.z = std::stoi(line);
+
 			// size information
 			std::getline(in, line, ',');
-			new_entity->size.x = std::stoi(line);
+			new_size.x = std::stoi(line);
 			std::getline(in, line, ',');
-			new_entity->size.y = std::stoi(line);
+			new_size.y = std::stoi(line);
 			std::getline(in, line, ',');
-			new_entity->size.z = std::stoi(line);
-			printf("Size: %f, %f, %f\n", new_entity->size.x, new_entity->size.y, new_entity->size.z);
+			new_size.z = std::stoi(line);
+
+			new_entity = new PlayerEntity(new_pos, new_size, t_vertex(1.0f,1.0f,1.0f));
 
 			((PlayerEntity*)new_entity)->init();
+			entities->push_back(new_entity);
+		}
+		// for each entity
+		if (line == "GameEntity")
+		{
+			// position information
+			std::getline(in, line, ',');
+			new_pos.x = std::stoi(line);
+			std::getline(in, line, ',');
+			new_pos.y = std::stoi(line);
+			std::getline(in, line, ',');
+			new_pos.z = std::stoi(line);
+
+			// size information
+			std::getline(in, line, ',');
+			new_size.x = std::stoi(line);
+			std::getline(in, line, ',');
+			new_size.y = std::stoi(line);
+			std::getline(in, line, ',');
+			new_size.z = std::stoi(line);
+
+			new_entity = new GameEntity(new_pos, new_size, t_vertex(1.0f,1.0f,1.0f));
+
+			new_entity->color = t_vertex(1.0f, 1.0f, 1.0f);
+			new_entity->texture = NULL;
+
 			entities->push_back(new_entity);
 		}
 	}
@@ -106,8 +152,14 @@ void LevelEditor::write_level()
 		if (entities->at(i)->type == PLAYER_ENTITY)
 		{
 			myfile << "PlayerEntity\n";
-			myfile << entities->at(i)->position.x << "," << entities->at(i)->position.y << "," << entities->at(i)->position.z << ",";
-			myfile << "1,3,1\n";
+			myfile << entities->at(i)->initial_position.x << "," << entities->at(i)->initial_position.y << "," << entities->at(i)->initial_position.z << ",";
+			myfile << "1,3,1,\n";
+		}
+		if (entities->at(i)->type == GAME_ENTITY)
+		{
+			myfile << "GameEntity\n";
+			myfile << entities->at(i)->initial_position.x << "," << entities->at(i)->initial_position.y << "," << entities->at(i)->initial_position.z << ",";
+			myfile << entities->at(i)->size.x << "," << entities->at(i)->size.y << "," << entities->at(i)->size.z << "," << "\n";
 		}
 	}
 
@@ -156,6 +208,8 @@ void LevelEditor::input_edit(boundinput input, bool type)
 	{
 		entities->at(current_entity)->position.y -= 1;
 	}
+
+	entities->at(current_entity)->initial_position = entities->at(current_entity)->position;
 }
 
 void LevelEditor::build_entity()

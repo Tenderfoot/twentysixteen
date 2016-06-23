@@ -30,6 +30,7 @@ public:
 	void update();
 	void draw();
 	void build_entity();
+	void reset_entities();
 
 	// file IO to save entity information
 	void read_level();

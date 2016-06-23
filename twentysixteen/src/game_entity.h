@@ -15,6 +15,7 @@ public:
 	
 	GameEntity()
 	{
+		type = GAME_ENTITY;
 	}
 
 	GameEntity(t_vertex new_pos, t_vertex new_size, t_vertex new_color)
@@ -23,6 +24,8 @@ public:
 		position = new_pos;
 		size = new_size;
 		color = new_color;
+		initial_position = new_pos;
+		velocity = t_vertex(0, 0, 0);
 	}
 
 	// An Entity has a position - a GameEntity also has:

@@ -25,6 +25,7 @@
 class Entity
 {
 public:
+	t_vertex initial_position;
 	t_vertex position;
 	t_vertex size;
 	t_vertex color;
@@ -40,10 +41,12 @@ public:
 	{
 		type = ENTITY;
 		position = new_pos;
+		initial_position = new_pos;
 		size = new_size;
 		color = new_color;
 	}
 
+	virtual void reset();
 	virtual void draw();
 	virtual void update(float delta_time);
 };

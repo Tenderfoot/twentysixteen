@@ -3,7 +3,6 @@
 
 void Entity::draw()
 {
-	// StarField background
 	glPushMatrix();
 		glTranslatef(position.x, position.y, position.z);
 		glScalef(size.x, size.y, size.z);
@@ -15,4 +14,9 @@ void Entity::draw()
 
 void Entity::update(float delta_time)
 {
+}
+
+void Entity::reset()
+{
+	position = initial_position;
 }
