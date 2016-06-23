@@ -65,8 +65,8 @@ void EnemyTechDemo::run(float time_delta)
 
 	myemitter.update(time_delta);
 
-	LightManager::lights[0].y = 5+knight.position.y-camera_position.y;
-	LightManager::lights[0].x = knight.position.x-camera_position.x;
+	//LightManager::lights[0].y = 5+knight.position.y-camera_position.y;
+	//LightManager::lights[0].x = knight.position.x-camera_position.x;
 }
 
 void EnemyTechDemo::reset()
@@ -79,7 +79,7 @@ void EnemyTechDemo::reset()
 	}
 
 	LightManager::lights[0].x = 0;
-	LightManager::lights[0].y = 10;
+	LightManager::lights[0].y = 5;
 	LightManager::lights[0].z = -15;
 	LightManager::lights[0].radius = 15;
 

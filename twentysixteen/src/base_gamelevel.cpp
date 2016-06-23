@@ -83,10 +83,10 @@ void BaseGameLevel::run(float time_delta)
 			}
 			if (entities.at(i)->type == PLAYER_ENTITY)
 			{
-				set_camera(t_vertex(((PlayerEntity*)entities.at(i))->position.x, ((PlayerEntity*)entities.at(i))->position.y + 5, 15), t_vertex(((PlayerEntity*)entities.at(i))->position.x, ((PlayerEntity*)entities.at(i))->position.y, -25));
-				((PlayerEntity*)entities.at(i))->player_update(time_delta);
 				((PlayerEntity*)entities.at(i))->correct_against_collisiongroup(collision_group, time_delta);
 				((PlayerEntity*)entities.at(i))->update(time_delta);
+				((PlayerEntity*)entities.at(i))->player_update(time_delta);
+				set_camera(t_vertex(((PlayerEntity*)entities.at(i))->position.x, ((PlayerEntity*)entities.at(i))->position.y + 5, 15), t_vertex(((PlayerEntity*)entities.at(i))->position.x, ((PlayerEntity*)entities.at(i))->position.y, -25));
 			}
 			if (entities.at(i)->type == EMITTER_ENTITY)
 			{
