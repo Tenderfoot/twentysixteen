@@ -10,7 +10,6 @@ void SceneTechDemo::init()
 	level_editor.entities = &entities;
 	level_editor.render_targets = &render_targets;
 	level_editor.read_level("test");
-	level_editor.editor_mode = PLAY_MODE;
 
 	build_render_targets();
 }
@@ -20,7 +19,6 @@ void SceneTechDemo::reset()
 	LightManager::reset();
 	while (LightManager::lights.size() < 1)
 	{
-		// make sure there are actually two lights to manipulate
 		LightManager::lights.push_back(Light(0, 0, 0, 100));
 	}
 

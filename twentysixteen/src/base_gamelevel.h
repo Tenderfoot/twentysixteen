@@ -18,6 +18,11 @@
 class BaseGameLevel : public Level
 {
 public:
+	
+	BaseGameLevel()
+	{
+		level_editor.editor_mode = PLAY_MODE;
+	}
 
 	void build_render_targets();
 	void set_camera(t_vertex position, t_vertex lookat);
