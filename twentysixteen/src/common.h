@@ -42,7 +42,8 @@ enum boundinput
 	EDITOR_SAVE,
 	EDITOR_CREATE_MODE,
 	EDITOR_EDIT_MODE,
-	EDITOR_PLAY_MODE
+	EDITOR_PLAY_MODE,
+	EDITOR_DELETE
 };
 
 enum rendertarget_types

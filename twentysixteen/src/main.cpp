@@ -103,6 +103,8 @@ boundinput translate_key_input(SDL_Keycode keycode)
 			return EDITOR_EDIT_MODE;
 		case SDLK_F3:
 			return EDITOR_PLAY_MODE;
+		case SDLK_DELETE:
+			return EDITOR_DELETE;
 	}
 
 	return NO_BIND;

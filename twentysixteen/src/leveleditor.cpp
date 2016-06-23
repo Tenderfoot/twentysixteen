@@ -168,6 +168,24 @@ void LevelEditor::write_level()
 
 void LevelEditor::input_edit(boundinput input, bool type)
 {
+	if (input == EDITOR_DELETE && type == true)
+	{	
+
+		int i;
+		for (i = 0; i < render_targets->size(); i++)
+		{
+			if (entities->at(current_entity) == render_targets->at(i).the_entity)
+			{
+				printf("hit this!\n");
+				render_targets->erase(render_targets->begin() + i);
+			}
+		}
+
+		delete entities->at(current_entity);
+		entities->erase(entities->begin() + current_entity);
+		current_entity = 0;
+	}
+
 	if (input == NEXT && type == true)
 	{
 		current_entity += 1;
@@ -226,7 +244,7 @@ void LevelEditor::build_entity()
 			create_mode_entity = new GameEntity(t_vertex(pos.x, pos.y, 0), t_vertex(5, 5, 5), t_vertex(1, 0, 1));
 			break;
 		case PLAYER_ENTITY:
-			create_mode_entity = new PlayerEntity();
+			create_mode_entity = new PlayerEntity(t_vertex(pos.x, pos.y, 0), t_vertex(1, 3, 1), t_vertex(1, 0, 1));
 			((PlayerEntity*)create_mode_entity)->init();
 			((PlayerEntity*)create_mode_entity)->position = pos;
 			((PlayerEntity*)create_mode_entity)->spine_data.setslots();
