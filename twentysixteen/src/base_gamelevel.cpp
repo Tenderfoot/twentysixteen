@@ -103,7 +103,7 @@ void BaseGameLevel::draw()
 	gluLookAt(camera_position.x, camera_position.y, camera_position.z, camera_lookat.x, camera_lookat.y, camera_lookat.z, 0, 1, 0);
 
 	//  this line draws the level collision group as lines
-	//	Paintbrush::draw_collision_group(collision_group, 0);
+		Paintbrush::draw_collision_group(collision_group, 0);
 
 	// draw the rendertargets
 	glPushMatrix();
@@ -165,9 +165,9 @@ void BaseGameLevel::reset()
 	}
 
 	LightManager::lights[0].x = 0;
-	LightManager::lights[0].y = 5;
-	LightManager::lights[0].z = -15;
-	LightManager::lights[0].radius = 25;
+	LightManager::lights[0].y = 10;
+	LightManager::lights[0].z = -10;
+	LightManager::lights[0].radius = 30;
 
 	LightManager::lights[0].r = 0.9;
 	LightManager::lights[0].g = 0.9;

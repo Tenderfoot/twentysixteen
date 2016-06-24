@@ -40,6 +40,7 @@ void GameEntity::correct_against_collisiongroup(t_collisiongroup collision_group
 	bool intersected = false;
 
 	int i, j;
+
 	for (i = 0; i < collision_group.collision_groups.size(); i++)
 	{
 		PolygonCollisionResult r = LinearAlgebra::PolygonCollision(return_polygon(), collision_group.collision_groups.at(i), real_velocity);
@@ -56,12 +57,13 @@ void GameEntity::correct_against_collisiongroup(t_collisiongroup collision_group
 				velocity.y = 0;
 				apply_friction = true;
 			}
-			
+
 			if (r.MinimumTranslationVector.y < 0)
 				velocity.y = -0.001;
 
 			intersected = true;
 		}
 	}
+	
 
 }

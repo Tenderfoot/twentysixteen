@@ -11,13 +11,9 @@
 #define NO_SDL_GLEXT
 
 // whats next
-// set up scene tech demos
-// Meadow
-// Graveyard
-// Marsh
-// Town
-// Dungeon
-
+// make each scene tech demo different
+// fix lights
+// entity textures
 
 // General Libraries
 #include <GL/glew.h>
