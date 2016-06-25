@@ -44,6 +44,17 @@ public:
 		initial_position = new_pos;
 		size = new_size;
 		color = new_color;
+		texture = NULL;
+	}
+
+	Entity(t_vertex new_pos, t_vertex new_size, t_vertex new_color, GLuint new_texture)
+	{
+		type = ENTITY;
+		position = new_pos;
+		initial_position = new_pos;
+		size = new_size;
+		color = new_color;
+		texture = new_texture;
 	}
 
 	virtual void reset();

@@ -1,7 +1,7 @@
 
 #include "audio_controller.h"
 
-std::map<char*, Mix_Chunk*, cmp_str> AudioController::audio_db = {};
+std::map<std::string, Mix_Chunk*> AudioController::audio_db = {};
 
 void AudioController::init()
 {
@@ -20,28 +20,20 @@ void AudioController::init()
 	Mix_AllocateChannels(16);
 }
 
-void AudioController::play_sound(char *filename)
+void AudioController::play_sound(std::string filename)
 {
-	char *dir = new char[256];
-	sprintf_s(dir, sizeof(char) * 256, "data/sounds/%s.wav", filename);
-
-	Mix_PlayChannel(-1, get_sound(dir), 0);
-
-	delete dir;
+	Mix_PlayChannel(-1, get_sound(filename), 0);
 }
 
-Mix_Chunk* AudioController::get_sound(char* audio_id)
+Mix_Chunk* AudioController::get_sound(std::string audio_id)
 {
-	std::map<char*, Mix_Chunk*, cmp_str>::iterator it;
+	std::map<std::string, Mix_Chunk*>::iterator it;
 
 	it = audio_db.find(audio_id);
 
 	if (it == audio_db.end())
 	{
-		char *new_string = new char[128];
-		strcpy_s(new_string, sizeof(char)*128, audio_id);
-
-		audio_db.insert({ new_string , Mix_LoadWAV(audio_id) });
+		audio_db.insert({ audio_id , Mix_LoadWAV(audio_id.c_str()) });
 	}
 
 	return audio_db[audio_id];

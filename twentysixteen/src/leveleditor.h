@@ -9,6 +9,7 @@
 #include "render_target.h"
 #include "vfxgrass.h"
 #include "player_entity.h"
+#include "base_user_interface.h"
 
 // LevelEditor
 // The level editor will have a pointer
@@ -28,14 +29,26 @@ public:
 		create_mode_entity = new Entity(t_vertex(0,15,0), t_vertex(5,5,5), t_vertex(1,0,0));
 		current_type = 0;
 		current_entity = 0;
+
+		entity_stringname[ENTITY] = "Base";
+		entity_stringname[GAME_ENTITY] = "Game";
+		entity_stringname[GRASS_ENTITY] = "Grass";
+		entity_stringname[PLAYER_ENTITY] = "Player";
+		entity_stringname[EMITTER_ENTITY] = "Emitter";
+
 	}
 	void take_input(boundinput input, bool type);
 	void input_edit(boundinput input, bool type);
 	void input_create(boundinput input, bool type);
 	void update();
+	void build_ui();
 	void draw();
 	void build_entity();
 	void reset_entities();
+
+	// Editor UI stuff
+	BaseUserInterface editor_interface;
+	std::map<entity_types, std::string> entity_stringname;
 
 	t_vertex get_vertex_from_buffer(std::ifstream *in);
 

@@ -10,11 +10,14 @@ void UIImage::draw()
 {
 	glPushMatrix();
 
-		glTranslatef(0.5*res_width, 0.6*res_height, 0.0f);
-		glScalef(0.5*res_width, 0.5*res_height, 1.0f);
+		glTranslatef(x*res_width, y*res_height, 0.0f);
+		glScalef(width*res_width, height*res_height, 1.0f);
 
 		glBindTexture(GL_TEXTURE_2D, texture);
+		if(texture == NULL)
+			glColor3f(0.0, 0.0f, 0.0f);
 		Paintbrush::draw_quad();
+		glColor3f(1.0, 1.0f, 1.0f);
 
 	glPopMatrix();
 }

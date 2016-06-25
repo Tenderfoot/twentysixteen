@@ -25,7 +25,7 @@ PFNGLGETSHADERINFOLOGPROC           glGetShaderInfoLog = NULL;
 // texture storage
 GLuint Paintbrush::font_texture = 0;
 TTF_Font *Paintbrush::font = NULL;
-std::map<char*, GLuint, cmp_str> Paintbrush::texture_db = {};
+std::map<std::string, GLuint> Paintbrush::texture_db = {};
 
 // shaders and uniform storage
 std::map<std::string, GLenum> Paintbrush::shader_db = {};
@@ -83,7 +83,7 @@ void Paintbrush::setup_extensions()
 
 GLenum Paintbrush::get_shader(std::string shader_id)
 {
-	std::map<std::string, GLenum, cmp_str>::iterator it;
+	std::map<std::string, GLenum>::iterator it;
 
 	it = shader_db.find(shader_id);
 
@@ -256,7 +256,7 @@ void Paintbrush::set_uniform(GLenum shader, std::string uniform_name, float data
 void Paintbrush::update_shader_uniforms()
 {
 	// Iterate through each shader and send time
-	std::map<char*, GLenum, cmp_str>::iterator it;
+	std::map<std::string, GLenum>::iterator it;
 
 	for (auto it = shader_db.begin(); it != shader_db.end(); ++it)
 	{
@@ -313,7 +313,7 @@ void Paintbrush::draw_quad()
 	glPopMatrix();
 }
 
-GLuint Paintbrush::Soil_Load_Texture(char *filename, bool for_assimp)
+GLuint Paintbrush::Soil_Load_Texture(std::string filename, bool for_assimp)
 {
 	GLuint loaded_texture;
 	int flags;
@@ -324,7 +324,7 @@ GLuint Paintbrush::Soil_Load_Texture(char *filename, bool for_assimp)
 		flags = SOIL_FLAG_MIPMAPS;
 
 	loaded_texture = SOIL_load_OGL_texture
-		(	filename,
+		(	filename.c_str(),
 			SOIL_LOAD_AUTO,
 			SOIL_CREATE_NEW_ID,
 			flags);
@@ -373,7 +373,7 @@ GLuint Paintbrush::TextToTexture(GLubyte r, GLubyte g, GLubyte b, const char* te
 	return font_texture;
 }
 
-void Paintbrush::draw_text(char *text, float x, float y, float width, float height)
+void Paintbrush::draw_text(std::string text, float x, float y, float width, float height)
 {
 	// draw the text
 	glPushMatrix();
@@ -385,24 +385,21 @@ void Paintbrush::draw_text(char *text, float x, float y, float width, float heig
 	glPopMatrix();
 }
 
-GLuint Paintbrush::get_texture(char* texture_id, bool text, bool flip)
+GLuint Paintbrush::get_texture(std::string texture_id, bool text, bool flip)
 {
-	std::map<char*, GLuint, cmp_str>::iterator it;
-
+	std::map<std::string, GLuint>::iterator it;
+	
 	it = texture_db.find(texture_id);
-
+	
 	if (it == texture_db.end())
 	{
-		char *new_string = new char[128];
-		strcpy_s(new_string, sizeof(char) * 128, texture_id);
-
 		if (text)
 		{
-			texture_db.insert({ new_string, TextToTexture(255, 255, 255, texture_id, 14) });
+			texture_db.insert({ texture_id, TextToTexture(255, 255, 255, texture_id.c_str(), 14) });
 		}
 		else
 		{
-			texture_db.insert({ new_string, Soil_Load_Texture(texture_id, flip) });
+			texture_db.insert({ texture_id, Soil_Load_Texture(texture_id, flip) });
 		}
 	}
 

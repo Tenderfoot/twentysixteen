@@ -32,7 +32,7 @@ class TextWidget : public UIWidget
 {
 public:
 
-	TextWidget(char* text, float x, float y, float width, float height)
+	TextWidget(std::string text, float x, float y, float width, float height)
 	{
 		this->text = text;
 		this->x = x;
@@ -42,14 +42,21 @@ public:
 	}
 
 	float x, y, width, height;
-	char *text;
+	std::string text;
 	void draw();
 };
 
 class UIImage : public UIWidget
 {
 public:
-	UIImage(GLuint texture) : texture(texture) {};
+	UIImage(float x, float y, float width, float height, GLuint texture)
+	{
+		this->texture = texture;
+		this->x = x;
+		this->y = y;
+		this->width = width;
+		this->height = height;
+	}
 
 	GLuint texture;
 	void draw();

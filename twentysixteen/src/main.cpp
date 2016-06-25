@@ -11,9 +11,9 @@
 #define NO_SDL_GLEXT
 
 // whats next
-// make each scene tech demo different
-// fix lights
 // entity textures
+// editor HUD
+// fix lights
 
 // General Libraries
 #include <GL/glew.h>

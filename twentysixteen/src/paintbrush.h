@@ -39,9 +39,9 @@ public:
 	static GLuint TextToTexture(GLubyte r, GLubyte g, GLubyte b, const char* text, int ptsize);
 
 	// Load a texture
-	static GLuint Soil_Load_Texture(char *filename, bool for_assimp);
+	static GLuint Soil_Load_Texture(std::string filename, bool for_assimp);
 
-	static void draw_text(char *text, float x, float y, float width, float height);
+	static void draw_text(std::string text, float x, float y, float width, float height);
 
 	// TODO get rid of this and set it up so rendered strings are stored
 	static GLuint font_texture;
@@ -49,8 +49,8 @@ public:
 	// texturedb stores and returns already loaded
 	// textures or rendered strings
 	// string -> texture GLuint
-	static std::map<char*, GLuint, cmp_str> texture_db;
-	static GLuint get_texture(char* texture_id, bool text, bool flip);
+	static std::map<std::string, GLuint> texture_db;
+	static GLuint get_texture(std::string texture_id, bool text, bool flip);
 
 	// draw a 3d model
 	static void draw_model(t_3dModel *mymodel);

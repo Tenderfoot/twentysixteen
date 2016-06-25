@@ -78,12 +78,3 @@ enum EDITOR_MODES
 	EDIT_MODE,
 	PLAY_MODE
 };
-
-// proper comparison for char* maps
-struct cmp_str
-{
-	bool operator()(char *a, char *b) const
-	{
-		return std::strcmp(a, b) < 0;
-	}
-};

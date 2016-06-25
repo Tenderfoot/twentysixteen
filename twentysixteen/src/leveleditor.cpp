@@ -27,6 +27,8 @@ void LevelEditor::take_input(boundinput input, bool type)
 
 		create_mode_entity->position = entities->at(current_entity)->position;
 		editor_mode = CREATE_MODE;
+
+		build_ui();
 	}
 
 	if (input == EDITOR_EDIT_MODE && type == true)
@@ -36,6 +38,8 @@ void LevelEditor::take_input(boundinput input, bool type)
 			reset_entities();
 		}
 		editor_mode = EDIT_MODE;
+
+		build_ui();
 	}
 
 	if (input == EDITOR_PLAY_MODE && type == true)
@@ -94,6 +98,7 @@ void LevelEditor::read_level(std::string level_name)
 	std::string line;
 
 	Entity *new_entity;
+	GLuint texture;
 
 	// get number of entities
 	std::getline(in, line);
@@ -135,9 +140,11 @@ void LevelEditor::read_level(std::string level_name)
 			new_pos = get_vertex_from_buffer(&in);
 			new_size = get_vertex_from_buffer(&in);
 			new_color = get_vertex_from_buffer(&in);
+			
+			std::getline(in, line, ',');
+			texture = std::stoi(line);
 
-			new_entity = new Entity(new_pos, new_size, new_color);
-			new_entity->texture = NULL;
+			new_entity = new Entity(new_pos, new_size, new_color, texture);
 
 			entities->push_back(new_entity);
 		}
@@ -187,7 +194,8 @@ void LevelEditor::write_level()
 			myfile << "Entity\n";
 			myfile << entities->at(i)->initial_position.x << "," << entities->at(i)->initial_position.y << "," << entities->at(i)->initial_position.z << ",";
 			myfile << entities->at(i)->size.x << "," << entities->at(i)->size.y << "," << entities->at(i)->size.z << ",";
-			myfile << entities->at(i)->color.x << "," << entities->at(i)->color.y << "," << entities->at(i)->color.z << "," << "\n";
+			myfile << entities->at(i)->color.x << "," << entities->at(i)->color.y << "," << entities->at(i)->color.z << ",";
+			myfile << entities->at(i)->texture << "," << "\n";
 		}
 		if (entities->at(i)->type == EMITTER_ENTITY)
 		{
@@ -229,6 +237,7 @@ void LevelEditor::input_edit(boundinput input, bool type)
 			current_entity += 1;
 			current_entity = current_entity % entities->size();
 		}
+		build_ui();
 	}
 	if (input == PREVIOUS && type == true)
 	{
@@ -239,6 +248,7 @@ void LevelEditor::input_edit(boundinput input, bool type)
 			current_entity += 1;
 			current_entity = current_entity % entities->size();
 		}
+		build_ui();
 	}
 
 	if (input == RIGHT && type == true)
@@ -272,7 +282,7 @@ void LevelEditor::build_entity()
 	switch (current_type)
 	{
 		case ENTITY:
-			create_mode_entity = new Entity(t_vertex(pos.x, pos.y, 0), t_vertex(5, 5, 5), t_vertex(1, 0, 0));
+			create_mode_entity = new Entity(t_vertex(pos.x, pos.y, 0), t_vertex(5, 5, 5), t_vertex(1, 0, 0), NULL);
 			break;
 		case GAME_ENTITY:
 			create_mode_entity = new GameEntity(t_vertex(pos.x, pos.y, 0), t_vertex(5, 5, 5), t_vertex(1, 0, 1));
@@ -296,12 +306,14 @@ void LevelEditor::input_create(boundinput input, bool type)
 	{
 		current_type = (current_type + 1) % 4;
 		build_entity();
+		build_ui();
 	}
 
 	if (input == PREVIOUS && type == true)
 	{
 		current_type = (current_type - 1) % 4;
 		build_entity();
+		build_ui();
 	}
 
 	// movement
@@ -338,6 +350,50 @@ void LevelEditor::input_create(boundinput input, bool type)
 		current_entity = entities->size() - 1;
 		editor_mode = EDIT_MODE;
 		create_mode_entity = new Entity(t_vertex(0, 0, 0), t_vertex(5, 5, 5), t_vertex(1, 0, 0));
+
+		build_ui();
+	}
+}
+
+void LevelEditor::build_ui()
+{
+	editor_interface.widgets.clear();
+	
+	editor_interface.add_widget(new UIImage(0, 0, 0.5, 2, NULL));
+
+	editor_interface.add_widget(new TextWidget("Level Editor", 0.125, 0.025, 0.25, 0.05));
+	if (editor_mode == CREATE_MODE)
+	{
+		editor_interface.add_widget(new TextWidget("Create Mode", 0.075, 0.075, 0.15, 0.035));
+		editor_interface.add_widget(new TextWidget("Entity Type:", 0.075, 0.115, 0.15, 0.035));
+		editor_interface.add_widget(new TextWidget(entity_stringname[create_mode_entity->type], 0.075, 0.15, 0.10, 0.03));
+	}
+	if (editor_mode == EDIT_MODE)
+	{
+		editor_interface.add_widget(new TextWidget("Edit Mode", 0.075, 0.075, 0.15, 0.035));
+		editor_interface.add_widget(new TextWidget("Entity Type:", 0.075, 0.115, 0.15, 0.035));
+		editor_interface.add_widget(new TextWidget(entity_stringname[entities->at(current_entity)->type], 0.075, 0.15, 0.10, 0.03));
+	}
+
+	editor_interface.add_widget(new TextWidget("F1 - Create Mode", 0.05, 0.3, 0.1, 0.02));
+	editor_interface.add_widget(new TextWidget("F2 - Edit Mode", 0.05, 0.32, 0.1, 0.02));
+
+	editor_interface.add_widget(new TextWidget("W - Move Up", 0.05, 0.34, 0.1, 0.02));
+	editor_interface.add_widget(new TextWidget("S - Move Down", 0.05, 0.36, 0.1, 0.02));
+	editor_interface.add_widget(new TextWidget("A - Move left", 0.05, 0.38, 0.1, 0.02));
+	editor_interface.add_widget(new TextWidget("D - Move Right", 0.05, 0.4, 0.1, 0.02));
+	editor_interface.add_widget(new TextWidget("Q - Move Forward", 0.05, 0.42, 0.1, 0.02));
+	editor_interface.add_widget(new TextWidget("E - Move Back", 0.05, 0.44, 0.1, 0.02));
+
+	if (editor_mode == CREATE_MODE)
+	{
+		editor_interface.add_widget(new TextWidget("Page Up - Next Type", 0.075, 0.46, 0.15, 0.02));
+		editor_interface.add_widget(new TextWidget("Page Down - Previous Type", 0.075, 0.48, 0.15, 0.02));
+	}
+	if (editor_mode == EDIT_MODE)
+	{
+		editor_interface.add_widget(new TextWidget("Page Up - Next Entity", 0.075, 0.46, 0.15, 0.02));
+		editor_interface.add_widget(new TextWidget("Page Down - Previous Entity", 0.075, 0.48, 0.15, 0.02));
 	}
 }
 
@@ -347,6 +403,12 @@ void LevelEditor::draw()
 	{
 		glPushMatrix();
 			create_mode_entity->draw();
+		glPopMatrix();
+	}
+	if (editor_mode == CREATE_MODE || editor_mode == EDIT_MODE)
+	{
+		glPushMatrix();
+			editor_interface.draw();
 		glPopMatrix();
 	}
 }
