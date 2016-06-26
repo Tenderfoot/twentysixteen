@@ -112,6 +112,28 @@ boundinput translate_key_input(SDL_Keycode keycode)
 			return EDITOR_PLAY_MODE;
 		case SDLK_DELETE:
 			return EDITOR_DELETE;
+		case SDLK_q:
+			return QUICKSWITCH;
+		case SDLK_e:
+			return USE;
+		case SDLK_KP_7:
+			return EDITOR_SCALE_X_PLUS;
+		case SDLK_KP_4:
+			return EDITOR_SCALE_X_MINUS;
+		case SDLK_KP_8:
+			return EDITOR_SCALE_Y_PLUS;
+		case SDLK_KP_5:
+			return EDITOR_SCALE_Y_MINUS;
+		case SDLK_KP_9:
+			return EDITOR_SCALE_Z_PLUS;
+		case SDLK_KP_6:
+			return EDITOR_SCALE_Z_MINUS;
+		case SDLK_KP_1:
+			return EDITOR_RED;
+		case SDLK_KP_2:
+			return EDITOR_GREEN;
+		case SDLK_KP_3:
+			return EDITOR_BLUE;
 	}
 
 	return NO_BIND;

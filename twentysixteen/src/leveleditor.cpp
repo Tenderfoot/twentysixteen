@@ -271,6 +271,74 @@ void LevelEditor::input_edit(boundinput input, bool type)
 		entities->at(current_entity)->position.y -= 1;
 	}
 
+	if (input == QUICKSWITCH && type == true)
+	{
+		entities->at(current_entity)->position.z -= 1;
+	}
+
+	if (input == USE && type == true)
+	{
+		entities->at(current_entity)->position.z += 1;
+	}
+
+	if (input == EDITOR_RED && type == true)
+	{
+		entities->at(current_entity)->color.x = (entities->at(current_entity)->color.x + 0.05f);
+		if (entities->at(current_entity)->color.x > 1)
+			entities->at(current_entity)->color.x = 0;
+	}
+
+	if (input == EDITOR_BLUE && type == true)
+	{
+		entities->at(current_entity)->color.y = (entities->at(current_entity)->color.y + 0.05f);
+		if (entities->at(current_entity)->color.y > 1)
+			entities->at(current_entity)->color.y = 0;
+	}
+
+	if (input == EDITOR_GREEN && type == true)
+	{
+		entities->at(current_entity)->color.z = (entities->at(current_entity)->color.z + 0.05f);
+		if (entities->at(current_entity)->color.z > 1)
+			entities->at(current_entity)->color.z = 0;
+	}
+
+	if (input == EDITOR_SCALE_X_PLUS && type == true)
+	{
+		entities->at(current_entity)->size.x = (entities->at(current_entity)->size.x + 0.05f);
+	}
+
+	if (input == EDITOR_SCALE_Y_PLUS && type == true)
+	{
+		entities->at(current_entity)->size.y = (entities->at(current_entity)->size.y + 0.05f);
+	}
+
+	if (input == EDITOR_SCALE_Z_PLUS && type == true)
+	{
+		entities->at(current_entity)->size.z = (entities->at(current_entity)->size.z + 0.05f);
+	}
+
+	if (input == EDITOR_SCALE_X_MINUS && type == true)
+	{
+		entities->at(current_entity)->size.x = (entities->at(current_entity)->size.x - 0.05f);
+		if (entities->at(current_entity)->size.x < 0)
+			entities->at(current_entity)->size.x = 0;
+	}
+
+	if (input == EDITOR_SCALE_Y_MINUS && type == true)
+	{
+		entities->at(current_entity)->size.y = (entities->at(current_entity)->size.y - 0.05f);
+		if (entities->at(current_entity)->size.y < 0)
+			entities->at(current_entity)->size.y = 0;
+	}
+
+	if (input == EDITOR_SCALE_Z_MINUS && type == true)
+	{
+		entities->at(current_entity)->size.z = (entities->at(current_entity)->size.z - 0.05f);
+		if (entities->at(current_entity)->size.z < 0)
+			entities->at(current_entity)->size.z = 0;
+	}
+
+
 	entities->at(current_entity)->initial_position = entities->at(current_entity)->position;
 }
 
@@ -337,6 +405,16 @@ void LevelEditor::input_create(boundinput input, bool type)
 		create_mode_entity->position.y -= 1;
 	}
 
+	if (input == QUICKSWITCH && type == true)
+	{
+		create_mode_entity->position.z -= 1;
+	}
+
+	if (input == USE && type == true)
+	{
+		create_mode_entity->position.z += 1;
+	}
+
 	if (input == ACTION && type == true)
 	{
 		entities->push_back(create_mode_entity);
@@ -357,6 +435,12 @@ void LevelEditor::input_create(boundinput input, bool type)
 
 void LevelEditor::build_ui()
 {
+	int i;
+	for (i = 0; i < editor_interface.widgets.size(); i++)
+	{
+		delete editor_interface.widgets.at(i);
+	}
+
 	editor_interface.widgets.clear();
 	
 	editor_interface.add_widget(new UIImage(0, 0, 0.5, 2, NULL));
@@ -389,13 +473,16 @@ void LevelEditor::build_ui()
 	{
 		editor_interface.add_widget(new TextWidget("Page Up - Next Type", 0.075, 0.46, 0.15, 0.02));
 		editor_interface.add_widget(new TextWidget("Page Down - Previous Type", 0.075, 0.48, 0.15, 0.02));
+		editor_interface.add_widget(new TextWidget("Space - Create Entity", 0.075, 0.5, 0.15, 0.02));
 	}
 	if (editor_mode == EDIT_MODE)
 	{
 		editor_interface.add_widget(new TextWidget("Page Up - Next Entity", 0.075, 0.46, 0.15, 0.02));
 		editor_interface.add_widget(new TextWidget("Page Down - Previous Entity", 0.075, 0.48, 0.15, 0.02));
+		editor_interface.add_widget(new TextWidget("Delete - Delete Entity", 0.075, 0.5, 0.15, 0.02));
 	}
 }
+
 
 void LevelEditor::draw()
 {
