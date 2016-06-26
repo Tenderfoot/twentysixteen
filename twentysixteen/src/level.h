@@ -17,6 +17,7 @@
 // for example taking controller inputs or keyboard inputs, and sending them to the base levels as the same input.
 
 #include "common.h"
+#include "render_target.h"
 #include <map>
 
 class Level
@@ -33,4 +34,10 @@ public:
 	
 	// Exit level
 	levels exit_level = LEVEL_NONE;
+
+	struct by_depth_rendertarget {
+		bool operator()(render_target left, render_target right) {
+			return left.position.z < right.position.z;
+		}
+	};
 };

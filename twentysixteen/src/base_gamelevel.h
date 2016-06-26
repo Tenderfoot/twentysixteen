@@ -46,10 +46,4 @@ public:
 
 	// Render target vector for sorted rendering
 	std::vector<render_target> render_targets;
-
-	struct by_depth_rendertarget {
-		bool operator()(render_target left, render_target right) {
-			return left.position.z < right.position.z;
-		}
-	};
 };

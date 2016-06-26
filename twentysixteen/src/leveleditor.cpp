@@ -488,6 +488,15 @@ void LevelEditor::build_ui()
 		editor_interface.add_widget(new TextWidget("Page Up - Next Entity", 0.075, 0.46, 0.15, 0.02));
 		editor_interface.add_widget(new TextWidget("Page Down - Previous Entity", 0.075, 0.48, 0.15, 0.02));
 		editor_interface.add_widget(new TextWidget("Delete - Delete Entity", 0.075, 0.5, 0.15, 0.02));
+		editor_interface.add_widget(new TextWidget("Num 7/4 - Scale X", 0.075, 0.52, 0.15, 0.02));
+		editor_interface.add_widget(new TextWidget("Num 8/5 - Scale Y", 0.075, 0.54, 0.15, 0.02));
+		editor_interface.add_widget(new TextWidget("Num 9/6 - Scale Z", 0.075, 0.56, 0.15, 0.02));
+		editor_interface.add_widget(new TextWidget("Num 1/2/4 - R/G/B", 0.075, 0.58, 0.15, 0.02));
+
+		if (entities->at(current_entity)->type == ENTITY || entities->at(current_entity)->type == GAME_ENTITY)
+		{
+			editor_interface.add_widget(new TextWidget("T - Cycle Texture", 0.075, 0.6, 0.15, 0.02));
+		}
 	}
 }
 
