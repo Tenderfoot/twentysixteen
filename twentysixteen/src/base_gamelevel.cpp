@@ -73,17 +73,47 @@ void BaseGameLevel::run(float time_delta)
 	}
 	else
 	{
-		int i;
+		t_collisiongroup test;
+		int i, j;
+
 		for (i = 0; i < entities.size(); i++)
 		{
 			if (entities.at(i)->type == GAME_ENTITY)
 			{
-				((GameEntity*)entities.at(i))->correct_against_collisiongroup(collision_group, time_delta);
+				// ======= test against other entities and collision groups, but not yourself
+				test.collision_groups.clear();
+				for (j = 0; j < entities.size(); j++)
+				{
+					if ((entities.at(j)->type == GAME_ENTITY || entities.at(j)->type == PLAYER_ENTITY ) && i != j)
+					{
+						test.collision_groups.push_back(((GameEntity*)entities.at(j))->return_polygon());
+					}
+				}
+				for (j = 0; j < collision_group.collision_groups.size(); j++)
+				{
+					test.collision_groups.push_back(collision_group.collision_groups.at(j));
+				}
+				((GameEntity*)entities.at(i))->correct_against_collisiongroup(test, time_delta);
+				// ==========================
 				((GameEntity*)entities.at(i))->update(time_delta);
 			}
 			if (entities.at(i)->type == PLAYER_ENTITY)
 			{
-				((PlayerEntity*)entities.at(i))->correct_against_collisiongroup(collision_group, time_delta);
+				// ==== test against other entities and collision groups
+				test.collision_groups.clear();
+				for (j = 0; j < entities.size(); j++)
+				{
+					if (entities.at(j)->type == GAME_ENTITY)
+					{
+						test.collision_groups.push_back(((GameEntity*)entities.at(j))->return_polygon());
+					}
+				}
+				for (j = 0; j < collision_group.collision_groups.size(); j++)
+				{
+					test.collision_groups.push_back(collision_group.collision_groups.at(j));
+				}
+				// ==============================
+				((PlayerEntity*)entities.at(i))->correct_against_collisiongroup(test, time_delta);
 				((PlayerEntity*)entities.at(i))->update(time_delta);
 				((PlayerEntity*)entities.at(i))->player_update(time_delta);
 				set_camera(t_vertex(((PlayerEntity*)entities.at(i))->position.x, ((PlayerEntity*)entities.at(i))->position.y + 5, 15), t_vertex(((PlayerEntity*)entities.at(i))->position.x, ((PlayerEntity*)entities.at(i))->position.y, -25));

@@ -128,10 +128,13 @@ void LevelEditor::read_level(std::string level_name)
 			new_pos = get_vertex_from_buffer(&in);
 			new_size = get_vertex_from_buffer(&in);
 
+			std::getline(in, line, ',');
+			texture = std::stoi(line);
+
 			new_entity = new GameEntity(new_pos, new_size, t_vertex(1.0f,1.0f,1.0f));
 
 			new_entity->color = t_vertex(1.0f, 1.0f, 1.0f);
-			new_entity->texture = NULL;
+			new_entity->texture = texture;
 
 			entities->push_back(new_entity);
 		}
@@ -187,7 +190,8 @@ void LevelEditor::write_level()
 		{
 			myfile << "GameEntity\n";
 			myfile << entities->at(i)->initial_position.x << "," << entities->at(i)->initial_position.y << "," << entities->at(i)->initial_position.z << ",";
-			myfile << entities->at(i)->size.x << "," << entities->at(i)->size.y << "," << entities->at(i)->size.z << "," << "\n";
+			myfile << entities->at(i)->size.x << "," << entities->at(i)->size.y << "," << entities->at(i)->size.z << ",";
+			myfile << entities->at(i)->texture << "," << "\n";
 		}
 		if (entities->at(i)->type == ENTITY)
 		{

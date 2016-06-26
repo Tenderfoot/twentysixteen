@@ -58,6 +58,11 @@ void GameEntity::correct_against_collisiongroup(t_collisiongroup collision_group
 				apply_friction = true;
 			}
 
+			if (r.MinimumTranslationVector.x != 0 && r.MinimumTranslationVector.y == 0)
+			{
+				velocity.x = 0;
+			}
+
 			if (r.MinimumTranslationVector.y < 0)
 				velocity.y = -0.001;
 
