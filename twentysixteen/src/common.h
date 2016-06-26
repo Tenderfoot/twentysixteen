@@ -58,7 +58,8 @@ enum boundinput
 	EDITOR_SCALE_Z_MINUS,
 	EDITOR_RED,
 	EDITOR_GREEN,
-	EDITOR_BLUE
+	EDITOR_BLUE,
+	EDITOR_T,
 };
 
 enum rendertarget_types

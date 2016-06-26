@@ -134,6 +134,8 @@ boundinput translate_key_input(SDL_Keycode keycode)
 			return EDITOR_GREEN;
 		case SDLK_KP_3:
 			return EDITOR_BLUE;
+		case SDLK_t:
+			return EDITOR_T;
 	}
 
 	return NO_BIND;

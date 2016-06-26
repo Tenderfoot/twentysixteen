@@ -338,6 +338,14 @@ void LevelEditor::input_edit(boundinput input, bool type)
 			entities->at(current_entity)->size.z = 0;
 	}
 
+	if (input == EDITOR_T && type == true)
+	{
+		if (entities->at(current_entity)->type == ENTITY || entities->at(current_entity)->type == GAME_ENTITY)
+		{
+			entities->at(current_entity)->texture = (entities->at(current_entity)->texture + 1) % Paintbrush::texture_db.size();
+		}
+	}
+
 
 	entities->at(current_entity)->initial_position = entities->at(current_entity)->position;
 }
