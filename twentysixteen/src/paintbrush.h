@@ -34,6 +34,8 @@ typedef struct
 	float *colors;
 
 	int num_faces;
+	GLuint texture;
+
 }t_VBO;
 
 class Paintbrush

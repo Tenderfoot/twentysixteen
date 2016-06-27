@@ -24,6 +24,7 @@ public:
 	spSkeleton* skeleton;
 	spAtlas* atlas;
 	spSkeletonData *skeletonData;
+	bool flip;
 
 	GLuint texture; 
 

@@ -188,7 +188,7 @@ void Paintbrush::draw_vbo(t_VBO the_vbo)
 	glTexCoordPointer(2, GL_FLOAT, 0, 0);
 
 	glPushMatrix();
-		glBindTexture(GL_TEXTURE_2D, Paintbrush::get_texture("data/models/meadow_atlas.png", false, true));
+		glBindTexture(GL_TEXTURE_2D, the_vbo.texture);
 		glDrawArrays(GL_TRIANGLES, 0, the_vbo.num_faces * 3);
 	glPopMatrix();
 }

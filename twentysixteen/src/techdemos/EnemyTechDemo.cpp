@@ -3,6 +3,8 @@
 
 void EnemyTechDemo::init()
 {
+	init_level("meadow");
+
 	skeleton.init("skel");
 	skeleton.position = t_vertex(10, 30, 0);
 	skeleton.size = t_vertex(1, 3, 1);

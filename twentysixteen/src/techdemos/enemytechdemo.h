@@ -18,11 +18,6 @@
 class EnemyTechDemo : public BaseGameLevel
 {
 public:
-	
-	EnemyTechDemo(std::string level_name)
-	{
-		init_level(level_name);
-	}
 
 	void run(float time_delta);
 	void init();

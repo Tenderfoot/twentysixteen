@@ -141,6 +141,20 @@ void BaseGameLevel::draw()
 	glPushMatrix();
 	int i;
 
+	for (i = 0; i < render_targets.size(); i++)
+	{
+		if (render_targets.at(i).type != TYPE_FACE)
+		{
+			if (render_targets.at(i).the_entity->position.z < -99)
+			{
+				glPushMatrix();
+				render_targets.at(i).the_entity->draw();
+				glPopMatrix();
+			}
+		}
+	}
+
+
 	Paintbrush::use_shader(Paintbrush::get_shader("point_light"));
 	glPushMatrix();
 		glColor3f(1.0f, 1.0f, 1.0f);
@@ -152,9 +166,12 @@ void BaseGameLevel::draw()
 	{
 		if (render_targets.at(i).type != TYPE_FACE)
 		{
-			glPushMatrix();
-			render_targets.at(i).the_entity->draw();
-			glPopMatrix();
+			if (render_targets.at(i).the_entity->position.z > -99)
+			{
+				glPushMatrix();
+				render_targets.at(i).the_entity->draw();
+				glPopMatrix();
+			}
 		}
 	}
 
@@ -203,6 +220,7 @@ void BaseGameLevel::init_level(std::string level_name)
 	level_editor.read_level(level_name);
 
 	level_vbo = Paintbrush::create_vbo(*level_static.model);
+	level_vbo.texture = Paintbrush::get_texture("data/levels/"+level_name+"/"+level_name+"_atlas.png", false, true);
 }
 
 void BaseGameLevel::reset()
