@@ -32,8 +32,15 @@ public:
 	// for shaders:
 	static void setup_extensions();
 
+	// VBO stuff
+	static GLuint mesh_vbo[3];
+	static void create_vbo(t_3dModel model);
+
 	// draw a unit length quad at origin
 	static void draw_quad();
+	static void draw_vbo();
+
+	static int num_faces;
 
 	// Convert a string into an OpenGL Texture using SDL_TTF
 	static GLuint TextToTexture(GLubyte r, GLubyte g, GLubyte b, const char* text, int ptsize);

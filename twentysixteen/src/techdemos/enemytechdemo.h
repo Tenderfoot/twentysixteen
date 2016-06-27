@@ -24,6 +24,8 @@ public:
 
 	void run(float time_delta);
 	void init();
+	void draw();
+	void reset();
 
 	SkeletonEntity skeleton;
 };

@@ -22,10 +22,19 @@ PFNGLUNIFORM1IARBPROC               glUniform1iARB = NULL;
 PFNGLGETSHADERIVPROC                glGetShaderiv = NULL;
 PFNGLGETSHADERINFOLOGPROC           glGetShaderInfoLog = NULL;
 
+// stuff for VBOs...
+PFNGLGENBUFFERSARBPROC      glGenBuffersARB = NULL;
+PFNGLBUFFERDATAARBPROC      glBufferDataARB = NULL;
+PFNGLBINDBUFFERARBPROC      glBindBufferARB = NULL;
+
+
 // texture storage
 GLuint Paintbrush::font_texture = 0;
 TTF_Font *Paintbrush::font = NULL;
 std::map<std::string, GLuint> Paintbrush::texture_db = {};
+
+int Paintbrush::num_faces = 0;
+GLuint Paintbrush::mesh_vbo[] = { 0,0,0 };
 
 // shaders and uniform storage
 std::map<std::string, GLenum> Paintbrush::shader_db = {};
@@ -38,7 +47,7 @@ void Paintbrush::init()
 	{
 		printf("TTF_OpenFont: %s\n", TTF_GetError());
 	}
-
+	
 	setup_extensions();
 }
 
@@ -73,12 +82,116 @@ void Paintbrush::setup_extensions()
 		uglGetProcAddress("glUseProgramObjectARB");
 	glGetUniformLocationARB = (PFNGLGETUNIFORMLOCATIONARBPROC)
 		uglGetProcAddress("glGetUniformLocationARB");
+
+	glGenBuffersARB = (PFNGLGENBUFFERSARBPROC)
+		uglGetProcAddress("glGenBuffersARB");
+	glBufferDataARB = (PFNGLBUFFERDATAARBPROC)
+		uglGetProcAddress("glBufferDataARB");
+	glBindBufferARB = (PFNGLBINDBUFFERARBPROC)
+		uglGetProcAddress("glBindBufferARB");
+
 	glUniform1fARB = (PFNGLUNIFORM1FARBPROC)
 		uglGetProcAddress("glUniform1fARB");
 	glUniform1iARB = (PFNGLUNIFORM1IARBPROC)
 		uglGetProcAddress("glUniform1iARB");
 	glGetShaderiv = (PFNGLGETSHADERIVPROC)
 		uglGetProcAddress("glGetShaderiv");
+}
+
+void Paintbrush::create_vbo(t_3dModel model)
+{
+	//Create a new VBO and use the variable id to store the VBO id
+	glGenBuffersARB(3, &mesh_vbo[0]);
+
+	float *verticies;
+	float *colors;
+	float *texcoords;
+
+
+	int i, j;
+	num_faces = 0;
+	for (j = 0; j < model.meshes.size(); j++)
+	{
+		num_faces += model.meshes.at(j)->faces.size();
+	}
+
+	verticies = new float[num_faces * 3 * 3];
+	colors = new float[num_faces * 3 * 3];
+	texcoords = new float[num_faces * 3 * 2];
+	
+	// set verticies, colors and texcoords to the appropriate values
+	int vert_index_last = 0;
+	for (j = 0; j < model.meshes.size(); j++)
+	{
+		for (i = 0; i < model.meshes.at(j)->faces.size(); i++)
+		{
+			verticies[(vert_index_last*9)] =	 model.meshes.at(j)->faces.at(i)->verticies.at(0).x;
+			verticies[(vert_index_last * 9) + 1] = model.meshes.at(j)->faces.at(i)->verticies.at(0).y;
+			verticies[(vert_index_last * 9) + 2] = model.meshes.at(j)->faces.at(i)->verticies.at(0).z;
+			verticies[(vert_index_last * 9) + 3] = model.meshes.at(j)->faces.at(i)->verticies.at(1).x;
+			verticies[(vert_index_last * 9) + 4] = model.meshes.at(j)->faces.at(i)->verticies.at(1).y;
+			verticies[(vert_index_last * 9) + 5] = model.meshes.at(j)->faces.at(i)->verticies.at(1).z;
+			verticies[(vert_index_last * 9) + 6] = model.meshes.at(j)->faces.at(i)->verticies.at(2).x;
+			verticies[(vert_index_last * 9) + 7] = model.meshes.at(j)->faces.at(i)->verticies.at(2).y;
+			verticies[(vert_index_last * 9) + 8] = model.meshes.at(j)->faces.at(i)->verticies.at(2).z;
+
+			colors[(vert_index_last * 9) + 0] = 1.0f;
+			colors[(vert_index_last * 9) + 1] = 1.0f;
+			colors[(vert_index_last * 9) + 2] = 1.0f;
+			colors[(vert_index_last * 9) + 3] = 1.0f;
+			colors[(vert_index_last * 9) + 4] = 1.0f;
+			colors[(vert_index_last * 9) + 5] = 1.0f;
+			colors[(vert_index_last * 9) + 6] = 1.0f;
+			colors[(vert_index_last * 9) + 7] = 1.0f;
+			colors[(vert_index_last * 9) + 8] = 1.0f;
+
+			texcoords[(vert_index_last * 6)] = model.meshes.at(j)->faces.at(i)->verticies.at(0).texcoord_x;
+			texcoords[(vert_index_last * 6) + 1] = model.meshes.at(j)->faces.at(i)->verticies.at(0).texcoord_y;
+			texcoords[(vert_index_last * 6) + 2] = model.meshes.at(j)->faces.at(i)->verticies.at(1).texcoord_x;
+			texcoords[(vert_index_last * 6) + 3] = model.meshes.at(j)->faces.at(i)->verticies.at(1).texcoord_y;
+			texcoords[(vert_index_last * 6) + 4] = model.meshes.at(j)->faces.at(i)->verticies.at(2).texcoord_x;
+			texcoords[(vert_index_last * 6) + 5] = model.meshes.at(j)->faces.at(i)->verticies.at(2).texcoord_y;
+
+			vert_index_last += 1;
+
+		}
+	}
+	//Make the new VBO active
+	glBindBufferARB(GL_ARRAY_BUFFER, mesh_vbo[0]);
+	//Upload vertex data to the video device
+	glBufferDataARB(GL_ARRAY_BUFFER, sizeof(float)*num_faces * 3 * 3, verticies, GL_STATIC_DRAW);
+
+	//Make the new VBO active
+	glBindBufferARB(GL_ARRAY_BUFFER, mesh_vbo[1]);
+	//Upload vertex data to the video device
+	glBufferDataARB(GL_ARRAY_BUFFER, sizeof(float)*num_faces * 3 * 3, colors, GL_STATIC_DRAW);
+
+	//Make the new VBO active
+	glBindBufferARB(GL_ARRAY_BUFFER, mesh_vbo[2]);
+	//Upload vertex data to the video device
+	glBufferDataARB(GL_ARRAY_BUFFER, sizeof(float)*num_faces * 3 * 2, texcoords, GL_STATIC_DRAW);
+
+	//Make the new VBO active. Repeat here incase changed since initialisation
+	glBindBufferARB(GL_ARRAY_BUFFER, mesh_vbo[0]);
+	glVertexPointer(3, GL_FLOAT, 0, 0);
+
+	glBindBufferARB(GL_ARRAY_BUFFER, mesh_vbo[1]);
+	glColorPointer(3, GL_FLOAT, 0, 0);
+
+	glBindBufferARB(GL_ARRAY_BUFFER, mesh_vbo[2]);
+	glTexCoordPointer(2, GL_FLOAT, 0, 0);
+
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_COLOR_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+}
+
+void Paintbrush::draw_vbo()
+{
+	glPushMatrix();
+		glBindTexture(GL_TEXTURE_2D, Paintbrush::get_texture("data/models/meadow_atlas.png", false, true));
+		glDrawArrays(GL_TRIANGLES, 0, num_faces * 3);
+	glPopMatrix();
 }
 
 GLenum Paintbrush::get_shader(std::string shader_id)

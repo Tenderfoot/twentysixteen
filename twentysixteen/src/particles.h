@@ -117,8 +117,9 @@ public:
 
 			// bind texture and setup
 			glBindTexture(GL_TEXTURE_2D, texture);
-			glDisable(GL_DEPTH_TEST);
+
 			glEnable(GL_BLEND);
+			glEnable(GL_DEPTH_TEST);
 			glColor4f(1.0f, (100 - life) / 80, 0.0f, life / 100);
 
 			// transform
@@ -136,7 +137,6 @@ public:
 			// reset
 			glColor3f(1.0f, 1.0f, 1.0f);
 			glDisable(GL_BLEND);
-			glEnable(GL_DEPTH_TEST);
 
 		glPopMatrix();
 	}
@@ -204,7 +204,7 @@ public:
 
 		// bind texture and setup
 		glBindTexture(GL_TEXTURE_2D, texture);
-		glDisable(GL_DEPTH_TEST);
+		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_BLEND);
 		glColor4f(1.0f, 1.0, 1.0, life / 100);
 

@@ -28,7 +28,7 @@ public:
 
 		float diff = abs(v2.x - v1.x)/5;
 
-		glDisable(GL_DEPTH_TEST);
+		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_BLEND);
 
 		glPushMatrix();
