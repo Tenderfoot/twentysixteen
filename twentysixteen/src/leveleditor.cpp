@@ -92,7 +92,7 @@ void LevelEditor::read_level(std::string level_name)
 	this->level_name = level_name;
 
 	std::stringstream filename;
-	filename << "data/levels/" << level_name.c_str() << ".txt";
+	filename << "data/levels/" << level_name.c_str() <<  "/" << level_name.c_str() << ".txt";
 	std::ifstream in(filename.str());
 	printf("%s\n", filename.str().c_str());
 	std::string line;

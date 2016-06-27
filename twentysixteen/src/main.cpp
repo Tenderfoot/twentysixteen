@@ -227,9 +227,9 @@ void init_levels()
 	level_map[TECHDEMO_LIGHTS] = new LightTechDemo();
 	level_map[TECHDEMO_POSTPROCESS] = new PostProcessDemo();
 	level_map[TECHDEMO_ENEMY] = new EnemyTechDemo();
+	level_map[TECHDEMO_MARSH] = new MarshTechDemo();
 	level_map[TECHDEMO_GRAVEYARD] = new GraveyardTechDemo();
 	level_map[TECHDEMO_MEADOW] = new MeadowTechDemo();
-	level_map[TECHDEMO_MARSH] = new MarshTechDemo();
 	level_map[TECHDEMO_TOWN] = new TownTechDemo();
 	level_map[TECHDEMO_DUNGEON] = new DungeonTechDemo();
 

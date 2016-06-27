@@ -141,12 +141,16 @@ void BaseGameLevel::draw()
 	glPushMatrix();
 	int i;
 
+	glDepthMask(GL_TRUE);
+	glEnable(GL_DEPTH_TEST);
+	glDisable(GL_BLEND);
 	Paintbrush::use_shader(Paintbrush::get_shader("point_light"));
 	glPushMatrix();
 		glColor3f(1.0f, 1.0f, 1.0f);
 		Paintbrush::draw_vbo(level_vbo);
 	glPopMatrix();
 	Paintbrush::stop_shader();
+
 
 	for (i = 0; i < render_targets.size(); i++)
 	{
