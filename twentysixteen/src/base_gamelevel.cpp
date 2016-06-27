@@ -141,20 +141,6 @@ void BaseGameLevel::draw()
 	glPushMatrix();
 	int i;
 
-	for (i = 0; i < render_targets.size(); i++)
-	{
-		if (render_targets.at(i).type != TYPE_FACE)
-		{
-			if (render_targets.at(i).the_entity->position.z < -99)
-			{
-				glPushMatrix();
-				render_targets.at(i).the_entity->draw();
-				glPopMatrix();
-			}
-		}
-	}
-
-
 	Paintbrush::use_shader(Paintbrush::get_shader("point_light"));
 	glPushMatrix();
 		glColor3f(1.0f, 1.0f, 1.0f);
@@ -166,12 +152,9 @@ void BaseGameLevel::draw()
 	{
 		if (render_targets.at(i).type != TYPE_FACE)
 		{
-			if (render_targets.at(i).the_entity->position.z > -99)
-			{
-				glPushMatrix();
+			glPushMatrix();
 				render_targets.at(i).the_entity->draw();
-				glPopMatrix();
-			}
+			glPopMatrix();
 		}
 	}
 
