@@ -87,6 +87,7 @@ void SpineData::draw()
 	spRegionAttachment *temp;
 
 	glEnable(GL_BLEND);
+	glDepthMask(GL_FALSE);
 
 	glPushMatrix();
 	if (flip)
@@ -107,10 +108,7 @@ void SpineData::draw()
 			glBindTexture(GL_TEXTURE_2D, texture);
 			glColor3f(1.0f, 1.0f, 1.0f);
 
-			if(!flip)
-				glTranslatef(skeleton->slots[i]->bone->worldX, skeleton->slots[i]->bone->worldY, i);
-			else
-				glTranslatef(skeleton->slots[i]->bone->worldX, skeleton->slots[i]->bone->worldY, -i);
+			glTranslatef(skeleton->slots[i]->bone->worldX, skeleton->slots[i]->bone->worldY, 0.0f);
 
 			glRotatef(skeleton->slots[i]->bone->worldRotation, 0.0f, 0.0f, 1.0f);
 
@@ -128,7 +126,7 @@ void SpineData::draw()
 	}
 	glPopMatrix();
 
-	glEnable(GL_DEPTH_TEST);
+	glDepthMask(GL_TRUE);
 	glDisable(GL_BLEND);
 }
 
