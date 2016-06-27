@@ -6,6 +6,7 @@
 #include "vfxgrass.h"
 #include "leveleditor.h"
 #include "particles.h"
+#include "skeleton_entity.h"
 
 // BaseGameLevel
 // This is the base for all the scenes in the game.
@@ -34,6 +35,12 @@ public:
 	// Model for area
 	ModelData level_static;
 	t_collisiongroup collision_group;
+
+	// Number of entities
+	// should be entities->size(); but if
+	// we add one and they're differen't, we'll know to
+	// update render_targets
+	int num_entities;
 
 	// Level Editor
 	LevelEditor level_editor;

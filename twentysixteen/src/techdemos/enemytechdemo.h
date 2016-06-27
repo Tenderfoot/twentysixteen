@@ -10,6 +10,7 @@
 #include "../modelprop_entity.h"
 #include "../player_entity.h"
 #include "../npc_entity.h"
+#include "../skeleton_entity.h"
 
 // This used to inherit from basetechdemo, but
 // it makes more sense to make it inherit from basegamelevel.
@@ -24,5 +25,5 @@ public:
 	void run(float time_delta);
 	void init();
 
-	NPCEntity knight;
+	SkeletonEntity skeleton;
 };

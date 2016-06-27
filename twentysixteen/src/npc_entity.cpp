@@ -8,28 +8,15 @@ void NPCEntity::handle_keypress(boundinput input, bool type)
 
 void NPCEntity::update(float delta_time)
 {
-
-	if (position.x > 17.5)
-	{
-		position.x = 17.5;
-		turn = true;
-	}
-
-	if (position.x < 2.5)
-	{
-		position.x = 2.5;
-		turn = false;
-	}
-	
 	if (turn)
 	{
 		flip = false;
-		velocity.x = -(delta_time*0.00025);
+		velocity.x = -(0.025);
 	}
 	else
 	{
 		flip = true;
-		velocity.x = (delta_time*0.00025);
+		velocity.x = (0.025);
 	}
 
 	apply_friction = false;
@@ -47,7 +34,7 @@ void NPCEntity::player_update(float time_delta)
 
 	if (velocity.y > -0.03)
 	{
-		velocity.y -= 0.0001*time_delta;
+		velocity.y -= 0.0001;
 	}
 
 }

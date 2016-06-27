@@ -11,8 +11,6 @@
 #define NO_SDL_GLEXT
 
 // whats next
-// entity textures
-// editor HUD
 // fix lights
 
 // General Libraries

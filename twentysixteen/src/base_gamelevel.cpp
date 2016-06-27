@@ -47,11 +47,18 @@ void BaseGameLevel::build_render_targets()
 		current_target.type = TYPE_ENTITY;
 		current_target.the_entity = entities.at(i);
 		current_target.position = entities.at(i)->position;
+
+		// this is a dirty way to do this
+		// give every entity access to the entities and render targets
+		// so they can add entites to the game later
+		entities.at(i)->game_entities = &entities;
+
 		render_targets.push_back(current_target);
 	}
 
 	printf("rendertargets size: %d\n", render_targets.size());
 
+	num_entities = entities.size();
 	std::sort(render_targets.begin(), render_targets.end(), by_depth_rendertarget());
 }
 
@@ -80,40 +87,18 @@ void BaseGameLevel::run(float time_delta)
 		{
 			if (entities.at(i)->type == GAME_ENTITY)
 			{
-				// ======= test against other entities and collision groups, but not yourself
-				test.collision_groups.clear();
-				for (j = 0; j < entities.size(); j++)
-				{
-					if ((entities.at(j)->type == GAME_ENTITY || entities.at(j)->type == PLAYER_ENTITY ) && i != j)
-					{
-						test.collision_groups.push_back(((GameEntity*)entities.at(j))->return_polygon());
-					}
-				}
-				for (j = 0; j < collision_group.collision_groups.size(); j++)
-				{
-					test.collision_groups.push_back(collision_group.collision_groups.at(j));
-				}
-				((GameEntity*)entities.at(i))->correct_against_collisiongroup(test, time_delta);
-				// ==========================
-				((GameEntity*)entities.at(i))->update(time_delta);
+			//	((GameEntity*)entities.at(i))->correct_against_collisiongroup(collision_group, time_delta);
+			//	((GameEntity*)entities.at(i))->update(time_delta);
+			}
+			if (entities.at(i)->type == SKELETON_ENTITY)
+			{
+				((SkeletonEntity*)entities.at(i))->correct_against_collisiongroup(collision_group, time_delta);
+				((SkeletonEntity*)entities.at(i))->update(time_delta);
+				((SkeletonEntity*)entities.at(i))->player_update(time_delta);
 			}
 			if (entities.at(i)->type == PLAYER_ENTITY)
 			{
-				// ==== test against other entities and collision groups
-				test.collision_groups.clear();
-				for (j = 0; j < entities.size(); j++)
-				{
-					if (entities.at(j)->type == GAME_ENTITY)
-					{
-						test.collision_groups.push_back(((GameEntity*)entities.at(j))->return_polygon());
-					}
-				}
-				for (j = 0; j < collision_group.collision_groups.size(); j++)
-				{
-					test.collision_groups.push_back(collision_group.collision_groups.at(j));
-				}
-				// ==============================
-				((PlayerEntity*)entities.at(i))->correct_against_collisiongroup(test, time_delta);
+				((PlayerEntity*)entities.at(i))->correct_against_collisiongroup(collision_group, time_delta);
 				((PlayerEntity*)entities.at(i))->update(time_delta);
 				((PlayerEntity*)entities.at(i))->player_update(time_delta);
 				set_camera(t_vertex(((PlayerEntity*)entities.at(i))->position.x, ((PlayerEntity*)entities.at(i))->position.y + 5, 15), t_vertex(((PlayerEntity*)entities.at(i))->position.x, ((PlayerEntity*)entities.at(i))->position.y, -25));
@@ -123,6 +108,23 @@ void BaseGameLevel::run(float time_delta)
 				((ParticleEmitter*)entities.at(i))->update(time_delta);
 			}
 		}
+	}
+
+	// See if entities has increased
+	if (num_entities != entities.size())
+	{
+		render_target current_target;
+		current_target.type = TYPE_ENTITY;
+		current_target.the_entity = entities.at(entities.size()-1);
+		current_target.position = entities.at(entities.size() - 1)->position;
+		render_targets.push_back(current_target);
+		// this is a dirty way to do this
+		// give every entity access to the entities and render targets
+		// so they can add entites to the game later
+		entities.at(entities.size() - 1)->game_entities = &entities;
+			
+		num_entities = entities.size();
+		std::sort(render_targets.begin(), render_targets.end(), by_depth_rendertarget());
 	}
 
 	level_editor.update();

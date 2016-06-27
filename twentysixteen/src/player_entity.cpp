@@ -1,9 +1,18 @@
 
 #include "player_entity.h"
+#include "skeleton_entity.h"
 
 void PlayerEntity::handle_keypress(boundinput input, bool type)
 {
 	keydown_map[input] = type;
+
+	if (input == EDITOR_T && type == true)
+	{
+		SkeletonEntity *test = new SkeletonEntity();
+		test->init("skel");
+		test->position = position;
+		add_entity(test);
+	}
 }
 
 void PlayerEntity::update(float delta_time)

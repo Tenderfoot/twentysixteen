@@ -7,7 +7,7 @@ void GameEntity::update(float delta_time)
 	{
 		if (velocity.x > 0)
 		{
-			velocity.x -= (delta_time*0.0000125);
+			velocity.x -= (0.0000125);
 			if (velocity.x < 0)
 			{
 				velocity.x = 0;
@@ -15,7 +15,7 @@ void GameEntity::update(float delta_time)
 		}
 		if (velocity.x < 0)
 		{
-			velocity.x += (delta_time*0.0000125);
+			velocity.x += (0.0000125);
 			if (velocity.x > 0)
 			{
 				velocity.x = 0;
@@ -26,7 +26,7 @@ void GameEntity::update(float delta_time)
 
 	if (velocity.y > -0.03)
 	{
-		velocity.y -= 0.0001*delta_time;
+		velocity.y -= 0.0001;
 	}
 
 	position.x += real_velocity.x;

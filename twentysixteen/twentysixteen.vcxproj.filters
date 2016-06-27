@@ -275,6 +275,9 @@
     <ClInclude Include="src\techdemos\dungeontechdemo.h">
       <Filter>Header Files\scenes</Filter>
     </ClInclude>
+    <ClInclude Include="src\skeleton_entity.h">
+      <Filter>Header Files\entities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="data\shaders\grass.frag">

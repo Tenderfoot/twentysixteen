@@ -22,3 +22,8 @@ void Entity::reset()
 {
 	position = initial_position;
 }
+
+void Entity::add_entity(Entity* entity_to_add)
+{
+	game_entities->push_back(entity_to_add);
+}

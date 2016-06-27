@@ -31,6 +31,8 @@ public:
 	t_vertex color;
 	GLuint texture;
 	entity_types type;
+
+	std::vector<Entity*> *game_entities;
 	
 	Entity()
 	{
@@ -60,6 +62,7 @@ public:
 	virtual void reset();
 	virtual void draw();
 	virtual void update(float delta_time);
+	void add_entity(Entity *entity_to_add);
 };
 
 struct by_depth {
