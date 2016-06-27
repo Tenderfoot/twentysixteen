@@ -28,9 +28,8 @@ public:
 
 		float diff = abs(v2.x - v1.x)/5;
 
-		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_BLEND);
-
+		glDepthMask(GL_FALSE);
 		glPushMatrix();
 			Paintbrush::use_shader(Paintbrush::get_shader("grass"));
 			glBegin(GL_QUADS);
@@ -42,8 +41,7 @@ public:
 			glEnd();
 			Paintbrush::stop_shader();
 		glPopMatrix();
-
-		glEnable(GL_DEPTH_TEST);
+		glDepthMask(GL_TRUE);
 		glDisable(GL_BLEND);
 	}
 

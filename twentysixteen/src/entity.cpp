@@ -4,6 +4,7 @@
 void Entity::draw()
 {
 	glEnable(GL_BLEND);
+	glDepthMask(GL_FALSE);
 	glPushMatrix();
 		glTranslatef(position.x, position.y, position.z);
 		glScalef(size.x, size.y, size.z);
@@ -11,6 +12,7 @@ void Entity::draw()
 		glColor3f(color.x, color.y, color.z);
 		Paintbrush::draw_quad();
 	glPopMatrix();
+	glDepthMask(GL_TRUE);
 	glDisable(GL_BLEND);
 }
 
