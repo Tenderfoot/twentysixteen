@@ -5,7 +5,7 @@ void BaseGameLevel::build_render_targets()
 {
 	// build grass here - if theres no grass, theres no grass- no harm done.
 	int i, j, k;
-	std::vector<Entity*> grass_entities = VFXGrass::generate_grass(*level_static.model, t_vertex(0, 0, 0), 0);
+	std::vector<Entity*> grass_entities = VFXGrass::generate_grass(*level_data, t_vertex(0, 0, 0), 0);
 	for (i = 0; i < grass_entities.size(); i++)
 	{
 		entities.push_back(grass_entities.at(i));
@@ -87,8 +87,8 @@ void BaseGameLevel::run(float time_delta)
 		{
 			if (entities.at(i)->type == GAME_ENTITY)
 			{
-			//	((GameEntity*)entities.at(i))->correct_against_collisiongroup(collision_group, time_delta);
-			//	((GameEntity*)entities.at(i))->update(time_delta);
+				((GameEntity*)entities.at(i))->correct_against_collisiongroup(collision_group, time_delta);
+				((GameEntity*)entities.at(i))->update(time_delta);
 			}
 			if (entities.at(i)->type == SKELETON_ENTITY)
 			{
@@ -135,25 +135,25 @@ void BaseGameLevel::draw()
 	gluLookAt(camera_position.x, camera_position.y, camera_position.z, camera_lookat.x, camera_lookat.y, camera_lookat.z, 0, 1, 0);
 
 	//  this line draws the level collision group as lines
-		Paintbrush::draw_collision_group(collision_group, 0);
+	Paintbrush::draw_collision_group(collision_group, 0);
 
 	// draw the rendertargets
 	glPushMatrix();
 	int i;
+
+	Paintbrush::use_shader(Paintbrush::get_shader("point_light"));
+	glPushMatrix();
+		glColor3f(1.0f, 1.0f, 1.0f);
+		Paintbrush::draw_vbo(level_vbo);
+	glPopMatrix();
+	Paintbrush::stop_shader();
+
 	for (i = 0; i < render_targets.size(); i++)
 	{
-		if (render_targets.at(i).type == TYPE_FACE)
-		{
-			Paintbrush::use_shader(Paintbrush::get_shader("point_light"));
-			glPushMatrix();
-				Paintbrush::draw_face(render_targets.at(i).face, render_targets.at(i).texture);
-			glPopMatrix();
-			Paintbrush::stop_shader();
-		}
-		else
+		if (render_targets.at(i).type != TYPE_FACE)
 		{
 			glPushMatrix();
-				render_targets.at(i).the_entity->draw();
+			render_targets.at(i).the_entity->draw();
 			glPopMatrix();
 		}
 	}
@@ -186,6 +186,23 @@ void BaseGameLevel::take_input(boundinput input, bool type)
 
 	if (input == BACK && type == true)
 		exit_level = TECHDEMO_BASE;
+}
+
+void BaseGameLevel::init_level(std::string level_name)
+{
+	level_editor.editor_mode = PLAY_MODE;
+
+	level_static.model = ModelData::import("data/levels/"+level_name + "/" + level_name + ".fbx", 0.005);
+	level_data = ModelData::import("data/levels/" + level_name + "/" + level_name + "_data.fbx", 0.005);
+
+	collision_group = LinearAlgebra::get_collisiongroups_from_model(*level_data, 0, t_vertex(0, 0, 0));
+
+	// Point the editor to the entity list
+	level_editor.entities = &entities;
+	level_editor.render_targets = &render_targets;
+	level_editor.read_level(level_name);
+
+	level_vbo = Paintbrush::create_vbo(*level_static.model);
 }
 
 void BaseGameLevel::reset()

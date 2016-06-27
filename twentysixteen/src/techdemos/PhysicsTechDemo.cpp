@@ -6,7 +6,7 @@ void PhysicsTechDemo::init()
 	TechDemoUI.add_widget(new TextWidget("Physics Tech Demo", 0.5, 0.15, 0.5, 0.15));
 	TechDemoUI.add_widget(new TextWidget("Press ESCAPE to go back", 0.5, 0.9, 0.5, 0.05));
 
-	level_static.model = ModelData::import("testcollision4.fbx", 0.05);
+	level_static.model = ModelData::import("data/models/testcollision4.fbx", 0.05);
 
 	collision_group = LinearAlgebra::get_collisiongroups_from_model(*level_static.model, -20, t_vertex(0, 0, -50));
 

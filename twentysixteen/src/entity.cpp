@@ -4,9 +4,8 @@
 void Entity::draw()
 {
 	glEnable(GL_BLEND);
-	glEnable(GL_DEPTH_TEST);
 	glPushMatrix();
-		glTranslatef(position.x, position.y, position.z+1);
+		glTranslatef(position.x, position.y, position.z);
 		glScalef(size.x, size.y, size.z);
 		glBindTexture(GL_TEXTURE_2D, texture);
 		glColor3f(color.x, color.y, color.z);

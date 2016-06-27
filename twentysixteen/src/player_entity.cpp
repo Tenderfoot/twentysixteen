@@ -21,7 +21,7 @@ void PlayerEntity::update(float delta_time)
 	{
 		if (velocity.x > 0)
 		{
-			velocity.x -= (delta_time*0.00005);
+			velocity.x -= (0.0005);
 			if (velocity.x < 0)
 			{
 				velocity.x = 0;
@@ -29,7 +29,7 @@ void PlayerEntity::update(float delta_time)
 		}
 		if (velocity.x < 0)
 		{
-			velocity.x += (delta_time*0.00005);
+			velocity.x += (0.0005);
 			if (velocity.x > 0)
 			{
 				velocity.x = 0;
@@ -53,7 +53,7 @@ void PlayerEntity::player_update(float time_delta)
 
 		if (keydown_map[LEFT])
 		{
-			velocity.x -= (time_delta*0.00003);
+			velocity.x -= (0.003);
 			flip = false;
 		}
 
@@ -62,7 +62,7 @@ void PlayerEntity::player_update(float time_delta)
 
 		if (keydown_map[RIGHT])
 		{
-			velocity.x += (time_delta*0.00003);
+			velocity.x += (0.003);
 			flip = true;
 		}
 
@@ -81,7 +81,7 @@ void PlayerEntity::player_update(float time_delta)
 
 	if (velocity.y > -0.03)
 	{
-		velocity.y -= 0.0001*time_delta;
+		velocity.y -= 0.0025;
 	}
 
 }

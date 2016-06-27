@@ -3,17 +3,13 @@
 
 Assimp::Importer ModelData::importer;
 
-t_3dModel *ModelData::import(char *filename, float scale) 
+t_3dModel *ModelData::import(std::string filename, float scale) 
 {
 	const aiScene *scene;
-	char *dir;
-
 	t_3dModel *new_model = new t_3dModel;
+	std::string dir;
 
-	dir = new char[256];
-	sprintf_s(dir, sizeof(char) * 256, "data/models/%s", filename);
-
-	scene = importer.ReadFile(dir, aiProcess_GenSmoothNormals | aiProcess_PreTransformVertices | aiProcess_Triangulate);
+	scene = importer.ReadFile(filename, aiProcess_GenSmoothNormals | aiProcess_PreTransformVertices | aiProcess_Triangulate);
 
 	// If the import failed, report it
 	if (!scene)
@@ -35,10 +31,13 @@ t_3dModel *ModelData::import(char *filename, float scale)
 		if (name.C_Str()[0] == 'X')
 			printf("\n");
 
-		dir = new char[256];
-		sprintf_s(dir, sizeof(char)*256, "data/models/%s", name.C_Str());
+		dir = "";
+		dir.append("data/models/");
+		dir.append(name.C_Str());
 
-		if (strcmp(name.C_Str(), "grass.jpg") == 0)
+		std::string test = name.C_Str();
+
+		if (test == "grass.jpg")
 		{
 			new_model->grass_index = i;
 		}

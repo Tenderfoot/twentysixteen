@@ -6,7 +6,7 @@ void LightTechDemo::init()
 	TechDemoUI.add_widget(new TextWidget("Lights Tech Demo", 0.5, 0.1, 0.5, 0.15));
 	TechDemoUI.add_widget(new TextWidget("Press ESCAPE to go back", 0.5, 0.95, 0.5, 0.05));
 
-	level_static.model = ModelData::import("testchamber.fbx", 0.05);
+	level_static.model = ModelData::import("data/models/testchamber.fbx", 0.05);
 	level_static.shader = Paintbrush::get_shader("point_light");
 
 	spineboy.load_spine_data("everybody");

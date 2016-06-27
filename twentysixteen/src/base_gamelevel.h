@@ -25,15 +25,25 @@ public:
 		level_editor.editor_mode = PLAY_MODE;
 	}
 
+	BaseGameLevel(std::string level_name)
+	{
+		init_level(level_name);
+	}
+
+	
+
 	void build_render_targets();
 	void set_camera(t_vertex position, t_vertex lookat);
 	void run(float time_delta);
 	void take_input(boundinput input, bool type);
+	void init_level(std::string level_name);
 	void reset();
 	void draw();
 
 	// Model for area
 	ModelData level_static;
+	t_3dModel *level_data;
+	t_VBO level_vbo;
 	t_collisiongroup collision_group;
 
 	// Number of entities

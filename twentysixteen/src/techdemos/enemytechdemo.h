@@ -18,13 +18,14 @@
 class EnemyTechDemo : public BaseGameLevel
 {
 public:
-	EnemyTechDemo()
+	
+	EnemyTechDemo(std::string level_name)
 	{
+		init_level(level_name);
 	}
 
 	void run(float time_delta);
 	void init();
-	void draw();
 	void reset();
 
 	SkeletonEntity skeleton;

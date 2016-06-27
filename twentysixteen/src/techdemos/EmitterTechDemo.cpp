@@ -6,7 +6,7 @@ void EmitterTechDemo::init()
 	TechDemoUI.add_widget(new TextWidget("Emitter Tech Demo", 0.5, 0.2, 0.5, 0.3));
 	TechDemoUI.add_widget(new TextWidget("Press ESCAPE to go back", 0.5, 0.9, 0.5, 0.05));
 
-	level_static.model = ModelData::import("testchamber.fbx", 0.05);
+	level_static.model = ModelData::import("data/models/testchamber.fbx", 0.05);
 	level_static.shader = Paintbrush::get_shader("point_light");
 
 	while (myemitter.particles.size() < 50)

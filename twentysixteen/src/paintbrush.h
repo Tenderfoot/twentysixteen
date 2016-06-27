@@ -23,6 +23,19 @@
 #define uglGetProcAddress(x) wglGetProcAddress(x)
 #define WIN32_OR_X11
 
+typedef struct
+{
+	GLuint vertex_buffer;
+	GLuint texcoord_buffer;
+	GLuint color_buffer;
+
+	float *verticies;
+	float *texcoords;
+	float *colors;
+
+	int num_faces;
+}t_VBO;
+
 class Paintbrush
 {
 public:
@@ -33,12 +46,11 @@ public:
 	static void setup_extensions();
 
 	// VBO stuff
-	static GLuint mesh_vbo[3];
-	static void create_vbo(t_3dModel model);
+	static t_VBO create_vbo(t_3dModel model);
 
 	// draw a unit length quad at origin
 	static void draw_quad();
-	static void draw_vbo();
+	static void draw_vbo(t_VBO the_vbo);
 
 	static int num_faces;
 

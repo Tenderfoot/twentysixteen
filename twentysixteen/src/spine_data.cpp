@@ -86,7 +86,7 @@ void SpineData::draw()
 	int i;
 	spRegionAttachment *temp;
 
-	glEnable(GL_DEPTH_TEST);
+	glDisable(GL_DEPTH_TEST);
 	glEnable(GL_BLEND);
 
 	for (i = 0; i < skeleton->slotsCount; i++)

@@ -3,7 +3,7 @@
 
 void GrassTechDemo::init()
 {
-	level_static.model = ModelData::import("brandnewscene.fbx", 0.005);
+	level_static.model = ModelData::import("data/models/brandnewscene.fbx", 0.005);
 
 	// build grass
 	int i;

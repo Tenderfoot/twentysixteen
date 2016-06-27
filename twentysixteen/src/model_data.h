@@ -64,7 +64,7 @@ typedef struct
 {
 	std::vector<t_mesh*> meshes;
 	std::vector<GLuint> textures;
-	char *filename;
+	std::string filename;
 	int grass_index;
 }t_3dModel;
 
@@ -72,7 +72,7 @@ class ModelData
 {
 public:
 	static Assimp::Importer importer;
-	static t_3dModel *import(char *filename, float scale);
+	static t_3dModel *import(std::string filename, float scale);
 
 	// local to the model
 	GLenum shader;

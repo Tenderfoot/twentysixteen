@@ -10,7 +10,7 @@ void ModelToPolygonTechDemo::init()
 	TechDemoUI.add_widget(new TextWidget("W - toggle draw plane", 0.2, 0.4, 0.15, 0.05));
 	TechDemoUI.add_widget(new TextWidget("S - toggle draw model", 0.2, 0.5, 0.15, 0.05));
 
-	model_data = ModelData::import("testcollision.fbx", 0.05);
+	model_data = ModelData::import("data/models/testcollision.fbx", 0.05);
 
 	collision_group = LinearAlgebra::get_collisiongroups_from_model(*model_data, test_plane, t_vertex(0, 0, -50));
 

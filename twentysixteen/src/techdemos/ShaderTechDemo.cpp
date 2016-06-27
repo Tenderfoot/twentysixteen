@@ -16,7 +16,7 @@ void ShaderTechDemo::init()
 	TechDemoUI.add_widget(shader_menu);
 	shader_menu->set_data(0.2, 0.5, 0.1, 0.05, false);
 
-	test_chamber.model = ModelData::import("testchamber.fbx", 0.05);
+	test_chamber.model = ModelData::import("data/models/testchamber.fbx", 0.05);
 
 	current_list = item_menu;
 }
