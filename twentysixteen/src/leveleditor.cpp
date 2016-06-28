@@ -94,7 +94,6 @@ void LevelEditor::read_level(std::string level_name)
 	std::stringstream filename;
 	filename << "data/levels/" << level_name.c_str() <<  "/" << level_name.c_str() << ".txt";
 	std::ifstream in(filename.str());
-	printf("%s\n", filename.str().c_str());
 	std::string line;
 
 	Entity *new_entity;
@@ -103,13 +102,11 @@ void LevelEditor::read_level(std::string level_name)
 	// get number of entities
 	std::getline(in, line);
 	int number = std::stoi(line);
-	printf("number of entities: %d\n", number);
 	
 	t_vertex new_pos, new_size, new_color;
 
 	while (std::getline(in, line))
 	{
-		printf("%s\n", line.c_str());
 		// for each entity
 		if (line == "PlayerEntity")
 		{

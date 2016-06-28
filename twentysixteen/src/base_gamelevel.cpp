@@ -56,8 +56,6 @@ void BaseGameLevel::build_render_targets()
 		render_targets.push_back(current_target);
 	}
 
-	printf("rendertargets size: %d\n", render_targets.size());
-
 	num_entities = entities.size();
 	std::sort(render_targets.begin(), render_targets.end(), by_depth_rendertarget());
 }
@@ -85,6 +83,19 @@ void BaseGameLevel::run(float time_delta)
 
 		for (i = 0; i < entities.size(); i++)
 		{
+			if (entities.at(i)->type == SKELETON_ENTITY)
+			{
+				test.collision_groups.push_back(((SkeletonEntity*)entities.at(i))->return_polygon());
+			}
+		}
+
+		for (i = 0; i < collision_group.collision_groups.size(); i++)
+		{
+			test.collision_groups.push_back(collision_group.collision_groups.at(i));
+		}
+
+		for (i = 0; i < entities.size(); i++)
+		{
 			if (entities.at(i)->type == GAME_ENTITY)
 			{
 				((GameEntity*)entities.at(i))->correct_against_collisiongroup(collision_group, time_delta);
@@ -98,7 +109,7 @@ void BaseGameLevel::run(float time_delta)
 			}
 			if (entities.at(i)->type == PLAYER_ENTITY)
 			{
-				((PlayerEntity*)entities.at(i))->correct_against_collisiongroup(collision_group, time_delta);
+				((PlayerEntity*)entities.at(i))->correct_against_collisiongroup(test, time_delta);
 				((PlayerEntity*)entities.at(i))->update(time_delta);
 				((PlayerEntity*)entities.at(i))->player_update(time_delta);
 				set_camera(t_vertex(((PlayerEntity*)entities.at(i))->position.x, ((PlayerEntity*)entities.at(i))->position.y + 5, 15), t_vertex(((PlayerEntity*)entities.at(i))->position.x, ((PlayerEntity*)entities.at(i))->position.y, -25));

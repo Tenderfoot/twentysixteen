@@ -32,7 +32,7 @@ void SkeletonEntity::init(char *who)
 	
 	dirt.position = position;
 	dirt.position.y -= 2;
-	dirt.position.x -= 1;
+	dirt.position.x -= 1.5;
 	dirt.size = t_vertex(5.0f, 5.0f, 1.0f);
 
 	int i;
