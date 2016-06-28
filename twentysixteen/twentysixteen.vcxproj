@@ -33,6 +33,7 @@
     <ClCompile Include="src\paintbrush.cpp" />
     <ClCompile Include="src\particles.cpp" />
     <ClCompile Include="src\player_entity.cpp" />
+    <ClCompile Include="src\skeleton_entity.cpp" />
     <ClCompile Include="src\spine_data.cpp" />
     <ClCompile Include="src\spine_entity.cpp" />
     <ClCompile Include="src\techdemos\AudioTechDemo.cpp" />

@@ -11,6 +11,7 @@
 #include "paintbrush.h"
 #include "spine_data.h"
 #include "npc_entity.h"
+#include "particles.h"
 
 class SkeletonEntity : public NPCEntity
 {
@@ -18,6 +19,13 @@ public:
 	SkeletonEntity()
 	{
 		type = SKELETON_ENTITY;
+		spine_data.flip = true;
 	}
+
+	void player_update(float time_delta);
+	void update(float time_delta);
+	void init(char *who);
+
+	ParticleEmitter dirt;
 
 };

@@ -9,8 +9,10 @@ void PlayerEntity::handle_keypress(boundinput input, bool type)
 	if (input == EDITOR_T && type == true)
 	{
 		SkeletonEntity *test = new SkeletonEntity();
-		test->init("skel");
 		test->position = position;
+		test->size = t_vertex(1, 3, 1);
+		test->game_entities = game_entities;
+		test->init("skel");
 		add_entity(test);
 	}
 }

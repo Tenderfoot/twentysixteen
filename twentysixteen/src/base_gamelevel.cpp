@@ -113,17 +113,22 @@ void BaseGameLevel::run(float time_delta)
 	// See if entities has increased
 	if (num_entities != entities.size())
 	{
+		int extra_entities = entities.size() - num_entities;
 		render_target current_target;
-		current_target.type = TYPE_ENTITY;
-		current_target.the_entity = entities.at(entities.size()-1);
-		current_target.position = entities.at(entities.size() - 1)->position;
-		render_targets.push_back(current_target);
-		// this is a dirty way to do this
-		// give every entity access to the entities and render targets
-		// so they can add entites to the game later
-		entities.at(entities.size() - 1)->game_entities = &entities;
-			
-		num_entities = entities.size();
+		int i;
+		for (i = 0; i < extra_entities; i++)
+		{
+			current_target.type = TYPE_ENTITY;
+			current_target.the_entity = entities.at(entities.size() - 1 - i);
+			current_target.position = entities.at(entities.size() - 1 - i)->position;
+			render_targets.push_back(current_target);
+			// this is a dirty way to do this
+			// give every entity access to the entities and render targets
+			// so they can add entites to the game later
+			entities.at(entities.size() - 1)->game_entities = &entities;
+
+			num_entities = entities.size();
+		}
 		std::sort(render_targets.begin(), render_targets.end(), by_depth_rendertarget());
 	}
 

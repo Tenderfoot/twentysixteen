@@ -22,6 +22,4 @@ public:
 	void run(float time_delta);
 	void init();
 	void reset();
-
-	SkeletonEntity skeleton;
 };

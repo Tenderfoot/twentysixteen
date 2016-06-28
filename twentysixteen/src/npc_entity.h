@@ -14,11 +14,10 @@
 class NPCEntity : public SpineEntity
 {
 public:
-	void handle_keypress(boundinput input, bool type);
 	std::map<boundinput, bool> keydown_map;
 
 	bool turn;
 
-	void player_update(float time_delta);
-	void update(float delta_time);
+	virtual void player_update(float time_delta);
+	virtual void update(float delta_time);
 };

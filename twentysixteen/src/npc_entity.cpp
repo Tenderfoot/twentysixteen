@@ -1,11 +1,6 @@
 
 #include "npc_entity.h"
 
-void NPCEntity::handle_keypress(boundinput input, bool type)
-{
-	//keydown_map[input] = type;
-}
-
 void NPCEntity::update(float delta_time)
 {
 	if (turn)
