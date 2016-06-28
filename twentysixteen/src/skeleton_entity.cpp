@@ -3,7 +3,7 @@
 
 void SkeletonEntity::update(float time_delta)
 {
-	if (turn)
+/*	if (turn)
 	{
 		flip = false;
 		velocity.x = -(0.0025);
@@ -13,7 +13,7 @@ void SkeletonEntity::update(float time_delta)
 		flip = true;
 		velocity.x = (0.0025);
 	}
-
+*/
 	if (apply_friction)
 		velocity.y = 0;
 
@@ -30,13 +30,14 @@ void SkeletonEntity::init(char *who)
 	
 	dirt.position = position;
 	dirt.position.y -= 2;
+	dirt.position.x -= 1;
 	dirt.size = t_vertex(5.0f, 5.0f, 1.0f);
 
 	int i;
-	for (i = 0; i < 100; i++)
+	for (i = 0; i < 25; i++)
 		dirt.particles.push_back(new DirtParticle);
 
-	dirt.init(Paintbrush::get_texture("data/images/fire.png", false, false), dirt.position, t_vertex(5.0f, 5.0f, 1.0f));
+	dirt.init(Paintbrush::get_texture("data/images/fire.png", false, false), dirt.position, t_vertex(3.0f, 2.0f, 1.0f));
 
 	game_entities->push_back(&dirt);
 }

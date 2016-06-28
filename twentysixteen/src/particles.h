@@ -198,7 +198,7 @@ public:
 
 		glEnable(GL_BLEND);
 		glDepthMask(GL_FALSE);
-		glColor4f(0.6f, 0.3f, 0.0f, life/100);
+		glColor4f(0.2f, 0.1f, 0.0f, life/100);
 
 		// transform
 		glTranslatef(position.x, position.y, position.z);
