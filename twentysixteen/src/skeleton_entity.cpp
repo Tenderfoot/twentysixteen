@@ -27,6 +27,8 @@ void SkeletonEntity::init(char *who)
 {
 	spine_data.load_spine_data("everybody");
 	spSkeleton_setSkinByName(spine_data.skeleton, who);
+	spine_data.animation_name = "climb_out";
+	spine_data.start_time = SDL_GetTicks();
 	
 	dirt.position = position;
 	dirt.position.y -= 2;
@@ -44,9 +46,14 @@ void SkeletonEntity::init(char *who)
 
 void SkeletonEntity::player_update(float time_delta)
 {
-	spine_data.update_skeleton(time_delta);
+	int i;
+	if (spine_data.current_time - spine_data.start_time > 1350)
+	{
+		spine_data.animation_name = "idle";
+		dirt.kill();
+	}
 
-	spine_data.animation_name = "climb_out";
+	spine_data.update_skeleton(time_delta);
 
 	if (velocity.y > -0.03)
 	{

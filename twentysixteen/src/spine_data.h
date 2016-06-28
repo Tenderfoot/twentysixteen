@@ -20,6 +20,7 @@ public:
 
 	char *animation_name;
 	float current_time;
+	float start_time;
 
 	spSkeleton* skeleton;
 	spAtlas* atlas;

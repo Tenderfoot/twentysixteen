@@ -132,7 +132,7 @@ void SpineData::draw()
 
 void SpineData::update_skeleton(float delta_time)
 {
-	spAnimation_apply(spSkeletonData_findAnimation(skeletonData, animation_name), skeleton, current_time/550, (current_time+delta_time)/550, true, NULL, NULL);
+	spAnimation_apply(spSkeletonData_findAnimation(skeletonData, animation_name), skeleton, current_time-start_time/550, (current_time-start_time+delta_time)/550, true, NULL, NULL);
 	spSkeleton_updateWorldTransform(skeleton);
 
 	// this only probably needs to happen when animation changes

@@ -6,7 +6,7 @@ void PlayerEntity::handle_keypress(boundinput input, bool type)
 {
 	keydown_map[input] = type;
 
-	if (input == EDITOR_T && type == true)
+	if (input == EDITOR_T && type == true && velocity.y > -0.005 && velocity.y < 0.005)
 	{
 		SkeletonEntity *test = new SkeletonEntity();
 		test->position = position;
@@ -42,6 +42,7 @@ void PlayerEntity::update(float delta_time)
 
 	position.x += real_velocity.x;
 	position.y += real_velocity.y;
+
 }
 
 

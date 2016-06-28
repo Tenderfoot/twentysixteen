@@ -47,6 +47,7 @@ public:
 	float r, g, b;
 	float life;
 	bool dir;
+	bool dying;
 };
 
 class ParticleEmitter : public Entity
@@ -58,11 +59,14 @@ public:
 		type = EMITTER_ENTITY;
 	}
 
+
 	void init(GLuint texture);
 	void init(GLuint texture, t_vertex position, t_vertex size);
 	void reset();
 	void draw();
 	void update(float time_delta);
+	void kill();
+
 	std::vector<Particle*> particles;
 };
 
@@ -102,7 +106,7 @@ public:
 		position.y = emission_position.y;
 	}
 
-	virtual void update(float time_delta)
+	virtual void update(float time_delta, bool dying)
 	{
 		life = life - 1*(time_delta/5);
 		position.y += 0.005*time_delta;
@@ -184,7 +188,7 @@ public:
 		life = life - 1 * (time_delta / 5);
 		position.y += 0.005*time_delta;
 
-		if (life < 0)
+		if (life < 0 && dying == false)
 			reset();
 	}
 

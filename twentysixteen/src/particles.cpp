@@ -34,6 +34,11 @@ void ParticleEmitter::update(float time_delta)
 	for (i = 0; i < particles.size(); i++)
 	{
 		particles.at(i)->update(time_delta);
+		if (particles.at(i)->life < 0)
+		{
+			delete particles.at(i);
+			particles.erase(particles.begin() + i);
+		}
 	}
 }
 void ParticleEmitter::draw()
@@ -42,5 +47,14 @@ void ParticleEmitter::draw()
 	for (i = 0; i < particles.size(); i++)
 	{
 		particles.at(i)->draw();
+	}
+}
+
+void ParticleEmitter::kill()
+{
+	int i;
+	for (i = 0; i < particles.size(); i++)
+	{
+		particles.at(i)->dying = true;
 	}
 }
