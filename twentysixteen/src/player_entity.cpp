@@ -88,7 +88,7 @@ void PlayerEntity::player_update(float time_delta)
 
 	if (velocity.y > -0.03)
 	{
-		velocity.y -= 0.0025;
+		velocity.y -= 0.0001*time_delta;
 	}
 
 }
