@@ -60,7 +60,7 @@ void PlayerEntity::player_update(float time_delta)
 
 		if (keydown_map[LEFT])
 		{
-			velocity.x -= (0.003);
+			velocity.x -= (0.0003)*time_delta;
 			spine_data.flip = false;
 		}
 
@@ -69,7 +69,7 @@ void PlayerEntity::player_update(float time_delta)
 
 		if (keydown_map[RIGHT])
 		{
-			velocity.x += (0.003);
+			velocity.x += (0.0003)*time_delta;
 			spine_data.flip = true;
 		}
 
