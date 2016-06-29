@@ -25,6 +25,7 @@ public:
 		size = new_size;
 		color = new_color;
 		initial_position = new_pos;
+		initial_size = new_size;
 		velocity = t_vertex(0, 0, 0);
 		texture = Paintbrush::get_texture("data/images/metal_gate.png", false, true);
 	}
@@ -32,5 +33,6 @@ public:
 	void draw();
 	void update(float time_delta);
 	void activate();
+	void reset();
 
 };

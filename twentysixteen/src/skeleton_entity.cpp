@@ -30,18 +30,18 @@ void SkeletonEntity::init(char *who)
 	spine_data.animation_name = "climb_out";
 	spine_data.start_time = SDL_GetTicks();
 	
-	dirt.position = position;
-	dirt.position.y -= 2;
-	dirt.position.x -= 1.5;
-	dirt.size = t_vertex(5.0f, 5.0f, 1.0f);
+	dirt->position = position;
+	dirt->position.y -= 2;
+	dirt->position.x -= 1.5;
+	dirt->size = t_vertex(5.0f, 5.0f, 1.0f);
 
 	int i;
 	for (i = 0; i < 25; i++)
-		dirt.particles.push_back(new DirtParticle);
+		dirt->particles.push_back(new DirtParticle);
 
-	dirt.init(Paintbrush::get_texture("data/images/fire.png", false, false), dirt.position, t_vertex(3.0f, 2.0f, 1.0f));
+	dirt->init(Paintbrush::get_texture("data/images/fire.png", false, false), dirt->position, t_vertex(3.0f, 2.0f, 1.0f));
 
-	game_entities->push_back(&dirt);
+	game_entities->push_back(dirt);
 }
 
 void SkeletonEntity::player_update(float time_delta)
@@ -50,7 +50,7 @@ void SkeletonEntity::player_update(float time_delta)
 	if (spine_data.current_time - spine_data.start_time > 1350)
 	{
 		spine_data.animation_name = "idle";
-		dirt.kill();
+		dirt->kill();
 	}
 
 	spine_data.update_skeleton(time_delta);

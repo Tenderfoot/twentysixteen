@@ -59,6 +59,11 @@ void LevelEditor::reset_entities()
 			((PlayerEntity*)entities->at(i))->state = IDLE;
 			((PlayerEntity*)entities->at(i))->spine_data.looping = true;
 		}
+		if (entities->at(i)->type == EMITTER_ENTITY)
+		{
+			((ParticleEmitter*)entities->at(i))->kill();
+		}
+
 
 		if (entities->at(i)->type == ARROW_ENTITY || entities->at(i)->type == SKELETON_ENTITY)
 		{

@@ -32,3 +32,11 @@ void PortcullisEntity::activate()
 {
 	activated = true;
 }
+
+
+void PortcullisEntity::reset()
+{
+	position = initial_position;
+	size = initial_size;
+	activated = false;
+}

@@ -21,12 +21,13 @@ public:
 		type = SKELETON_ENTITY;
 		spine_data.flip = true;
 		spine_data.looping = true;
+		dirt = new ParticleEmitter();
 	}
 
 	void player_update(float time_delta);
 	void update(float time_delta);
 	void init(char *who);
 
-	ParticleEmitter dirt;
+	ParticleEmitter *dirt;
 
 };

@@ -28,6 +28,7 @@ public:
 	t_vertex initial_position;
 	t_vertex position;
 	t_vertex size;
+	t_vertex initial_size;
 	t_vertex color;
 	GLuint texture;
 	entity_types type;
