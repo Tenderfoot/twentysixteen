@@ -69,6 +69,7 @@ void BaseGameLevel::set_camera(t_vertex position, t_vertex lookat)
 void BaseGameLevel::run(float time_delta)
 {
 	if (level_editor.editor_mode == CREATE_MODE)
+
 	{
 		set_camera(t_vertex(level_editor.camera_position.x, level_editor.camera_position.y + 5, 15), t_vertex(level_editor.camera_position.x, level_editor.camera_position.y, -25));
 	}
@@ -233,6 +234,7 @@ void BaseGameLevel::reset()
 	{
 		LightManager::lights.push_back(Light(0, 0, 0, 100));
 	}
+
 
 	LightManager::lights[0].x = 0;
 	LightManager::lights[0].y = 10;

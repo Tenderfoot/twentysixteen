@@ -130,6 +130,21 @@ void SpineData::draw()
 	glDisable(GL_BLEND);
 }
 
+t_vertex SpineData::get_slot_location(std::string slotname)
+{
+	spBone *staff_tip;
+	staff_tip = spSkeleton_findBone(skeleton, slotname.c_str());
+
+	t_vertex return_data;
+
+	if(flip)
+		return_data = t_vertex(-staff_tip->worldX*0.006, (staff_tip->worldY*0.006)-1.5, 0);
+	else
+		return_data = t_vertex(staff_tip->worldX*0.006, (staff_tip->worldY*0.006) - 1.5, 0);
+
+	return return_data;
+}
+
 void SpineData::update_skeleton(float delta_time)
 {
 	spAnimation_apply(spSkeletonData_findAnimation(skeletonData, animation_name), skeleton, current_time-start_time/550, (current_time-start_time+delta_time)/550, true, NULL, NULL);

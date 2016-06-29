@@ -319,6 +319,13 @@ skel_leg
   orig: 69, 173
   offset: 0, 0
   index: -1
+staff
+  rotate: false
+  xy: 4068, 435
+  size: 12, 75
+  orig: 12, 75
+  offset: 0, 0
+  index: -1
 witch_arm
   rotate: false
   xy: 2200, 119

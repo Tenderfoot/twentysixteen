@@ -67,6 +67,8 @@ public:
 	void update(float time_delta);
 	void kill();
 
+	void update_position(t_vertex new_pos);
+
 	std::vector<Particle*> particles;
 };
 
@@ -106,12 +108,12 @@ public:
 		position.y = emission_position.y;
 	}
 
-	virtual void update(float time_delta, bool dying)
+	virtual void update(float time_delta)
 	{
-		life = life - 1*(time_delta/5);
+		life = life - 1 * (time_delta / 5);
 		position.y += 0.005*time_delta;
 
-		if (life < 0)
+		if (life < 0 && dying == false)
 			reset();
 	}
 
@@ -203,6 +205,83 @@ public:
 		glEnable(GL_BLEND);
 		glDepthMask(GL_FALSE);
 		glColor4f(0.2f, 0.1f, 0.0f, life/100);
+
+		// transform
+		glTranslatef(position.x, position.y, position.z);
+		glScalef(size.x, size.x, 0.0f);
+
+		// draw
+		glBegin(GL_QUADS);
+		glTexCoord2f(0.0f, 0.0f); glVertex3f(0.5f, 0.5f, 0.0f);
+		glTexCoord2f(1.0f, 0.0f); glVertex3f(-0.5f, 0.5f, 0.0f);
+		glTexCoord2f(1.0f, 1.0f); glVertex3f(-0.5f, -0.5f, 0.0f);
+		glTexCoord2f(0.0f, 1.0f); glVertex3f(0.5f, -0.5f, 0.0f);
+		glEnd();
+
+		// reset
+		glColor3f(1.0f, 1.0f, 1.0f);
+		glDisable(GL_BLEND);
+
+		glPopMatrix();
+	}
+};
+
+// Fire Particle
+class StaffParticle : public Particle
+{
+public:
+
+	void init(GLuint particle_texture, t_vertex emission_position, t_vertex emission_size)
+	{
+		texture = particle_texture;
+
+		this->emission_position = emission_position;
+		this->emission_size = emission_size;
+
+		reset();
+	}
+
+	virtual void reset()
+	{
+		life = rand() % 200;
+
+		float x;
+		x = rand() % 100;
+		x = x / 100;
+
+		position.x = emission_size.x*x + emission_position.x;
+
+		x = (rand() % 125) + 50;
+		x = x / 100;
+
+		size.x = x;
+
+		x = rand() % 100;
+		x = x / 100;
+
+		position.y = emission_position.y;
+	}
+
+	virtual void update(float time_delta)
+	{
+		life = life - 1 * (time_delta / 5);
+		position.y += 0.005*time_delta;
+
+		if (life < 0 && dying == false)
+			reset();
+	}
+
+	void draw()
+	{
+
+		glPushMatrix();
+
+		// bind texture and setup
+		glBindTexture(GL_TEXTURE_2D, texture);
+
+		glEnable(GL_BLEND);
+		glDepthMask(GL_FALSE);
+		glColor4f(1.0f, (100 - life) / 80, 0.0f, life / 100);
 
 		// transform
 		glTranslatef(position.x, position.y, position.z);

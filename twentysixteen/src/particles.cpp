@@ -58,3 +58,12 @@ void ParticleEmitter::kill()
 		particles.at(i)->dying = true;
 	}
 }
+
+void ParticleEmitter::update_position(t_vertex new_pos)
+{
+	int i;
+	for (i = 0; i < particles.size(); i++)
+	{
+		particles.at(i)->emission_position = new_pos;
+	}
+}

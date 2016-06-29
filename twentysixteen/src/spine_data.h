@@ -10,6 +10,8 @@
 #include <spine/spine.h>
 #include <spine/extension.h>
 
+#include "model_data.h"
+
 class SpineData
 {
 public:
@@ -17,6 +19,7 @@ public:
 	void load_spine_data(char* spine_folder);
 	void setslots();
 	void update_skeleton(float delta_time);
+	t_vertex get_slot_location(std::string slotname);
 
 	char *animation_name;
 	float current_time;

@@ -59,5 +59,4 @@ void SkeletonEntity::player_update(float time_delta)
 	{
 		velocity.y -= 0.0025;
 	}
-
 }

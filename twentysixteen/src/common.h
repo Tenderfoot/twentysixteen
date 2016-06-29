@@ -85,6 +85,15 @@ enum entity_types
 	SKELETON_ENTITY
 };
 
+enum player_states
+{
+	IDLE,
+	WALK_LEFT,
+	WALK_RIGHT,
+	JUMPING,
+	CASTING
+};
+
 enum EDITOR_MODES
 {
 	CREATE_MODE,

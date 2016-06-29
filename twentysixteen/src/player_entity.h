@@ -10,6 +10,7 @@
 #include "spine_entity.h"
 #include "paintbrush.h"
 #include "spine_data.h"
+#include "particles.h"
 
 class PlayerEntity : public SpineEntity
 {
@@ -18,6 +19,7 @@ public:
 	PlayerEntity()
 	{
 		type = PLAYER_ENTITY;
+		state = IDLE;
 	}
 
 	PlayerEntity(t_vertex new_pos, t_vertex new_size, t_vertex new_color)
@@ -28,11 +30,19 @@ public:
 		color = new_color;
 		initial_position = new_pos;
 		velocity = t_vertex(0, 0, 0);
+		state = IDLE;
+
+		staff_emitter = NULL;
 	}
+
+	player_states state;
+
+	ParticleEmitter *staff_emitter;
 
 	void handle_keypress(boundinput input, bool type);
 	std::map<boundinput, bool> keydown_map;
 
 	void player_update(float time_delta);
 	void update(float delta_time);
+	void state_machine();
 };
