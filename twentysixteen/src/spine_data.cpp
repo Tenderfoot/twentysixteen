@@ -145,9 +145,9 @@ t_vertex SpineData::get_slot_location(std::string slotname)
 	return return_data;
 }
 
-void SpineData::update_skeleton(float delta_time)
+void SpineData::update_skeleton(float time_delta)
 {
-	spAnimation_apply(spSkeletonData_findAnimation(skeletonData, animation_name), skeleton, current_time-start_time/550, (current_time-start_time+delta_time)/550, true, NULL, NULL);
+	spAnimation_apply(spSkeletonData_findAnimation(skeletonData, animation_name), skeleton, current_time-start_time/550, (current_time-start_time+time_delta)/550, true, NULL, NULL);
 	spSkeleton_updateWorldTransform(skeleton);
 
 	// this only probably needs to happen when animation changes

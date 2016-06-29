@@ -36,7 +36,7 @@ void PlayerEntity::handle_keypress(boundinput input, bool type)
 	}
 }
 
-void PlayerEntity::update(float delta_time)
+void PlayerEntity::update(float time_delta)
 {
 	if (apply_friction && keydown_map[LEFT] == false && keydown_map[RIGHT] == false)
 	{

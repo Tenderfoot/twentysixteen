@@ -377,6 +377,12 @@ void LevelEditor::build_entity()
 			((ArcherEntity*)create_mode_entity)->position = pos;
 			((ArcherEntity*)create_mode_entity)->spine_data.setslots();
 			break;
+		case BUTTON_ENTITY:
+			create_mode_entity = new ButtonEntity(t_vertex(pos.x, pos.y, 0), t_vertex(4, 2, 1), t_vertex(1, 1, 1));
+			break;
+		case PORTCULLIS_ENTITY:
+			create_mode_entity = new PortcullisEntity(t_vertex(pos.x, pos.y, 0), t_vertex(1, 2, 1), t_vertex(1, 1, 1));
+			break;
 		default:
 			create_mode_entity = new Entity(t_vertex(pos.x, pos.y, 0), t_vertex(5, 5, 5), t_vertex(1, 0, 0));
 			break;
@@ -388,14 +394,14 @@ void LevelEditor::input_create(boundinput input, bool type)
 	// these should change the entity type
 	if (input == NEXT && type == true)
 	{
-		current_type = (current_type + 1) % 7;
+		current_type = (current_type + 1) % NUM_TOTAL_ENTITIES;
 		build_entity();
 		build_ui();
 	}
 
 	if (input == PREVIOUS && type == true)
 	{
-		current_type = (current_type - 1) % 7;
+		current_type = (current_type - 1) % NUM_TOTAL_ENTITIES;
 		build_entity();
 		build_ui();
 	}

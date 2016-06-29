@@ -11,7 +11,6 @@
 #define NO_SDL_GLEXT
 
 // whats next
-// fix lights
 
 // General Libraries
 #include <GL/glew.h>

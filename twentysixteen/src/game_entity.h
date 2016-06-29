@@ -33,11 +33,21 @@ public:
 	// -velocty
 	t_vertex velocity;
 	t_vertex real_velocity;
-
 	bool apply_friction;
+
 	void update(float time_delta);
 
+	// activation stuff (buttons, portcullises)
+	virtual void activate()
+	{}
+	int activate_id;
+	bool activated;
+
+	
+
+	// collision stuff
 	void correct_against_collisiongroup(t_collisiongroup collision_group, float time_delta);
+	bool check_against_game_entity(GameEntity *opposing_entity);
 
 	t_polygon return_polygon()
 	{

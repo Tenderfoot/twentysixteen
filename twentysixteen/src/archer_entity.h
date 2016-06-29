@@ -36,5 +36,5 @@ public:
 	void init();
 
 	virtual void player_update(float time_delta);
-	virtual void update(float delta_time);
+	virtual void update(float time_delta);
 };

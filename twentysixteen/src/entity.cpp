@@ -16,7 +16,7 @@ void Entity::draw()
 	glDisable(GL_BLEND);
 }
 
-void Entity::update(float delta_time)
+void Entity::update(float time_delta)
 {
 }
 

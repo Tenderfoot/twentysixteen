@@ -1,7 +1,7 @@
 
 #include "npc_entity.h"
 
-void NPCEntity::update(float delta_time)
+void NPCEntity::update(float time_delta)
 {
 	if (turn)
 	{

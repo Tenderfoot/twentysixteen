@@ -1,7 +1,7 @@
 
 #include "game_entity.h"
 
-void GameEntity::update(float delta_time)
+void GameEntity::update(float time_delta)
 {
 	if (apply_friction)
 	{
@@ -31,6 +31,18 @@ void GameEntity::update(float delta_time)
 
 	position.x += real_velocity.x;
 	position.y += real_velocity.y;
+}
+
+bool GameEntity::check_against_game_entity(GameEntity *opposing_entity)
+{
+	PolygonCollisionResult r = LinearAlgebra::PolygonCollision(return_polygon(), opposing_entity->return_polygon(), real_velocity);
+
+	if (r.Intersect)
+	{
+		return true;
+	}
+
+	return false;
 }
 
 void GameEntity::correct_against_collisiongroup(t_collisiongroup collision_group, float time_delta)

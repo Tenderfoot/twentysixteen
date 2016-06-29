@@ -45,7 +45,7 @@ public:
 		glDisable(GL_BLEND);
 	}
 
-	void update(float delta_time)
+	void update(float time_delta)
 	{
 	}
 };

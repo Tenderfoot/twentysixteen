@@ -162,6 +162,12 @@
     <ClCompile Include="src\arrow_entity.cpp">
       <Filter>Source Files\entities</Filter>
     </ClCompile>
+    <ClCompile Include="src\button_entity.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\portcullis_entity.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\level.h">
@@ -297,6 +303,12 @@
       <Filter>Header Files\entities\spine_entities</Filter>
     </ClInclude>
     <ClInclude Include="src\arrow.h">
+      <Filter>Header Files\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\button_entity.h">
+      <Filter>Header Files\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\portcullis_entity.h">
       <Filter>Header Files\entities</Filter>
     </ClInclude>
   </ItemGroup>

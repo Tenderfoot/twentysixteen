@@ -3,6 +3,7 @@
 // some globals
 #define res_width  1024		
 #define res_height  768
+#define NUM_TOTAL_ENTITIES 10
 
 #include <stdio.h>
 #include <string>
@@ -84,7 +85,9 @@ enum entity_types
 	EMITTER_ENTITY,
 	SKELETON_ENTITY,
 	ARCHER_ENTITY,
-	ARROW_ENTITY
+	ARROW_ENTITY,
+	BUTTON_ENTITY,
+	PORTCULLIS_ENTITY
 };
 
 enum player_states

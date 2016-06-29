@@ -31,7 +31,7 @@ public:
 		position.y = 6;
 	}
 
-	void update(float delta_time)
+	void update(float time_delta)
 	{
 	}
 

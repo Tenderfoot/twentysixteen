@@ -32,6 +32,9 @@ public:
 	GLuint texture;
 	entity_types type;
 
+	// used for buttons, portcullises
+	int activation_index;
+
 	std::vector<Entity*> *game_entities;
 	
 	Entity()
@@ -61,7 +64,7 @@ public:
 
 	virtual void reset();
 	virtual void draw();
-	virtual void update(float delta_time);
+	virtual void update(float time_delta);
 	void add_entity(Entity *entity_to_add);
 };
 

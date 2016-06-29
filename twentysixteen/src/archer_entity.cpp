@@ -1,7 +1,7 @@
 
 #include "archer_entity.h"
 
-void ArcherEntity::update(float delta_time)
+void ArcherEntity::update(float time_delta)
 {
 	apply_friction = false;
 
@@ -16,11 +16,7 @@ void ArcherEntity::init()
 	spine_data.animation_name = "shoot";
 	spine_data.start_time = SDL_GetTicks();
 
-	current_arrow = new ArrowEntity();
-	current_arrow->position = position;
-	current_arrow->position.z += 0.5;
-
-	add_entity(current_arrow);
+	current_arrow = NULL;
 }
 
 

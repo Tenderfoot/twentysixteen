@@ -106,9 +106,9 @@ void BaseGameLevel::run(float time_delta)
 
 		for (i = 0; i < entities.size(); i++)
 		{
-			if (entities.at(i)->type == SKELETON_ENTITY)
+			if (entities.at(i)->type == SKELETON_ENTITY || entities.at(i)->type == PORTCULLIS_ENTITY)
 			{
-				test.collision_groups.push_back(((SkeletonEntity*)entities.at(i))->return_polygon());
+				test.collision_groups.push_back(((GameEntity*)entities.at(i))->return_polygon());
 			}
 		}
 
@@ -123,6 +123,14 @@ void BaseGameLevel::run(float time_delta)
 			{
 				((GameEntity*)entities.at(i))->correct_against_collisiongroup(collision_group, time_delta);
 				((GameEntity*)entities.at(i))->update(time_delta);
+			}
+			if (entities.at(i)->type == PORTCULLIS_ENTITY)
+			{
+				((PortcullisEntity*)entities.at(i))->update(time_delta);
+			}
+			if (entities.at(i)->type == BUTTON_ENTITY)
+			{
+				((ButtonEntity*)entities.at(i))->update(time_delta);
 			}
 			if (entities.at(i)->type == SKELETON_ENTITY)
 			{
@@ -158,7 +166,7 @@ void BaseGameLevel::draw()
 	gluLookAt(camera_position.x, camera_position.y, camera_position.z, camera_lookat.x, camera_lookat.y, camera_lookat.z, 0, 1, 0);
 
 	//  this line draws the level collision group as lines
-	Paintbrush::draw_collision_group(collision_group, 0);
+//	Paintbrush::draw_collision_group(collision_group, 0);
 
 	// draw the rendertargets
 	glPushMatrix();

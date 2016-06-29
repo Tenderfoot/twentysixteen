@@ -24,6 +24,7 @@
     <ClCompile Include="src\audio_controller.cpp" />
     <ClCompile Include="src\base_gamelevel.cpp" />
     <ClCompile Include="src\base_user_interface.cpp" />
+    <ClCompile Include="src\button_entity.cpp" />
     <ClCompile Include="src\entity.cpp" />
     <ClCompile Include="src\game_entity.cpp" />
     <ClCompile Include="src\leveleditor.cpp" />
@@ -35,6 +36,7 @@
     <ClCompile Include="src\paintbrush.cpp" />
     <ClCompile Include="src\particles.cpp" />
     <ClCompile Include="src\player_entity.cpp" />
+    <ClCompile Include="src\portcullis_entity.cpp" />
     <ClCompile Include="src\skeleton_entity.cpp" />
     <ClCompile Include="src\spine_data.cpp" />
     <ClCompile Include="src\spine_entity.cpp" />
@@ -64,6 +66,7 @@
     <ClInclude Include="src\audio_controller.h" />
     <ClInclude Include="src\base_gamelevel.h" />
     <ClInclude Include="src\base_user_interface.h" />
+    <ClInclude Include="src\button_entity.h" />
     <ClInclude Include="src\common.h" />
     <ClInclude Include="src\entity.h" />
     <ClInclude Include="src\game_entity.h" />
@@ -79,6 +82,7 @@
     <ClInclude Include="src\paintbrush.h" />
     <ClInclude Include="src\particles.h" />
     <ClInclude Include="src\player_entity.h" />
+    <ClInclude Include="src\portcullis_entity.h" />
     <ClInclude Include="src\postprocess.h" />
     <ClInclude Include="src\render_target.h" />
     <ClInclude Include="src\skeleton_entity.h" />

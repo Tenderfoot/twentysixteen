@@ -18,7 +18,7 @@ public:
 	
 	void load_spine_data(char* spine_folder);
 	void setslots();
-	void update_skeleton(float delta_time);
+	void update_skeleton(float time_delta);
 	t_vertex get_slot_location(std::string slotname);
 
 	char *animation_name;
