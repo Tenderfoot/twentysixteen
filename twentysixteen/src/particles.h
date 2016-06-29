@@ -357,6 +357,9 @@ public:
 
 		if (life < 0 || life > 100)
 			dir = !dir;
+
+		if (life < 0)
+			life = 1;
 	}
 
 	void draw()

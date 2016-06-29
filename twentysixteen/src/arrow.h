@@ -15,7 +15,7 @@ public:
 
 	ArrowEntity()
 	{
-		type = GAME_ENTITY;
+		type = ARROW_ENTITY;
 		color = t_vertex(1.0f, 1.0f, 1.0f);
 		size = t_vertex(1, 0.5, 1);
 		texture = Paintbrush::get_texture("data/images/arrow.png", false, true);

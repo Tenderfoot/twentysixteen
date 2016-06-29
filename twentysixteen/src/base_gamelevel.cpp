@@ -70,7 +70,7 @@ void BaseGameLevel::run(float time_delta)
 {
 
 	// See if entities has increased
-	if (num_entities != entities.size())
+	if (num_entities < entities.size())
 	{
 		int extra_entities = entities.size() - num_entities;
 		render_target current_target;
@@ -90,6 +90,8 @@ void BaseGameLevel::run(float time_delta)
 		}
 		std::sort(render_targets.begin(), render_targets.end(), by_depth_rendertarget());
 	}
+	else if (num_entities > entities.size())
+		num_entities = entities.size();
 
 	if (level_editor.editor_mode == CREATE_MODE)
 	{
@@ -123,6 +125,10 @@ void BaseGameLevel::run(float time_delta)
 			{
 				((GameEntity*)entities.at(i))->correct_against_collisiongroup(collision_group, time_delta);
 				((GameEntity*)entities.at(i))->update(time_delta);
+			}
+			if (entities.at(i)->type == ARROW_ENTITY)
+			{
+				((ArrowEntity*)entities.at(i))->update(time_delta);
 			}
 			if (entities.at(i)->type == PORTCULLIS_ENTITY)
 			{

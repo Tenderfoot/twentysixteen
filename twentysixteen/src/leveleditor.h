@@ -65,6 +65,8 @@ public:
 	void read_level(std::string level_name);
 	void write_level();
 	
+	void remove_entity_at_index(int index);
+
 	// create or edit mode?
 	EDITOR_MODES editor_mode;
 	Entity *create_mode_entity;

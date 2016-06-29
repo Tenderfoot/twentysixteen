@@ -54,6 +54,12 @@ void LevelEditor::reset_entities()
 	for (i = 0; i < entities->size(); i++)
 	{
 		entities->at(i)->reset();
+		if (entities->at(i)->type == ARROW_ENTITY)
+		{
+			remove_entity_at_index(i);
+			i--;
+		}
+
 	}
 }
 
@@ -135,6 +141,54 @@ void LevelEditor::read_level(std::string level_name)
 
 			entities->push_back(new_entity);
 		}
+		if (line == "PortcullisEntity")
+		{
+			new_pos = get_vertex_from_buffer(&in);
+			new_size = get_vertex_from_buffer(&in);
+
+			std::getline(in, line, ',');
+			texture = std::stoi(line);
+
+			new_entity = new PortcullisEntity(new_pos, new_size, t_vertex(1.0f, 1.0f, 1.0f));
+
+			new_entity->color = t_vertex(1.0f, 1.0f, 1.0f);
+			new_entity->texture = Paintbrush::get_texture("data/images/metal_gate.png", false, true);
+
+			entities->push_back(new_entity);
+		}
+		if (line == "ButtonEntity")
+		{
+			new_pos = get_vertex_from_buffer(&in);
+			new_size = get_vertex_from_buffer(&in);
+
+			std::getline(in, line, ',');
+			texture = std::stoi(line);
+
+			new_entity = new ButtonEntity(new_pos, new_size, t_vertex(1.0f, 1.0f, 1.0f));
+
+			new_entity->color = t_vertex(1.0f, 1.0f, 1.0f);
+			new_entity->texture = texture;
+
+			entities->push_back(new_entity);
+		}
+		if (line == "ArcherEntity")
+		{
+			new_pos = get_vertex_from_buffer(&in);
+			new_size = get_vertex_from_buffer(&in);
+
+			std::getline(in, line, ',');
+			texture = std::stoi(line);
+
+			new_entity = new ArcherEntity(new_pos, new_size, t_vertex(1.0f, 1.0f, 1.0f));
+
+			new_entity->color = t_vertex(1.0f, 1.0f, 1.0f);
+			new_entity->texture = texture;
+
+			((ArcherEntity*)new_entity)->init();
+			((ArcherEntity*)new_entity)->spine_data.setslots();
+
+			entities->push_back(new_entity);
+		}
 		if (line == "Entity")
 		{
 			new_pos = get_vertex_from_buffer(&in);
@@ -170,7 +224,7 @@ void LevelEditor::write_level()
 {
 	std::ofstream myfile;
 	std::stringstream filename;
-	filename << "data/levels/" << level_name.c_str() << ".txt";
+	filename << "data/levels/" << level_name.c_str()  << "/" << level_name.c_str() << ".txt";
 	myfile.open(filename.str());
 	myfile << "1\n";
 
@@ -204,28 +258,52 @@ void LevelEditor::write_level()
 			myfile << entities->at(i)->initial_position.x << "," << entities->at(i)->initial_position.y << "," << entities->at(i)->initial_position.z << ",";
 			myfile << entities->at(i)->size.x << "," << entities->at(i)->size.y << "," << entities->at(i)->size.z << "," << "\n";
 		}
+		if (entities->at(i)->type == PORTCULLIS_ENTITY)
+		{
+			myfile << "PortcullisEntity\n";
+			myfile << entities->at(i)->initial_position.x << "," << entities->at(i)->initial_position.y << "," << entities->at(i)->initial_position.z << ",";
+			myfile << entities->at(i)->size.x << "," << entities->at(i)->size.y << "," << entities->at(i)->size.z << ",";
+			myfile << entities->at(i)->texture << "," << "\n";
+		}
+		if (entities->at(i)->type == BUTTON_ENTITY)
+		{
+			myfile << "ButtonEntity\n";
+			myfile << entities->at(i)->initial_position.x << "," << entities->at(i)->initial_position.y << "," << entities->at(i)->initial_position.z << ",";
+			myfile << entities->at(i)->size.x << "," << entities->at(i)->size.y << "," << entities->at(i)->size.z << ",";
+			myfile << entities->at(i)->texture << "," << "\n";
+		}
+		if (entities->at(i)->type == ARCHER_ENTITY)
+		{
+			myfile << "ArcherEntity\n";
+			myfile << entities->at(i)->initial_position.x << "," << entities->at(i)->initial_position.y << "," << entities->at(i)->initial_position.z << ",";
+			myfile << entities->at(i)->size.x << "," << entities->at(i)->size.y << "," << entities->at(i)->size.z << ",";
+			myfile << entities->at(i)->texture << "," << "\n";
+		}
 	}
 
 	myfile.close();
+}
+
+void LevelEditor::remove_entity_at_index(int index)
+{
+	int i;
+	for (i = 0; i < render_targets->size(); i++)
+	{
+		if (entities->at(index) == render_targets->at(i).the_entity)
+		{
+			render_targets->erase(render_targets->begin() + i);
+		}
+	}
+
+	delete entities->at(index);
+	entities->erase(entities->begin() + index);
 }
 
 void LevelEditor::input_edit(boundinput input, bool type)
 {
 	if (input == EDITOR_DELETE && type == true)
 	{	
-
-		int i;
-		for (i = 0; i < render_targets->size(); i++)
-		{
-			if (entities->at(current_entity) == render_targets->at(i).the_entity)
-			{
-				printf("hit this!\n");
-				render_targets->erase(render_targets->begin() + i);
-			}
-		}
-
-		delete entities->at(current_entity);
-		entities->erase(entities->begin() + current_entity);
+		remove_entity_at_index(current_entity);
 		current_entity = 0;
 	}
 
