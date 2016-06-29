@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\archer_entity.cpp" />
+    <ClCompile Include="src\arrow_entity.cpp" />
     <ClCompile Include="src\audio_controller.cpp" />
     <ClCompile Include="src\base_gamelevel.cpp" />
     <ClCompile Include="src\base_user_interface.cpp" />
@@ -57,6 +59,8 @@
     <ClCompile Include="src\vfxgrass.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\archer_entity.h" />
+    <ClInclude Include="src\arrow.h" />
     <ClInclude Include="src\audio_controller.h" />
     <ClInclude Include="src\base_gamelevel.h" />
     <ClInclude Include="src\base_user_interface.h" />

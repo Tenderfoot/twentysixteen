@@ -10,6 +10,7 @@
 #include "vfxgrass.h"
 #include "player_entity.h"
 #include "base_user_interface.h"
+#include "archer_entity.h"
 
 // LevelEditor
 // The level editor will have a pointer
@@ -35,6 +36,9 @@ public:
 		entity_stringname[GRASS_ENTITY] = "Grass";
 		entity_stringname[PLAYER_ENTITY] = "Player";
 		entity_stringname[EMITTER_ENTITY] = "Emitter";
+		entity_stringname[SKELETON_ENTITY] = "Skeleton";
+		entity_stringname[ARCHER_ENTITY] = "Archer";
+		entity_stringname[ARROW_ENTITY] = "Arrow";
 
 	}
 	void take_input(boundinput input, bool type);

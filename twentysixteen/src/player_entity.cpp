@@ -11,9 +11,9 @@ void PlayerEntity::handle_keypress(boundinput input, bool type)
 		SkeletonEntity *test = new SkeletonEntity();
 		test->position = position;
 		if (spine_data.flip)
-			test->position.x += 2;
+			test->position.x += 5;
 		else
-			test->position.x -= 2;
+			test->position.x -= 5;
 		test->size = t_vertex(1, 2.8, 1);
 		test->game_entities = game_entities;
 		test->init("skel");

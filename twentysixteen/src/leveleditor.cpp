@@ -370,6 +370,13 @@ void LevelEditor::build_entity()
 			((PlayerEntity*)create_mode_entity)->position = pos;
 			((PlayerEntity*)create_mode_entity)->spine_data.setslots();
 			break;
+		case ARCHER_ENTITY:
+			create_mode_entity = new ArcherEntity(t_vertex(pos.x, pos.y, 0), t_vertex(1, 3, 1), t_vertex(1, 0, 1));
+			((ArcherEntity*)create_mode_entity)->game_entities = entities;
+			((ArcherEntity*)create_mode_entity)->init();
+			((ArcherEntity*)create_mode_entity)->position = pos;
+			((ArcherEntity*)create_mode_entity)->spine_data.setslots();
+			break;
 		default:
 			create_mode_entity = new Entity(t_vertex(pos.x, pos.y, 0), t_vertex(5, 5, 5), t_vertex(1, 0, 0));
 			break;
@@ -381,14 +388,14 @@ void LevelEditor::input_create(boundinput input, bool type)
 	// these should change the entity type
 	if (input == NEXT && type == true)
 	{
-		current_type = (current_type + 1) % 4;
+		current_type = (current_type + 1) % 7;
 		build_entity();
 		build_ui();
 	}
 
 	if (input == PREVIOUS && type == true)
 	{
-		current_type = (current_type - 1) % 4;
+		current_type = (current_type - 1) % 7;
 		build_entity();
 		build_ui();
 	}
@@ -427,13 +434,6 @@ void LevelEditor::input_create(boundinput input, bool type)
 	if (input == ACTION && type == true)
 	{
 		entities->push_back(create_mode_entity);
-
-		render_target new_entity;
-		new_entity.type = TYPE_ENTITY;
-		create_mode_entity->position = create_mode_entity->position;
-		new_entity.the_entity = create_mode_entity;
-		render_targets->push_back(new_entity);
-
 		current_entity = entities->size() - 1;
 		editor_mode = EDIT_MODE;
 		create_mode_entity = new Entity(t_vertex(0, 0, 0), t_vertex(5, 5, 5), t_vertex(1, 0, 0));

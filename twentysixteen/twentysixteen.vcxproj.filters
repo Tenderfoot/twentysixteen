@@ -40,6 +40,12 @@
     <Filter Include="Source Files\scenes">
       <UniqueIdentifier>{b26ed3a9-8ec5-4b3c-ae15-dbe20e17114e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\entities\spine_entities">
+      <UniqueIdentifier>{1adade70-ce64-49b6-8660-787e21b7f28f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\entities\spine_entities">
+      <UniqueIdentifier>{c0be2a73-3119-48ef-8f62-2c88741e48be}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -111,12 +117,6 @@
     <ClCompile Include="src\game_entity.cpp">
       <Filter>Source Files\entities</Filter>
     </ClCompile>
-    <ClCompile Include="src\spine_entity.cpp">
-      <Filter>Source Files\entities</Filter>
-    </ClCompile>
-    <ClCompile Include="src\player_entity.cpp">
-      <Filter>Source Files\entities</Filter>
-    </ClCompile>
     <ClCompile Include="src\base_gamelevel.cpp">
       <Filter>Source Files\scenes</Filter>
     </ClCompile>
@@ -125,9 +125,6 @@
     </ClCompile>
     <ClCompile Include="src\techdemos\EnemyTechDemo.cpp">
       <Filter>Source Files\techdemos</Filter>
-    </ClCompile>
-    <ClCompile Include="src\npc_entity.cpp">
-      <Filter>Source Files\entities</Filter>
     </ClCompile>
     <ClCompile Include="src\leveleditor.cpp">
       <Filter>Source Files\scenes</Filter>
@@ -147,7 +144,22 @@
     <ClCompile Include="src\techdemos\TownTechDemo.cpp">
       <Filter>Source Files\scenes</Filter>
     </ClCompile>
+    <ClCompile Include="src\archer_entity.cpp">
+      <Filter>Source Files\entities\spine_entities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\npc_entity.cpp">
+      <Filter>Source Files\entities\spine_entities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\player_entity.cpp">
+      <Filter>Source Files\entities\spine_entities</Filter>
+    </ClCompile>
     <ClCompile Include="src\skeleton_entity.cpp">
+      <Filter>Source Files\entities\spine_entities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\spine_entity.cpp">
+      <Filter>Source Files\entities\spine_entities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\arrow_entity.cpp">
       <Filter>Source Files\entities</Filter>
     </ClCompile>
   </ItemGroup>
@@ -236,12 +248,6 @@
     <ClInclude Include="src\modelprop_entity.h">
       <Filter>Header Files\entities</Filter>
     </ClInclude>
-    <ClInclude Include="src\spine_entity.h">
-      <Filter>Header Files\entities</Filter>
-    </ClInclude>
-    <ClInclude Include="src\player_entity.h">
-      <Filter>Header Files\entities</Filter>
-    </ClInclude>
     <ClInclude Include="src\render_target.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -256,9 +262,6 @@
     </ClInclude>
     <ClInclude Include="src\techdemos\enemytechdemo.h">
       <Filter>Header Files\techdemos</Filter>
-    </ClInclude>
-    <ClInclude Include="src\npc_entity.h">
-      <Filter>Header Files\entities</Filter>
     </ClInclude>
     <ClInclude Include="src\leveleditor.h">
       <Filter>Header Files\scenes</Filter>
@@ -278,7 +281,22 @@
     <ClInclude Include="src\techdemos\dungeontechdemo.h">
       <Filter>Header Files\scenes</Filter>
     </ClInclude>
+    <ClInclude Include="src\spine_entity.h">
+      <Filter>Header Files\entities\spine_entities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\npc_entity.h">
+      <Filter>Header Files\entities\spine_entities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\archer_entity.h">
+      <Filter>Header Files\entities\spine_entities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\player_entity.h">
+      <Filter>Header Files\entities\spine_entities</Filter>
+    </ClInclude>
     <ClInclude Include="src\skeleton_entity.h">
+      <Filter>Header Files\entities\spine_entities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\arrow.h">
       <Filter>Header Files\entities</Filter>
     </ClInclude>
   </ItemGroup>
