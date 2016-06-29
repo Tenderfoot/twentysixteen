@@ -15,9 +15,10 @@ public:
 
 	ArrowEntity()
 	{
-		type = ARROW_ENTITY;
-		size = t_vertex(2, 0.5, 1);
-		texture = Paintbrush::get_texture("data/images/grass.png", false, false);
+		type = GAME_ENTITY;
+		color = t_vertex(1.0f, 1.0f, 1.0f);
+		size = t_vertex(1, 0.5, 1);
+		texture = Paintbrush::get_texture("data/images/arrow.png", false, true);
 	}
 
 	void update(float time_delta);
