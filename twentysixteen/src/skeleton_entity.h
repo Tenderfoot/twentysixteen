@@ -20,6 +20,7 @@ public:
 	{
 		type = SKELETON_ENTITY;
 		spine_data.flip = true;
+		spine_data.looping = true;
 	}
 
 	void player_update(float time_delta);

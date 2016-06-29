@@ -25,6 +25,8 @@ public:
 	float current_time;
 	float start_time;
 
+	bool looping;
+
 	spSkeleton* skeleton;
 	spAtlas* atlas;
 	spSkeletonData *skeletonData;

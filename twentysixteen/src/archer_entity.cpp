@@ -41,6 +41,7 @@ void ArcherEntity::player_update(float time_delta)
 		current_arrow = new ArrowEntity();
 		current_arrow->position = position;
 		current_arrow->position.z += 0.5;
+		current_arrow->game_entities = game_entities;
 		add_entity(current_arrow);
 	}
 

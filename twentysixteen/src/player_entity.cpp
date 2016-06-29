@@ -76,7 +76,8 @@ void PlayerEntity::state_machine()
 	}
 	if ((state == WALK_LEFT || state == WALK_RIGHT) && (keydown_map[LEFT] == false && keydown_map[RIGHT] == false))
 	{
-		state = IDLE;
+		if(state != DEAD)
+			state = IDLE;
 	}
 
 }
@@ -124,11 +125,16 @@ void PlayerEntity::player_update(float time_delta)
 			staff_emitter->kill();
 		}
 	}
+	else if (state == DEAD)
+	{
+		spine_data.looping = false;
+		spine_data.animation_name = "die";
+	}
 	else
 		spine_data.animation_name = "idle";
 
 	// jump
-	if (keydown_map[UP] == true && state != CASTING)
+	if (keydown_map[UP] == true && state != CASTING && state != DEAD)
 	{
 		if (velocity.y == 0)
 			velocity.y = +0.04;

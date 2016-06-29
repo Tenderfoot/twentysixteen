@@ -96,7 +96,8 @@ enum player_states
 	WALK_LEFT,
 	WALK_RIGHT,
 	JUMPING,
-	CASTING
+	CASTING,
+	DEAD
 };
 
 enum EDITOR_MODES

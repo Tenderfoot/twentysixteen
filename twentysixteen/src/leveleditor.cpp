@@ -54,7 +54,13 @@ void LevelEditor::reset_entities()
 	for (i = 0; i < entities->size(); i++)
 	{
 		entities->at(i)->reset();
-		if (entities->at(i)->type == ARROW_ENTITY)
+		if (entities->at(i)->type == PLAYER_ENTITY)
+		{
+			((PlayerEntity*)entities->at(i))->state = IDLE;
+			((PlayerEntity*)entities->at(i))->spine_data.looping = true;
+		}
+
+		if (entities->at(i)->type == ARROW_ENTITY || entities->at(i)->type == SKELETON_ENTITY)
 		{
 			remove_entity_at_index(i);
 			i--;

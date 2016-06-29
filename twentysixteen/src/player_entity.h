@@ -31,7 +31,7 @@ public:
 		initial_position = new_pos;
 		velocity = t_vertex(0, 0, 0);
 		state = IDLE;
-
+		spine_data.looping = true;
 		staff_emitter = NULL;
 	}
 
