@@ -144,6 +144,7 @@ public:
 			// reset
 			glColor3f(1.0f, 1.0f, 1.0f);
 			glDisable(GL_BLEND);
+			glDepthMask(GL_TRUE);
 
 		glPopMatrix();
 	}
@@ -221,6 +222,7 @@ public:
 		// reset
 		glColor3f(1.0f, 1.0f, 1.0f);
 		glDisable(GL_BLEND);
+		glDepthMask(GL_TRUE);
 
 		glPopMatrix();
 	}
@@ -298,6 +300,7 @@ public:
 		// reset
 		glColor3f(1.0f, 1.0f, 1.0f);
 		glDisable(GL_BLEND);
+		glDepthMask(GL_TRUE);
 
 		glPopMatrix();
 	}
@@ -368,7 +371,6 @@ public:
 
 		// bind texture and setup
 		glBindTexture(GL_TEXTURE_2D, texture);
-		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_BLEND);
 		glColor4f(1.0f, 1.0, 1.0, life / 100);
 
@@ -387,7 +389,6 @@ public:
 		// reset
 		glColor3f(1.0f, 1.0f, 1.0f);
 		glDisable(GL_BLEND);
-		glEnable(GL_DEPTH_TEST);
 
 		glPopMatrix();
 	}

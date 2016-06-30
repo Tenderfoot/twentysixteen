@@ -264,7 +264,7 @@ void BaseGameLevel::reset()
 
 	LightManager::lights[0].x = 0;
 	LightManager::lights[0].y = 10;
-	LightManager::lights[0].z = -20;
+	LightManager::lights[0].z = -10;
 	LightManager::lights[0].radius = 35;
 
 	LightManager::lights[0].r = 0.9;
