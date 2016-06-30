@@ -7,8 +7,16 @@ void SwordsmanEntity::update(float time_delta)
 
 	position.x += real_velocity.x;
 	position.y += real_velocity.y;
-/*
+
 	int j;
+	for (j = 0; j < game_entities->size(); j++)
+	{
+		if (game_entities->at(j)->type == PLAYER_ENTITY)
+		{
+			player_pos = game_entities->at(j)->position;
+		}
+	}
+
 	for (j = 0; j < game_entities->size(); j++)
 	{
 		if (game_entities->at(j)->type == PLAYER_ENTITY)
@@ -19,14 +27,16 @@ void SwordsmanEntity::update(float time_delta)
 
 	if (position.x < player_pos.x)
 	{
-		velocity.x -= 0.0005*time_delta;
+		velocity.x += 0.00001*time_delta;
+		spine_data.flip = true;
 	}
 
 	if (position.x > player_pos.x)
 	{
-		velocity.x -= 0.0005*time_delta;
+		velocity.x -= 0.00001*time_delta;
+		spine_data.flip = false;
 	}
-*/
+
 }
 
 void SwordsmanEntity::init()
