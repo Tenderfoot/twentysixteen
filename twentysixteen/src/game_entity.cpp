@@ -3,34 +3,6 @@
 
 void GameEntity::update(float time_delta)
 {
-	if (apply_friction)
-	{
-		if (velocity.x > 0)
-		{
-			velocity.x -= (0.0000125);
-			if (velocity.x < 0)
-			{
-				velocity.x = 0;
-			}
-		}
-		if (velocity.x < 0)
-		{
-			velocity.x += (0.0000125);
-			if (velocity.x > 0)
-			{
-				velocity.x = 0;
-			}
-		}
-	}
-	apply_friction = false;
-
-	if (velocity.y > -0.03)
-	{
-		velocity.y -= 0.0001;
-	}
-
-	position.x += real_velocity.x;
-	position.y += real_velocity.y;
 }
 
 bool GameEntity::check_against_game_entity(GameEntity *opposing_entity)

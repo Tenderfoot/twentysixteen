@@ -108,7 +108,7 @@ void BaseGameLevel::run(float time_delta)
 
 		for (i = 0; i < entities.size(); i++)
 		{
-			if (entities.at(i)->type == SKELETON_ENTITY || entities.at(i)->type == PORTCULLIS_ENTITY)
+			if (entities.at(i)->type == SKELETON_ENTITY || entities.at(i)->type == PORTCULLIS_ENTITY || entities.at(i)->type == GAME_ENTITY)
 			{
 				test.collision_groups.push_back(((GameEntity*)entities.at(i))->return_polygon());
 			}
@@ -149,7 +149,7 @@ void BaseGameLevel::run(float time_delta)
 				((PlayerEntity*)entities.at(i))->correct_against_collisiongroup(test, time_delta);
 				((PlayerEntity*)entities.at(i))->update(time_delta);
 				((PlayerEntity*)entities.at(i))->player_update(time_delta);
-				set_camera(t_vertex(((PlayerEntity*)entities.at(i))->position.x, ((PlayerEntity*)entities.at(i))->position.y + 5, 15), t_vertex(((PlayerEntity*)entities.at(i))->position.x, ((PlayerEntity*)entities.at(i))->position.y, -25));
+				set_camera(t_vertex(((PlayerEntity*)entities.at(i))->position.x, ((PlayerEntity*)entities.at(i))->position.y + 10, 20), t_vertex(((PlayerEntity*)entities.at(i))->position.x, ((PlayerEntity*)entities.at(i))->position.y, -25));
 			}
 			if (entities.at(i)->type == EMITTER_ENTITY)
 			{
@@ -157,7 +157,7 @@ void BaseGameLevel::run(float time_delta)
 			}
 			if (entities.at(i)->type == ARCHER_ENTITY)
 			{
-				((ArcherEntity*)entities.at(i))->correct_against_collisiongroup(collision_group, time_delta);
+				((ArcherEntity*)entities.at(i))->correct_against_collisiongroup(test, time_delta);
 				((ArcherEntity*)entities.at(i))->update(time_delta);
 				((ArcherEntity*)entities.at(i))->player_update(time_delta);
 			}
@@ -257,7 +257,7 @@ void BaseGameLevel::reset()
 
 	LightManager::lights[0].x = 0;
 	LightManager::lights[0].y = 10;
-	LightManager::lights[0].z = -5;
+	LightManager::lights[0].z = -20;
 	LightManager::lights[0].radius = 35;
 
 	LightManager::lights[0].r = 0.9;

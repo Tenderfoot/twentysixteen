@@ -19,9 +19,13 @@ public:
 		color = t_vertex(1.0f, 1.0f, 1.0f);
 		size = t_vertex(1, 0.5, 1);
 		texture = Paintbrush::get_texture("data/images/arrow.png", false, true);
+		velocity = t_vertex(-0.015, 0.0f, 0.0f);
 	}
 
 	void update(float time_delta);
+	void draw();
 	bool loosed;
+
+	t_vertex player_pos;
 
 };

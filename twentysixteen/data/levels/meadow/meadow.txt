@@ -16,8 +16,6 @@ Entity
 Entity
 3,7,-6,2.4,4.15,5,1,0,0,7,
 ArcherEntity
-16,10,0,1,3,1,0,
-ButtonEntity
--6,6,0,4,2,1,0,
-PortcullisEntity
-12,9,0,1,9.65002,1,13,
+8,19,0,1,3,1,0,
+GameEntity
+8,15,0,7.80001,1.05,5,0,
