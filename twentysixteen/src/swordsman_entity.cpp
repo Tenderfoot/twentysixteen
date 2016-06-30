@@ -7,7 +7,7 @@ void SwordsmanEntity::update(float time_delta)
 
 	position.x += real_velocity.x;
 	position.y += real_velocity.y;
-
+/*
 	int j;
 	for (j = 0; j < game_entities->size(); j++)
 	{
@@ -26,6 +26,7 @@ void SwordsmanEntity::update(float time_delta)
 	{
 		velocity.x -= 0.0005*time_delta;
 	}
+*/
 }
 
 void SwordsmanEntity::init()

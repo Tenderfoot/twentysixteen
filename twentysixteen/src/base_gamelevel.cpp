@@ -149,7 +149,7 @@ void BaseGameLevel::run(float time_delta)
 				((PlayerEntity*)entities.at(i))->correct_against_collisiongroup(test, time_delta);
 				((PlayerEntity*)entities.at(i))->update(time_delta);
 				((PlayerEntity*)entities.at(i))->player_update(time_delta);
-				set_camera(t_vertex(((PlayerEntity*)entities.at(i))->position.x, ((PlayerEntity*)entities.at(i))->position.y + 10, 20), t_vertex(((PlayerEntity*)entities.at(i))->position.x, ((PlayerEntity*)entities.at(i))->position.y, -25));
+				set_camera(t_vertex(((PlayerEntity*)entities.at(i))->position.x, ((PlayerEntity*)entities.at(i))->position.y + 10, 20), t_vertex(((PlayerEntity*)entities.at(i))->position.x, ((PlayerEntity*)entities.at(i))->position.y+10, -25));
 			}
 			if (entities.at(i)->type == EMITTER_ENTITY)
 			{
@@ -160,6 +160,12 @@ void BaseGameLevel::run(float time_delta)
 				((ArcherEntity*)entities.at(i))->correct_against_collisiongroup(test, time_delta);
 				((ArcherEntity*)entities.at(i))->update(time_delta);
 				((ArcherEntity*)entities.at(i))->player_update(time_delta);
+			}
+			if (entities.at(i)->type == SWORDSMAN_ENTITY)
+			{
+				((SwordsmanEntity*)entities.at(i))->correct_against_collisiongroup(test, time_delta);
+				((SwordsmanEntity*)entities.at(i))->update(time_delta);
+				((SwordsmanEntity*)entities.at(i))->player_update(time_delta);
 			}
 		}
 	}

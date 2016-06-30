@@ -13,6 +13,7 @@
 #include "archer_entity.h"
 #include "button_entity.h"
 #include "portcullis_entity.h"
+#include "swordsman_entity.h"
 
 // LevelEditor
 // The level editor will have a pointer
@@ -43,6 +44,7 @@ public:
 		entity_stringname[ARROW_ENTITY] = "Arrow";
 		entity_stringname[BUTTON_ENTITY] = "Button";
 		entity_stringname[PORTCULLIS_ENTITY] = "Gate";
+		entity_stringname[SWORDSMAN_ENTITY] = "Swordsman";
 
 	}
 	void take_input(boundinput input, bool type);

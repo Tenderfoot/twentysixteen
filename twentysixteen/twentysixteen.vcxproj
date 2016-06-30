@@ -40,6 +40,7 @@
     <ClCompile Include="src\skeleton_entity.cpp" />
     <ClCompile Include="src\spine_data.cpp" />
     <ClCompile Include="src\spine_entity.cpp" />
+    <ClCompile Include="src\swordsman_entity.cpp" />
     <ClCompile Include="src\techdemos\AudioTechDemo.cpp" />
     <ClCompile Include="src\techdemos\DungeonTechDemo.cpp" />
     <ClCompile Include="src\techdemos\EmitterTechDemo.cpp" />
@@ -88,6 +89,7 @@
     <ClInclude Include="src\skeleton_entity.h" />
     <ClInclude Include="src\spine_data.h" />
     <ClInclude Include="src\spine_entity.h" />
+    <ClInclude Include="src\swordsman_entity.h" />
     <ClInclude Include="src\techdemos\audiotechdemo.h" />
     <ClInclude Include="src\techdemos\basetechdemo.h" />
     <ClInclude Include="src\techdemos\dungeontechdemo.h" />

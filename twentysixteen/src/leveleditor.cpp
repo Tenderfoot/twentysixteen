@@ -472,6 +472,13 @@ void LevelEditor::build_entity()
 		case PORTCULLIS_ENTITY:
 			create_mode_entity = new PortcullisEntity(t_vertex(pos.x, pos.y, 0), t_vertex(1, 2, 1), t_vertex(1, 1, 1));
 			break;
+		case SWORDSMAN_ENTITY:
+			create_mode_entity = new SwordsmanEntity(t_vertex(pos.x, pos.y, 0), t_vertex(1, 3, 1), t_vertex(1, 0, 1));
+			((SwordsmanEntity*)create_mode_entity)->game_entities = entities;
+			((SwordsmanEntity*)create_mode_entity)->init();
+			((SwordsmanEntity*)create_mode_entity)->position = pos;
+			((SwordsmanEntity*)create_mode_entity)->spine_data.setslots();
+			break;
 		default:
 			create_mode_entity = new Entity(t_vertex(pos.x, pos.y, 0), t_vertex(5, 5, 5), t_vertex(1, 0, 0));
 			break;
