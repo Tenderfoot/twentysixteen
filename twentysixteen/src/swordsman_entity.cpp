@@ -1,5 +1,6 @@
 
 #include "swordsman_entity.h"
+#include "player_entity.h"
 
 void SwordsmanEntity::update(float time_delta)
 {
@@ -46,6 +47,27 @@ void SwordsmanEntity::update(float time_delta)
 		else
 		velocity.x -= 0.00001*time_delta;
 		spine_data.flip = false;
+	}
+
+	for (j = 0; j < game_entities->size(); j++)
+	{
+		if (game_entities->at(j)->type == PLAYER_ENTITY)
+		{
+			player_pos = game_entities->at(j)->position;
+
+			if (((GameEntity*)game_entities->at(j))->check_against_game_entity(this))
+			{
+				if (((PlayerEntity*)game_entities->at(j))->state != DEAD)
+				{
+					((PlayerEntity*)game_entities->at(j))->state = DEAD;
+					((PlayerEntity*)game_entities->at(j))->spine_data.start_time = SDL_GetTicks();
+					if (((PlayerEntity*)game_entities->at(j))->staff_emitter != NULL)
+					{
+						((PlayerEntity*)game_entities->at(j))->staff_emitter->kill();
+					}
+				}
+			}
+		}
 	}
 
 }

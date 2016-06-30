@@ -32,6 +32,7 @@ public:
 	}
 
 	ArrowEntity *current_arrow;
+	t_vertex player_pos;
 
 	void init();
 
