@@ -200,6 +200,24 @@ void LevelEditor::read_level(std::string level_name)
 
 			entities->push_back(new_entity);
 		}
+		if (line == "SwordsmanEntity")
+		{
+			new_pos = get_vertex_from_buffer(&in);
+			new_size = get_vertex_from_buffer(&in);
+
+			std::getline(in, line, ',');
+			texture = std::stoi(line);
+
+			new_entity = new SwordsmanEntity(new_pos, new_size, t_vertex(1.0f, 1.0f, 1.0f));
+
+			new_entity->color = t_vertex(1.0f, 1.0f, 1.0f);
+			new_entity->texture = texture;
+
+			((SwordsmanEntity*)new_entity)->init();
+			((SwordsmanEntity*)new_entity)->spine_data.setslots();
+
+			entities->push_back(new_entity);
+		}
 		if (line == "Entity")
 		{
 			new_pos = get_vertex_from_buffer(&in);
@@ -286,6 +304,13 @@ void LevelEditor::write_level()
 		if (entities->at(i)->type == ARCHER_ENTITY)
 		{
 			myfile << "ArcherEntity\n";
+			myfile << entities->at(i)->initial_position.x << "," << entities->at(i)->initial_position.y << "," << entities->at(i)->initial_position.z << ",";
+			myfile << entities->at(i)->size.x << "," << entities->at(i)->size.y << "," << entities->at(i)->size.z << ",";
+			myfile << entities->at(i)->texture << "," << "\n";
+		}
+		if (entities->at(i)->type == SWORDSMAN_ENTITY)
+		{
+			myfile << "SwordsmanEntity\n";
 			myfile << entities->at(i)->initial_position.x << "," << entities->at(i)->initial_position.y << "," << entities->at(i)->initial_position.z << ",";
 			myfile << entities->at(i)->size.x << "," << entities->at(i)->size.y << "," << entities->at(i)->size.z << ",";
 			myfile << entities->at(i)->texture << "," << "\n";
@@ -395,16 +420,19 @@ void LevelEditor::input_edit(boundinput input, bool type)
 	if (input == EDITOR_SCALE_X_PLUS && type == true)
 	{
 		entities->at(current_entity)->size.x = (entities->at(current_entity)->size.x + 0.05f);
+		entities->at(current_entity)->initial_size = entities->at(current_entity)->size;
 	}
 
 	if (input == EDITOR_SCALE_Y_PLUS && type == true)
 	{
 		entities->at(current_entity)->size.y = (entities->at(current_entity)->size.y + 0.05f);
+		entities->at(current_entity)->initial_size = entities->at(current_entity)->size;
 	}
 
 	if (input == EDITOR_SCALE_Z_PLUS && type == true)
 	{
 		entities->at(current_entity)->size.z = (entities->at(current_entity)->size.z + 0.05f);
+		entities->at(current_entity)->initial_size = entities->at(current_entity)->size;
 	}
 
 	if (input == EDITOR_SCALE_X_MINUS && type == true)
@@ -412,6 +440,8 @@ void LevelEditor::input_edit(boundinput input, bool type)
 		entities->at(current_entity)->size.x = (entities->at(current_entity)->size.x - 0.05f);
 		if (entities->at(current_entity)->size.x < 0)
 			entities->at(current_entity)->size.x = 0;
+
+		entities->at(current_entity)->initial_size = entities->at(current_entity)->size;
 	}
 
 	if (input == EDITOR_SCALE_Y_MINUS && type == true)
@@ -419,6 +449,8 @@ void LevelEditor::input_edit(boundinput input, bool type)
 		entities->at(current_entity)->size.y = (entities->at(current_entity)->size.y - 0.05f);
 		if (entities->at(current_entity)->size.y < 0)
 			entities->at(current_entity)->size.y = 0;
+
+		entities->at(current_entity)->initial_size = entities->at(current_entity)->size;
 	}
 
 	if (input == EDITOR_SCALE_Z_MINUS && type == true)
@@ -426,6 +458,8 @@ void LevelEditor::input_edit(boundinput input, bool type)
 		entities->at(current_entity)->size.z = (entities->at(current_entity)->size.z - 0.05f);
 		if (entities->at(current_entity)->size.z < 0)
 			entities->at(current_entity)->size.z = 0;
+
+		entities->at(current_entity)->initial_size = entities->at(current_entity)->size;
 	}
 
 	if (input == EDITOR_T && type == true)

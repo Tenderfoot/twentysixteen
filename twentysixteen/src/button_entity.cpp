@@ -5,10 +5,10 @@ void ButtonEntity::update(float time_delta)
 	// I'm going to iterate a lot here
 	// It'll be fixed sooner than later
 	int i,j;
-
+	bool found = false;
 	for (j = 0; j < game_entities->size(); j++)
 	{
-		if (game_entities->at(j)->type == PLAYER_ENTITY)
+		if (game_entities->at(j)->type == PLAYER_ENTITY || game_entities->at(j)->type == SWORDSMAN_ENTITY)
 		{
 			if (((GameEntity*)game_entities->at(j))->check_against_game_entity(this))
 			{
@@ -17,8 +17,20 @@ void ButtonEntity::update(float time_delta)
 					if (game_entities->at(i)->type == PORTCULLIS_ENTITY)
 					{
 						((GameEntity*)game_entities->at(i))->activate();
+						found = true;
 					}
 				}
+			}
+		}
+	}
+
+	if (found == false)
+	{
+		for (i = 0; i < game_entities->size(); i++)
+		{
+			if (game_entities->at(i)->type == PORTCULLIS_ENTITY)
+			{
+				((GameEntity*)game_entities->at(i))->activated = false;
 			}
 		}
 	}

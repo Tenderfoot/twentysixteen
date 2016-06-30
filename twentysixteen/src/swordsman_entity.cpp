@@ -27,12 +27,23 @@ void SwordsmanEntity::update(float time_delta)
 
 	if (position.x < player_pos.x)
 	{
-		velocity.x += 0.00001*time_delta;
+		if (velocity.x < 0)
+		{
+			velocity.x += 0.00005*time_delta;
+		}
+		else
+			velocity.x += 0.00001*time_delta;
+
 		spine_data.flip = true;
 	}
 
 	if (position.x > player_pos.x)
 	{
+		if (velocity.x > 0)
+		{
+			velocity.x -= 0.00005*time_delta;
+		}
+		else
 		velocity.x -= 0.00001*time_delta;
 		spine_data.flip = false;
 	}

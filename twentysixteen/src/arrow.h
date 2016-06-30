@@ -23,8 +23,10 @@ public:
 	}
 
 	void update(float time_delta);
+	void arrow_collision(t_collisiongroup group);
 	void draw();
 	bool loosed;
+	bool stuck;
 
 	t_vertex player_pos;
 

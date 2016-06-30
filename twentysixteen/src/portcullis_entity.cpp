@@ -26,6 +26,14 @@ void PortcullisEntity::update(float time_delta)
 			position.y -= 0.005*time_delta;
 		}
 	}
+	if (returner && activated == false)
+	{
+		if (size.y < initial_size.y)
+		{
+			size.y += 0.005*time_delta;
+			position.y += 0.005*time_delta;
+		}
+	}
 }
 
 void PortcullisEntity::activate()
