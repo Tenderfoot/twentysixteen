@@ -13,7 +13,7 @@ bow
   index: -1
 cheer_arm
   rotate: false
-  xy: 2756, 117
+  xy: 2756, 77
   size: 44, 157
   orig: 44, 157
   offset: 0, 0
@@ -97,7 +97,7 @@ fro_leg
   index: -1
 gym_arm
   rotate: false
-  xy: 2848, 160
+  xy: 2802, 77
   size: 44, 157
   orig: 44, 157
   offset: 0, 0
@@ -181,7 +181,7 @@ matt_leg
   index: -1
 mo_arm
   rotate: false
-  xy: 2894, 160
+  xy: 2848, 77
   size: 44, 157
   orig: 44, 157
   offset: 0, 0
@@ -209,7 +209,7 @@ mo_leg
   index: -1
 ninja_arm
   rotate: false
-  xy: 2802, 159
+  xy: 2894, 76
   size: 44, 158
   orig: 44, 158
   offset: 0, 0
@@ -265,7 +265,7 @@ old_leg
   index: -1
 rasta_arm
   rotate: false
-  xy: 2940, 160
+  xy: 2984, 171
   size: 44, 157
   orig: 44, 157
   offset: 0, 0
@@ -300,7 +300,7 @@ robe
   index: -1
 skel_arm
   rotate: false
-  xy: 2986, 168
+  xy: 2940, 157
   size: 42, 160
   orig: 42, 160
   offset: 0, 0
@@ -331,6 +331,13 @@ staff
   xy: 4064, 435
   size: 12, 75
   orig: 12, 75
+  offset: 0, 0
+  index: -1
+sword
+  rotate: false
+  xy: 2783, 236
+  size: 150, 81
+  orig: 150, 81
   offset: 0, 0
   index: -1
 witch_arm

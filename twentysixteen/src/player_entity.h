@@ -40,6 +40,7 @@ public:
 	ParticleEmitter *staff_emitter;
 
 	void handle_keypress(boundinput input, bool type);
+	void correct_against_collisiongroup(t_collisiongroup collision_group, float time_delta);
 	std::map<boundinput, bool> keydown_map;
 
 	void player_update(float time_delta);

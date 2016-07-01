@@ -336,7 +336,7 @@ public:
 		position.x = emission_size.x*x + emission_position.x;
 
 		x = rand() % 200;
-		x = x / 100;
+		x = x / 50;
 		size.x = x;
 
 		x = rand() % 100;

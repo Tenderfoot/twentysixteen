@@ -12,8 +12,17 @@ std::vector<Entity*> VFXGrass::generate_grass(t_3dModel from_model, t_vertex mod
 
 	float z;
 
-	for (z = 10; z > -100; z -= 1)
+	for (z = 10; z > -100; z -= 0)
 	{
+		if (z > 0)
+		{
+			z -= 1;
+		}
+		else
+		{
+			z -= 3;
+		}
+
 		grass_group = LinearAlgebra::get_collisiongroups_from_model(from_model, z, model_transform);
 
 		int i, j;
