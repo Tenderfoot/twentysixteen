@@ -69,7 +69,6 @@ void ArrowEntity::draw()
 
 		float angle;
 		angle = tan(velocity.y / velocity.x) * 57.29;
-		printf("angle was %f\n", angle);
 		glRotatef(angle, 0.0f, 0.0f, 1.0f);
 		glScalef(size.x, size.y, size.z);
 		glBindTexture(GL_TEXTURE_2D, texture);
