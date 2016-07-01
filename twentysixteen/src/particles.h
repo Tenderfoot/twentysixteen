@@ -335,7 +335,7 @@ public:
 
 		position.x = emission_size.x*x + emission_position.x;
 
-		x = rand() % 100;
+		x = rand() % 200;
 		x = x / 100;
 		size.x = x;
 
@@ -375,7 +375,7 @@ public:
 		glColor4f(1.0f, 1.0, 1.0, life / 100);
 
 		// transform
-		glTranslatef(position.x, position.y, position.z);
+		glTranslatef(position.x-400, position.y, position.z);
 		glScalef(size.x, size.x, 0.0f);
 
 		// draw

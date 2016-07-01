@@ -150,7 +150,7 @@ void BaseGameLevel::run(float time_delta)
 				((PlayerEntity*)entities.at(i))->correct_against_collisiongroup(test, time_delta);
 				((PlayerEntity*)entities.at(i))->update(time_delta);
 				((PlayerEntity*)entities.at(i))->player_update(time_delta);
-				set_camera(t_vertex(((PlayerEntity*)entities.at(i))->position.x, (((PlayerEntity*)entities.at(i))->position.y/1.5) + 10, 20), t_vertex(((PlayerEntity*)entities.at(i))->position.x, (((PlayerEntity*)entities.at(i))->position.y/1.5)+10, -25));
+				set_camera(t_vertex(((PlayerEntity*)entities.at(i))->position.x, (((PlayerEntity*)entities.at(i))->position.y) + 10, 20), t_vertex(((PlayerEntity*)entities.at(i))->position.x, (((PlayerEntity*)entities.at(i))->position.y)+10, -25));
 			}
 			if (entities.at(i)->type == EMITTER_ENTITY)
 			{
@@ -179,7 +179,7 @@ void BaseGameLevel::draw()
 	gluLookAt(camera_position.x, camera_position.y, camera_position.z, camera_lookat.x, camera_lookat.y, camera_lookat.z, 0, 1, 0);
 
 	//  this line draws the level collision group as lines
-//	Paintbrush::draw_collision_group(collision_group, 0);
+	Paintbrush::draw_collision_group(collision_group, 0);
 
 	// draw the rendertargets
 	glPushMatrix();
@@ -229,7 +229,8 @@ void BaseGameLevel::take_input(boundinput input, bool type)
 
 	if (input == EDITOR_PLAY_MODE && type == true)
 	{
-		std::sort(render_targets.begin(), render_targets.end(), by_depth_rendertarget());
+		std::sort(render_targets.
+			begin(), render_targets.end(), by_depth_rendertarget());
 	}
 
 	if (input == BACK && type == true)
@@ -264,10 +265,10 @@ void BaseGameLevel::reset()
 
 	LightManager::lights[0].x = 0;
 	LightManager::lights[0].y = 10;
-	LightManager::lights[0].z = -10;
-	LightManager::lights[0].radius = 35;
+	LightManager::lights[0].z = -20;
+	LightManager::lights[0].radius = 50;
 
-	LightManager::lights[0].r = 0.9;
-	LightManager::lights[0].g = 0.9;
-	LightManager::lights[0].b = 0.9;
+	LightManager::lights[0].r = 0.7;
+	LightManager::lights[0].g = 0.7;
+	LightManager::lights[0].b = 0.7;
 }
