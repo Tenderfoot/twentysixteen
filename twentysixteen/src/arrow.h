@@ -27,6 +27,7 @@ public:
 	void draw();
 	bool loosed;
 	bool stuck;
+	float create_time;
 
 	t_vertex player_pos;
 

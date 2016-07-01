@@ -6,6 +6,24 @@ void PlayerEntity::handle_keypress(boundinput input, bool type)
 {
 	keydown_map[input] = type;
 
+	if (input == HAT_CLEAR)
+	{
+		keydown_map[LEFT] = false;
+		keydown_map[RIGHT] = false;
+		keydown_map[UP] = false;
+		keydown_map[DOWN] = false;
+	}
+
+	if (input == LEFT && type == true)
+	{
+		keydown_map[RIGHT] = false;
+	}
+	else if (input == RIGHT && type == true)
+	{
+		keydown_map[LEFT] = false;
+	}
+
+
 	if (input == EDITOR_T && type == true && velocity.y > -0.005 && velocity.y < 0.005 && state == IDLE)
 	{
 		SkeletonEntity *test = new SkeletonEntity();
@@ -80,6 +98,16 @@ void PlayerEntity::state_machine()
 			state = IDLE;
 	}
 
+	if(state == WALK_LEFT && keydown_map[LEFT] == false)
+	{ 
+		state = IDLE;
+	}
+
+	if (state == WALK_RIGHT && keydown_map[RIGHT] == false)
+	{
+		state = IDLE;
+	}
+
 }
 
 void PlayerEntity::player_update(float time_delta)
@@ -134,7 +162,7 @@ void PlayerEntity::player_update(float time_delta)
 		spine_data.animation_name = "idle";
 
 	// jump
-	if (keydown_map[UP] == true && state != CASTING && state != DEAD)
+	if (keydown_map[ACTION] == true && state != CASTING && state != DEAD)
 	{
 		if (velocity.y == 0)
 			velocity.y = +0.04;

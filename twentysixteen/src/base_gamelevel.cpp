@@ -130,6 +130,11 @@ void BaseGameLevel::run(float time_delta)
 			{
 				((ArrowEntity*)entities.at(i))->update(time_delta);
 				((ArrowEntity*)entities.at(i))->arrow_collision(test);
+				if (SDL_GetTicks() - ((ArrowEntity*)entities.at(i))->create_time > 10000)
+				{
+					level_editor.remove_entity_at_index(i);
+					i--;
+				}
 			}
 			if (entities.at(i)->type == PORTCULLIS_ENTITY)
 			{
@@ -212,6 +217,14 @@ void BaseGameLevel::draw()
 
 void BaseGameLevel::take_input(boundinput input, bool type)
 {
+	if (input == HAT_CLEAR)
+	{
+		keydown_map[LEFT] = false;
+		keydown_map[RIGHT] = false;
+		keydown_map[UP] = false;
+		keydown_map[DOWN] = false;
+	}
+
 	keydown_map[input] = type;
 	level_editor.take_input(input, type);
 
@@ -266,7 +279,7 @@ void BaseGameLevel::reset()
 	LightManager::lights[0].x = 0;
 	LightManager::lights[0].y = 10;
 	LightManager::lights[0].z = -20;
-	LightManager::lights[0].radius = 50;
+	LightManager::lights[0].radius = 35;
 
 	LightManager::lights[0].r = 0.7;
 	LightManager::lights[0].g = 0.7;

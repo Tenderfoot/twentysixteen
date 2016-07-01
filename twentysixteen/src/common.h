@@ -1,8 +1,8 @@
 #pragma once
 
 // some globals
-#define res_width  1920		
-#define res_height  1080
+#define res_width  1024		
+#define res_height  768
 #define NUM_TOTAL_ENTITIES 11
 
 #include <stdio.h>
@@ -61,6 +61,7 @@ enum boundinput
 	EDITOR_GREEN,
 	EDITOR_BLUE,
 	EDITOR_T,
+	HAT_CLEAR	// for joysticks
 };
 
 enum rendertarget_types

@@ -33,7 +33,7 @@ void ArcherEntity::player_update(float time_delta)
 		}
 	}
 
-	if (player_pos.x > position.x - 30 || player_pos.x > position.x + 30)
+	if (player_pos.x > position.x - 30 && player_pos.x < position.x + 30)
 	{
 		if (SDL_GetTicks() - spine_data.start_time > 700)
 		{
@@ -53,6 +53,7 @@ void ArcherEntity::player_update(float time_delta)
 			current_arrow->position = position;
 			current_arrow->position.z += 0.5;
 			current_arrow->game_entities = game_entities;
+			current_arrow->create_time = SDL_GetTicks();
 			add_entity(current_arrow);
 		}
 

@@ -157,11 +157,15 @@ boundinput translate_joy_input(int joybutton, bool hat)
 			case 8:
 				return LEFT;
 				break;
+			case 0:
+				return HAT_CLEAR;
+				break;
 		}
 		return NO_BIND;
 	}
 	else
 	{
+		printf("%d\n", joybutton);
 		switch (joybutton)
 		{
 			case 0:
@@ -169,6 +173,9 @@ boundinput translate_joy_input(int joybutton, bool hat)
 				break;
 			case 1:
 				return BACK;
+				break;
+			case 2:
+				return EDITOR_T;
 				break;
 		}
 	}
