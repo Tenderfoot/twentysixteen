@@ -165,7 +165,6 @@ boundinput translate_joy_input(int joybutton, bool hat)
 	}
 	else
 	{
-		printf("%d\n", joybutton);
 		switch (joybutton)
 		{
 			case 0:
