@@ -60,7 +60,7 @@ void PlayerEntity::update(float time_delta)
 	{
 		if (velocity.x > 0)
 		{
-			velocity.x -= (0.0005);
+			velocity.x -= (0.00005)*time_delta;
 			if (velocity.x < 0)
 			{
 				velocity.x = 0;
@@ -68,7 +68,7 @@ void PlayerEntity::update(float time_delta)
 		}
 		if (velocity.x < 0)
 		{
-			velocity.x += (0.0005);
+			velocity.x += (0.00005)*time_delta;
 			if (velocity.x > 0)
 			{
 				velocity.x = 0;
@@ -111,7 +111,7 @@ void PlayerEntity::correct_against_collisiongroup(t_collisiongroup collision_gro
 			{
 				velocity.x = 0;
 				// cat mode?
-				velocity.y += 0.005;
+				//velocity.y += 0.005;
 			}
 
 			if (r.MinimumTranslationVector.y < 0)
@@ -164,21 +164,21 @@ void PlayerEntity::player_update(float time_delta)
 
 		if (state == WALK_LEFT)
 		{
-			velocity.x -= (0.00003)*time_delta;
+			velocity.x -= (0.00005)*time_delta;
 			spine_data.flip = false;
 		}
 
-		if (velocity.x < -0.01)
-			velocity.x = -0.01;
+		if (velocity.x < -0.0165)
+			velocity.x = -0.0165;
 
 		if (state == WALK_RIGHT)
 		{
-			velocity.x += (0.00003)*time_delta;
+			velocity.x += (0.00005)*time_delta;
 			spine_data.flip = true;
 		}
 
-		if (velocity.x > 0.01)
-			velocity.x = 0.01;
+		if (velocity.x > 0.0165)
+			velocity.x = 0.0165;
 	}
 	else if (state == CASTING)
 	{
