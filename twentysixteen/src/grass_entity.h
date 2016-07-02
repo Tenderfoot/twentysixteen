@@ -18,7 +18,6 @@ public:
 		tex_displacement = ((float)(rand() % 100)) / 100;
 
 	}
-	
 
 	// the left and right vertex
 	t_vertex v1, v2;
@@ -36,10 +35,10 @@ public:
 			Paintbrush::use_shader(Paintbrush::get_shader("grass"));
 			glBegin(GL_QUADS);
 				glNormal3f(0.0f, 1.0f, 0.0f);
-				glTexCoord2f(1*diff+ tex_displacement, 1.00f);	glVertex3f(v2.x, v2.y+2, v2.z);
-				glTexCoord2f(0+ tex_displacement, 1.00f);	glVertex3f(v1.x, v1.y+2, v1.z);
-				glTexCoord2f(0+ tex_displacement, 0.0f);		glVertex3f(v1.x, v1.y, v1.z);
-				glTexCoord2f(1*diff+ tex_displacement, 0.0f);		glVertex3f(v2.x, v2.y, v2.z);
+				glTexCoord2f(1*diff+tex_displacement, 1.00f);	glVertex3f(v2.x, v2.y+2, v2.z);
+				glTexCoord2f(0+tex_displacement, 1.00f);	glVertex3f(v1.x, v1.y+2, v1.z);
+				glTexCoord2f(0+tex_displacement, 0.0f);		glVertex3f(v1.x, v1.y, v1.z);
+				glTexCoord2f(1*diff+tex_displacement, 0.0f);		glVertex3f(v2.x, v2.y, v2.z);
 			glEnd();
 			Paintbrush::stop_shader();
 		glPopMatrix();

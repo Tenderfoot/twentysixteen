@@ -107,7 +107,7 @@ void PlayerEntity::correct_against_collisiongroup(t_collisiongroup collision_gro
 				apply_friction = true;
 			}
 
-			if (r.MinimumTranslationVector.x != 0 && r.MinimumTranslationVector.y == 0)
+			if (((r.MinimumTranslationVector.x > 0 && velocity.x<0) || (r.MinimumTranslationVector.x < 0 && velocity.x>0))  && r.MinimumTranslationVector.y == 0)
 			{
 				velocity.x = 0;
 				// cat mode?
