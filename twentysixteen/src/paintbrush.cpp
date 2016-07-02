@@ -458,6 +458,46 @@ GLuint Paintbrush::Soil_Load_Texture(std::string filename, bool for_assimp)
 	return loaded_texture;
 }
 
+GLuint Paintbrush::Soil_Load_Texture(std::string filename, bool for_assimp, bool for_grass)
+{
+	GLuint loaded_texture;
+	int flags;
+
+	if (for_assimp)
+		flags = SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y;
+	else if (for_grass)
+		flags = SOIL_FLAG_INVERT_Y;
+	else
+		flags = SOIL_FLAG_MIPMAPS;
+
+	loaded_texture = SOIL_load_OGL_texture
+	(filename.c_str(),
+		SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID,
+		flags);
+
+	// Make sure texture is set to repeat on wrap
+	glBindTexture(GL_TEXTURE_2D, loaded_texture);
+
+	if (for_assimp)
+	{
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	}
+	else if (for_grass)
+	{
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	}
+	else
+	{
+		// make sure it doesn't wrap
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	}
+	return loaded_texture;
+}
+
 GLuint Paintbrush::TextToTexture(GLubyte r, GLubyte g, GLubyte b, const char* text, int ptsize)
 {
 	SDL_Color color = { r, g, b };
@@ -512,6 +552,27 @@ GLuint Paintbrush::get_texture(std::string texture_id, bool text, bool flip)
 		else
 		{
 			texture_db.insert({ texture_id, Soil_Load_Texture(texture_id, flip) });
+		}
+	}
+
+	return texture_db[texture_id];
+}
+
+GLuint Paintbrush::get_texture(std::string texture_id, bool text, bool flip, bool grass)
+{
+	std::map<std::string, GLuint>::iterator it;
+
+	it = texture_db.find(texture_id);
+
+	if (it == texture_db.end())
+	{
+		if (text)
+		{
+			texture_db.insert({ texture_id, TextToTexture(255, 255, 255, texture_id.c_str(), 14) });
+		}
+		else
+		{
+			texture_db.insert({ texture_id, Soil_Load_Texture(texture_id, flip, grass) });
 		}
 	}
 

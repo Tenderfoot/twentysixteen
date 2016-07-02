@@ -20,7 +20,7 @@ std::vector<Entity*> VFXGrass::generate_grass(t_3dModel from_model, t_vertex mod
 		}
 		else
 		{
-			z -= 3;
+			z -= 1;
 		}
 
 		grass_group = LinearAlgebra::get_collisiongroups_from_model(from_model, z, model_transform);

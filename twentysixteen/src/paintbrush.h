@@ -61,6 +61,7 @@ public:
 
 	// Load a texture
 	static GLuint Soil_Load_Texture(std::string filename, bool for_assimp);
+	static GLuint Soil_Load_Texture(std::string filename, bool for_assimp, bool for_grass);
 
 	static void draw_text(std::string text, float x, float y, float width, float height);
 
@@ -72,6 +73,7 @@ public:
 	// string -> texture GLuint
 	static std::map<std::string, GLuint> texture_db;
 	static GLuint get_texture(std::string texture_id, bool text, bool flip);
+	static GLuint get_texture(std::string texture_id, bool text, bool flip, bool grass);
 
 	// draw a 3d model
 	static void draw_model(t_3dModel *mymodel);

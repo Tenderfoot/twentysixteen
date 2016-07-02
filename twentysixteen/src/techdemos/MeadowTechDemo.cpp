@@ -20,7 +20,7 @@ void MeadowTechDemo::reset()
 	LightManager::lights[0].z = -20;
 	LightManager::lights[0].radius = 35;
 
-	LightManager::lights[0].r = 0.5;
+	LightManager::lights[0].r = 0.9;
 	LightManager::lights[0].g = 0.9;
 	LightManager::lights[0].b = 0.9;
 }
