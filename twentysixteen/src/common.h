@@ -61,7 +61,8 @@ enum boundinput
 	EDITOR_GREEN,
 	EDITOR_BLUE,
 	EDITOR_T,
-	HAT_CLEAR	// for joysticks
+	HAT_CLEAR,	// for joysticks
+	R_SHOULDER
 };
 
 enum rendertarget_types

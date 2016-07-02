@@ -167,6 +167,7 @@ boundinput translate_joy_input(int joybutton, bool hat)
 	{
 		switch (joybutton)
 		{
+			
 			case 0:
 				return ACTION;
 				break;
@@ -175,6 +176,9 @@ boundinput translate_joy_input(int joybutton, bool hat)
 				break;
 			case 2:
 				return EDITOR_T;
+				break;
+			case 5:
+				return R_SHOULDER;
 				break;
 		}
 	}
