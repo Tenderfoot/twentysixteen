@@ -30,7 +30,7 @@ public:
 		glBindTexture(GL_TEXTURE_2D, Paintbrush::get_texture("data/images/grass.png", false, false, true));
 		glColor3f(1.0f, 1.0f, 1.0f);
 
-		float diff = abs(v2.x - v1.x)/5+ tex_displacement;
+		float diff = abs(v2.x - v1.x) / 10 + tex_displacement;
 
 		glEnable(GL_BLEND);
 		glDepthMask(GL_FALSE);
