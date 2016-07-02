@@ -228,6 +228,99 @@ public:
 	}
 };
 
+class PoofParticle : public Particle
+{
+public:
+
+	void init(GLuint particle_texture, t_vertex emission_position, t_vertex emission_size)
+	{
+		texture = particle_texture;
+
+		this->emission_position = emission_position;
+		this->emission_size = emission_size;
+
+		reset();
+	}
+
+	t_vertex particle_velocity;
+
+	virtual void reset()
+	{
+		life = rand() % 200;
+
+		float x;
+		x = rand() % 100;
+		x = x / 100;
+
+		position.x = emission_size.x*x + emission_position.x;
+		position.y = emission_size.y*x + emission_position.y;
+
+		particle_velocity = t_vertex((((float)(rand() % 100))/100)*0.01, (((float)(rand() % 100)) / 100)*0.01, 0.0f);
+
+		if (rand() % 2 == 0)
+		{
+			particle_velocity.x = -particle_velocity.x;
+		}
+
+		if (rand() % 2 == 0)
+		{
+			particle_velocity.y = -particle_velocity.y;
+		}
+
+		x = (rand() % 250) + 100;
+		x = x / 100;
+
+		size.x = x;
+
+
+
+		x = rand() % 100;
+		x = x / 100;
+	}
+
+	virtual void update(float time_delta)
+	{
+		life = life - 1 * (time_delta / 5);
+		position.x += particle_velocity.x*time_delta;
+		position.y += particle_velocity.y*time_delta;
+
+		if (life < 0 && dying == false)
+			reset();
+	}
+
+	void draw()
+	{
+
+		glPushMatrix();
+
+		// bind texture and setup
+		glBindTexture(GL_TEXTURE_2D, texture);
+
+		glEnable(GL_BLEND);
+		glDisable(GL_DEPTH_TEST);
+		glColor4f(1.0f, 1.0f, 1.0f, life / 100);
+
+		// transform
+		glTranslatef(position.x-1.0f, position.y, position.z);
+		glScalef(size.x, size.x, 0.0f);
+
+		// draw
+		glBegin(GL_QUADS);
+		glTexCoord2f(0.0f, 0.0f); glVertex3f(0.5f, 0.5f, 0.0f);
+		glTexCoord2f(1.0f, 0.0f); glVertex3f(-0.5f, 0.5f, 0.0f);
+		glTexCoord2f(1.0f, 1.0f); glVertex3f(-0.5f, -0.5f, 0.0f);
+		glTexCoord2f(0.0f, 1.0f); glVertex3f(0.5f, -0.5f, 0.0f);
+		glEnd();
+
+		// reset
+		glColor3f(1.0f, 1.0f, 1.0f);
+		glDisable(GL_BLEND);
+		glEnable(GL_DEPTH_TEST);
+
+		glPopMatrix();
+	}
+};
+
 // Fire Particle
 class StaffParticle : public Particle
 {

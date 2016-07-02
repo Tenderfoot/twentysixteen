@@ -27,6 +27,8 @@ public:
 
 	bool looping;
 
+	std::string spine_name;
+
 	spSkeleton* skeleton;
 	spAtlas* atlas;
 	spSkeletonData *skeletonData;

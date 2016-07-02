@@ -33,11 +33,18 @@ public:
 		state = IDLE;
 		spine_data.looping = true;
 		staff_emitter = NULL;
+		poof_emitter = NULL;
+		cat_rotate = 0;
 	}
 
 	player_states state;
 
 	ParticleEmitter *staff_emitter;
+	ParticleEmitter *poof_emitter;
+
+	float polymorph_start_time;
+
+	SpineData cat_spine;
 
 	void handle_keypress(boundinput input, bool type);
 	void correct_against_collisiongroup(t_collisiongroup collision_group, float time_delta);
@@ -46,4 +53,8 @@ public:
 	void player_update(float time_delta);
 	void update(float time_delta);
 	void state_machine();
+	void init();
+	void draw();
+	bool catmode;
+	float cat_rotate;
 };

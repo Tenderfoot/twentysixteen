@@ -2,6 +2,16 @@
 #include "player_entity.h"
 #include "skeleton_entity.h"
 
+void PlayerEntity::init()
+{
+	spine_data.load_spine_data("everybody");
+	spSkeleton_setSkinByName(spine_data.skeleton, "witch");
+	cat_spine.load_spine_data("cat2");
+	cat_spine.start_time = SDL_GetTicks();
+	cat_spine.looping = true;
+	cat_spine.setslots();
+}
+
 void PlayerEntity::handle_keypress(boundinput input, bool type)
 {
 	keydown_map[input] = type;
@@ -23,8 +33,24 @@ void PlayerEntity::handle_keypress(boundinput input, bool type)
 		keydown_map[LEFT] = false;
 	}
 
+	if (input == R_SHOULDER && type == true)
+	{
+		if (poof_emitter == NULL)
+		{
+			poof_emitter = new ParticleEmitter();
+			int i;
+			for (i = 0; i < 50; i++)
+				poof_emitter->particles.push_back(new PoofParticle);
 
-	if (input == EDITOR_T && type == true && velocity.y > -0.005 && velocity.y < 0.005 && state == IDLE)
+			poof_emitter->init(Paintbrush::get_texture("data/images/fire.png", false, false), t_vertex(position.x-0.5, position.y-1, 0), t_vertex(3.0f, 3.0f, 1.0f));
+			game_entities->push_back(poof_emitter);
+			polymorph_start_time = SDL_GetTicks();
+
+			catmode = !catmode;
+		}
+	}
+
+	if (input == EDITOR_T && type == true && velocity.y > -0.005 && velocity.y < 0.005 && state == IDLE && !catmode)
 	{
 		SkeletonEntity *test = new SkeletonEntity();
 		test->position = position;
@@ -56,6 +82,21 @@ void PlayerEntity::handle_keypress(boundinput input, bool type)
 
 void PlayerEntity::update(float time_delta)
 {
+	if (SDL_GetTicks() - polymorph_start_time > 100 && (poof_emitter != NULL))
+	{
+		poof_emitter->kill();
+		poof_emitter = NULL;
+	}
+
+	if (cat_rotate < 0)
+	{
+		cat_rotate += 0.05*time_delta;
+	}
+	if (cat_rotate > 0)
+	{
+		cat_rotate -= 0.05*time_delta;
+	}
+
 	if (apply_friction && keydown_map[LEFT] == false && keydown_map[RIGHT] == false)
 	{
 		if (velocity.x > 0)
@@ -105,16 +146,29 @@ void PlayerEntity::correct_against_collisiongroup(t_collisiongroup collision_gro
 			{
 				velocity.y = 0;
 				apply_friction = true;
+				cat_rotate = 0;
 			}
 
 			if (((r.MinimumTranslationVector.x > 0 && velocity.x<0) || (r.MinimumTranslationVector.x < 0 && velocity.x>0))  && r.MinimumTranslationVector.y == 0)
 			{
+				if (velocity.x > 0)
+				{
+					cat_rotate = 90;
+				}
+				else
+				{
+					cat_rotate = -90;
+				}
+
 				velocity.x = 0;
 				// cat mode?
-				velocity.y += 0.005;
-				if (velocity.y > 0.05)
+				if (catmode)
 				{
-					velocity.y = 0.05;
+					velocity.y += 0.005;
+					if (velocity.y > 0.05)
+					{
+						velocity.y = 0.05;
+					}
 				}
 			}
 
@@ -161,6 +215,8 @@ void PlayerEntity::player_update(float time_delta)
 	state_machine();
 
 	spine_data.update_skeleton(time_delta);
+	cat_spine.update_skeleton(time_delta);
+
 
 	if (state == WALK_LEFT || state == WALK_RIGHT)
 	{
@@ -219,4 +275,36 @@ void PlayerEntity::player_update(float time_delta)
 		velocity.y -= 0.0001*time_delta;
 	}
 
+}
+
+void PlayerEntity::draw()
+{
+	if (!catmode)
+	{
+		glPushMatrix();
+		glTranslatef(position.x, position.y - 1.5, position.z);
+		glScalef(0.006f, 0.006f, 0.006f);
+		Paintbrush::use_shader(Paintbrush::get_shader("point_light_spine"));
+		spine_data.draw();
+		Paintbrush::stop_shader();
+		glPopMatrix();
+	}
+	else
+	{
+		cat_spine.flip = !spine_data.flip;
+		cat_spine.animation_name = spine_data.animation_name;
+		glPushMatrix();
+		if(cat_rotate > 0)
+			glTranslatef(position.x+0.5, position.y - 1.5, position.z);
+		else if(cat_rotate < 0)
+			glTranslatef(position.x-0.5, position.y - 1.5, position.z);
+		else
+			glTranslatef(position.x, position.y - 1.5, position.z);
+		glRotatef(cat_rotate, 0.0f, 0.0f, 1.0f);
+		glScalef(0.004f, 0.004f, 0.004f);
+		Paintbrush::use_shader(Paintbrush::get_shader("point_light_spine"));
+			cat_spine.draw();
+		Paintbrush::stop_shader();
+		glPopMatrix();
+	}
 }
