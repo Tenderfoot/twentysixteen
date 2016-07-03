@@ -8,7 +8,7 @@ void ButtonEntity::update(float time_delta)
 	bool found = false;
 	for (j = 0; j < game_entities->size(); j++)
 	{
-		if (game_entities->at(j)->type == PLAYER_ENTITY || game_entities->at(j)->type == SWORDSMAN_ENTITY)
+		if (game_entities->at(j)->type == PLAYER_ENTITY || game_entities->at(j)->type == SWORDSMAN_ENTITY || game_entities->at(j)->type == SKELETON_ENTITY)
 		{
 			if (((GameEntity*)game_entities->at(j))->check_against_game_entity(this))
 			{
@@ -16,8 +16,11 @@ void ButtonEntity::update(float time_delta)
 				{
 					if (game_entities->at(i)->type == PORTCULLIS_ENTITY)
 					{
-						((GameEntity*)game_entities->at(i))->activate();
-						found = true;
+						if (game_entities->at(i)->activation_index == this->activation_index)
+						{
+							((GameEntity*)game_entities->at(i))->activate();
+							found = true;
+						}
 					}
 				}
 			}
@@ -30,7 +33,10 @@ void ButtonEntity::update(float time_delta)
 		{
 			if (game_entities->at(i)->type == PORTCULLIS_ENTITY)
 			{
-				((GameEntity*)game_entities->at(i))->activated = false;
+				if (game_entities->at(i)->activation_index == this->activation_index)
+				{
+					((GameEntity*)game_entities->at(i))->activated = false;
+				}
 			}
 		}
 	}

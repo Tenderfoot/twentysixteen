@@ -121,6 +121,7 @@ void LevelEditor::read_level(std::string level_name)
 	int number = std::stoi(line);
 	
 	t_vertex new_pos, new_size, new_color;
+	int activation_index;
 
 	while (std::getline(in, line))
 	{
@@ -159,11 +160,15 @@ void LevelEditor::read_level(std::string level_name)
 
 			std::getline(in, line, ',');
 			texture = std::stoi(line);
+			
+			std::getline(in, line, ',');
+			activation_index = std::stoi(line);
 
 			new_entity = new PortcullisEntity(new_pos, new_size, t_vertex(1.0f, 1.0f, 1.0f));
 
 			new_entity->color = t_vertex(1.0f, 1.0f, 1.0f);
 			new_entity->texture = Paintbrush::get_texture("data/images/metal_gate.png", false, true);
+			new_entity->activation_index = activation_index;
 
 			entities->push_back(new_entity);
 		}
@@ -174,11 +179,16 @@ void LevelEditor::read_level(std::string level_name)
 
 			std::getline(in, line, ',');
 			texture = std::stoi(line);
+	
+
+			std::getline(in, line, ',');
+			activation_index = std::stoi(line);
 
 			new_entity = new ButtonEntity(new_pos, new_size, t_vertex(1.0f, 1.0f, 1.0f));
 
 			new_entity->color = t_vertex(1.0f, 1.0f, 1.0f);
 			new_entity->texture = texture;
+			new_entity->activation_index = activation_index;
 
 			entities->push_back(new_entity);
 		}
@@ -292,14 +302,14 @@ void LevelEditor::write_level()
 			myfile << "PortcullisEntity\n";
 			myfile << entities->at(i)->initial_position.x << "," << entities->at(i)->initial_position.y << "," << entities->at(i)->initial_position.z << ",";
 			myfile << entities->at(i)->size.x << "," << entities->at(i)->size.y << "," << entities->at(i)->size.z << ",";
-			myfile << entities->at(i)->texture << "," << "\n";
+			myfile << entities->at(i)->texture << "," << entities->at(i)->activation_index << "," << "\n";
 		}
 		if (entities->at(i)->type == BUTTON_ENTITY)
 		{
 			myfile << "ButtonEntity\n";
 			myfile << entities->at(i)->initial_position.x << "," << entities->at(i)->initial_position.y << "," << entities->at(i)->initial_position.z << ",";
 			myfile << entities->at(i)->size.x << "," << entities->at(i)->size.y << "," << entities->at(i)->size.z << ",";
-			myfile << entities->at(i)->texture << "," << "\n";
+			myfile << entities->at(i)->texture << "," << entities->at(i)->activation_index << "," << "\n";
 		}
 		if (entities->at(i)->type == ARCHER_ENTITY)
 		{
@@ -468,6 +478,11 @@ void LevelEditor::input_edit(boundinput input, bool type)
 		{
 			entities->at(current_entity)->texture = (entities->at(current_entity)->texture + 1) % Paintbrush::texture_db.size();
 		}
+		if (entities->at(current_entity)->type == PORTCULLIS_ENTITY || entities->at(current_entity)->type == BUTTON_ENTITY)
+		{
+			entities->at(current_entity)->activation_index++;
+			build_ui();
+		}
 	}
 
 
@@ -633,6 +648,12 @@ void LevelEditor::build_ui()
 		if (entities->at(current_entity)->type == ENTITY || entities->at(current_entity)->type == GAME_ENTITY)
 		{
 			editor_interface.add_widget(new TextWidget("T - Cycle Texture", 0.075, 0.6, 0.15, 0.02));
+		}
+		if (entities->at(current_entity)->type == PORTCULLIS_ENTITY || entities->at(current_entity)->type == BUTTON_ENTITY)
+		{
+			std::string helper;
+			helper = "T - Cycle Index (" + std::to_string((entities->at(current_entity)->activation_index)) + ")";
+			editor_interface.add_widget(new TextWidget(helper, 0.075, 0.6, 0.15, 0.02));
 		}
 	}
 }

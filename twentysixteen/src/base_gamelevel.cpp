@@ -193,6 +193,7 @@ void BaseGameLevel::draw()
 
 	glDepthMask(GL_TRUE);
 	glEnable(GL_DEPTH_TEST);
+
 	glDisable(GL_BLEND);
 	Paintbrush::use_shader(Paintbrush::get_shader("point_light"));
 	glPushMatrix();
