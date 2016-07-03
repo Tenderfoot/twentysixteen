@@ -64,9 +64,10 @@ void ArrowEntity::draw()
 {
 	glEnable(GL_BLEND);
 	glDepthMask(GL_FALSE);
-	glPushMatrix();
-		glTranslatef(position.x, position.y, position.z);
 
+	glPushMatrix();
+		Paintbrush::use_shader(Paintbrush::get_shader("point_light_spine"));
+		glTranslatef(position.x, position.y, position.z);
 		float angle;
 		angle = tan(velocity.y / velocity.x) * 57.29;
 		glRotatef(angle, 0.0f, 0.0f, 1.0f);
@@ -74,6 +75,7 @@ void ArrowEntity::draw()
 		glBindTexture(GL_TEXTURE_2D, texture);
 		glColor3f(color.x, color.y, color.z);
 		Paintbrush::draw_quad();
+		Paintbrush::stop_shader();
 	glPopMatrix();
 	glDepthMask(GL_TRUE);
 	glDisable(GL_BLEND);

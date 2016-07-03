@@ -3,6 +3,6 @@
 
 void MarshTechDemo::init()
 {
-	init_level("marsh");
+	init_level("crematorium");
 	build_render_targets();
 }

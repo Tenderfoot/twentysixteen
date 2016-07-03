@@ -217,6 +217,12 @@ void PlayerEntity::player_update(float time_delta)
 	spine_data.update_skeleton(time_delta);
 	cat_spine.update_skeleton(time_delta);
 
+	float max_velocity;
+	if (catmode)
+		max_velocity = 0.018;
+	else
+		max_velocity = 0.013;
+
 
 	if (state == WALK_LEFT || state == WALK_RIGHT)
 	{
@@ -228,8 +234,8 @@ void PlayerEntity::player_update(float time_delta)
 			spine_data.flip = false;
 		}
 
-		if (velocity.x < -0.0165)
-			velocity.x = -0.0165;
+		if (velocity.x < -max_velocity)
+			velocity.x = -max_velocity;
 
 		if (state == WALK_RIGHT)
 		{
@@ -237,8 +243,8 @@ void PlayerEntity::player_update(float time_delta)
 			spine_data.flip = true;
 		}
 
-		if (velocity.x > 0.0165)
-			velocity.x = 0.0165;
+		if (velocity.x > max_velocity)
+			velocity.x = max_velocity;
 	}
 	else if (state == CASTING)
 	{
