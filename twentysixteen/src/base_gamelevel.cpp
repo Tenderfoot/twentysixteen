@@ -68,7 +68,6 @@ void BaseGameLevel::set_camera(t_vertex position, t_vertex lookat)
 
 void BaseGameLevel::run(float time_delta)
 {
-
 	// See if entities has increased
 	if (num_entities < entities.size())
 	{

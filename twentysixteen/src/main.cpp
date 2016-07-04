@@ -287,6 +287,7 @@ int main(int argc, char *argv[])
 	// main loop
 	while (!done)
 	{
+
 		Paintbrush::update_shader_uniforms();
 		handle_sdl_event();
 		
@@ -294,7 +295,6 @@ int main(int argc, char *argv[])
 		float current_time = SDL_GetTicks();
 		current_level->run(current_time - previous_time);
 		previous_time = current_time;
-
 		// Draw
 		draw();
 

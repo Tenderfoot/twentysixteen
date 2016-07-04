@@ -10,8 +10,6 @@ void PhysicsTechDemo::init()
 
 	collision_group = LinearAlgebra::get_collisiongroups_from_model(*level_static.model, -20, t_vertex(0, 0, -50));
 
-	printf("==== test : %d\n", collision_group.collision_groups.size());
-
 	spineboy.load_spine_data("everybody");
 	spSkeleton_setSkinByName(spineboy.skeleton, "mo");
 
