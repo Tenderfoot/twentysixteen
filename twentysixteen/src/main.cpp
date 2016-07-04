@@ -291,8 +291,9 @@ int main(int argc, char *argv[])
 		handle_sdl_event();
 		
 		// Run
-		current_level->run(SDL_GetTicks() - previous_time);
-		previous_time = SDL_GetTicks();
+		float current_time = SDL_GetTicks();
+		current_level->run(current_time - previous_time);
+		previous_time = current_time;
 
 		// Draw
 		draw();
