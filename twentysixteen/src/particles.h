@@ -69,6 +69,7 @@ public:
 	void update(float time_delta);
 	void kill();
 	void change_particle_type(particle_types new_type);
+	void add_particle();
 
 	// is this a dynamic effect or a prop?
 	// clean up effects on reset, leave props;
@@ -166,10 +167,63 @@ public:
 	void update(float time_delta)
 	{
 		life = life - 1 * (time_delta / 5);
-		position.x -= 0.005*time_delta;
+		position.x -= 0.015*time_delta;
 
 		if (life < 0 && dying == false)
 			reset();
+	}
+
+	void reset()
+	{
+		life = rand() % 500;
+
+		float x;
+		x = rand() % 100;
+		x = x / 100;
+
+		position.y = emission_size.y*x + emission_position.y;
+
+		x = (rand() % 250) + 100;
+		x = x / 100;
+
+		size.x = x;
+
+		x = rand() % 100;
+		x = x / 100;
+
+		position.x = emission_position.x;
+	}
+
+	void draw()
+	{
+
+		glPushMatrix();
+
+		// bind texture and setup
+		glBindTexture(GL_TEXTURE_2D, texture);
+
+		glEnable(GL_BLEND);
+		glDepthMask(GL_FALSE);
+		glColor4f(1.0f, (250 - life)/250, 0.0f, life / 100);
+
+		// transform
+		glTranslatef(position.x, position.y, position.z);
+		glScalef(size.x, size.x, 0.0f);
+
+		// draw
+		glBegin(GL_QUADS);
+		glTexCoord2f(0.0f, 0.0f); glVertex3f(0.5f, 0.5f, 0.0f);
+		glTexCoord2f(1.0f, 0.0f); glVertex3f(-0.5f, 0.5f, 0.0f);
+		glTexCoord2f(1.0f, 1.0f); glVertex3f(-0.5f, -0.5f, 0.0f);
+		glTexCoord2f(0.0f, 1.0f); glVertex3f(0.5f, -0.5f, 0.0f);
+		glEnd();
+
+		// reset
+		glColor3f(1.0f, 1.0f, 1.0f);
+		glDisable(GL_BLEND);
+		glDepthMask(GL_TRUE);
+
+		glPopMatrix();
 	}
 };
 

@@ -24,6 +24,20 @@ void ParticleEmitter::init(GLuint texture, t_vertex position, t_vertex size)
 	}
 }
 
+void ParticleEmitter::add_particle()
+{
+	if (particle_type == SIDE_FIRE)
+	{
+		int i;
+		for (i = 0; i < 10; i++)
+		{
+			particles.push_back(new SideFireParticle);
+		}
+	}
+
+	reset();
+}
+
 void ParticleEmitter::init(GLuint texture, t_vertex position, t_vertex size, particle_types type, int num_particles, bool prop)
 {
 	int i;
@@ -33,7 +47,6 @@ void ParticleEmitter::init(GLuint texture, t_vertex position, t_vertex size, par
 	this->prop = prop;
 	this->texture = texture;
 	this->particle_type = type;
-
 
 	if (type == STAR)
 	{
@@ -72,6 +85,11 @@ void ParticleEmitter::init(GLuint texture, t_vertex position, t_vertex size, par
 
 void ParticleEmitter::reset()
 {
+	int i;
+	for (i = 0; i < particles.size(); i++)
+	{
+		particles.at(i)->init(texture, position, size);
+	}
 }
 
 void ParticleEmitter::update(float time_delta)

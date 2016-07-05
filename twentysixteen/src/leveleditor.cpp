@@ -499,6 +499,11 @@ void LevelEditor::input_edit(boundinput input, bool type)
 		}
 	}
 
+	if (input == R_SHOULDER && type == true)
+	{
+		((ParticleEmitter*)entities->at(current_entity))->add_particle();
+	}
+
 
 	entities->at(current_entity)->initial_position = entities->at(current_entity)->position;
 }
