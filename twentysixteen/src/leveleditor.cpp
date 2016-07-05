@@ -400,6 +400,11 @@ void LevelEditor::input_edit(boundinput input, bool type)
 		entities->at(current_entity)->position.y -= 1;
 	}
 
+	if (entities->at(current_entity)->type == EMITTER_ENTITY)
+	{
+		((ParticleEmitter*)entities->at(current_entity))->update_position(entities->at(current_entity)->position);
+	}
+
 	if (input == QUICKSWITCH && type == true)
 	{
 		entities->at(current_entity)->position.z -= 1;
@@ -486,6 +491,10 @@ void LevelEditor::input_edit(boundinput input, bool type)
 		{
 			entities->at(current_entity)->activation_index++;
 			build_ui();
+		}
+
+		if (entities->at(current_entity)->type == EMITTER_ENTITY)
+		{
 		}
 	}
 
@@ -578,6 +587,11 @@ void LevelEditor::input_create(boundinput input, bool type)
 	if (input == DOWN && type == true)
 	{
 		create_mode_entity->position.y -= 1;
+	}
+
+	if (create_mode_entity->type == EMITTER_ENTITY)
+	{
+		((ParticleEmitter*)create_mode_entity)->update_position(create_mode_entity->position);
 	}
 
 	if (input == QUICKSWITCH && type == true)
