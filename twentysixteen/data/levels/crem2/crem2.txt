@@ -11,5 +11,5 @@ GameEntity
 33,10,0,4.95,0.699999,5,0,
 SwordsmanEntity
 18,12,0,1,3,1,0,
-EmitterEntity
-36,1,0,5,5,5,3,100,
+EnemySideFireEntity
+36,1,0,5,5,5,0,

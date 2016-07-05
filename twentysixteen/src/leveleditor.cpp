@@ -155,6 +155,21 @@ void LevelEditor::read_level(std::string level_name)
 
 			entities->push_back(new_entity);
 		}
+		if (line == "EnemySideFireEntity")
+		{
+			new_pos = get_vertex_from_buffer(&in);
+			new_size = get_vertex_from_buffer(&in);
+
+			std::getline(in, line, ',');
+			texture = std::stoi(line);
+
+			new_entity = new EnemySideFireEntity(new_pos, new_size, t_vertex(1.0f, 1.0f, 1.0f));
+
+			new_entity->color = t_vertex(1.0f, 1.0f, 1.0f);
+			new_entity->texture = texture;
+
+			entities->push_back(new_entity);
+		}
 		if (line == "PortcullisEntity")
 		{
 			new_pos = get_vertex_from_buffer(&in);
@@ -282,6 +297,13 @@ void LevelEditor::write_level()
 		if (entities->at(i)->type == GAME_ENTITY)
 		{
 			myfile << "GameEntity\n";
+			myfile << entities->at(i)->initial_position.x << "," << entities->at(i)->initial_position.y << "," << entities->at(i)->initial_position.z << ",";
+			myfile << entities->at(i)->size.x << "," << entities->at(i)->size.y << "," << entities->at(i)->size.z << ",";
+			myfile << entities->at(i)->texture << "," << "\n";
+		}
+		if (entities->at(i)->type == ENEMY_SIDEFIRE_ENTITY)
+		{
+			myfile << "EnemySideFireEntity\n";
 			myfile << entities->at(i)->initial_position.x << "," << entities->at(i)->initial_position.y << "," << entities->at(i)->initial_position.z << ",";
 			myfile << entities->at(i)->size.x << "," << entities->at(i)->size.y << "," << entities->at(i)->size.z << ",";
 			myfile << entities->at(i)->texture << "," << "\n";
@@ -543,6 +565,9 @@ void LevelEditor::build_entity()
 			break;
 		case PORTCULLIS_ENTITY:
 			create_mode_entity = new PortcullisEntity(t_vertex(pos.x, pos.y, 0), t_vertex(1, 2, 1), t_vertex(1, 1, 1));
+			break;
+		case ENEMY_SIDEFIRE_ENTITY:
+			create_mode_entity = new EnemySideFireEntity(t_vertex(pos.x, pos.y, 0), t_vertex(5, 5, 5), t_vertex(1, 1, 1));
 			break;
 		case SWORDSMAN_ENTITY:
 			create_mode_entity = new SwordsmanEntity(t_vertex(pos.x, pos.y, 0), t_vertex(1, 3, 1), t_vertex(1, 0, 1));

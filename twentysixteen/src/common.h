@@ -3,7 +3,7 @@
 // some globals
 #define res_width  1920		
 #define res_height  1080
-#define NUM_TOTAL_ENTITIES 11
+#define NUM_TOTAL_ENTITIES 12
 #define NUM_PARTICLE_TYPES 4
 
 #include <stdio.h>
@@ -99,7 +99,8 @@ enum entity_types
 	ARROW_ENTITY,
 	BUTTON_ENTITY,
 	PORTCULLIS_ENTITY,
-	SWORDSMAN_ENTITY
+	SWORDSMAN_ENTITY,
+	ENEMY_SIDEFIRE_ENTITY,
 };
 
 enum player_states

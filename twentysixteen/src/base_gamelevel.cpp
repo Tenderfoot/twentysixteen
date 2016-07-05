@@ -161,6 +161,10 @@ void BaseGameLevel::run(float time_delta)
 			{
 				((ParticleEmitter*)entities.at(i))->update(time_delta);
 			}
+			if (entities.at(i)->type == ENEMY_SIDEFIRE_ENTITY)
+			{
+				((EnemySideFireEntity*)entities.at(i))->update(time_delta);
+			}
 			if (entities.at(i)->type == ARCHER_ENTITY)
 			{
 				((ArcherEntity*)entities.at(i))->correct_against_collisiongroup(test, time_delta);

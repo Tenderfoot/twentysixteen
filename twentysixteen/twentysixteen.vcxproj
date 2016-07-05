@@ -25,6 +25,7 @@
     <ClCompile Include="src\base_gamelevel.cpp" />
     <ClCompile Include="src\base_user_interface.cpp" />
     <ClCompile Include="src\button_entity.cpp" />
+    <ClCompile Include="src\enemy_sidefire.cpp" />
     <ClCompile Include="src\entity.cpp" />
     <ClCompile Include="src\game_entity.cpp" />
     <ClCompile Include="src\leveleditor.cpp" />
@@ -69,6 +70,7 @@
     <ClInclude Include="src\base_user_interface.h" />
     <ClInclude Include="src\button_entity.h" />
     <ClInclude Include="src\common.h" />
+    <ClInclude Include="src\enemy_sidefire.h" />
     <ClInclude Include="src\entity.h" />
     <ClInclude Include="src\game_entity.h" />
     <ClInclude Include="src\glext.h" />

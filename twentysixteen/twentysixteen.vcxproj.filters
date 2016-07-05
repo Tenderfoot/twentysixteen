@@ -171,6 +171,9 @@
     <ClCompile Include="src\swordsman_entity.cpp">
       <Filter>Source Files\entities\spine_entities</Filter>
     </ClCompile>
+    <ClCompile Include="src\enemy_sidefire.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\level.h">
@@ -316,6 +319,9 @@
     </ClInclude>
     <ClInclude Include="src\swordsman_entity.h">
       <Filter>Header Files\entities\spine_entities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\enemy_sidefire.h">
+      <Filter>Header Files\entities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

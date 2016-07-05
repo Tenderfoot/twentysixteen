@@ -35,9 +35,23 @@ public:
 
 	virtual void init(GLuint particle_texture, t_vertex emission_position, t_vertex emission_size) = 0;
 
+	virtual void init(GLuint particle_texture, t_vertex emission_position, t_vertex emission_size, int max_life)
+	{
+		texture = particle_texture;
+
+		this->emission_position = emission_position;
+		this->emission_size = emission_size;
+
+		this->max_life = max_life;
+
+		reset();
+	}
+
 	t_vertex position;
 	t_vertex velocity;
 	t_vertex size;
+
+	int max_life;
 
 	// emitter stuff...
 	t_vertex emission_position;
@@ -69,6 +83,14 @@ public:
 	void update(float time_delta);
 	void kill();
 	void change_particle_type(particle_types new_type);
+	void change_max_life(int new_max_life)
+	{
+		int i;
+		for (i = 0; i < particles.size(); i++)
+		{
+			particles.at(i)->max_life = new_max_life;
+		}
+	}
 	void add_particle();
 
 	// is this a dynamic effect or a prop?
@@ -91,7 +113,7 @@ public:
 
 		this->emission_position = emission_position;
 		this->emission_size = emission_size;
-
+		max_life = 250;
 		reset();
 	}
 
@@ -167,7 +189,7 @@ public:
 	void update(float time_delta)
 	{
 		life = life - 1 * (time_delta / 5);
-		position.x -= 0.015*time_delta;
+		position.x -= 0.05*time_delta;
 
 		if (life < 0 && dying == false)
 			reset();
@@ -175,7 +197,7 @@ public:
 
 	void reset()
 	{
-		life = rand() % 500;
+		life = rand() % max_life;
 
 		float x;
 		x = rand() % 100;
@@ -204,7 +226,7 @@ public:
 
 		glEnable(GL_BLEND);
 		glDepthMask(GL_FALSE);
-		glColor4f(1.0f, (250 - life)/250, 0.0f, life / 100);
+		glColor4f(1.0f, (200 - life)/200, 0.0f, life / 100);
 
 		// transform
 		glTranslatef(position.x, position.y, position.z);
