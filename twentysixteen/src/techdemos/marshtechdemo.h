@@ -21,4 +21,5 @@ public:
 	}
 
 	void init();
+	ParticleEmitter *side_fire;
 };

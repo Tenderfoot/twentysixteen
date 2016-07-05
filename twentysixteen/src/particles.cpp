@@ -24,6 +24,35 @@ void ParticleEmitter::init(GLuint texture, t_vertex position, t_vertex size)
 	}
 }
 
+void ParticleEmitter::init(GLuint texture, t_vertex position, t_vertex size, particle_types type, int num_particles, bool prop)
+{
+	int i;
+	this->position = position;
+	this->size = size;
+	this->initial_position = position;
+	this->prop = prop;
+
+	if (type == STAR)
+	{
+		for (i = 0; i < num_particles; i++)
+		{
+			particles.push_back(new Star);
+		}
+	}
+	else if (type == FIRE)
+	{
+		for (i = 0; i < num_particles; i++)
+		{
+			particles.push_back(new FireParticle);
+		}
+	}
+
+	for (i = 0; i < particles.size(); i++)
+	{
+		particles.at(i)->init(texture, position, size);
+	}
+}
+
 void ParticleEmitter::reset()
 {
 }

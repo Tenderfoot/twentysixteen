@@ -61,7 +61,8 @@ void LevelEditor::reset_entities()
 		}
 		if (entities->at(i)->type == EMITTER_ENTITY)
 		{
-			((ParticleEmitter*)entities->at(i))->kill();
+			if(((ParticleEmitter*)entities->at(i))->prop == false)
+				((ParticleEmitter*)entities->at(i))->kill();
 		}
 
 
@@ -121,6 +122,7 @@ void LevelEditor::read_level(std::string level_name)
 	int number = std::stoi(line);
 	
 	t_vertex new_pos, new_size, new_color;
+	int particle_type, num_particles;
 	int activation_index;
 
 	while (std::getline(in, line))
@@ -247,12 +249,13 @@ void LevelEditor::read_level(std::string level_name)
 			new_pos = get_vertex_from_buffer(&in);
 			new_size = get_vertex_from_buffer(&in);
 
+			std::getline(in, line, ',');
+			particle_type = std::stoi(line);
+			std::getline(in, line, ',');
+			num_particles = std::stoi(line);
+
 			new_entity = new ParticleEmitter();
-			while (((ParticleEmitter*)new_entity)->particles.size() < 1000)
-			{
-				((ParticleEmitter*)new_entity)->particles.push_back(new Star);
-			}
-			((ParticleEmitter*)new_entity)->init(Paintbrush::get_texture("data/images/fire.png", false, false), new_pos, new_size);
+			((ParticleEmitter*)new_entity)->init(Paintbrush::get_texture("data/images/fire.png", false, false), new_pos, new_size, (particle_types)particle_type, num_particles, true);
 
 			entities->push_back(new_entity);
 		}
@@ -295,7 +298,8 @@ void LevelEditor::write_level()
 		{
 			myfile << "EmitterEntity\n";
 			myfile << entities->at(i)->initial_position.x << "," << entities->at(i)->initial_position.y << "," << entities->at(i)->initial_position.z << ",";
-			myfile << entities->at(i)->size.x << "," << entities->at(i)->size.y << "," << entities->at(i)->size.z << "," << "\n";
+			myfile << entities->at(i)->size.x << "," << entities->at(i)->size.y << "," << entities->at(i)->size.z << ",";
+			myfile << ((ParticleEmitter*)entities->at(i))->particle_type << "," << ((ParticleEmitter*)entities->at(i))->particles.size() << "," << "\n";
 		}
 		if (entities->at(i)->type == PORTCULLIS_ENTITY)
 		{
@@ -501,6 +505,10 @@ void LevelEditor::build_entity()
 			break;
 		case GAME_ENTITY:
 			create_mode_entity = new GameEntity(t_vertex(pos.x, pos.y, 0), t_vertex(5, 5, 5), t_vertex(1, 0, 1));
+			break;
+		case EMITTER_ENTITY:
+			create_mode_entity = new ParticleEmitter();
+			((ParticleEmitter*)create_mode_entity)->init(Paintbrush::get_texture("data/images/fire.png", false, false), pos, t_vertex(5, 5, 5), FIRE, 50, true);
 			break;
 		case PLAYER_ENTITY:
 			create_mode_entity = new PlayerEntity(t_vertex(pos.x, pos.y, 0), t_vertex(1, 3, 1), t_vertex(1, 0, 1));

@@ -65,6 +65,12 @@ enum boundinput
 	R_SHOULDER
 };
 
+enum particle_types
+{
+	STAR,
+	FIRE
+};
+
 enum rendertarget_types
 {
 	TYPE_ENTITY,
