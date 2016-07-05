@@ -4,6 +4,7 @@
 #define res_width  1920		
 #define res_height  1080
 #define NUM_TOTAL_ENTITIES 11
+#define NUM_PARTICLE_TYPES 4
 
 #include <stdio.h>
 #include <string>
@@ -68,7 +69,9 @@ enum boundinput
 enum particle_types
 {
 	STAR,
-	FIRE
+	FIRE,
+	POOF,
+	SIDE_FIRE
 };
 
 enum rendertarget_types

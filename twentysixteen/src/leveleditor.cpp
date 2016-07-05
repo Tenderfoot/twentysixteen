@@ -495,6 +495,7 @@ void LevelEditor::input_edit(boundinput input, bool type)
 
 		if (entities->at(current_entity)->type == EMITTER_ENTITY)
 		{
+			((ParticleEmitter*)entities->at(current_entity))->change_particle_type((particle_types)((((int)((ParticleEmitter*)entities->at(current_entity))->particle_type) + 1) % NUM_PARTICLE_TYPES));
 		}
 	}
 
