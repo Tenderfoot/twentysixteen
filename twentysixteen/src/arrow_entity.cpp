@@ -24,15 +24,7 @@ void ArrowEntity::update(float time_delta)
 
 				if (((GameEntity*)game_entities->at(j))->check_against_game_entity(this))
 				{
-					if (((PlayerEntity*)game_entities->at(j))->state != DEAD)
-					{
-						((PlayerEntity*)game_entities->at(j))->state = DEAD;
-						((PlayerEntity*)game_entities->at(j))->spine_data.start_time = SDL_GetTicks();
-						if (((PlayerEntity*)game_entities->at(j))->staff_emitter != NULL)
-						{
-							((PlayerEntity*)game_entities->at(j))->staff_emitter->kill();
-						}
-					}
+					((PlayerEntity*)game_entities->at(j))->die();
 				}
 			}
 		}

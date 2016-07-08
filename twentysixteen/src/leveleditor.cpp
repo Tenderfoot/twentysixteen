@@ -65,6 +65,11 @@ void LevelEditor::reset_entities()
 				((ParticleEmitter*)entities->at(i))->kill();
 		}
 
+		if (entities->at(i)->type == SWORDSMAN_ENTITY)
+		{
+			((SwordsmanEntity*)entities->at(i))->dead = false;
+			((SwordsmanEntity*)entities->at(i))->spine_data.looping = true;
+		}
 
 		if (entities->at(i)->type == ARROW_ENTITY || entities->at(i)->type == SKELETON_ENTITY)
 		{

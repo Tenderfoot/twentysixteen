@@ -1,8 +1,8 @@
 #pragma once
 
 // some globals
-#define res_width  1920		
-#define res_height  1080
+#define res_width  1024		
+#define res_height  768
 #define NUM_TOTAL_ENTITIES 12
 #define NUM_PARTICLE_TYPES 4
 

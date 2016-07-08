@@ -18,6 +18,10 @@ public:
 
 	bool turn;
 
+	bool dead;
+
+	void die();
+
 	virtual void player_update(float time_delta);
 	virtual void update(float time_delta);
 };

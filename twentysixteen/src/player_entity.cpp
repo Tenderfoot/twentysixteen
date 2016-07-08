@@ -12,6 +12,19 @@ void PlayerEntity::init()
 	cat_spine.setslots();
 }
 
+void PlayerEntity::die()
+{
+	if (state != DEAD)
+	{
+		state = DEAD;
+		spine_data.start_time = SDL_GetTicks();
+		if (staff_emitter != NULL)
+		{
+			staff_emitter->kill();
+		}
+	}
+}
+
 void PlayerEntity::handle_keypress(boundinput input, bool type)
 {
 	keydown_map[input] = type;
@@ -33,7 +46,7 @@ void PlayerEntity::handle_keypress(boundinput input, bool type)
 		keydown_map[LEFT] = false;
 	}
 
-	if (input == R_SHOULDER && type == true)
+	if (((input == R_SHOULDER) || (input == NEXT)) && type == true)
 	{
 		if (poof_emitter == NULL)
 		{

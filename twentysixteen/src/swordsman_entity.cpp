@@ -9,67 +9,66 @@ void SwordsmanEntity::update(float time_delta)
 	position.x += real_velocity.x;
 	position.y += real_velocity.y;
 
-	int j;
-	for (j = 0; j < game_entities->size(); j++)
+	if (!dead)
 	{
-		if (game_entities->at(j)->type == PLAYER_ENTITY)
-		{
-			player_pos = game_entities->at(j)->position;
-		}
-	}
-
-	if (position.x < player_pos.x + 30 && position.x > player_pos.x-30)
-	{
-		spine_data.animation_name = "knight_run";
-
-		if (position.x < player_pos.x)
-		{
-			if (velocity.x < 0)
-			{
-				velocity.x += 0.00005*time_delta;
-			}
-			else
-				velocity.x += 0.00001*time_delta;
-
-			spine_data.flip = true;
-		}
-
-		if (position.x > player_pos.x)
-		{
-			if (velocity.x > 0)
-			{
-				velocity.x -= 0.00005*time_delta;
-			}
-			else
-				velocity.x -= 0.00001*time_delta;
-			spine_data.flip = false;
-		}
-
+		int j;
 		for (j = 0; j < game_entities->size(); j++)
 		{
 			if (game_entities->at(j)->type == PLAYER_ENTITY)
 			{
 				player_pos = game_entities->at(j)->position;
+			}
+		}
 
-				if (((GameEntity*)game_entities->at(j))->check_against_game_entity(this))
+		if (position.x < player_pos.x + 30 && position.x > player_pos.x - 30)
+		{
+			spine_data.animation_name = "knight_run";
+
+			if (position.x < player_pos.x)
+			{
+				if (velocity.x < 0)
 				{
-					if (((PlayerEntity*)game_entities->at(j))->state != DEAD)
+					velocity.x += 0.00005*time_delta;
+				}
+				else
+					velocity.x += 0.00001*time_delta;
+
+				spine_data.flip = true;
+			}
+
+			if (position.x > player_pos.x)
+			{
+				if (velocity.x > 0)
+				{
+					velocity.x -= 0.00005*time_delta;
+				}
+				else
+					velocity.x -= 0.00001*time_delta;
+				spine_data.flip = false;
+			}
+
+			for (j = 0; j < game_entities->size(); j++)
+			{
+				if (game_entities->at(j)->type == PLAYER_ENTITY)
+				{
+					player_pos = game_entities->at(j)->position;
+
+					if (((GameEntity*)game_entities->at(j))->check_against_game_entity(this))
 					{
-						((PlayerEntity*)game_entities->at(j))->state = DEAD;
-						((PlayerEntity*)game_entities->at(j))->spine_data.start_time = SDL_GetTicks();
-						if (((PlayerEntity*)game_entities->at(j))->staff_emitter != NULL)
-						{
-							((PlayerEntity*)game_entities->at(j))->staff_emitter->kill();
-						}
+						((PlayerEntity*)game_entities->at(j))->die();
 					}
 				}
 			}
 		}
+		else
+		{
+			velocity = t_vertex(0, 0, 0);
+			spine_data.animation_name = "idle";
+		}
 	}
 	else
 	{
-		velocity = t_vertex(0, 0, 0);
-		spine_data.animation_name = "idle";
+		velocity.x = 0;
 	}
 
 }
