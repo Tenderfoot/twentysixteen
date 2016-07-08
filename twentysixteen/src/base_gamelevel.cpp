@@ -107,7 +107,7 @@ void BaseGameLevel::run(float time_delta)
 
 		for (i = 0; i < entities.size(); i++)
 		{
-			if (entities.at(i)->type == SKELETON_ENTITY || entities.at(i)->type == PORTCULLIS_ENTITY || entities.at(i)->type == GAME_ENTITY)
+			if (entities.at(i)->type == PORTCULLIS_ENTITY || entities.at(i)->type == GAME_ENTITY)
 			{
 				test.collision_groups.push_back(((GameEntity*)entities.at(i))->return_polygon());
 			}

@@ -136,9 +136,33 @@ void PlayerEntity::update(float time_delta)
 
 }
 
+void PlayerEntity::check_against_skeletons()
+{
+	int j;
+	GameEntity *skeleton;
+	for (j = 0; j < game_entities->size(); j++)
+	{
+		if (game_entities->at(j)->type == SKELETON_ENTITY)
+		{
+			skeleton = (GameEntity*)game_entities->at(j);
+
+			PolygonCollisionResult r = LinearAlgebra::PolygonCollision(return_polygon(), skeleton->return_polygon(), real_velocity);
+
+			if (r.WillIntersect)
+			{
+				if (r.MinimumTranslationVector.y != 0 && velocity.y < 0)
+				{
+					velocity.y = 0.04;
+				}
+			}
+		}
+	}
+}
+
 void PlayerEntity::correct_against_collisiongroup(t_collisiongroup collision_group, float time_delta)
 {
 	real_velocity = t_vertex(velocity.x*time_delta, velocity.y*time_delta, 0.0f);
+	check_against_skeletons();
 
 	bool intersected = false;
 

@@ -55,6 +55,7 @@ public:
 	void state_machine();
 	void init();
 	void draw();
+	void check_against_skeletons();
 	void die();
 	bool catmode;
 	float cat_rotate;
