@@ -53,6 +53,11 @@ void SpineData::setslots()
 		texwidth = 1024;
 		texheight = 256;
 	}
+	if (spine_name == "heromesh")
+	{
+		texwidth = 1024;
+		texheight = 256;
+	}
 
 	for (i = 0; i < skeleton->slotsCount; i++)
 	{
@@ -106,6 +111,61 @@ void SpineData::load_spine_data(char* spine_folder)
 	delete dir;
 }
 
+void SpineData::draw_regionattachment(int i)
+{
+	spRegionAttachment *temp;
+	temp = ((spRegionAttachment*)skeleton->slots[i]->attachment);
+
+	glPushMatrix();
+
+		glNormal3d(0, 0, 1);
+
+		glBindTexture(GL_TEXTURE_2D, texture);
+		glColor3f(1.0f, 1.0f, 1.0f);
+
+		glTranslatef(skeleton->slots[i]->bone->worldX, skeleton->slots[i]->bone->worldY, 0.0f);
+		
+		glRotatef(spBone_getWorldRotationX(skeleton->slots[i]->bone), 0.0f, 0.0f, 1.0f);
+	//	glRotatef(skeleton->slots[i]->bone->appliedRotation, 0.0f, 0.0f, 1.0f);
+	//	glScalef(skeleton->slots[i]->bone->worldSignX, skeleton->slots[i]->bone->worldSignY, 1.0f);
+
+		glBegin(GL_QUADS);
+			glTexCoord2f(temp->uvs[0], temp->uvs[1]); glVertex3f(temp->offset[0], temp->offset[1], 0.0f);
+			glTexCoord2f(temp->uvs[2], temp->uvs[3]); glVertex3f(temp->offset[2], temp->offset[3], 0.0f);
+			glTexCoord2f(temp->uvs[4], temp->uvs[5]); glVertex3f(temp->offset[4], temp->offset[5], 0.0f);
+			glTexCoord2f(temp->uvs[6], temp->uvs[7]); glVertex3f(temp->offset[6], temp->offset[7], 0.0f);
+		glEnd();
+
+	glPopMatrix();
+}
+
+void SpineData::draw_meshattachment(int i)
+{
+	spMeshAttachment *temp;
+	temp = ((spMeshAttachment*)skeleton->slots[i]->attachment);
+
+	int j;
+
+	glPushMatrix();
+
+		//glTranslatef(0.0f, -500.0f, -950.0f)
+		glNormal3d(0, 0, 1);
+
+		glBindTexture(GL_TEXTURE_2D, texture);
+		glColor3f(1.0f, 1.0f, 1.0f);
+
+		glTranslatef(skeleton->slots[i]->bone->worldX, skeleton->slots[i]->bone->worldY, 0.0f);
+
+		glRotatef(skeleton->slots[i]->bone->appliedRotation, 0.0f, 0.0f, 1.0f);
+
+		glScalef(skeleton->slots[i]->bone->worldSignX, skeleton->slots[i]->bone->worldSignY, 1.0f);
+
+		glBegin(GL_TRIANGLES);
+		glEnd();
+
+	glPopMatrix();
+}
+
 void SpineData::draw()
 {
 	int i;
@@ -120,33 +180,16 @@ void SpineData::draw()
 
 	for (i = 0; i < skeleton->slotsCount; i++)
 	{
-		temp = ((spRegionAttachment*)skeleton->slots[i]->attachment);
-
-		if (temp != NULL)
+		if (skeleton->slots[i]->attachment != NULL)
 		{
-			glPushMatrix();
-
-			//glTranslatef(0.0f, -500.0f, -950.0f);
-
-			glNormal3d(0, 0, 1);
-
-			glBindTexture(GL_TEXTURE_2D, texture);
-			glColor3f(1.0f, 1.0f, 1.0f);
-
-			glTranslatef(skeleton->slots[i]->bone->worldX, skeleton->slots[i]->bone->worldY, 0.0f);
-
-			glRotatef(skeleton->slots[i]->bone->worldRotation, 0.0f, 0.0f, 1.0f);
-
-			glScalef(skeleton->slots[i]->bone->worldScaleX, skeleton->slots[i]->bone->worldScaleY, 1.0f);
-
-			glBegin(GL_QUADS);
-				glTexCoord2f(temp->uvs[0], temp->uvs[1]); glVertex3f(temp->offset[0], temp->offset[1], 0.0f);
-				glTexCoord2f(temp->uvs[2], temp->uvs[3]); glVertex3f(temp->offset[2], temp->offset[3], 0.0f);
-				glTexCoord2f(temp->uvs[4], temp->uvs[5]); glVertex3f(temp->offset[4], temp->offset[5], 0.0f);
-				glTexCoord2f(temp->uvs[6], temp->uvs[7]); glVertex3f(temp->offset[6], temp->offset[7], 0.0f);
-			glEnd();
-
-			glPopMatrix();
+			if (skeleton->slots[i]->attachment->type == SP_ATTACHMENT_REGION)
+			{
+				draw_regionattachment(i);
+			}
+			if (skeleton->slots[i]->attachment->type == SP_ATTACHMENT_MESH)
+			{
+				draw_meshattachment(i);
+			}
 		}
 	}
 	glPopMatrix();
