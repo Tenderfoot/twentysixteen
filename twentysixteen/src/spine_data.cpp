@@ -53,9 +53,9 @@ void SpineData::setslots()
 		texwidth = 1024;
 		texheight = 256;
 	}
-	if (spine_name == "heromesh")
+	if (spine_name == "heromesh" || spine_name == "hero")
 	{
-		texwidth = 1024;
+		texwidth = 512;
 		texheight = 256;
 	}
 
@@ -65,14 +65,17 @@ void SpineData::setslots()
 		{
 			if (skeleton->slots[i]->attachment != NULL)
 			{
-				spAtlasRegion *test = spAtlas_findRegion(atlas, skeleton->slots[i]->attachment->name);
-				
-				spRegionAttachment* attch = (spRegionAttachment*)skeleton->slots[i]->attachment;
-				float width1 = float(test->x) / texwidth;
-				float height1 = (float(test->y)) / texheight;
-				float width2 = (float(test->x) + float(test->width)) / texwidth;
-				float height2 = (float(test->y) + float(test->height)) / texheight;
-				spRegionAttachment_setUVs(attch, width1, height1, width2, height2, 0);
+				if (skeleton->slots[i]->attachment->type == SP_ATTACHMENT_REGION)
+				{
+					spAtlasRegion *test = spAtlas_findRegion(atlas, skeleton->slots[i]->attachment->name);
+
+					spRegionAttachment* attch = (spRegionAttachment*)skeleton->slots[i]->attachment;
+					float width1 = float(test->x) / texwidth;
+					float height1 = (float(test->y)) / texheight;
+					float width2 = (float(test->x) + float(test->width)) / texwidth;
+					float height2 = (float(test->y) + float(test->height)) / texheight;
+					spRegionAttachment_setUVs(attch, width1, height1, width2, height2, 0);
+				}
 			}
 		}
 	}
@@ -188,7 +191,7 @@ void SpineData::draw()
 			}
 			if (skeleton->slots[i]->attachment->type == SP_ATTACHMENT_MESH)
 			{
-				draw_meshattachment(i);
+				//draw_meshattachment(i);
 			}
 		}
 	}
