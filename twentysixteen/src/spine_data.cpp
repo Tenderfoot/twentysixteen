@@ -53,9 +53,14 @@ void SpineData::setslots()
 		texwidth = 1024;
 		texheight = 256;
 	}
-	if (spine_name == "heromesh" || spine_name == "hero")
+	if (spine_name == "hero")
 	{
 		texwidth = 512;
+		texheight = 256;
+	}
+	if (spine_name == "heromesh")
+	{
+		texwidth = 1024;
 		texheight = 256;
 	}
 
@@ -127,10 +132,7 @@ void SpineData::draw_regionattachment(int i)
 		glColor3f(1.0f, 1.0f, 1.0f);
 
 		glTranslatef(skeleton->slots[i]->bone->worldX, skeleton->slots[i]->bone->worldY, 0.0f);
-		
 		glRotatef(spBone_getWorldRotationX(skeleton->slots[i]->bone), 0.0f, 0.0f, 1.0f);
-	//	glRotatef(skeleton->slots[i]->bone->appliedRotation, 0.0f, 0.0f, 1.0f);
-	//	glScalef(skeleton->slots[i]->bone->worldSignX, skeleton->slots[i]->bone->worldSignY, 1.0f);
 
 		glBegin(GL_QUADS);
 			glTexCoord2f(temp->uvs[0], temp->uvs[1]); glVertex3f(temp->offset[0], temp->offset[1], 0.0f);
@@ -149,6 +151,10 @@ void SpineData::draw_meshattachment(int i)
 
 	int j;
 
+	float *world_verticies = new float[temp->trianglesCount*3*2];
+	spMeshAttachment_updateUVs(temp);
+	spMeshAttachment_computeWorldVertices(temp, skeleton->slots[i], world_verticies);
+	
 	glPushMatrix();
 
 		//glTranslatef(0.0f, -500.0f, -950.0f)
@@ -157,13 +163,14 @@ void SpineData::draw_meshattachment(int i)
 		glBindTexture(GL_TEXTURE_2D, texture);
 		glColor3f(1.0f, 1.0f, 1.0f);
 
-		glTranslatef(skeleton->slots[i]->bone->worldX, skeleton->slots[i]->bone->worldY, 0.0f);
-
-		glRotatef(skeleton->slots[i]->bone->appliedRotation, 0.0f, 0.0f, 1.0f);
-
-		glScalef(skeleton->slots[i]->bone->worldSignX, skeleton->slots[i]->bone->worldSignY, 1.0f);
+	//	glTranslatef(skeleton->slots[i]->bone->worldX, skeleton->slots[i]->bone->worldY, 0.0f);
+	//	glRotatef(spBone_getWorldRotationX(skeleton->slots[i]->bone), 0.0f, 0.0f, 1.0f);
 
 		glBegin(GL_TRIANGLES);
+		for (j = 0; j < temp->trianglesCount*3; j++)
+		{
+			glTexCoord2f(temp->uvs[(j*2)], temp->uvs[(j*2)+1]); glVertex3f(world_verticies[(j*2)], world_verticies[(j*2)+1], 0.0f);
+		}
 		glEnd();
 
 	glPopMatrix();
@@ -191,7 +198,7 @@ void SpineData::draw()
 			}
 			if (skeleton->slots[i]->attachment->type == SP_ATTACHMENT_MESH)
 			{
-				//draw_meshattachment(i);
+				draw_meshattachment(i);
 			}
 		}
 	}
