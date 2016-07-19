@@ -11,8 +11,17 @@
 
 void _spAtlasPage_createTexture(spAtlasPage* self, const char* path) {
 	self->rendererObject = 0;
-	self->width = 123;
-	self->height = 456;
+
+	glBindTexture(GL_TEXTURE_2D, Paintbrush::get_texture(std::string(path), false, false));
+
+	int w, h;
+	int miplevel = 0;
+	glGetTexLevelParameteriv(GL_TEXTURE_2D, miplevel, GL_TEXTURE_WIDTH, &w);
+	glGetTexLevelParameteriv(GL_TEXTURE_2D, miplevel, GL_TEXTURE_HEIGHT, &h);
+
+	std::string new_string(path);
+	self->width = w;
+	self->height = h;
 }
 
 void _spAtlasPage_disposeTexture(spAtlasPage* self) {
@@ -64,6 +73,19 @@ void SpineData::setslots()
 		texheight = 256;
 	}
 
+	if (spine_name == "meshtest")
+	{
+		texwidth = 256;
+		texheight = 256;
+	}
+
+
+	if (spine_name == "spinemesh")
+	{
+		texwidth = 1024;
+		texheight = 1024;
+	}
+
 	for (i = 0; i < skeleton->slotsCount; i++)
 	{
 		if (skeleton->slots[i] != NULL)
@@ -80,6 +102,11 @@ void SpineData::setslots()
 					float width2 = (float(test->x) + float(test->width)) / texwidth;
 					float height2 = (float(test->y) + float(test->height)) / texheight;
 					spRegionAttachment_setUVs(attch, width1, height1, width2, height2, 0);
+				}
+
+				if (skeleton->slots[i]->attachment->type == SP_ATTACHMENT_MESH)
+				{
+					spMeshAttachment_updateUVs((spMeshAttachment*)skeleton->slots[i]->attachment);
 				}
 			}
 		}
@@ -151,10 +178,12 @@ void SpineData::draw_meshattachment(int i)
 
 	int j;
 
-	float *world_verticies = new float[temp->trianglesCount*3*2];
-	spMeshAttachment_updateUVs(temp);
+	float *world_verticies = new float[((spVertexAttachment*)temp)->verticesCount];
 	spMeshAttachment_computeWorldVertices(temp, skeleton->slots[i], world_verticies);
-	
+	spMeshAttachment_updateUVs(temp);
+
+	spAtlasRegion *test = spAtlas_findRegion(atlas, skeleton->slots[i]->attachment->name);
+
 	glPushMatrix();
 
 		//glTranslatef(0.0f, -500.0f, -950.0f)
@@ -163,17 +192,22 @@ void SpineData::draw_meshattachment(int i)
 		glBindTexture(GL_TEXTURE_2D, texture);
 		glColor3f(1.0f, 1.0f, 1.0f);
 
-	//	glTranslatef(skeleton->slots[i]->bone->worldX, skeleton->slots[i]->bone->worldY, 0.0f);
-	//	glRotatef(spBone_getWorldRotationX(skeleton->slots[i]->bone), 0.0f, 0.0f, 1.0f);
-
+		int index;
 		glBegin(GL_TRIANGLES);
-		for (j = 0; j < temp->trianglesCount*3; j++)
+		for (j = 0; j < temp->trianglesCount; j++)
 		{
-			glTexCoord2f(temp->uvs[(j*2)], temp->uvs[(j*2)+1]); glVertex3f(world_verticies[(j*2)], world_verticies[(j*2)+1], 0.0f);
+			index = temp->triangles[j] << 1;
+
+			float new_u = (temp->uvs[index]);
+			float new_v = (temp->uvs[index + 1]);
+
+			glTexCoord2f(new_u, new_v); glVertex3f(world_verticies[index], world_verticies[index+1], 0.0f);
 		}
 		glEnd();
 
 	glPopMatrix();
+
+	delete world_verticies;
 }
 
 void SpineData::draw()
