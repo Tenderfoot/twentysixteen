@@ -71,6 +71,7 @@ public:
 	ParticleEmitter()
 	{
 		type = EMITTER_ENTITY;
+		start_time = SDL_GetTicks();
 	}
 
 	particle_types particle_type;
@@ -96,6 +97,8 @@ public:
 	// is this a dynamic effect or a prop?
 	// clean up effects on reset, leave props;
 	bool prop;
+
+	int start_time;
 
 	void update_position(t_vertex new_pos);
 
@@ -180,6 +183,84 @@ public:
 	}
 };
 
+
+// BallFire Particle
+class BallFireParticle : public Particle
+{
+public:
+
+	void init(GLuint particle_texture, t_vertex emission_position, t_vertex emission_size)
+	{
+		texture = particle_texture;
+
+		this->emission_position = emission_position;
+		this->emission_size = emission_size;
+		max_life = 250;
+		reset();
+	}
+
+	void reset()
+	{
+		life = rand() % 200;
+
+		float x;
+		x = rand() % 100;
+		x = x / 100;
+
+		position.x = emission_size.x*x + emission_position.x;
+
+		x = (rand() % 250) + 100;
+		x = x / 100;
+
+		size.x = x;
+
+		x = rand() % 100;
+		x = x / 100;
+
+		position.y = emission_position.y;
+	}
+
+	virtual void update(float time_delta)
+	{
+		life = life - 1 * (time_delta / 5);
+		//position.y += 0.005*time_delta;
+
+		if (life < 0 && dying == false)
+			reset();
+	}
+
+	void draw()
+	{
+
+		glPushMatrix();
+
+		// bind texture and setup
+		glBindTexture(GL_TEXTURE_2D, texture);
+
+		glEnable(GL_BLEND);
+		glDepthMask(GL_FALSE);
+		glColor4f(1.0f, (100 - life) / 80, 0.0f, life / 100);
+
+		// transform
+		glTranslatef(position.x, position.y, position.z);
+		glScalef(size.x, size.x, 0.0f);
+
+		// draw
+		glBegin(GL_QUADS);
+		glTexCoord2f(0.0f, 0.0f); glVertex3f(0.5f, 0.5f, 0.0f);
+		glTexCoord2f(1.0f, 0.0f); glVertex3f(-0.5f, 0.5f, 0.0f);
+		glTexCoord2f(1.0f, 1.0f); glVertex3f(-0.5f, -0.5f, 0.0f);
+		glTexCoord2f(0.0f, 1.0f); glVertex3f(0.5f, -0.5f, 0.0f);
+		glEnd();
+
+		// reset
+		glColor3f(1.0f, 1.0f, 1.0f);
+		glDisable(GL_BLEND);
+		glDepthMask(GL_TRUE);
+
+		glPopMatrix();
+	}
+};
 
 // Fire Particle
 class SideFireParticle : public FireParticle

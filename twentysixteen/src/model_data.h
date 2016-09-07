@@ -27,6 +27,24 @@ public:
 	t_vertex()
 	{
 	}
+	
+	t_vertex operator* (float multiplier)
+	{
+		this->x = this->x*multiplier;
+		this->y = this->y*multiplier;
+		this->z = this->z*multiplier;
+
+		return *this;
+	}
+
+	t_vertex operator+= (t_vertex& other)
+	{
+		this->x += other.x;
+		this->y += other.y;
+		this->z += other.z;
+
+		return *this;
+	}
 
 	float DotProduct(t_vertex other) {
 		return x * other.x + y * other.y;

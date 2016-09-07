@@ -5,8 +5,6 @@
 #include "../linear_algebra.h"
 #include "../particles.h"
 
-
-
 class EmitterTechDemo : public BaseTechDemo
 {
 public:

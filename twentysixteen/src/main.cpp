@@ -38,6 +38,8 @@
 #include "techdemos\marshtechdemo.h"
 #include "techdemos\towntechdemo.h"
 #include "techdemos\dungeontechdemo.h"
+#include "techdemos\breakouttechdemo.h"
+#include "techdemos\JokeTechDemo.h"
 
 // and a few globals
 bool done = 0; // Quit?
@@ -241,6 +243,8 @@ void init_levels()
 	level_map[TECHDEMO_MEADOW] = new MeadowTechDemo();
 	level_map[TECHDEMO_TOWN] = new TownTechDemo();
 	level_map[TECHDEMO_DUNGEON] = new DungeonTechDemo();
+	level_map[TECHDEMO_BREAKOUT] = new BreakoutTechDemo();
+	level_map[TECHDEMO_JOKE] = new JokeTechDemo();
 
 	for (auto it = std::begin(level_map); it != std::end(level_map); ++it)
 	{
@@ -280,7 +284,7 @@ int main(int argc, char *argv[])
 	init_levels();
 
 	// set start level
-	current_level = level_map[TECHDEMO_BASE];
+	current_level = level_map[TECHDEMO_JOKE];
 
 	float previous_time = SDL_GetTicks();
 

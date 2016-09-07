@@ -4,9 +4,12 @@
 
 void PlayerEntity::init()
 {
-	spine_data.load_spine_data("everybody");
-	spSkeleton_setSkinByName(spine_data.skeleton, "witch");
+	spine_data.load_spine_data("heromesh");
+	spine_data.animation_name = "Idle";
+	spine_data.setslots();
+	//spSkeleton_setSkinByName(spine_data.skeleton, "witch");
 	cat_spine.load_spine_data("cat2");
+	cat_spine.animation_name = "idle";
 	cat_spine.start_time = SDL_GetTicks();
 	cat_spine.looping = true;
 	cat_spine.setslots();
@@ -263,12 +266,12 @@ void PlayerEntity::player_update(float time_delta)
 
 	if (state == WALK_LEFT || state == WALK_RIGHT)
 	{
-		spine_data.animation_name = "walk_two";
+		spine_data.animation_name = "Walk";
 
 		if (state == WALK_LEFT)
 		{
 			velocity.x -= (0.00005)*time_delta;
-			spine_data.flip = false;
+			spine_data.flip = true;
 		}
 
 		if (velocity.x < -max_velocity)
@@ -277,7 +280,7 @@ void PlayerEntity::player_update(float time_delta)
 		if (state == WALK_RIGHT)
 		{
 			velocity.x += (0.00005)*time_delta;
-			spine_data.flip = true;
+			spine_data.flip = false;
 		}
 
 		if (velocity.x > max_velocity)
@@ -304,7 +307,7 @@ void PlayerEntity::player_update(float time_delta)
 		spine_data.animation_name = "die";
 	}
 	else
-		spine_data.animation_name = "idle";
+		spine_data.animation_name = "Idle";
 
 	// jump
 	if (keydown_map[ACTION] == true && state != CASTING && state != DEAD)
@@ -326,7 +329,7 @@ void PlayerEntity::draw()
 	{
 		glPushMatrix();
 		glTranslatef(position.x, position.y - 1.5, position.z);
-		glScalef(0.006f, 0.006f, 0.006f);
+		glScalef(0.0125f, 0.0125f, 0.01f);
 		Paintbrush::use_shader(Paintbrush::get_shader("point_light_spine"));
 		spine_data.draw();
 		Paintbrush::stop_shader();

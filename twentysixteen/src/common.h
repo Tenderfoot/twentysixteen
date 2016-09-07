@@ -1,7 +1,7 @@
 #pragma once
 
 // some globals
-#define res_width  1024		
+#define res_width  1024
 #define res_height  768
 #define NUM_TOTAL_ENTITIES 12
 #define NUM_PARTICLE_TYPES 4
@@ -31,6 +31,8 @@ enum levels
 	TECHDEMO_MARSH,
 	TECHDEMO_TOWN,
 	TECHDEMO_DUNGEON,
+	TECHDEMO_BREAKOUT,
+	TECHDEMO_JOKE,
 	QUIT
 };
 

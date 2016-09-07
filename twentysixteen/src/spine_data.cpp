@@ -40,70 +40,12 @@ void SpineData::setslots()
 {
 	int i;
 
-	float texwidth, texheight;
-
-	if (spine_name == "everybody")
-	{
-		texwidth = 4096;
-		texheight = 512;
-	}
-	if (spine_name == "cat")
-	{
-		texwidth = 1024;
-		texheight = 256;
-	}
-	if (spine_name == "test")
-	{
-		texwidth = 512;
-		texheight = 256;
-	}
-	if (spine_name == "cat2")
-	{
-		texwidth = 1024;
-		texheight = 256;
-	}
-	if (spine_name == "hero")
-	{
-		texwidth = 512;
-		texheight = 256;
-	}
-	if (spine_name == "heromesh")
-	{
-		texwidth = 1024;
-		texheight = 256;
-	}
-
-	if (spine_name == "meshtest")
-	{
-		texwidth = 256;
-		texheight = 256;
-	}
-
-
-	if (spine_name == "spinemesh")
-	{
-		texwidth = 1024;
-		texheight = 1024;
-	}
-
 	for (i = 0; i < skeleton->slotsCount; i++)
 	{
 		if (skeleton->slots[i] != NULL)
 		{
 			if (skeleton->slots[i]->attachment != NULL)
 			{
-				if (skeleton->slots[i]->attachment->type == SP_ATTACHMENT_REGION)
-				{
-					spAtlasRegion *test = spAtlas_findRegion(atlas, skeleton->slots[i]->attachment->name);
-
-					spRegionAttachment* attch = (spRegionAttachment*)skeleton->slots[i]->attachment;
-					float width1 = float(test->x) / texwidth;
-					float height1 = (float(test->y)) / texheight;
-					float width2 = (float(test->x) + float(test->width)) / texwidth;
-					float height2 = (float(test->y) + float(test->height)) / texheight;
-					spRegionAttachment_setUVs(attch, width1, height1, width2, height2, 0);
-				}
-
 				if (skeleton->slots[i]->attachment->type == SP_ATTACHMENT_MESH)
 				{
 					spMeshAttachment_updateUVs((spMeshAttachment*)skeleton->slots[i]->attachment);
@@ -115,6 +57,7 @@ void SpineData::setslots()
 
 void SpineData::load_spine_data(char* spine_folder)
 {
+
 	char *dir = new char[64];
 
 	spine_name = spine_folder;
@@ -138,10 +81,6 @@ void SpineData::load_spine_data(char* spine_folder)
 	sprintf_s(dir, sizeof(char)*64, "data/spinedata/%s/skeleton.png", spine_folder);
 
 	texture = Paintbrush::get_texture(dir, false, false);
-
-	animation_name = "idle";
-
-	setslots();
 
 	delete dir;
 }

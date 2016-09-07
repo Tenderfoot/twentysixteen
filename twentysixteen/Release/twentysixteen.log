@@ -1,6 +1,49 @@
-﻿  spine_data.cpp
+﻿  arrow_entity.cpp
+  audio_controller.cpp
+  base_gamelevel.cpp
+  base_user_interface.cpp
+  button_entity.cpp
+  enemy_sidefire.cpp
+  entity.cpp
+  game_entity.cpp
+  leveleditor.cpp
+  light_manager.cpp
+  linear_algebra.cpp
+  main.cpp
+  model_data.cpp
+  npc_entity.cpp
+  paintbrush.cpp
+  particles.cpp
+  player_entity.cpp
+  portcullis_entity.cpp
+  skeleton_entity.cpp
+  spine_data.cpp
+  Compiling...
+  spine_entity.cpp
+  swordsman_entity.cpp
+  AudioTechDemo.cpp
+  BreakoutTechDemo.cpp
+  DungeonTechDemo.cpp
+  EmitterTechDemo.cpp
+  EnemyTechDemo.cpp
+  GrassTechDemo.cpp
+  GraveyardTechDemo.cpp
+  JokeTechDemo.cpp
+  LightTechDemo.cpp
+  MarshTechDemo.cpp
+  MeadowTechDemo.cpp
+  ModelTechDemo.cpp
+  ModelToPolygonTechDemo.cpp
+  PhysicsTechDemo.cpp
+  PostProcessDemo.cpp
+  ShaderTechDemo.cpp
+  SpineTechDemo.cpp
+  TTFTechDemo.cpp
+  Compiling...
+  TownTechDemo.cpp
+  vfxgrass.cpp
   Generating code
-  1 of 2919 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
+  0 of 3006 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
     20 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
