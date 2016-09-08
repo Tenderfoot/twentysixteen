@@ -40,6 +40,7 @@
 #include "techdemos\dungeontechdemo.h"
 #include "techdemos\breakouttechdemo.h"
 #include "techdemos\JokeTechDemo.h"
+#include "techdemos\fogofwartechdemo.h"
 
 // and a few globals
 bool done = 0; // Quit?
@@ -67,7 +68,6 @@ void init_opengl()
 	gluPerspective(90, res_width / res_height, 1.0, 1000.0);
 	glMatrixMode(GL_MODELVIEW);  // Select The Model View Matrix
 	glLoadIdentity();    // Reset The Model View Matrix
-
 
 	glClearColor(0.0f, 0.0f, 0.0f, 0.5f);
 }
@@ -245,6 +245,7 @@ void init_levels()
 	level_map[TECHDEMO_DUNGEON] = new DungeonTechDemo();
 	level_map[TECHDEMO_BREAKOUT] = new BreakoutTechDemo();
 	level_map[TECHDEMO_JOKE] = new JokeTechDemo();
+	level_map[TECHDEMO_FOGOFWAR] = new FogOfWarTechDemo();
 
 	for (auto it = std::begin(level_map); it != std::end(level_map); ++it)
 	{
@@ -284,7 +285,7 @@ int main(int argc, char *argv[])
 	init_levels();
 
 	// set start level
-	current_level = level_map[TECHDEMO_JOKE];
+	current_level = level_map[TECHDEMO_FOGOFWAR];
 
 	float previous_time = SDL_GetTicks();
 

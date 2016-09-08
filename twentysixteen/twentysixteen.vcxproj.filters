@@ -180,6 +180,9 @@
     <ClCompile Include="src\techdemos\JokeTechDemo.cpp">
       <Filter>Source Files\techdemos</Filter>
     </ClCompile>
+    <ClCompile Include="src\techdemos\FogOfWarTechDemo.cpp">
+      <Filter>Source Files\techdemos</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\level.h">
@@ -333,6 +336,9 @@
       <Filter>Header Files\techdemos</Filter>
     </ClInclude>
     <ClInclude Include="src\techdemos\JokeTechDemo.h">
+      <Filter>Header Files\techdemos</Filter>
+    </ClInclude>
+    <ClInclude Include="src\techdemos\fogofwartechdemo.h">
       <Filter>Header Files\techdemos</Filter>
     </ClInclude>
   </ItemGroup>

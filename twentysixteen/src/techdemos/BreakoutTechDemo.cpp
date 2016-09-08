@@ -248,7 +248,7 @@ void BreakoutTechDemo::draw()
 		glPushMatrix();
 			glTranslatef(0.0f, -0.2f, 0.0f);
 			glScalef(0.002f, 0.0019f, 0.002f);
-			spineboy.draw();
+			//spineboy.draw();
 		glPopMatrix();
 	glPopMatrix();
 }

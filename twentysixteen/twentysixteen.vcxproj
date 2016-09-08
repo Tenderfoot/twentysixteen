@@ -55,6 +55,7 @@
     <ClCompile Include="src\techdemos\DungeonTechDemo.cpp" />
     <ClCompile Include="src\techdemos\EmitterTechDemo.cpp" />
     <ClCompile Include="src\techdemos\EnemyTechDemo.cpp" />
+    <ClCompile Include="src\techdemos\FogOfWarTechDemo.cpp" />
     <ClCompile Include="src\techdemos\GrassTechDemo.cpp" />
     <ClCompile Include="src\techdemos\GraveyardTechDemo.cpp" />
     <ClCompile Include="src\techdemos\JokeTechDemo.cpp" />
@@ -108,6 +109,7 @@
     <ClInclude Include="src\techdemos\dungeontechdemo.h" />
     <ClInclude Include="src\techdemos\emittertechdemo.h" />
     <ClInclude Include="src\techdemos\enemytechdemo.h" />
+    <ClInclude Include="src\techdemos\fogofwartechdemo.h" />
     <ClInclude Include="src\techdemos\grasstechdemo.h" />
     <ClInclude Include="src\techdemos\graveyardtechdemo.h" />
     <ClInclude Include="src\techdemos\JokeTechDemo.h" />
