@@ -14,8 +14,10 @@ void FogOfWarTechDemo::init()
 			tile_map[i][j].wall = 0;
 		}
 
-	tile_map[5][5].wall = 1;
-	tile_map[2][5].wall = 1;
+	tile_map[5][3].wall = 1;
+	tile_map[4][3].wall = 1;
+	tile_map[3][3].wall = 1;
+	tile_map[2][3].wall = 1;
 
 	tile_map[7][7].wall = 1;
 
@@ -138,7 +140,7 @@ void FogOfWarTechDemo::take_input(boundinput input, bool type)
 
 	if (input == RIGHT && type == true)
 	{
-		if (x < 9)
+		if (x < 9 && tile_map[x+1][y].wall != 1)
 		{
 			x++;
 			compute_visibility(x, y);
@@ -147,7 +149,7 @@ void FogOfWarTechDemo::take_input(boundinput input, bool type)
 
 	if (input == LEFT && type == true)
 	{
-		if (x > 0)
+		if (x > 0 && tile_map[x - 1][y].wall != 1)
 		{
 			x--;
 			compute_visibility(x, y);
@@ -156,7 +158,7 @@ void FogOfWarTechDemo::take_input(boundinput input, bool type)
 
 	if (input == UP && type == true)
 	{
-		if (y < 9)
+		if (y < 9 && tile_map[x][y+1].wall != 1)
 		{
 			y++;
 			compute_visibility(x, y);
@@ -165,7 +167,7 @@ void FogOfWarTechDemo::take_input(boundinput input, bool type)
 
 	if (input == DOWN && type == true)
 	{
-		if (y > 0)
+		if (y > 0 && tile_map[x][y - 1].wall != 1)
 		{
 			y--;
 			compute_visibility(x, y);
@@ -177,6 +179,8 @@ void FogOfWarTechDemo::draw()
 {
 	BaseTechDemo::draw();
 
+	gluLookAt(x, y, 10.0f, x, y, 00.0f, 0.0f, 1.0f, 0.0f);
+
 	int p;
 	int i, j;
 	for (i = 0; i < 10; i++)
@@ -185,7 +189,7 @@ void FogOfWarTechDemo::draw()
 				if(tile_map[i][j].visible == true || tile_map[i][j].wall == 1)
 				{
 					glPushMatrix();
-					glTranslatef(i - 5, j - 5, -10.0f);
+					glTranslatef(i, j, 0.0f);
 					glDisable(GL_TEXTURE_2D);
 
 					if(tile_map[i][j].wall == 1)
