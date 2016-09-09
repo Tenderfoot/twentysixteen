@@ -5,10 +5,8 @@
 void FogOfWarTechDemo::init()
 {
 	TechDemoUI.add_widget(new TextWidget("Fog Of War", 0.5, 0.1, 0.5, 0.15));
-	grid_manager.init();
+	grid_manager.init(10,10);
 }
-
-
 
 void FogOfWarTechDemo::run(float time_delta)
 {
@@ -21,10 +19,10 @@ void FogOfWarTechDemo::take_input(boundinput input, bool type)
 
 	if (input == RIGHT && type == true)
 	{
-		if (x < 9 && grid_manager.tile_map[x+1][y].wall != 1)
+		if (x < grid_manager.width-1 && grid_manager.tile_map[x+1][y].wall != 1)
 		{
 			x++;
-			grid_manager.compute_visibility(x, y);
+			grid_manager.compute_visibility_raycast(x, y);
 		}
 	}
 
@@ -33,16 +31,16 @@ void FogOfWarTechDemo::take_input(boundinput input, bool type)
 		if (x > 0 && grid_manager.tile_map[x - 1][y].wall != 1)
 		{
 			x--;
-			grid_manager.compute_visibility(x, y);
+			grid_manager.compute_visibility_raycast(x, y);
 		}
 	}
 
 	if (input == UP && type == true)
 	{
-		if (y < 9 && grid_manager.tile_map[x][y+1].wall != 1)
+		if (y < grid_manager.height-1 && grid_manager.tile_map[x][y+1].wall != 1)
 		{
 			y++;
-			grid_manager.compute_visibility(x, y);
+			grid_manager.compute_visibility_raycast(x, y);
 		}
 	}
 
@@ -51,7 +49,7 @@ void FogOfWarTechDemo::take_input(boundinput input, bool type)
 		if (y > 0 && grid_manager.tile_map[x][y - 1].wall != 1)
 		{
 			y--;
-			grid_manager.compute_visibility(x, y);
+			grid_manager.compute_visibility_raycast(x, y);
 		}
 	}
 }

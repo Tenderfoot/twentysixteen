@@ -1,11 +1,14 @@
 
 #include "grid_manager.h"
 
-void GridManager::init()
+void GridManager::init(int w, int h)
 {
+	width = w;
+	height = h;
+
 	int i, j;
-	for (i = 0; i < 10; i++)
-		for (j = 0; j < 10; j++)
+	for (i = 0; i < width; i++)
+		for (j = 0; j < height; j++)
 		{
 			tile_map[i][j] = t_tile();
 			tile_map[i][j].wall = 0;
@@ -18,10 +21,9 @@ void GridManager::init()
 	tile_map[5][2].wall = 1;
 	tile_map[5][1].wall = 1;
 	tile_map[5][0].wall = 1;
-
 	tile_map[7][7].wall = 1;
 
-	compute_visibility(0, 0);
+	compute_visibility_raycast(0, 0);
 
 	x = 0;
 	y = 0;
@@ -31,8 +33,8 @@ void GridManager::draw_2d()
 {
 	int p;
 	int i, j;
-	for (i = 0; i < 10; i++)
-		for (j = 0; j < 10; j++)
+	for (i = 0; i < width; i++)
+		for (j = 0; j < height; j++)
 		{
 			if (tile_map[i][j].visible == true || tile_map[i][j].wall == 1)
 			{
@@ -45,7 +47,7 @@ void GridManager::draw_2d()
 				else if (i == x && j == y)
 					glColor3f(1.0f, 1.0f, 0.0f);
 				else
-					glColor3f(((float)i) / 10, ((float)j) / 10, 1.0f);
+					glColor3f(((float)i) / width, ((float)j) / height, 1.0f);
 				Paintbrush::draw_quad();
 				glPopMatrix();
 				glEnable(GL_TEXTURE_2D);
@@ -59,15 +61,15 @@ void GridManager::compute_visibility(int i, int j)
 	bool found;
 	int i2, j2;
 
-	for (i2 = 0; i2 < 10; i2++)
+	for (i2 = 0; i2 < width; i2++)
 	{
-		for (j2 = 0; j2 < 10; j2++)
+		for (j2 = 0; j2 < height; j2++)
 		{
 			tile_map[i2][j2].visible = true;
 			vision_rect = get_vision_rect(i, j, i2, j2);
 			int a, b;
-			for (a = 0; a < 10; a++)
-				for (b = 0; b < 10; b++)
+			for (a = 0; a < width; a++)
+				for (b = 0; b < height; b++)
 				{
 					if (check_collision(vision_rect, a, b) == true)
 					{
@@ -79,6 +81,50 @@ void GridManager::compute_visibility(int i, int j)
 				}
 		}
 	}
+}
+
+void GridManager::compute_visibility_raycast(int i, int j)
+{
+	t_polygon vision_rect;
+	bool found;
+	int i2, j2;
+
+	// i and j are the current position
+	// i2 and j2 are iterators.
+	// for the current position cast a ray from the current position
+	// to a position on the perimeter. 
+
+	for (i2 = 0; i2 < width; i2++)
+	{
+		for (j2 = 0; j2 < height; j2++)
+		{
+			tile_map[i2][j2].visible = false;
+		}
+	}
+
+	t_raycast vision_cast;
+
+	for (i2 = 0; i2 < width; i2++)
+	{
+		for (j2 = 0; j2 < height; j2++)
+		{
+			vision_cast.init(i, j, i2, j2);
+
+			// while raycasting
+			while (vision_cast.has_next())
+			{
+				int ray_x = vision_cast.get_point().x;
+				int ray_y = vision_cast.get_point().y;
+
+				if (tile_map[ray_x][ray_y].wall == 1)
+					break;
+
+				tile_map[ray_x][ray_y].visible = true;
+				vision_cast.next();
+			}
+		}
+	}
+
 }
 
 t_polygon GridManager::get_vision_rect(int i, int j, float i2, float j2)
