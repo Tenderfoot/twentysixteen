@@ -93,41 +93,37 @@ void GridManager::compute_visibility_raycast(int i, int j)
 	// i2 and j2 are iterators.
 	// for the current position cast a ray from the current position
 	// to a position on the perimeter. 
-
 	for (i2 = 0; i2 < width; i2++)
 	{
 		for (j2 = 0; j2 < height; j2++)
 		{
-			tile_map[i2][j2].visible = false;
-		}
-	}
-
-	t_raycast vision_cast;
-
-	for (i2 = 0; i2 < width; i2++)
-	{
-		for (j2 = 0; j2 < height; j2++)
-		{
-			vision_cast.init(i, j, i2, j2);
-
-			// while raycasting
-			while (vision_cast.has_next())
-			{
-				int ray_x = vision_cast.get_point().x;
-				int ray_y = vision_cast.get_point().y;
-
-				if (tile_map[ray_x][ray_y].wall == 1)
-					break;
-
-				tile_map[ray_x][ray_y].visible = true;
-				vision_cast.next();
-			}
+			tile_map[i2][j2].visible = point_can_be_seen(i,j,i2,j2);
 		}
 	}
 
 }
 
-t_polygon GridManager::get_vision_rect(int i, int j, float i2, float j2)
+bool GridManager::point_can_be_seen(int i, int j, int i2, int j2)
+{
+	t_raycast vision_cast;
+	vision_cast.init(i, j, i2, j2);
+
+	// while raycasting
+	while (vision_cast.has_next())
+	{
+		int ray_x = vision_cast.get_point().x;
+		int ray_y = vision_cast.get_point().y;
+
+		if (tile_map[ray_x][ray_y].wall == 1)
+			return false;
+
+		vision_cast.next();
+	}
+
+	return true;
+}
+
+t_polygon GridManager::get_vision_rect(int i, int j, int i2, int j2)
 {
 	t_polygon return_rect;
 	float slope;
