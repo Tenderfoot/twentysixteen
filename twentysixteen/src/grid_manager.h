@@ -69,6 +69,7 @@ public:
 
 	// for debugging FOV
 	void draw_2d();
+	void draw_3d();
 
 	// special stuff
 	t_polygon get_vision_rect(int i, int j, int i2, int j2);
@@ -76,6 +77,10 @@ public:
 	void compute_visibility(int i, int j);
 	void compute_visibility_raycast(int i, int j);
 	bool point_can_be_seen(int i, int j, int i2, int j2);
+
+	// loading in tile types
+	t_3dModel *tile;
+	t_3dModel *wall;
 
 	// other stuff
 	int width, height;

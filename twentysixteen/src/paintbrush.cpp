@@ -647,8 +647,6 @@ void Paintbrush::draw_model(t_3dModel *mymodel)
 	t_vertex temp2;
 	t_vertex cross;
 
-	glColor3f(1.0f, 1.0f, 1.0f);
-
 	glPushMatrix();
 
 	for (i = 0; i<mymodel->meshes.size(); i++)

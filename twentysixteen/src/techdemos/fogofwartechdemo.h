@@ -21,4 +21,6 @@ public:
 	//
 	GridManager grid_manager;
 	int x, y;
+	t_3dModel *mymodel;
+	SpineData spineboy;
 };

@@ -23,10 +23,22 @@ void GridManager::init(int w, int h)
 	tile_map[5][0].wall = 1;
 	tile_map[7][7].wall = 1;
 
+	tile_map[12][12].wall = 1;
+	tile_map[15][15].wall = 1;
+	tile_map[16][16].wall = 1;
+	tile_map[17][17].wall = 1;
+	tile_map[26][26].wall = 1;
+	tile_map[30][30].wall = 1;
+	tile_map[31][31].wall = 1;
+
+
 	compute_visibility_raycast(0, 0);
 
 	x = 0;
 	y = 0;
+
+	tile = ModelData::import("data/models/tile.fbx", 0.05);
+	wall = ModelData::import("data/models/tile_wall.fbx", 0.05);
 }
 
 void GridManager::draw_2d()
@@ -53,6 +65,39 @@ void GridManager::draw_2d()
 				glEnable(GL_TEXTURE_2D);
 			}
 		}
+}
+
+void GridManager::draw_3d()
+{
+	int i2, j2;
+
+	for (i2 = 0; i2 < width; i2++)
+	{
+		for (j2 = 0; j2 < height; j2++)
+		{
+
+			if (tile_map[i2][j2].visible)
+				glColor3f(1.0f, 1.0f, 1.0f);
+			else
+				glColor3f(0.5f, 0.5f, 0.5f);
+
+			if (tile_map[i2][j2].wall == 0)
+			{
+				glPushMatrix();
+					glTranslatef(i2 * 5, 0.0f, j2*5);
+					Paintbrush::draw_model(tile);
+				glPopMatrix();
+			}
+			else
+			{
+				glPushMatrix();
+					glTranslatef(i2 * 5, 0.0f, j2 * 5);
+					glColor3f(1.0f, 0.5f, 0.5f);
+					Paintbrush::draw_model(wall);
+				glPopMatrix();
+			}
+		}
+	}
 }
 
 void GridManager::compute_visibility(int i, int j)
