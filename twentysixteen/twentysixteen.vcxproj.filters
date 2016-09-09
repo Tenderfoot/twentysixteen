@@ -46,6 +46,12 @@
     <Filter Include="Source Files\entities\spine_entities">
       <UniqueIdentifier>{c0be2a73-3119-48ef-8f62-2c88741e48be}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\grid">
+      <UniqueIdentifier>{ea116173-306f-4450-9755-d0c59e44ad6d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\grid">
+      <UniqueIdentifier>{47e5a6b8-9072-4c0a-83ab-525fef63c522}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -182,6 +188,9 @@
     </ClCompile>
     <ClCompile Include="src\techdemos\FogOfWarTechDemo.cpp">
       <Filter>Source Files\techdemos</Filter>
+    </ClCompile>
+    <ClCompile Include="src\grid_manager.cpp">
+      <Filter>Source Files\grid</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -340,6 +349,9 @@
     </ClInclude>
     <ClInclude Include="src\techdemos\fogofwartechdemo.h">
       <Filter>Header Files\techdemos</Filter>
+    </ClInclude>
+    <ClInclude Include="src\grid_manager.h">
+      <Filter>Header Files\grid</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
