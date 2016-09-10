@@ -66,7 +66,12 @@ enum boundinput
 	EDITOR_BLUE,
 	EDITOR_T,
 	HAT_CLEAR,	// for joysticks
-	R_SHOULDER
+	R_SHOULDER,
+	LMOUSE,
+	RMOUSE,
+	MWHEELDOWN,
+	MWHEELUP,
+	MIDDLEMOUSE
 };
 
 enum particle_types

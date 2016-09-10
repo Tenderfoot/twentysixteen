@@ -24,5 +24,7 @@ public:
 	t_3dModel *mymodel;
 	SpineData spineboy;
 	float camera_rotation_x, camera_rotation_y;
+	float camera_distance;
+	bool lookmode;
 	
 };

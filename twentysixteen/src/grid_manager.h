@@ -77,6 +77,7 @@ public:
 	void compute_visibility(int i, int j);
 	void compute_visibility_raycast(int i, int j);
 	bool point_can_be_seen(int i, int j, int i2, int j2);
+	void set_mouse_coords(int mx, int my);
 
 	// loading in tile types
 	t_3dModel *tile;
@@ -86,4 +87,6 @@ public:
 	int width, height;
 	int x, y;
 	std::map<int, std::map<int, t_tile>> tile_map;
+	int mouse_x, mouse_y;
+	bool lookmode;
 };

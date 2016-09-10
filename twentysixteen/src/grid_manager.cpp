@@ -41,6 +41,22 @@ void GridManager::init(int w, int h)
 	wall = ModelData::import("data/models/tile_wall.fbx", 0.05);
 }
 
+void GridManager::set_mouse_coords(int mx, int my)
+{
+	mouse_x = mx;
+	mouse_y = my;
+
+	if (mouse_x < 0)
+		mouse_x = 0;
+	if (mouse_x > width)
+		mouse_x = width;
+
+	if (mouse_y < 0)
+		mouse_y = 0;
+	if (mouse_y > height)
+		mouse_y = height;
+}
+
 void GridManager::draw_2d()
 {
 	int p;
@@ -80,6 +96,9 @@ void GridManager::draw_3d()
 				glColor3f(1.0f, 1.0f, 1.0f);
 			else
 				glColor3f(0.5f, 0.5f, 0.5f);
+
+			if (mouse_x == i2 && mouse_y == j2 && !lookmode)
+				glColor3f(0.0f, 1.0f, 0.0f);
 
 			if (tile_map[i2][j2].wall == 0)
 			{

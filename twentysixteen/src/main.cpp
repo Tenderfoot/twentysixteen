@@ -11,6 +11,9 @@
 #define NO_SDL_GLEXT
 
 // whats next
+// -pathfinding
+// --find path between player and mousenode
+
 
 // General Libraries
 #include <GL/glew.h>
@@ -220,14 +223,39 @@ void handle_sdl_event()
 			//current_level->mousey = event.motion.yrel;
 			current_level->mousex = (float)event.motion.x;
 			current_level->mousey =  (float)event.motion.y;
+			current_level->mouse_relative = t_vertex(event.motion.xrel, event.motion.yrel, 0.0f);
 
 		//	printf("%d, %d\n", event.motion.x, event.motion.y);
 		}
 
 		if (event.type == SDL_MOUSEBUTTONDOWN)
 		{
-	
-			
+			if(event.button.button == SDL_BUTTON_LEFT)
+				current_level->take_input(LMOUSE, true);
+
+			if (event.button.button == SDL_BUTTON_RIGHT)
+				current_level->take_input(RMOUSE, true);		
+
+			if (event.button.button == SDL_BUTTON_MIDDLE)
+				current_level->take_input(MIDDLEMOUSE, true);
+		}
+
+		if (event.type == SDL_MOUSEBUTTONUP)
+		{
+			if (event.button.button == SDL_BUTTON_LEFT)
+				current_level->take_input(LMOUSE, false);
+
+			if (event.button.button == SDL_BUTTON_RIGHT)
+				current_level->take_input(RMOUSE, false);
+		}
+
+		if (event.type == SDL_MOUSEWHEEL)
+		{
+			if (event.wheel.y > 0)
+				current_level->take_input(MWHEELUP, true);
+
+			if (event.wheel.y < 0)
+				current_level->take_input(MWHEELDOWN, true);
 		}
 
 
@@ -270,13 +298,32 @@ void init_levels()
 
 }
 
+void get_mouse_in_space()
+{
+	// refresh mouse in space - needs to happen after draw
+	GLint viewport[4];
+	GLdouble modelview[16];
+	GLdouble projection[16];
+	GLfloat winX, winY, winZ;
+	GLdouble posX, posY, posZ;
+
+	glGetDoublev(GL_MODELVIEW_MATRIX, modelview);
+	glGetDoublev(GL_PROJECTION_MATRIX, projection);
+	glGetIntegerv(GL_VIEWPORT, viewport);
+
+	winX = (float)current_level->mousex;
+	winY = (float)viewport[3] - (float)current_level->mousey;
+	glReadPixels(winX, int(winY), 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &winZ);
+	gluUnProject(winX, winY, winZ, modelview, projection, viewport, &posX, &posY, &posZ);
+
+	current_level->mouse_in_space = t_vertex(posX, posY, posZ);
+}
+
 int main(int argc, char *argv[])
 {
 	SDL_Init(SDL_INIT_VIDEO);
 	SDL_Init(SDL_INIT_AUDIO);
 	SDL_Init(SDL_INIT_JOYSTICK);
-	
-	//SDL_SetRelativeMouseMode(SDL_TRUE);
 
 	if (TTF_Init() == -1) {
 		printf("TTF_Init: %s\n", TTF_GetError());
@@ -321,25 +368,11 @@ int main(int argc, char *argv[])
 		// Draw
 		draw();
 
-		// refresh mouse in space - needs to happen after draw
-		GLint viewport[4];
-		GLdouble modelview[16];
-		GLdouble projection[16];
-		GLfloat winX, winY, winZ;
-		GLdouble posX, posY, posZ;
-
-		glGetDoublev(GL_MODELVIEW_MATRIX, modelview);
-		glGetDoublev(GL_PROJECTION_MATRIX, projection);
-		glGetIntegerv(GL_VIEWPORT, viewport);
-
-		winX = (float)current_level->mousex;
-		winY = (float)viewport[3] - (float)current_level->mousey;
-		glReadPixels(winX, int(winY), 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &winZ);
-		gluUnProject(winX, winY, winZ, modelview, projection, viewport, &posX, &posY, &posZ);
-
-		printf("pos %f %f %f\n", posX, posY, posZ);
-
-		current_level->mouse_in_space = t_vertex(posX, posY, posZ);
+		// get mouse position in space
+		// this needs to happen after draw, because it uses
+		// glReadPixels to get the depth at the mouse cursor,
+		// the uses gluUnProject to determine the position at that depth.
+		get_mouse_in_space();
 
 		// Level change request?
 		if (current_level->exit_level != LEVEL_NONE)
