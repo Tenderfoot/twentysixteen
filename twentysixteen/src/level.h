@@ -34,6 +34,9 @@ public:
 	
 	// Exit level
 	levels exit_level = LEVEL_NONE;
+	float mousex, mousey;
+
+	t_vertex mouse_in_space;
 
 	struct by_depth_rendertarget {
 		bool operator()(render_target left, render_target right) {

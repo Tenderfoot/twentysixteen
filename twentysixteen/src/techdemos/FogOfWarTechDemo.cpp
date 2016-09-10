@@ -16,6 +16,9 @@ void FogOfWarTechDemo::init()
 void FogOfWarTechDemo::run(float time_delta)
 {
 	spineboy.update_skeleton(time_delta);
+
+	//camera_rotation_x += mousex/100;
+	//camera_rotation_y += mousey / 100;
 }
 
 void FogOfWarTechDemo::take_input(boundinput input, bool type)
@@ -58,6 +61,7 @@ void FogOfWarTechDemo::take_input(boundinput input, bool type)
 			grid_manager.compute_visibility_raycast(x, y);
 		}
 	}
+	
 }
 
 void FogOfWarTechDemo::draw()
@@ -67,8 +71,8 @@ void FogOfWarTechDemo::draw()
 	grid_manager.x = x;
 	grid_manager.y = y;
 
-	gluLookAt((x*5), +50, (y*5)+15.0f, x*5, 0, (y * 5), 0.0f, 1.0f, 0.0f);
-	//grid_manager.draw_2d();
+	gluLookAt(((x*5)+(sin(camera_rotation_x)*15)), +50, ((y*5)+(cos(camera_rotation_x)*15)), x*5, 0, (y * 5), 0.0f, 1.0f, 0.0f);
+//	grid_manager.draw_2d();
 	grid_manager.draw_3d();
 
 	glPushMatrix();
@@ -76,5 +80,12 @@ void FogOfWarTechDemo::draw()
 		glScalef(0.01f, 0.01f, 0.01f);
 		spineboy.draw();
 	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(mouse_in_space.x, 0, mouse_in_space.z);
+	Paintbrush::draw_cube();
+	glPopMatrix();
+
+
 
 }

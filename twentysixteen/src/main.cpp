@@ -214,6 +214,22 @@ void handle_sdl_event()
 			current_level->take_input(translate_joy_input(SDL_JoystickGetHat(joy, 0), true), true);
 		}
 
+		if (event.type == SDL_MOUSEMOTION)
+		{	
+			//current_level->mousex = event.motion.xrel;
+			//current_level->mousey = event.motion.yrel;
+			current_level->mousex = (float)event.motion.x;
+			current_level->mousey =  (float)event.motion.y;
+
+		//	printf("%d, %d\n", event.motion.x, event.motion.y);
+		}
+
+		if (event.type == SDL_MOUSEBUTTONDOWN)
+		{
+	
+			
+		}
+
 
 		// quit event
 		if (event.type == SDL_QUIT || event.type == SDL_QUIT)
@@ -259,6 +275,8 @@ int main(int argc, char *argv[])
 	SDL_Init(SDL_INIT_VIDEO);
 	SDL_Init(SDL_INIT_AUDIO);
 	SDL_Init(SDL_INIT_JOYSTICK);
+	
+	//SDL_SetRelativeMouseMode(SDL_TRUE);
 
 	if (TTF_Init() == -1) {
 		printf("TTF_Init: %s\n", TTF_GetError());
@@ -269,7 +287,7 @@ int main(int argc, char *argv[])
 	
 	SDL_GLContext glcontext = SDL_GL_CreateContext(window);
 
-	SDL_ShowCursor(0);
+	SDL_ShowCursor(1);
 
 	init_opengl();
 
@@ -302,6 +320,26 @@ int main(int argc, char *argv[])
 		previous_time = current_time;
 		// Draw
 		draw();
+
+		// refresh mouse in space - needs to happen after draw
+		GLint viewport[4];
+		GLdouble modelview[16];
+		GLdouble projection[16];
+		GLfloat winX, winY, winZ;
+		GLdouble posX, posY, posZ;
+
+		glGetDoublev(GL_MODELVIEW_MATRIX, modelview);
+		glGetDoublev(GL_PROJECTION_MATRIX, projection);
+		glGetIntegerv(GL_VIEWPORT, viewport);
+
+		winX = (float)current_level->mousex;
+		winY = (float)viewport[3] - (float)current_level->mousey;
+		glReadPixels(winX, int(winY), 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &winZ);
+		gluUnProject(winX, winY, winZ, modelview, projection, viewport, &posX, &posY, &posZ);
+
+		printf("pos %f %f %f\n", posX, posY, posZ);
+
+		current_level->mouse_in_space = t_vertex(posX, posY, posZ);
 
 		// Level change request?
 		if (current_level->exit_level != LEVEL_NONE)

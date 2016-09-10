@@ -23,4 +23,6 @@ public:
 	int x, y;
 	t_3dModel *mymodel;
 	SpineData spineboy;
+	float camera_rotation_x, camera_rotation_y;
+	
 };
