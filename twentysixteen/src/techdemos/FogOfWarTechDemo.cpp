@@ -5,7 +5,7 @@
 void FogOfWarTechDemo::init()
 {
 	TechDemoUI.add_widget(new TextWidget("Fog Of War", 0.5, 0.1, 0.5, 0.15));
-	grid_manager.init(10,10);
+	grid_manager.init(50,50);
 
 	spineboy.load_spine_data("everybody");
 	spSkeleton_setSkinByName(spineboy.skeleton, "mo");

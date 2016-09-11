@@ -193,11 +193,14 @@ bool GridManager::find_path(t_tile *start, t_tile *goal)
 		for (j = 0; j < 8; j++)
 		{
 			int new_x, new_y;
+			bool valid = true;
 			switch (j)
 			{
 			case 0:
 				new_x = current->x - 1;
 				new_y = current->y - 1;
+				if (tile_map[current->x - 1][current->y].wall == 1 || tile_map[current->x][current->y - 1].wall == 1)
+					valid = false;
 				break;
 			case 1:
 				new_x = current->x;
@@ -206,6 +209,8 @@ bool GridManager::find_path(t_tile *start, t_tile *goal)
 			case 2:
 				new_x = current->x + 1;
 				new_y = current->y - 1;
+				if (tile_map[current->x + 1][current->y].wall == 1 || tile_map[current->x][current->y - 1].wall == 1)
+					valid = false;
 				break;
 			case 3:
 				new_x = current->x - 1;
@@ -218,6 +223,8 @@ bool GridManager::find_path(t_tile *start, t_tile *goal)
 			case 5:
 				new_x = current->x - 1;
 				new_y = current->y + 1;
+				if (tile_map[current->x - 1][current->y].wall == 1 || tile_map[current->x][current->y + 1].wall == 1)
+					valid = false;
 				break;
 			case 6:
 				new_x = current->x;
@@ -226,6 +233,8 @@ bool GridManager::find_path(t_tile *start, t_tile *goal)
 			case 7:
 				new_x = current->x + 1;
 				new_y = current->y + 1;
+				if (tile_map[current->x + 1][current->y].wall == 1 || tile_map[current->x][current->y + 1].wall == 1)
+					valid = false;
 				break;
 			}
 
@@ -247,11 +256,15 @@ bool GridManager::find_path(t_tile *start, t_tile *goal)
 			else if (tentative_gScore >= neighbour->gscore)
 				continue;		// This is not a better path.
 
+			if(valid == false)
+				continue;
+
 			// This path is the best until now. Record it!
 			neighbour->cameFrom.x = current->x;
 			neighbour->cameFrom.y = current->y;
 			neighbour->gscore = tentative_gScore;
 			neighbour->fscore = neighbour->gscore + heuristic_cost_estimate(neighbour, goal);
+
 		}
 	}
 
