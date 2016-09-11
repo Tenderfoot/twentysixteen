@@ -23,52 +23,64 @@ bool in_set(std::vector<t_tile*> set, t_tile *vertex)
 	}
 	return false;
 }
+#include <sstream>
+
+void GridManager::load_map(std::string mapname)
+{
+	std::stringstream filename;
+	filename << "data/levels/" << mapname.c_str() << ".txt";
+	std::ifstream in(filename.str());
+	std::string line;
+
+	// get number of entities
+	std::getline(in, line);
+	int w = std::stoi(line);
+
+	std::getline(in, line);
+	int h = std::stoi(line);
+
+	width = w;
+	height = h;
+
+	int i, j;
+
+	i = 0;
+	j = 0;
+
+	while (std::getline(in, line))
+	{
+		printf("%s\n", line.c_str());
+
+		for (i = 0; i < line.length(); i++)
+		{
+			tile_map[i][j] = t_tile();
+			tile_map[i][j].wall = line.c_str()[i] - '0';
+			tile_map[i][j].x = i;
+			tile_map[i][j].y = j;
+			tile_map[i][j].gscore = INFINITY;
+			tile_map[i][j].fscore = INFINITY;
+		}
+
+		j++;
+	}
+}
 
 void GridManager::init(int w, int h)
 {
 	width = w;
 	height = h;
 
-	int i, j;
-	for (i = 0; i < width; i++)
-		for (j = 0; j < height; j++)
-		{
-			tile_map[i][j] = t_tile();
-			tile_map[i][j].wall = 0;
-			tile_map[i][j].x = i;
-			tile_map[i][j].y = j;
-			tile_map[i][j].gscore = INFINITY;
-			tile_map[i][j].fscore = INFINITY;
+	load_map("gridmap");
 
-		}
+	x = 1;
+	y = 1;
 
-	tile_map[5][3].wall = 1;
-	tile_map[4][3].wall = 1;
-	tile_map[3][3].wall = 1;
-	tile_map[2][3].wall = 1;
-	tile_map[5][2].wall = 1;
-	tile_map[5][1].wall = 1;
-	tile_map[5][0].wall = 1;
-	tile_map[7][7].wall = 1;
-
-	tile_map[12][12].wall = 1;
-	tile_map[15][15].wall = 1;
-	tile_map[16][16].wall = 1;
-	tile_map[17][17].wall = 1;
-	tile_map[26][26].wall = 1;
-	tile_map[30][30].wall = 1;
-	tile_map[31][31].wall = 1;
-
-
-	compute_visibility_raycast(0, 0);
-
-	x = 0;
-	y = 0;
-
+	compute_visibility_raycast(x, y);
+	
 	tile = ModelData::import("data/models/tile.fbx", 0.05);
 	wall = ModelData::import("data/models/tile_wall.fbx", 0.05);
 
-	last_path = &tile_map[0][0];
+	last_path = &tile_map[x][y];
 }
 
 void GridManager::set_mouse_coords(int mx, int my)
@@ -89,7 +101,7 @@ void GridManager::set_mouse_coords(int mx, int my)
 	if (!are_equal(&tile_map[mouse_x][mouse_y], last_path))
 	{
 		last_path = &tile_map[mouse_x][mouse_y];
-		find_path(&tile_map[0][0], last_path);
+		find_path(&tile_map[x][y], last_path);
 	}
 	
 }

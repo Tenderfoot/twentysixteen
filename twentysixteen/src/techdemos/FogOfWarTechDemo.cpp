@@ -16,6 +16,9 @@ void FogOfWarTechDemo::init()
 
 	camera_rotation_y = 1;
 	camera_distance = 25.0f;
+
+	x = 1;
+	y = 1;
 }
 
 void FogOfWarTechDemo::run(float time_delta)
@@ -118,6 +121,7 @@ void FogOfWarTechDemo::draw()
 
 	glPushMatrix();
 		glTranslatef(x*5, 0, y*5);
+		glRotatef(camera_rotation_x*57.2958, 0.0f, 1.0f, 0.0f);
 		glScalef(0.01f, 0.01f, 0.01f);
 		spineboy.draw();
 	glPopMatrix();
