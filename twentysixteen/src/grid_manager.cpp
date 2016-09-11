@@ -1,6 +1,29 @@
 
 #include "grid_manager.h"
 
+// 1.5? I guess
+float heuristic_cost_estimate(t_tile *a, t_tile *b)
+{
+	return (abs(a->x - b->x) + abs(a->y - b->y));
+}
+
+
+bool are_equal(t_tile *a, t_tile *b)
+{
+	return ((a->x == b->x) && (a->y == b->y));
+}
+
+bool in_set(std::vector<t_tile*> set, t_tile *vertex)
+{
+	int i;
+	for (i = 0; i < set.size(); i++)
+	{
+		if (are_equal(set.at(i), vertex))
+			return true;
+	}
+	return false;
+}
+
 void GridManager::init(int w, int h)
 {
 	width = w;
@@ -12,6 +35,11 @@ void GridManager::init(int w, int h)
 		{
 			tile_map[i][j] = t_tile();
 			tile_map[i][j].wall = 0;
+			tile_map[i][j].x = i;
+			tile_map[i][j].y = j;
+			tile_map[i][j].gscore = INFINITY;
+			tile_map[i][j].fscore = INFINITY;
+
 		}
 
 	tile_map[5][3].wall = 1;
@@ -39,6 +67,8 @@ void GridManager::init(int w, int h)
 
 	tile = ModelData::import("data/models/tile.fbx", 0.05);
 	wall = ModelData::import("data/models/tile_wall.fbx", 0.05);
+
+	last_path = &tile_map[0][0];
 }
 
 void GridManager::set_mouse_coords(int mx, int my)
@@ -55,6 +85,13 @@ void GridManager::set_mouse_coords(int mx, int my)
 		mouse_y = 0;
 	if (mouse_y > height)
 		mouse_y = height;
+
+	if (!are_equal(&tile_map[mouse_x][mouse_y], last_path))
+	{
+		last_path = &tile_map[mouse_x][mouse_y];
+		find_path(&tile_map[0][0], last_path);
+	}
+	
 }
 
 void GridManager::draw_2d()
@@ -83,6 +120,141 @@ void GridManager::draw_2d()
 		}
 }
 
+void GridManager::clear_path()
+{
+	int i2, j2;
+	for(i2=0; i2<width; i2++)
+		for (j2 = 0; j2 < height; j2++)
+		{
+			tile_map[i2][j2].gscore = INFINITY;
+			tile_map[i2][j2].fscore = INFINITY;
+			tile_map[i2][j2].cameFrom.x = 0;
+			tile_map[i2][j2].cameFrom.y = 0;
+			tile_map[i2][j2].in_path = false;
+		}
+}
+
+bool GridManager::find_path(t_tile *start, t_tile *goal)
+{
+	clear_path();
+
+	if (are_equal(start, goal))
+		return true;
+
+	// The set of nodes already evaluated.
+	std::vector<t_tile*> closedSet = {};
+		// The set of currently discovered nodes still to be evaluated.
+		// Initially, only the start node is known.
+	std::vector<t_tile*> openSet = { start };
+		// For each node, which node it can most efficiently be reached from.
+		// If a node can be reached from many nodes, cameFrom will eventually contain the
+		// most efficient previous step.
+	
+	int i;
+	int j;
+
+	t_tile *current = start;
+	t_tile *neighbour;
+
+	current->gscore = 0;
+	current->fscore = heuristic_cost_estimate(start, goal);
+
+	while (openSet.size() > 0)
+	{
+		float current_fscore = INFINITY;
+		for (i = 0; i < openSet.size(); i++)
+			if (openSet.at(i)->fscore < current_fscore)
+				current = openSet.at(i);
+
+		if (are_equal(current, goal))
+		{
+			// success
+			while (current != start)
+			{
+				current->in_path = true;
+				current = &tile_map[current->cameFrom.x][current->cameFrom.y];
+			}
+			return true;
+		}
+
+		for (i = 0; i < openSet.size(); i++)
+		{
+			if (are_equal(current, openSet.at(i)))
+			{
+				openSet.erase(openSet.begin() + i);
+			}
+		}
+
+		closedSet.push_back(current);
+
+		for (j = 0; j < 8; j++)
+		{
+			int new_x, new_y;
+			switch (j)
+			{
+			case 0:
+				new_x = current->x - 1;
+				new_y = current->y - 1;
+				break;
+			case 1:
+				new_x = current->x;
+				new_y = current->y - 1;
+				break;
+			case 2:
+				new_x = current->x + 1;
+				new_y = current->y - 1;
+				break;
+			case 3:
+				new_x = current->x - 1;
+				new_y = current->y;
+				break;
+			case 4:
+				new_x = current->x + 1;
+				new_y = current->y;
+				break;
+			case 5:
+				new_x = current->x - 1;
+				new_y = current->y + 1;
+				break;
+			case 6:
+				new_x = current->x;
+				new_y = current->y + 1;
+				break;
+			case 7:
+				new_x = current->x + 1;
+				new_y = current->y + 1;
+				break;
+			}
+
+			if ((new_x >= 0 && new_x < width && new_y >= 0 && new_y < height) && tile_map[new_x][new_y].wall == 0)
+			{
+				neighbour = &tile_map[new_x][new_y];
+			}
+			else
+				continue;
+
+			if (in_set(closedSet, neighbour))
+				continue;		// Ignore the neighbor which is already evaluated. 
+
+			float tentative_gScore;
+			tentative_gScore = current->gscore + 1;
+
+			if (!in_set(openSet, neighbour))	// Discover a new node
+				openSet.push_back(neighbour);
+			else if (tentative_gScore >= neighbour->gscore)
+				continue;		// This is not a better path.
+
+			// This path is the best until now. Record it!
+			neighbour->cameFrom.x = current->x;
+			neighbour->cameFrom.y = current->y;
+			neighbour->gscore = tentative_gScore;
+			neighbour->fscore = neighbour->gscore + heuristic_cost_estimate(neighbour, goal);
+		}
+	}
+
+	return false;
+}
+
 void GridManager::draw_3d()
 {
 	int i2, j2;
@@ -99,6 +271,9 @@ void GridManager::draw_3d()
 
 			if (mouse_x == i2 && mouse_y == j2 && !lookmode)
 				glColor3f(0.0f, 1.0f, 0.0f);
+
+			if (tile_map[i2][j2].in_path)
+				glColor3f(1.0f, 1.0f, 0.0f);
 
 			if (tile_map[i2][j2].wall == 0)
 			{

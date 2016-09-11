@@ -5,7 +5,7 @@
 void FogOfWarTechDemo::init()
 {
 	TechDemoUI.add_widget(new TextWidget("Fog Of War", 0.5, 0.1, 0.5, 0.15));
-	grid_manager.init(50,50);
+	grid_manager.init(10,10);
 
 	spineboy.load_spine_data("everybody");
 	spSkeleton_setSkinByName(spineboy.skeleton, "mo");
@@ -29,8 +29,8 @@ void FogOfWarTechDemo::run(float time_delta)
 		camera_rotation_x += mouse_relative.x / 100;
 		camera_rotation_y += mouse_relative.y / 100;
 
-		if (camera_rotation_y > 1)
-			camera_rotation_y = 1;
+		if (camera_rotation_y > 1.5)
+			camera_rotation_y = 1.5;
 
 		if (camera_rotation_y < 0.01)
 			camera_rotation_y = 0.01;
@@ -86,11 +86,13 @@ void FogOfWarTechDemo::take_input(boundinput input, bool type)
 
 	if (input == MWHEELUP)
 	{ 
+		if(camera_distance > 5)
 		camera_distance--;
 	}
 
 	if (input == MWHEELDOWN)
 	{
+		if (camera_distance < 100)
 		camera_distance++;
 	}
 

@@ -5,9 +5,22 @@
 
 typedef struct
 {
+	int x, y;
+}t_coords;
+
+typedef struct
+{
+	int x;
+	int y;
 	int wall;
 	std::vector<std::pair<int, int>> visible_tiles;
 	bool visible;
+
+	// for pathfinding
+	float gscore, fscore;
+	t_coords cameFrom;
+	bool in_path;
+
 }t_tile;
 
 typedef struct
@@ -78,6 +91,11 @@ public:
 	void compute_visibility_raycast(int i, int j);
 	bool point_can_be_seen(int i, int j, int i2, int j2);
 	void set_mouse_coords(int mx, int my);
+
+	// pathfinding stuff
+	bool find_path(t_tile *start, t_tile *goal);
+	void clear_path();
+	t_tile *last_path;
 
 	// loading in tile types
 	t_3dModel *tile;
