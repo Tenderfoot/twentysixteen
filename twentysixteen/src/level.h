@@ -35,6 +35,7 @@ public:
 	// Exit level
 	levels exit_level = LEVEL_NONE;
 	float mousex, mousey;
+	bool initialized;
 
 	t_vertex mouse_relative;
 	t_vertex mouse_in_space;

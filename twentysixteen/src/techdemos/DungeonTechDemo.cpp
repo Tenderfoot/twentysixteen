@@ -2,6 +2,11 @@
 #include "dungeontechdemo.h"
 #include "../game_entity.h"
 
+// going to make a grid character thats like an entity
+// at any one point in time, its a characters turn
+// that character can enter several states, for example, "moving"
+// when a character has exhausted its actions it is the next characters turn
+
 void DungeonTechDemo::init()
 {
 	TechDemoUI.add_widget(new TextWidget("Dungeon Tech Demo", 0.5, 0.1, 0.5, 0.15));

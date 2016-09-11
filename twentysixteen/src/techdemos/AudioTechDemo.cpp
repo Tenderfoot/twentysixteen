@@ -24,13 +24,13 @@ void AudioTechDemo::take_input(boundinput input, bool type)
 			exit_level = TECHDEMO_BASE;
 
 		if (input == UP)
-			AudioController::play_sound("tom1");
+			AudioController::play_sound("data/sounds/tom1.wav");
 
 		if (input == DOWN)
-			AudioController::play_sound("tom2");
+			AudioController::play_sound("data/sounds/tom2.wav");
 
 		if (input == ACTION)
-			AudioController::play_sound("tom3");
+			AudioController::play_sound("data/sounds/tom3.wav");
 	}
 }
 

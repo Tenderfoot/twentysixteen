@@ -342,8 +342,9 @@ int main(int argc, char *argv[])
 	init_levels();
 
 	// set start level
-	current_level = level_map[TECHDEMO_DUNGEON];
+	current_level = level_map[TECHDEMO_BASE];
 	current_level->init();
+	current_level->initialized = true;
 
 	float previous_time = SDL_GetTicks();
 	// main loop
@@ -378,7 +379,11 @@ int main(int argc, char *argv[])
 			{
 				current_level->exit_level = LEVEL_NONE;
 				current_level = level_map[next_level];
-				current_level->init();
+				if (current_level->initialized == false)
+				{
+					current_level->init();
+					current_level->initialized = true;
+				}
 				current_level->reset();
 			}
 		}
