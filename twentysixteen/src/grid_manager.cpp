@@ -49,8 +49,6 @@ void GridManager::load_map(std::string mapname)
 
 	while (std::getline(in, line))
 	{
-		printf("%s\n", line.c_str());
-
 		for (i = 0; i < line.length(); i++)
 		{
 			tile_map[i][j] = t_tile();

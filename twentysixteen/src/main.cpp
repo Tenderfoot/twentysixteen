@@ -291,11 +291,6 @@ void init_levels()
 	level_map[TECHDEMO_JOKE] = new JokeTechDemo();
 	level_map[TECHDEMO_FOGOFWAR] = new FogOfWarTechDemo();
 
-	for (auto it = std::begin(level_map); it != std::end(level_map); ++it)
-	{
-		it->second->init();
-	}
-
 }
 
 void get_mouse_in_space()
@@ -351,9 +346,9 @@ int main(int argc, char *argv[])
 
 	// set start level
 	current_level = level_map[TECHDEMO_FOGOFWAR];
+	current_level->init();
 
 	float previous_time = SDL_GetTicks();
-
 	// main loop
 	while (!done)
 	{
@@ -386,6 +381,7 @@ int main(int argc, char *argv[])
 			{
 				current_level->exit_level = LEVEL_NONE;
 				current_level = level_map[next_level];
+				current_level->init();
 				current_level->reset();
 			}
 		}
