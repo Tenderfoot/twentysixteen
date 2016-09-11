@@ -330,7 +330,7 @@ void PlayerEntity::draw()
 	{
 		glPushMatrix();
 		glTranslatef(position.x, position.y - 1.5, position.z);
-		glScalef(0.0075f, 0.0075f, 1.0f);
+		glScalef(0.0065f, 0.0065f, 1.0f);
 		Paintbrush::use_shader(Paintbrush::get_shader("point_light_spine"));
 		spine_data.draw();
 		Paintbrush::stop_shader();

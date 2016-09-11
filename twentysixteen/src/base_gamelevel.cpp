@@ -187,7 +187,7 @@ void BaseGameLevel::draw()
 	gluLookAt(camera_position.x, camera_position.y, camera_position.z, camera_lookat.x, camera_lookat.y, camera_lookat.z, 0, 1, 0);
 
 	//  this line draws the level collision group as lines
-	Paintbrush::draw_collision_group(collision_group, 0);
+	//Paintbrush::draw_collision_group(collision_group, 0);
 
 	// draw the rendertargets
 	glPushMatrix();
