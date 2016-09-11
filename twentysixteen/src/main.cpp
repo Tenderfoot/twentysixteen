@@ -11,9 +11,6 @@
 #define NO_SDL_GLEXT
 
 // whats next
-// -pathfinding
-// --find path between player and mousenode
-
 
 // General Libraries
 #include <GL/glew.h>
@@ -372,7 +369,7 @@ int main(int argc, char *argv[])
 		// Level change request?
 		if (current_level->exit_level != LEVEL_NONE)
 		{
-			levels next_level;
+			levels next_level; 
 			next_level = current_level->exit_level;
 
 			if (next_level == QUIT)
