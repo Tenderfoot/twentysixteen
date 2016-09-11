@@ -75,6 +75,14 @@ void FogOfWarTechDemo::take_input(boundinput input, bool type)
 	{
 	}
 
+	if (input == LMOUSE && type == true)
+	{
+		x = grid_manager.mouse_x;
+		y = grid_manager.mouse_y;
+
+		grid_manager.compute_visibility_raycast(x,y);
+	}
+
 	if (input == RMOUSE && type == true)
 	{
 		lookmode = true;
