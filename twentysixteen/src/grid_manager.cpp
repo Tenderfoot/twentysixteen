@@ -155,7 +155,8 @@ bool GridManager::find_path(t_tile *start, t_tile *goal)
 	std::vector<t_tile*> closedSet = {};
 		// The set of currently discovered nodes still to be evaluated.
 		// Initially, only the start node is known.
-	std::vector<t_tile*> openSet = { start };
+	std::vector<t_tile
+		*> openSet = { start };
 		// For each node, which node it can most efficiently be reached from.
 		// If a node can be reached from many nodes, cameFrom will eventually contain the
 		// most efficient previous step.

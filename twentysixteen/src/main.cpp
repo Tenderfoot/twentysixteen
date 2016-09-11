@@ -342,7 +342,7 @@ int main(int argc, char *argv[])
 	init_levels();
 
 	// set start level
-	current_level = level_map[TECHDEMO_FOGOFWAR];
+	current_level = level_map[TECHDEMO_DUNGEON];
 	current_level->init();
 
 	float previous_time = SDL_GetTicks();
