@@ -170,7 +170,7 @@ void BreakoutTechDemo::run(float time_delta)
 void BreakoutTechDemo::take_input(boundinput input, bool type)
 {
 	if (input == BACK && type == true)
-		exit_level = QUIT;
+		exit_level = TECHDEMO_BASE;
 
 	if (input == LEFT)
 	{

@@ -12,6 +12,7 @@ void PhysicsTechDemo::init()
 
 	spineboy.load_spine_data("everybody");
 	spSkeleton_setSkinByName(spineboy.skeleton, "mo");
+	spineboy.animation_name = "idle";
 
 	box.position = t_vertex(0, 6, -20);
 	box.size = t_vertex(1, 3, 1);

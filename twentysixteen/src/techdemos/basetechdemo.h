@@ -42,19 +42,19 @@ public:
 		filetypes_list->set_data(0.5, 0.4, 0.2, 0.1, false);
 		TechDemoUI.add_widget(filetypes_list);
 
-		vfx_list = new ListWidget({ "SHADERS", "EMITTERS", "GRASS", "LIGHTS", "POST", "BACK" });
+		vfx_list = new ListWidget({ "SHADERS", "EMITTERS", "GRASS", "LIGHTS", "BACK" });
 		vfx_list->set_data(0.5, 0.35, 0.2, 0.1, false);
 		TechDemoUI.add_widget(vfx_list);
 
-		physics_list = new ListWidget({ "COLLISION", "PHYS", "BACK" });
+		physics_list = new ListWidget({ "COLLISION", "BACK" });
 		physics_list->set_data(0.5, 0.4, 0.2, 0.1, false);
 		TechDemoUI.add_widget(physics_list);
 
-		scene_list = new ListWidget({ "MEADOW", "MARSH", "GRAVEYARD", "TOWN", "DUNGEON", "BACK" });
+		scene_list = new ListWidget({ "MEADOW", "MARSH", "GRAVEYARD", "TOWN", "BACK" });
 		scene_list->set_data(0.5, 0.35, 0.2, 0.1, false);
 		TechDemoUI.add_widget(scene_list);
 
-		prototyping = new ListWidget({"ENEMY", "BACK" });
+		prototyping = new ListWidget({"BREAKOUT", "FOG_OF_WAR", "BACK" });
 		prototyping->set_data(0.5, 0.4, 0.2, 0.1, false);
 		TechDemoUI.add_widget(prototyping);
 
@@ -131,6 +131,14 @@ public:
 				if (strcmp(choice, "EMITTERS") == 0)
 				{
 					exit_level = TECHDEMO_EMITTER;
+				}
+				if (strcmp(choice, "BREAKOUT") == 0)
+				{
+					exit_level = TECHDEMO_BREAKOUT;
+				}
+				if (strcmp(choice, "FOG_OF_WAR") == 0)
+				{
+					exit_level = TECHDEMO_FOGOFWAR;
 				}
 				if (strcmp(choice, "PHYS") == 0)
 				{

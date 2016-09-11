@@ -19,6 +19,8 @@ void ShaderTechDemo::init()
 	test_chamber.model = ModelData::import("data/models/testchamber.fbx", 0.05);
 
 	current_list = item_menu;
+
+	test_chamber.shader = Paintbrush::get_shader("inverter");
 }
 
 void ShaderTechDemo::run(float time_delta)

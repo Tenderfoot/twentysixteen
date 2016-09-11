@@ -11,6 +11,7 @@ void LightTechDemo::init()
 
 	spineboy.load_spine_data("everybody");
 	spSkeleton_setSkinByName(spineboy.skeleton, "mo");
+	spineboy.animation_name = "idle";
 }
 
 void LightTechDemo::run(float time_delta)
