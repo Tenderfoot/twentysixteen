@@ -4,7 +4,7 @@
 // 1.5? I guess
 float heuristic_cost_estimate(t_tile *a, t_tile *b)
 {
-	return (abs(a->x - b->x) + abs(a->y - b->y));
+	return (abs(b->x - a->x) + abs(b->y - a->y));
 }
 
 
@@ -164,7 +164,10 @@ bool GridManager::find_path(t_tile *start, t_tile *goal)
 		float current_fscore = INFINITY;
 		for (i = 0; i < openSet.size(); i++)
 			if (openSet.at(i)->fscore < current_fscore)
+			{
 				current = openSet.at(i);
+				current_fscore = current->fscore;
+			}
 
 		if (are_equal(current, goal))
 		{
