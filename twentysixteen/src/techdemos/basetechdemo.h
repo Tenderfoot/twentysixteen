@@ -50,11 +50,11 @@ public:
 		physics_list->set_data(0.5, 0.4, 0.2, 0.1, false);
 		TechDemoUI.add_widget(physics_list);
 
-		scene_list = new ListWidget({ "MEADOW", "MARSH", "GRAVEYARD", "TOWN", "BACK" });
+		scene_list = new ListWidget({ "PUZZLE", "BACK" });
 		scene_list->set_data(0.5, 0.35, 0.2, 0.1, false);
 		TechDemoUI.add_widget(scene_list);
 
-		prototyping = new ListWidget({"BREAKOUT", "FOG_OF_WAR", "BACK" });
+		prototyping = new ListWidget({"PLATFORMER", "BREAKOUT", "FOG_OF_WAR", "BACK" });
 		prototyping->set_data(0.5, 0.4, 0.2, 0.1, false);
 		TechDemoUI.add_widget(prototyping);
 
@@ -112,6 +112,10 @@ public:
 				{
 					exit_level = TECHDEMO_SHADER;
 				}
+				if (strcmp(choice, "PLATFORMER") == 0)
+				{
+					exit_level = TECHDEMO_MEADOW;
+				}
 				if (strcmp(choice, "QUIT") == 0)
 				{
 					exit_level = QUIT;
@@ -164,7 +168,7 @@ public:
 				{
 					exit_level = TECHDEMO_MEADOW;
 				}
-				if (strcmp(choice, "MARSH") == 0)
+				if (strcmp(choice, "PUZZLE") == 0)
 				{
 					exit_level = TECHDEMO_MARSH;
 				}

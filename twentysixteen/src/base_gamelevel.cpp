@@ -204,7 +204,6 @@ void BaseGameLevel::draw()
 	glPopMatrix();
 	Paintbrush::stop_shader();
 
-
 	for (i = 0; i < render_targets.size(); i++)
 	{
 		if (render_targets.at(i).type != TYPE_FACE)

@@ -30,8 +30,6 @@ public:
 		init_level(level_name);
 	}
 
-	
-
 	void build_render_targets();
 	void set_camera(t_vertex position, t_vertex lookat);
 	void run(float time_delta);
