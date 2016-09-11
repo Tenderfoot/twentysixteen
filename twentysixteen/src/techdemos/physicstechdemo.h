@@ -20,7 +20,6 @@ public:
 	void take_input(boundinput input, bool type);
 	bool check_collision(float time_delta);
 
-
 	t_vertex original_pos;
 
 	ModelData level_static;

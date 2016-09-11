@@ -104,7 +104,6 @@ void BaseGameLevel::run(float time_delta)
 	{
 		t_collisiongroup test;
 		int i, j;
-
 		for (i = 0; i < entities.size(); i++)
 		{
 			if (entities.at(i)->type == PORTCULLIS_ENTITY || entities.at(i)->type == GAME_ENTITY)
