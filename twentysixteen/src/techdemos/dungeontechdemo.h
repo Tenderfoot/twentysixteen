@@ -4,6 +4,7 @@
 #include "../spine_data.h"
 #include "../linear_algebra.h"
 #include "../grid_manager.h"
+#include "../gridcharacter.h"
 
 class DungeonTechDemo : public BaseTechDemo
 {
@@ -18,13 +19,15 @@ public:
 	void init();
 	void take_input(boundinput input, bool type);
 
-	//
+	// Dungeon stuff
 	GridManager grid_manager;
-	int x, y;
+	std::vector<Entity*> entities;
 	t_3dModel *mymodel;
-	SpineData spineboy;
+	GridCharacter test;
+
+	// other stuff
+	int x, y;
 	float camera_rotation_x, camera_rotation_y;
 	float camera_distance;
 	bool lookmode;
-
 };

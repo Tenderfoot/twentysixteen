@@ -353,6 +353,9 @@
     <ClInclude Include="src\techdemos\dungeontechdemo.h">
       <Filter>Header Files\techdemos</Filter>
     </ClInclude>
+    <ClInclude Include="src\gridcharacter.h">
+      <Filter>Header Files\grid</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="data\shaders\grass.frag">

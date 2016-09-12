@@ -12,11 +12,6 @@ void DungeonTechDemo::init()
 	TechDemoUI.add_widget(new TextWidget("Dungeon Tech Demo", 0.5, 0.1, 0.5, 0.15));
 	grid_manager.init(50, 50);
 
-	spineboy.load_spine_data("everybody");
-	spSkeleton_setSkinByName(spineboy.skeleton, "mo");
-	spineboy.animation_name = "idle";
-	spineboy.looping = true;
-
 	lookmode = false;
 
 	camera_rotation_y = 1;
@@ -24,12 +19,16 @@ void DungeonTechDemo::init()
 
 	x = 1;
 	y = 1;
+
+	test.spine_data.load_spine_data("everybody");
+	spSkeleton_setSkinByName(test.spine_data.skeleton, "witch");
+	test.spine_data.animation_name = "idle";
+	test.spine_data.looping = true;
 }
 
 void DungeonTechDemo::run(float time_delta)
 {
-	spineboy.update_skeleton(time_delta);
-
+	test.spine_data.update_skeleton(time_delta);
 	grid_manager.lookmode = lookmode;
 
 	if (lookmode)
@@ -44,14 +43,20 @@ void DungeonTechDemo::run(float time_delta)
 			camera_rotation_y = 0.01;
 	}
 
-	// This is because they are only set when there is deltas
-	mouse_relative.x = 0;
-	mouse_relative.y = 0;
-
+	// Loop through and update entities. This should stay and other things
+	// should be refactored out.
+	int i, j;
+	for (i = 0; i < entities.size(); i++)
+	{
+		entities.at(i)->update(time_delta);
+	}
+	
 	// convert mouse position in space to grid coordinates...
 	float x, y;
 	x = mouse_in_space.x + 2.5;
 	y = mouse_in_space.z + 2.5;
+	mouse_relative.x = 0;
+	mouse_relative.y = 0;
 
 	x /= 5;
 	y /= 5;
@@ -134,10 +139,9 @@ void DungeonTechDemo::draw()
 	grid_manager.draw_3d();
 
 	glPushMatrix();
-	glTranslatef(x * 5, 0, y * 5);
-	glRotatef(camera_rotation_x*57.2958, 0.0f, 1.0f, 0.0f);
-	glScalef(0.01f, 0.01f, 0.01f);
-	spineboy.draw();
+		glTranslatef(x * 5, 0.0f, y * 5);
+		glRotatef(camera_rotation_x*57.25, 0.0f, 1.0f, 0.0f);
+		test.draw();
 	glPopMatrix();
 
 	/*	3d cursor
