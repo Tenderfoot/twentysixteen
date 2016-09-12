@@ -143,10 +143,10 @@ void DungeonTechDemo::draw()
 	/*	3d cursor
 	if (!lookmode)
 	{
-	glPushMatrix();
-	glTranslatef(mouse_in_space.x, 0, mouse_in_space.z);
-	Paintbrush::draw_cube();
-	glPopMatrix();
+		glPushMatrix();
+			glTranslatef(mouse_in_space.x, 0, mouse_in_space.z);
+			Paintbrush::draw_cube();
+		glPopMatrix();
 	}
 	*/
 

@@ -61,7 +61,7 @@ public:
 
 		current_list = initial_list;
 
-		TechDemoUI.add_widget(new TextWidget("Use directions (WASD) and A (space) to select", 0.5, 0.975, 0.5, 0.05));
+		TechDemoUI.add_widget(new TextWidget("Use directions (WASD) and A (space) to select - OR THE MOUSE!", 0.5, 0.975, 0.65, 0.05));
 	}
 
 	void reset()
@@ -90,7 +90,7 @@ public:
 				current_list->next_item();
 			}
 
-			if (input == ACTION)
+			if (input == ACTION || input == LMOUSE)
 			{
 				char *choice = current_list->list_items[current_list->current_selection];
 				if (strcmp(choice, "Spine") == 0)
@@ -214,6 +214,14 @@ public:
 
 	void run(float time_delta)
 	{
+		if (mousex > current_list->x*res_width-(0.5*current_list->width*res_width) && mousex < current_list->x*res_width + (0.5*current_list->width*res_width) &&
+			mousey > current_list->y*res_height - (0.5*current_list->height*res_height) && mousey < current_list->y*res_height - (0.5*current_list->height*res_height) + (current_list->height*res_height)*current_list->list_items.size())
+		{
+			float delta = (current_list->height*res_height);
+			int index = int((mousey - (current_list->y*res_height - (0.5*current_list->height*res_height))) / delta);
+			
+			current_list->current_selection = index;
+		}
 	}
 
 	void draw() 
