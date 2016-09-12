@@ -43,8 +43,6 @@ public:
 	int activate_id;
 	bool activated;
 
-	
-
 	// collision stuff
 	void correct_against_collisiongroup(t_collisiongroup collision_group, float time_delta);
 	bool check_against_game_entity(GameEntity *opposing_entity);

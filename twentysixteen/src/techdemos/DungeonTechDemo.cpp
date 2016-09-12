@@ -17,18 +17,22 @@ void DungeonTechDemo::init()
 	camera_rotation_y = 1;
 	camera_distance = 25.0f;
 
-	x = 1;
-	y = 1;
-
 	test.spine_data.load_spine_data("everybody");
 	spSkeleton_setSkinByName(test.spine_data.skeleton, "witch");
 	test.spine_data.animation_name = "idle";
 	test.spine_data.looping = true;
+	test.grid_manager = &grid_manager;
+
+	current_char = &test;
+	current_char->position.x = 1;
+	current_char->position.z = 1;
+
+	// things need to be part of this now!
+	entities.push_back(&test);
 }
 
 void DungeonTechDemo::run(float time_delta)
 {
-	test.spine_data.update_skeleton(time_delta);
 	grid_manager.lookmode = lookmode;
 
 	if (lookmode)
@@ -69,29 +73,11 @@ void DungeonTechDemo::take_input(boundinput input, bool type)
 	if (input == BACK && type == true)
 		exit_level = TECHDEMO_BASE;
 
-	if (input == RIGHT && type == true)
-	{
-	}
-
-	if (input == LEFT && type == true)
-	{
-	}
-
-	if (input == UP && type == true)
-	{
-
-	}
-
-	if (input == DOWN && type == true)
-	{
-	}
-
 	if (input == LMOUSE && type == true)
 	{
-		x = grid_manager.mouse_x;
-		y = grid_manager.mouse_y;
-
-		grid_manager.compute_visibility_raycast(x, y);
+		current_char->position.x = grid_manager.mouse_x;
+		current_char->position.z = grid_manager.mouse_y;
+		grid_manager.compute_visibility_raycast(current_char->position.x, current_char->position.z);
 	}
 
 	if (input == RMOUSE && type == true)
@@ -124,34 +110,20 @@ void DungeonTechDemo::take_input(boundinput input, bool type)
 		camera_rotation_y = 1;
 		camera_rotation_x = 0;
 	}
-
 }
 
 void DungeonTechDemo::draw()
 {
 	BaseTechDemo::draw();
 
-	grid_manager.x = x;
-	grid_manager.y = y;
+	grid_manager.x = current_char->position.x;
+	grid_manager.y = current_char->position.z;
 
-	gluLookAt((x * 5) + ((sin(camera_rotation_x)*camera_distance))*sin(camera_rotation_y), camera_distance*cos(camera_rotation_y), (y * 5) + ((cos(camera_rotation_x)*camera_distance))*sin(camera_rotation_y), x * 5, 0, (y * 5), 0.0f, 1.0f, 0.0f);
-	//	grid_manager.draw_2d();
+	gluLookAt((current_char->position.x * 5) + ((sin(camera_rotation_x)*camera_distance))*sin(camera_rotation_y), camera_distance*cos(camera_rotation_y), (current_char->position.z * 5) + ((cos(camera_rotation_x)*camera_distance))*sin(camera_rotation_y), current_char->position.x * 5, 0, (current_char->position.z * 5), 0.0f, 1.0f, 0.0f);
+	
 	grid_manager.draw_3d();
 
 	glPushMatrix();
-		glTranslatef(x * 5, 0.0f, y * 5);
-		glRotatef(camera_rotation_x*57.25, 0.0f, 1.0f, 0.0f);
 		test.draw();
 	glPopMatrix();
-
-	/*	3d cursor
-	if (!lookmode)
-	{
-		glPushMatrix();
-			glTranslatef(mouse_in_space.x, 0, mouse_in_space.z);
-			Paintbrush::draw_cube();
-		glPopMatrix();
-	}
-	*/
-
 }

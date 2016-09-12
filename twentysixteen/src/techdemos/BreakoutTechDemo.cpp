@@ -9,7 +9,6 @@ void BreakoutTechDemo::init()
 	spineboy.animation_name = "mouth_open";
 	spineboy.looping = false;
 
-
 	while (myemitter.particles.size() < 50)
 	{
 		myemitter.particles.push_back(new BallFireParticle);
