@@ -61,6 +61,7 @@ public:
 				{
 					if (((GameEntity*)game_entities->at(j))->check_against_game_entity(this))
 					{
+						((PlayerEntity*)game_entities->at(j))->catmode = false;
 						((PlayerEntity*)game_entities->at(j))->die();
 					}
 				}

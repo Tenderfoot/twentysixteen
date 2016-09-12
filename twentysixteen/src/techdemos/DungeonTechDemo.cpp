@@ -62,7 +62,7 @@ void DungeonTechDemo::run(float time_delta)
 void DungeonTechDemo::take_input(boundinput input, bool type)
 {
 	if (input == BACK && type == true)
-		exit_level = QUIT;
+		exit_level = TECHDEMO_BASE;
 
 	if (input == RIGHT && type == true)
 	{
@@ -74,6 +74,7 @@ void DungeonTechDemo::take_input(boundinput input, bool type)
 
 	if (input == UP && type == true)
 	{
+
 	}
 
 	if (input == DOWN && type == true)

@@ -34,29 +34,30 @@ public:
 	{
 		TechDemoUI.add_widget(new TextWidget("Base Tech Demo", 0.5, 0.175, 0.5, 0.3));
 		
-		initial_list = new ListWidget({ "DATA IMPORT", "VFX", "PHYSICS", "SCENES", "PROTOTYPING", "QUIT" });
+		initial_list = new ListWidget({ "DATA IMPORT", "VFX", "PLATFORMER", "GRID STUFF", "OTHER", "QUIT" });
 		initial_list->set_data(0.5, 0.35, 0.2, 0.1, true);
 		TechDemoUI.add_widget(initial_list);
 
-		filetypes_list = new ListWidget({ "Spine", "TTF/SOIL", "SDL_MIXER", "ASSIMP", "BACK" });
-		filetypes_list->set_data(0.5, 0.4, 0.2, 0.1, false);
+		filetypes_list = new ListWidget({ "Spine", "TTF/SOIL", "SDL_MIXER", "ASSIMP", "COLLISION", "BACK" });
+		filetypes_list->set_data(0.5, 0.35, 0.2, 0.1, false);
 		TechDemoUI.add_widget(filetypes_list);
 
 		vfx_list = new ListWidget({ "SHADERS", "EMITTERS", "GRASS", "LIGHTS", "BACK" });
 		vfx_list->set_data(0.5, 0.35, 0.2, 0.1, false);
 		TechDemoUI.add_widget(vfx_list);
 
-		physics_list = new ListWidget({ "COLLISION", "BACK" });
+		physics_list = new ListWidget({ "MEADOW", "PUZZLE", "BACK" });
 		physics_list->set_data(0.5, 0.4, 0.2, 0.1, false);
 		TechDemoUI.add_widget(physics_list);
 
-		scene_list = new ListWidget({ "PUZZLE", "BACK" });
-		scene_list->set_data(0.5, 0.35, 0.2, 0.1, false);
-		TechDemoUI.add_widget(scene_list);
-
-		prototyping = new ListWidget({"PLATFORMER", "BREAKOUT", "FOG_OF_WAR", "BACK" });
+		prototyping = new ListWidget({ "BREAKOUT",  "BACK" });
 		prototyping->set_data(0.5, 0.4, 0.2, 0.1, false);
 		TechDemoUI.add_widget(prototyping);
+
+		/* no longer used */
+		scene_list = new ListWidget({ "FOG_OF_WAR", "DUNGEON", "BACK" });
+		scene_list->set_data(0.5, 0.35, 0.2, 0.1, false);
+		TechDemoUI.add_widget(scene_list);
 
 		current_list = initial_list;
 
@@ -112,7 +113,7 @@ public:
 				{
 					exit_level = TECHDEMO_SHADER;
 				}
-				if (strcmp(choice, "PLATFORMER") == 0)
+				if (strcmp(choice, "MEADOW") == 0)
 				{
 					exit_level = TECHDEMO_MEADOW;
 				}
@@ -188,15 +189,15 @@ public:
 				{
 					switch_to(vfx_list);
 				}
-				if (strcmp(choice, "PHYSICS") == 0)
+				if (strcmp(choice, "PLATFORMER") == 0)
 				{
 					switch_to(physics_list);
 				}
-				if (strcmp(choice, "PROTOTYPING") == 0)
+				if (strcmp(choice, "OTHER") == 0)
 				{
 					switch_to(prototyping);
 				}
-				if (strcmp(choice, "SCENES") == 0)
+				if (strcmp(choice, "GRID STUFF") == 0)
 				{
 					switch_to(scene_list);
 				}
