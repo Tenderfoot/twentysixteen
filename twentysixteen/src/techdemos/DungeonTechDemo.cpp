@@ -66,6 +66,12 @@ void DungeonTechDemo::run(float time_delta)
 	y /= 5;
 
 	grid_manager.set_mouse_coords(int(x), int(y));
+
+	// this sets the current position right now
+	// will be unnecissary when entities are using
+	// grid manager
+	grid_manager.x = current_char->position.x;
+	grid_manager.y = current_char->position.z;
 }
 
 void DungeonTechDemo::take_input(boundinput input, bool type)
@@ -75,8 +81,9 @@ void DungeonTechDemo::take_input(boundinput input, bool type)
 
 	if (input == LMOUSE && type == true)
 	{
-		current_char->position.x = grid_manager.mouse_x;
-		current_char->position.z = grid_manager.mouse_y;
+		current_char->desired_pos = t_vertex(grid_manager.mouse_x, 0.0f, grid_manager.mouse_y);
+		current_char->state = GRID_MOVING;
+
 		grid_manager.compute_visibility_raycast(current_char->position.x, current_char->position.z);
 	}
 
@@ -115,9 +122,6 @@ void DungeonTechDemo::take_input(boundinput input, bool type)
 void DungeonTechDemo::draw()
 {
 	BaseTechDemo::draw();
-
-	grid_manager.x = current_char->position.x;
-	grid_manager.y = current_char->position.z;
 
 	gluLookAt((current_char->position.x * 5) + ((sin(camera_rotation_x)*camera_distance))*sin(camera_rotation_y), camera_distance*cos(camera_rotation_y), (current_char->position.z * 5) + ((cos(camera_rotation_x)*camera_distance))*sin(camera_rotation_y), current_char->position.x * 5, 0, (current_char->position.z * 5), 0.0f, 1.0f, 0.0f);
 	

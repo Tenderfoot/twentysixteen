@@ -99,7 +99,7 @@ void GridManager::set_mouse_coords(int mx, int my)
 	if (!are_equal(&tile_map[mouse_x][mouse_y], last_path))
 	{
 		last_path = &tile_map[mouse_x][mouse_y];
-		find_path(&tile_map[x][y], last_path);
+		find_path(t_vertex(x,0,y), t_vertex(last_path->x, 0.0f, last_path->y));
 	}
 	
 }
@@ -144,19 +144,22 @@ void GridManager::clear_path()
 		}
 }
 
-bool GridManager::find_path(t_tile *start, t_tile *goal)
+std::vector<t_tile*> GridManager::find_path(t_vertex start_pos, t_vertex end_pos)
 {
+	t_tile *start = &tile_map[start_pos.x][start_pos.z];
+	t_tile *goal = &tile_map[end_pos.x][end_pos.z];
 	clear_path();
 
+	std::vector<t_tile*> return_vector;
+
 	if (are_equal(start, goal))
-		return true;
+		return return_vector;
 
 	// The set of nodes already evaluated.
 	std::vector<t_tile*> closedSet = {};
 		// The set of currently discovered nodes still to be evaluated.
 		// Initially, only the start node is known.
-	std::vector<t_tile
-		*> openSet = { start };
+	std::vector<t_tile*> openSet = { start };
 		// For each node, which node it can most efficiently be reached from.
 		// If a node can be reached from many nodes, cameFrom will eventually contain the
 		// most efficient previous step.
@@ -185,10 +188,11 @@ bool GridManager::find_path(t_tile *start, t_tile *goal)
 			// success
 			while (current != start)
 			{
+				return_vector.push_back(current);
 				current->in_path = true;
 				current = &tile_map[current->cameFrom.x][current->cameFrom.y];
 			}
-			return true;
+			return return_vector;
 		}
 
 		for (i = 0; i < openSet.size(); i++)
@@ -279,7 +283,7 @@ bool GridManager::find_path(t_tile *start, t_tile *goal)
 		}
 	}
 
-	return false;
+	return return_vector;
 }
 
 void GridManager::draw_3d()

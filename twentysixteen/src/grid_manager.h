@@ -94,7 +94,7 @@ public:
 	void set_mouse_coords(int mx, int my);
 
 	// pathfinding stuff
-	bool find_path(t_tile *start, t_tile *goal);
+	std::vector<t_tile*> find_path(t_vertex start_pos, t_vertex end_pos);
 	void clear_path();
 	t_tile *last_path;
 
