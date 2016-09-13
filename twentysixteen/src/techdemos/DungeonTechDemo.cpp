@@ -47,6 +47,8 @@ void DungeonTechDemo::run(float time_delta)
 			camera_rotation_y = 0.01;
 	}
 
+	current_char->camera_x_rotation = camera_rotation_x;
+
 	// Loop through and update entities. This should stay and other things
 	// should be refactored out.
 	int i, j;
@@ -56,16 +58,20 @@ void DungeonTechDemo::run(float time_delta)
 	}
 	
 	// convert mouse position in space to grid coordinates...
-	float x, y;
-	x = mouse_in_space.x + 2.5;
-	y = mouse_in_space.z + 2.5;
+	if (current_char->state != GRID_MOVING)
+	{
+		float x, y;
+		x = mouse_in_space.x + 2.5;
+		y = mouse_in_space.z + 2.5;
+
+		x /= 5;
+		y /= 5;
+
+		grid_manager.set_mouse_coords(int(x), int(y));
+	}
+
 	mouse_relative.x = 0;
 	mouse_relative.y = 0;
-
-	x /= 5;
-	y /= 5;
-
-	grid_manager.set_mouse_coords(int(x), int(y));
 
 	// this sets the current position right now
 	// will be unnecissary when entities are using
@@ -81,10 +87,7 @@ void DungeonTechDemo::take_input(boundinput input, bool type)
 
 	if (input == LMOUSE && type == true)
 	{
-		current_char->desired_pos = t_vertex(grid_manager.mouse_x, 0.0f, grid_manager.mouse_y);
-		current_char->state = GRID_MOVING;
-
-		grid_manager.compute_visibility_raycast(current_char->position.x, current_char->position.z);
+		current_char->set_moving(t_vertex(grid_manager.mouse_x, 0.0f, grid_manager.mouse_y));
 	}
 
 	if (input == RMOUSE && type == true)
@@ -123,7 +126,13 @@ void DungeonTechDemo::draw()
 {
 	BaseTechDemo::draw();
 
-	gluLookAt((current_char->position.x * 5) + ((sin(camera_rotation_x)*camera_distance))*sin(camera_rotation_y), camera_distance*cos(camera_rotation_y), (current_char->position.z * 5) + ((cos(camera_rotation_x)*camera_distance))*sin(camera_rotation_y), current_char->position.x * 5, 0, (current_char->position.z * 5), 0.0f, 1.0f, 0.0f);
+	t_vertex camera_pos;
+	if (current_char->state == GRID_MOVING)
+		camera_pos = current_char->draw_position;
+	else
+		camera_pos = current_char->position;
+
+	gluLookAt((camera_pos.x * 5) + ((sin(camera_rotation_x)*camera_distance))*sin(camera_rotation_y), camera_distance*cos(camera_rotation_y), (camera_pos.z * 5) + ((cos(camera_rotation_x)*camera_distance))*sin(camera_rotation_y), camera_pos.x * 5, 0, (camera_pos.z * 5), 0.0f, 1.0f, 0.0f);
 	
 	grid_manager.draw_3d();
 

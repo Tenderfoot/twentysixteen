@@ -37,6 +37,12 @@ public:
 		return *this;
 	}
 
+	t_vertex operator- (t_vertex& other)
+	{
+		return t_vertex(this->x-other.x, this->y-other.y, this->z-other.z);
+	}
+
+
 	t_vertex operator+= (t_vertex& other)
 	{
 		this->x += other.x;
@@ -52,7 +58,7 @@ public:
 
 	float Magnitude()
 	{
-		return (float)sqrt(x * x + y * y);
+		return (float)sqrt(x * x + y * y + z*z);
 	}
 
 	void Normalize() {
