@@ -37,13 +37,13 @@ public:
 		if (state == GRID_MOVING)
 		{
 			std::vector<t_tile*> path = grid_manager->find_path(position, desired_pos);
-			if (SDL_GetTicks() - last_time > 500)
+			if (SDL_GetTicks() - last_time > 0)
 			{
 				if (path.size() > 0)
 				{
 					position.x = path.at(path.size() - 1)->x;
 					position.z = path.at(path.size() - 1)->y;
-					grid_manager->compute_visibility(position.x, position.z);
+					grid_manager->compute_visibility_raycast(position.x, position.z);
 				}
 				else
 				{

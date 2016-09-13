@@ -325,34 +325,6 @@ void GridManager::draw_3d()
 	}
 }
 
-void GridManager::compute_visibility(int i, int j)
-{
-	t_polygon vision_rect;
-	bool found;
-	int i2, j2;
-
-	for (i2 = 0; i2 < width; i2++)
-	{
-		for (j2 = 0; j2 < height; j2++)
-		{
-			tile_map[i2][j2].visible = true;
-			vision_rect = get_vision_rect(i, j, i2, j2);
-			int a, b;
-			for (a = 0; a < width; a++)
-				for (b = 0; b < height; b++)
-				{
-					if (check_collision(vision_rect, a, b) == true)
-					{
-						if (tile_map[a][b].wall == 1)
-						{
-							tile_map[i2][j2].visible = false;
-						}
-					}
-				}
-		}
-	}
-}
-
 void GridManager::compute_visibility_raycast(int i, int j)
 {
 	t_polygon vision_rect;

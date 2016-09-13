@@ -88,7 +88,6 @@ public:
 	// special stuff
 	t_polygon get_vision_rect(int i, int j, int i2, int j2);
 	bool check_collision(t_polygon rect, int i, int j);
-	void compute_visibility(int i, int j);
 	void compute_visibility_raycast(int i, int j);
 	bool point_can_be_seen(int i, int j, int i2, int j2);
 	void set_mouse_coords(int mx, int my);
