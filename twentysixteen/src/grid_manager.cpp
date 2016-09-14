@@ -57,6 +57,7 @@ void GridManager::load_map(std::string mapname)
 			tile_map[i][j].y = j;
 			tile_map[i][j].gscore = INFINITY;
 			tile_map[i][j].fscore = INFINITY;
+			tile_map[i][j].discovered = false;
 		}
 
 		j++;
@@ -306,20 +307,23 @@ void GridManager::draw_3d()
 			if (tile_map[i2][j2].in_path)
 				glColor3f(1.0f, 1.0f, 0.0f);
 
-			if (tile_map[i2][j2].wall == 0)
+			if (tile_map[i2][j2].discovered)
 			{
-				glPushMatrix();
-					glTranslatef(i2 * 5, 0.0f, j2*5);
+				if (tile_map[i2][j2].wall == 0)
+				{
+					glPushMatrix();
+					glTranslatef(i2 * 5, 0.0f, j2 * 5);
 					Paintbrush::draw_model(tile);
-				glPopMatrix();
-			}
-			else
-			{
-				glPushMatrix();
+					glPopMatrix();
+				}
+				else
+				{
+					glPushMatrix();
 					glTranslatef(i2 * 5, 0.0f, j2 * 5);
 					glColor3f(1.0f, 0.5f, 0.5f);
 					Paintbrush::draw_model(wall);
-				glPopMatrix();
+					glPopMatrix();
+				}
 			}
 		}
 	}
@@ -340,6 +344,8 @@ void GridManager::compute_visibility_raycast(int i, int j)
 		for (j2 = 0; j2 < height; j2++)
 		{
 			tile_map[i2][j2].visible = point_can_be_seen(i,j,i2,j2);
+			if (tile_map[i2][j2].visible)
+				tile_map[i2][j2].discovered = true;
 		}
 	}
 

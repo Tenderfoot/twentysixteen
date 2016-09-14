@@ -18,6 +18,7 @@
 
 #include "common.h"
 #include "render_target.h"
+#include "entity.h"
 #include <map>
 
 class Level
@@ -37,12 +38,37 @@ public:
 	float mousex, mousey;
 	bool initialized;
 
+	// mouse information
 	t_vertex mouse_relative;
 	t_vertex mouse_in_space;
+
+	// this is used to front to back sort entities with respect to the camera
+	static t_vertex camera_position;
+	static t_vertex camera_lookat;
 
 	struct by_depth_rendertarget {
 		bool operator()(render_target left, render_target right) {
 			return left.position.z < right.position.z;
+		}
+	};
+
+	struct by_depth_entity {
+		bool operator()(Entity *left, Entity *right) {
+
+			// so the idea is we make a line, and that line is the camera vector
+			// we can get this by subtracting the cameras lookat from its position...
+			// then project the entities onto that line, and compare their... projected score
+
+			t_vertex projection_vector = camera_lookat - camera_position;
+
+			float left_constant = (projection_vector.DotProduct(left->position) / projection_vector.DotProduct(projection_vector));
+			float right_constant = (projection_vector.DotProduct(right->position) / projection_vector.DotProduct(projection_vector));
+			t_vertex new_left = t_vertex(left_constant*projection_vector.x, left_constant*projection_vector.y, left_constant*projection_vector.z);
+			t_vertex new_right = t_vertex(right_constant*projection_vector.x, right_constant*projection_vector.y, right_constant*projection_vector.z);
+			float left_mag = t_vertex(camera_position-new_left).Magnitude();
+			float right_mag = t_vertex(camera_position - new_right).Magnitude();
+
+			return left_mag > right_mag;
 		}
 	};
 };

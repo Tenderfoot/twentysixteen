@@ -53,7 +53,7 @@ public:
 	}
 
 	float DotProduct(t_vertex other) {
-		return x * other.x + y * other.y;
+		return x * other.x + y * other.y + z * other.z;
 	}
 
 	float Magnitude()

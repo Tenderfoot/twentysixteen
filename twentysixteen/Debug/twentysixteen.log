@@ -1,3 +1,44 @@
-﻿  TTFTechDemo.cpp
-  twentysixteen.vcxproj -> D:\programming stuff\twentysixteen\Debug\twentysixteen.exe
-  twentysixteen.vcxproj -> D:\programming stuff\twentysixteen\Debug\twentysixteen.pdb (Partial PDB)
+﻿cl : Command line warning D9028: minimal rebuild failure, reverting to normal build
+  DungeonTechDemo.cpp
+c:\users\grant\documents\github\twentysixteen\twentysixteen\src\linear_algebra.h(40): warning C4018: '<': signed/unsigned mismatch
+c:\users\grant\documents\github\twentysixteen\twentysixteen\src\base_user_interface.h(82): warning C4018: '>=': signed/unsigned mismatch
+c:\users\grant\documents\github\twentysixteen\twentysixteen\src\techdemos\basetechdemo.h(35): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\grant\documents\github\twentysixteen\twentysixteen\src\techdemos\basetechdemo.h(38): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\grant\documents\github\twentysixteen\twentysixteen\src\techdemos\basetechdemo.h(42): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\grant\documents\github\twentysixteen\twentysixteen\src\techdemos\basetechdemo.h(46): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\grant\documents\github\twentysixteen\twentysixteen\src\techdemos\basetechdemo.h(50): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\grant\documents\github\twentysixteen\twentysixteen\src\techdemos\basetechdemo.h(54): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\grant\documents\github\twentysixteen\twentysixteen\src\techdemos\basetechdemo.h(59): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\grant\documents\github\twentysixteen\twentysixteen\src\techdemos\basetechdemo.h(64): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\grant\documents\github\twentysixteen\twentysixteen\src\grid_manager.h(54): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\grant\documents\github\twentysixteen\twentysixteen\src\gridcharacter.h(37): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+c:\users\grant\documents\github\twentysixteen\twentysixteen\src\gridcharacter.h(74): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+c:\users\grant\documents\github\twentysixteen\twentysixteen\src\gridcharacter.h(76): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+c:\users\grant\documents\github\twentysixteen\twentysixteen\src\gridcharacter.h(82): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+c:\users\grant\documents\github\twentysixteen\twentysixteen\src\gridcharacter.h(84): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+c:\users\grant\documents\github\twentysixteen\twentysixteen\src\gridcharacter.h(87): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\grant\documents\github\twentysixteen\twentysixteen\src\gridcharacter.h(89): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\grant\documents\github\twentysixteen\twentysixteen\src\gridcharacter.h(90): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\grant\documents\github\twentysixteen\twentysixteen\src\gridcharacter.h(94): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\grant\documents\github\twentysixteen\twentysixteen\src\gridcharacter.h(104): warning C4244: '=': conversion from 'Uint32' to 'float', possible loss of data
+c:\users\grant\documents\github\twentysixteen\twentysixteen\src\techdemos\dungeontechdemo.cpp(12): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\grant\documents\github\twentysixteen\twentysixteen\src\techdemos\dungeontechdemo.cpp(56): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\grant\documents\github\twentysixteen\twentysixteen\src\techdemos\dungeontechdemo.cpp(64): warning C4018: '<': signed/unsigned mismatch
+c:\users\grant\documents\github\twentysixteen\twentysixteen\src\techdemos\dungeontechdemo.cpp(73): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\grant\documents\github\twentysixteen\twentysixteen\src\techdemos\dungeontechdemo.cpp(74): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\grant\documents\github\twentysixteen\twentysixteen\src\techdemos\dungeontechdemo.cpp(88): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\grant\documents\github\twentysixteen\twentysixteen\src\techdemos\dungeontechdemo.cpp(89): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\grant\documents\github\twentysixteen\twentysixteen\src\techdemos\dungeontechdemo.cpp(63): warning C4101: 'j': unreferenced local variable
+c:\users\grant\documents\github\twentysixteen\twentysixteen\src\techdemos\dungeontechdemo.cpp(101): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  SOIL.lib(SOIL.obj) : MSIL .netmodule or module compiled with /GL found; restarting link with /LTCG; add /LTCG to the link command line to improve linker performance
+LINK : warning LNK4075: ignoring '/INCREMENTAL' due to '/LTCG' specification
+archer_entity.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/OPT:LBR' specification
+MSVCRTD.lib(initializers.obj) : warning LNK4098: defaultlib 'msvcrt.lib' conflicts with use of other libs; use /NODEFAULTLIB:library
+  Generating code
+  Finished generating code
+SOIL.lib(SOIL.obj) : warning LNK4099: PDB 'SOIL.pdb' was not found with 'SOIL.lib(SOIL.obj)' or at 'C:\Users\grant\Documents\GitHub\twentysixteen\Debug\SOIL.pdb'; linking object as if no debug info
+SOIL.lib(image_helper.obj) : warning LNK4099: PDB 'SOIL.pdb' was not found with 'SOIL.lib(image_helper.obj)' or at 'C:\Users\grant\Documents\GitHub\twentysixteen\Debug\SOIL.pdb'; linking object as if no debug info
+SOIL.lib(stb_image_aug.obj) : warning LNK4099: PDB 'SOIL.pdb' was not found with 'SOIL.lib(stb_image_aug.obj)' or at 'C:\Users\grant\Documents\GitHub\twentysixteen\Debug\SOIL.pdb'; linking object as if no debug info
+SOIL.lib(image_DXT.obj) : warning LNK4099: PDB 'SOIL.pdb' was not found with 'SOIL.lib(image_DXT.obj)' or at 'C:\Users\grant\Documents\GitHub\twentysixteen\Debug\SOIL.pdb'; linking object as if no debug info
+  twentysixteen.vcxproj -> C:\Users\grant\Documents\GitHub\twentysixteen\Debug\twentysixteen.exe
+  twentysixteen.vcxproj -> C:\Users\grant\Documents\GitHub\twentysixteen\Debug\twentysixteen.pdb (Partial PDB)

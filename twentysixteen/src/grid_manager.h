@@ -15,6 +15,7 @@ typedef struct
 	int wall;
 	std::vector<std::pair<int, int>> visible_tiles;
 	bool visible;
+	bool discovered;
 
 	// for pathfinding
 	float gscore, fscore;

@@ -17,18 +17,27 @@ void DungeonTechDemo::init()
 	camera_rotation_y = 1;
 	camera_distance = 25.0f;
 
-	test.spine_data.load_spine_data("everybody");
-	spSkeleton_setSkinByName(test.spine_data.skeleton, "witch");
-	test.spine_data.animation_name = "idle";
-	test.spine_data.looping = true;
-	test.grid_manager = &grid_manager;
+	test = new GridCharacter();
+	test->spine_data.load_spine_data("everybody");
+	spSkeleton_setSkinByName(test->spine_data.skeleton, "witch");
+	test->spine_data.animation_name = "idle";
+	test->spine_data.looping = true;
+	test->grid_manager = &grid_manager;
+	entities.push_back(test);
+	
+	current_char = test;
 
-	current_char = &test;
+	test = new GridCharacter();
+	test->spine_data.load_spine_data("everybody");
+	spSkeleton_setSkinByName(test->spine_data.skeleton, "mo");
+	test->spine_data.animation_name = "idle";
+	test->spine_data.looping = true;
+	test->grid_manager = &grid_manager;
+	test->position = t_vertex(5, 0, 5);
+	entities.push_back(test);
+
 	current_char->position.x = 1;
 	current_char->position.z = 1;
-
-	// things need to be part of this now!
-	entities.push_back(&test);
 }
 
 void DungeonTechDemo::run(float time_delta)
@@ -49,12 +58,15 @@ void DungeonTechDemo::run(float time_delta)
 
 	current_char->camera_x_rotation = camera_rotation_x;
 
+	std::sort(entities.begin(), entities.end(), by_depth_entity());
+
 	// Loop through and update entities. This should stay and other things
 	// should be refactored out.
 	int i, j;
 	for (i = 0; i < entities.size(); i++)
 	{
 		entities.at(i)->update(time_delta);
+		((GridCharacter*)entities.at(i))->camera_x_rotation = camera_rotation_x;
 	}
 	
 	// convert mouse position in space to grid coordinates...
@@ -87,7 +99,10 @@ void DungeonTechDemo::take_input(boundinput input, bool type)
 
 	if (input == LMOUSE && type == true)
 	{
-		current_char->set_moving(t_vertex(grid_manager.mouse_x, 0.0f, grid_manager.mouse_y));
+		if (current_char->state != GRID_MOVING)
+		{
+			current_char->set_moving(t_vertex(grid_manager.mouse_x, 0.0f, grid_manager.mouse_y));
+		}
 	}
 
 	if (input == RMOUSE && type == true)
@@ -132,11 +147,18 @@ void DungeonTechDemo::draw()
 	else
 		camera_pos = current_char->position;
 
+	// this stuff is for the current draw order
+	camera_position = t_vertex((camera_pos.x) + ((sin(camera_rotation_x)*camera_distance))*sin(camera_rotation_y), camera_distance*cos(camera_rotation_y), (camera_pos.z) + ((cos(camera_rotation_x)*camera_distance))*sin(camera_rotation_y));
+	camera_lookat = t_vertex(camera_pos.x, 0, (camera_pos.z));
+
 	gluLookAt((camera_pos.x * 5) + ((sin(camera_rotation_x)*camera_distance))*sin(camera_rotation_y), camera_distance*cos(camera_rotation_y), (camera_pos.z * 5) + ((cos(camera_rotation_x)*camera_distance))*sin(camera_rotation_y), camera_pos.x * 5, 0, (camera_pos.z * 5), 0.0f, 1.0f, 0.0f);
-	
 	grid_manager.draw_3d();
 
-	glPushMatrix();
-		test.draw();
-	glPopMatrix();
+	int i, j;
+	for (i = 0; i < entities.size(); i++)
+	{
+		glPushMatrix();
+			entities.at(i)->draw();
+		glPopMatrix();
+	}
 }

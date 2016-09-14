@@ -23,8 +23,9 @@ public:
 	GridManager grid_manager;
 	std::vector<Entity*> entities;
 	t_3dModel *mymodel;
-	GridCharacter test;
+	GridCharacter *test; 
 	GridCharacter *current_char;
+
 
 	// other stuff
 	int x, y;

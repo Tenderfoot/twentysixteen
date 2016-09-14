@@ -11,6 +11,8 @@
 #define NO_SDL_GLEXT
 
 // whats next
+// draw order with respect to camera
+// opacity of wall tiles
 
 // General Libraries
 #include <GL/glew.h>

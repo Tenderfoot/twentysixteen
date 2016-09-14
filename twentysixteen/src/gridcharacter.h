@@ -21,7 +21,6 @@ public:
 	t_vertex desired_pos;
 	GridCharacterState state;
 	float camera_x_rotation;
-
 	t_vertex draw_position;
 
 	float last_time;
@@ -54,6 +53,11 @@ public:
 		draw_position = position;
 	}
 
+	virtual void think()
+	{
+
+	}
+
 	void update(float time_delta)
 	{
 		if (state == GRID_MOVING)
@@ -80,7 +84,7 @@ public:
 						draw_position.z -= 0.002*time_delta;
 				}
 
-				if (t_vertex(t_vertex(next_stop->x,0,next_stop->y) - draw_position).Magnitude() < 0.05)
+				if (t_vertex(t_vertex(next_stop->x,0,next_stop->y) - draw_position).Magnitude() < 0.025)
 				{
 					position.x = next_stop->x;
 					position.z = next_stop->y;

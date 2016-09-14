@@ -53,9 +53,6 @@ public:
 	// Level Editor
 	LevelEditor level_editor;
 
-	// camera
-	t_vertex camera_position, camera_lookat;
-
 	// Level Entities
 	std::vector<Entity*> entities;
 
