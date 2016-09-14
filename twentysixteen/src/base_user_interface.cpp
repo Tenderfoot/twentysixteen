@@ -22,6 +22,18 @@ void UIImage::draw()
 	glPopMatrix();
 }
 
+void CharacterWidget::draw()
+{
+	x = (res_width / 20) * 15;
+	y = res_height;
+	glPushMatrix();
+	glTranslatef(x, y, 0.0f);
+	glScalef(0.25, -0.25, 1.0f);
+	if(character != NULL)
+		((GridCharacter*)character)->spine_data.draw();
+	glPopMatrix();
+}
+
 void ListWidget::draw()
 {
 	int i;

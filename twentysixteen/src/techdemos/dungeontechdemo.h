@@ -27,6 +27,7 @@ public:
 	GridCharacter *test; 
 	GridCharacter *current_char;
 	int current_char_entity;
+	CharacterWidget *char_widget;
 
 	// other stuff
 	int x, y;

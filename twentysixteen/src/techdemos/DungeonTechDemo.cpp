@@ -33,6 +33,8 @@ void DungeonTechDemo::init()
 	entities.push_back(test);
 	
 	current_char = test;
+	char_widget = new CharacterWidget(current_char);
+	TechDemoUI.add_widget(char_widget);
 
 	test = new GridCharacter();
 	test->spine_data.load_spine_data("everybody");
@@ -86,6 +88,7 @@ void DungeonTechDemo::run(float time_delta)
 			if (entities.at(i)->type == GRID_CHARACTER)
 			{
 				current_char = ((GridCharacter*)entities.at(i));
+				char_widget->character = current_char;
 				current_char->state = GRID_IDLE;
 				grid_manager.compute_visibility_raycast(current_char->position.x, current_char->position.z);
 			}

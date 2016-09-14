@@ -15,6 +15,7 @@
 
 #include "paintbrush.h"
 #include "grid_manager.h"
+#include "gridcharacter.h"
 
 class UIWidget
 {
@@ -115,6 +116,25 @@ public:
 	void draw();
 };
 
+class CharacterWidget : public UIWidget
+{
+public:
+	CharacterWidget(GridCharacter *newchar)
+	{
+		visible = true;
+		character = newchar;
+		x = res_width / 2;
+		y = res_height / 2;
+		width = res_width / 4;
+		height = (res_height / 4);
+	}
+
+	GridCharacter *character;
+	float x, y, width, height;
+	bool visible;
+	void draw();
+};
+
 class BaseUserInterface
 {
 public:
@@ -123,6 +143,5 @@ public:
 
 	void draw();
 	void add_widget(UIWidget *new_widget);
-
 };
 
