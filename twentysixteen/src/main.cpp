@@ -71,15 +71,46 @@ void init_opengl()
 	glMatrixMode(GL_MODELVIEW);  // Select The Model View Matrix
 	glLoadIdentity();    // Reset The Model View Matrix
 
-	glClearColor(0.0f, 0.0f, 0.0f, 0.5f);
+	glClearColor(0.05f, 0.05f, 0.05f, 0.5f);
 }
+
+void get_mouse_in_space()
+{
+	// refresh mouse in space - needs to happen after draw
+	GLint viewport[4];
+	GLdouble modelview[16];
+	GLdouble projection[16];
+	GLfloat winX, winY, winZ;
+	GLdouble posX, posY, posZ;
+
+	glGetDoublev(GL_MODELVIEW_MATRIX, modelview);
+	glGetDoublev(GL_PROJECTION_MATRIX, projection);
+	glGetIntegerv(GL_VIEWPORT, viewport);
+
+	winX = (float)current_level->mousex;
+	winY = (float)viewport[3] - (float)current_level->mousey;
+	glReadPixels(winX, int(winY), 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &winZ);
+	gluUnProject(winX, winY, winZ, modelview, projection, viewport, &posX, &posY, &posZ);
+
+	current_level->mouse_in_space = t_vertex(posX, posY, posZ);
+}
+
 
 void draw()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	// Clear Screen And Depth Buffer
 	glLoadIdentity();
 
+	// draw level
 	current_level->draw();
+	// get mouse position in space
+	// this needs to happen after draw, because it uses
+	// glReadPixels to get the depth at the mouse cursor,
+	// the uses gluUnProject to determine the position at that depth.
+	get_mouse_in_space();
+
+	// draw HUD stuff
+	current_level->draw_hud();
 
 	SDL_GL_SwapWindow(window);
 }
@@ -292,27 +323,6 @@ void init_levels()
 
 }
 
-void get_mouse_in_space()
-{
-	// refresh mouse in space - needs to happen after draw
-	GLint viewport[4];
-	GLdouble modelview[16];
-	GLdouble projection[16];
-	GLfloat winX, winY, winZ;
-	GLdouble posX, posY, posZ;
-
-	glGetDoublev(GL_MODELVIEW_MATRIX, modelview);
-	glGetDoublev(GL_PROJECTION_MATRIX, projection);
-	glGetIntegerv(GL_VIEWPORT, viewport);
-
-	winX = (float)current_level->mousex;
-	winY = (float)viewport[3] - (float)current_level->mousey;
-	glReadPixels(winX, int(winY), 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &winZ);
-	gluUnProject(winX, winY, winZ, modelview, projection, viewport, &posX, &posY, &posZ);
-
-	current_level->mouse_in_space = t_vertex(posX, posY, posZ);
-}
-
 int main(int argc, char *argv[])
 {
 	SDL_Init(SDL_INIT_VIDEO);
@@ -360,14 +370,9 @@ int main(int argc, char *argv[])
 		float current_time = SDL_GetTicks();
 		current_level->run(current_time - previous_time);
 		previous_time = current_time;
+		
 		// Draw
 		draw();
-
-		// get mouse position in space
-		// this needs to happen after draw, because it uses
-		// glReadPixels to get the depth at the mouse cursor,
-		// the uses gluUnProject to determine the position at that depth.
-		get_mouse_in_space();
 
 		// Level change request?
 		if (current_level->exit_level != LEVEL_NONE)

@@ -12,7 +12,9 @@ t_vertex Level::camera_lookat;
 
 void DungeonTechDemo::init()
 {
-	TechDemoUI.add_widget(new TextWidget("Dungeon Tech Demo", 0.5, 0.1, 0.5, 0.15));
+	TechDemoUI.add_widget(new UIImage(0.5, 0.9, 1.01, 0.2, Paintbrush::Soil_Load_Texture("data/images/HUD.png", false, false)));
+	TechDemoUI.add_widget(new MapWidget(&grid_manager));
+
 	grid_manager.init(50, 50);
 
 	lookmode = false;
@@ -179,8 +181,6 @@ void DungeonTechDemo::take_input(boundinput input, bool type)
 
 void DungeonTechDemo::draw()
 {
-	BaseTechDemo::draw();
-
 	t_vertex camera_pos;
 	if (current_char->state == GRID_MOVING)
 		camera_pos = current_char->draw_position;
@@ -207,4 +207,9 @@ void DungeonTechDemo::draw()
 				sort_list.at(i)->draw();
 		glPopMatrix();
 	}
+}
+
+void DungeonTechDemo::draw_hud()
+{
+	BaseTechDemo::draw();
 }

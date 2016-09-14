@@ -42,6 +42,40 @@ void ListWidget::draw()
 	}
 }
 
+void MapWidget::draw()
+{
+	//printf("%d, %d\n", map_grid->width, map_grid->height);
+	int i, j;
+	for (i = 0; i < map_grid->width; i++)
+	{
+		for (j = 0; j < map_grid->height; j++)
+		{
+			glPushMatrix();
+
+			glTranslatef(x+(i*0.1*width),y+(j*0.1*height), 0.0f);
+			glScalef(0.1*width, 0.1*height, 1.0f);
+			
+			glBindTexture(GL_TEXTURE_2D, NULL);
+			if (map_grid->tile_map[i][j].discovered == false)
+				glColor3f(0.0, 0.0f, 0.0f);
+			else if(map_grid->tile_map[i][j].wall == 1)
+				glColor3f(1.0, 0.0f, 0.0f);
+			else if(map_grid->entity_on_position(t_vertex(i,0,j)) != -1)
+				glColor3f(0.0, 0.0f, 1.0f);
+			else if (map_grid->tile_map[i][j].in_path)
+				glColor3f(1.0, 1.0f, 0.0f);
+			else if(map_grid->tile_map[i][j].visible == false)
+				glColor3f(0.5, 0.5f, 0.5f);
+			else
+				glColor3f(1.0, 1.0f, 1.0f);
+			Paintbrush::draw_quad();
+			glColor3f(1.0, 1.0f, 1.0f);
+
+			glPopMatrix();
+		}
+	}
+}
+
 void BaseUserInterface::draw()
 {
 	// set up orthographic projection

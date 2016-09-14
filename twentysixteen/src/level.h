@@ -27,6 +27,9 @@ public:
 	virtual void init() = 0;
 	virtual void run(float time_delta) = 0;
 	virtual void draw() = 0;
+	virtual void draw_hud()
+	{
+	}
 	virtual void reset() = 0;
 
 	// the input, and whether it was pressed or released
@@ -63,8 +66,8 @@ public:
 
 			float left_constant = (projection_vector.DotProduct(left->position) / projection_vector.DotProduct(projection_vector));
 			float right_constant = (projection_vector.DotProduct(right->position) / projection_vector.DotProduct(projection_vector));
-			t_vertex new_left = t_vertex(left_constant*projection_vector.x, left_constant*projection_vector.y, left_constant*projection_vector.z);
-			t_vertex new_right = t_vertex(right_constant*projection_vector.x, right_constant*projection_vector.y, right_constant*projection_vector.z);
+			t_vertex new_left = projection_vector*left_constant;
+			t_vertex new_right = projection_vector*right_constant;
 			float left_mag = t_vertex(camera_position-new_left).Magnitude();
 			float right_mag = t_vertex(camera_position - new_right).Magnitude();
 

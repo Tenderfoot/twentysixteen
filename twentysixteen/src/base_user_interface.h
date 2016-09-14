@@ -14,6 +14,7 @@
 #include <vector>
 
 #include "paintbrush.h"
+#include "grid_manager.h"
 
 class UIWidget
 {
@@ -92,6 +93,25 @@ public:
 
 	std::vector<char*> list_items;
 	int current_selection;
+	void draw();
+};
+
+class MapWidget : public UIWidget
+{
+public:
+	MapWidget(GridManager *grid)
+	{
+		visible = true;
+		map_grid = grid;
+		x = res_width/100;
+		y = (res_height / 9)*7.5;
+		width = res_width / 14;
+		height = (res_height / 12);
+	}
+
+	GridManager *map_grid;
+	float x, y, width, height;
+	bool visible;
 	void draw();
 };
 
