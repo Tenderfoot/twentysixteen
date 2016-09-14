@@ -109,6 +109,7 @@ enum entity_types
 	PORTCULLIS_ENTITY,
 	SWORDSMAN_ENTITY,
 	ENEMY_SIDEFIRE_ENTITY,
+	GRID_CHARACTER,
 };
 
 enum player_states

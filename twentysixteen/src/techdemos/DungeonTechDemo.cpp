@@ -46,6 +46,7 @@ void DungeonTechDemo::init()
 void DungeonTechDemo::run(float time_delta)
 {
 	grid_manager.lookmode = lookmode;
+	int i;
 
 	if (lookmode)
 	{
@@ -59,13 +60,38 @@ void DungeonTechDemo::run(float time_delta)
 			camera_rotation_y = 0.01;
 	}
 
-	current_char->camera_x_rotation = camera_rotation_x;
+	// if turn is over, go to next grid character in entity list;
+	int char_index;
+	if (current_char->state == GRID_ENDTURN)
+	{
+		for (i = 0; i < entities.size(); i++)
+		{
+			if (current_char == entities.at(i))
+			{
+				char_index = i;
+			}
+		}
+		current_char = NULL;
+		char_index++;
+		i = char_index % entities.size();
+		while (current_char == NULL)
+		{
+			if (entities.at(i)->type == GRID_CHARACTER)
+			{
+				current_char = ((GridCharacter*)entities.at(i));
+				current_char->state = GRID_IDLE;
+				grid_manager.compute_visibility_raycast(current_char->position.x, current_char->position.z);
+			}
+			i++;
+			i = i % entities.size();
+		}
+	}
 
-	std::sort(entities.begin(), entities.end(), by_depth_entity());
+	// other stuff
+	current_char->camera_x_rotation = camera_rotation_x;
 
 	// Loop through and update entities. This should stay and other things
 	// should be refactored out.
-	int i, j;
 	for (i = 0; i < entities.size(); i++)
 	{
 		entities.at(i)->update(time_delta);
@@ -157,12 +183,17 @@ void DungeonTechDemo::draw()
 	gluLookAt((camera_pos.x * 5) + ((sin(camera_rotation_x)*camera_distance))*sin(camera_rotation_y), camera_distance*cos(camera_rotation_y), (camera_pos.z * 5) + ((cos(camera_rotation_x)*camera_distance))*sin(camera_rotation_y), camera_pos.x * 5, 0, (camera_pos.z * 5), 0.0f, 1.0f, 0.0f);
 	grid_manager.draw_3d();
 
-	int i, j;
-	for (i = 0; i < entities.size(); i++)
+	// sort and draw entities
+	std::vector<Entity*> sort_list;
+	sort_list = entities;
+	std::sort(sort_list.begin(), sort_list.end(), by_depth_entity());
+
+	int i;
+	for (i = 0; i < sort_list.size(); i++)
 	{
 		glPushMatrix();
-			if(grid_manager.tile_map[entities.at(i)->position.x][entities.at(i)->position.z].discovered)
-				entities.at(i)->draw();
+			if(grid_manager.tile_map[sort_list.at(i)->position.x][sort_list.at(i)->position.z].discovered)
+				sort_list.at(i)->draw();
 		glPopMatrix();
 	}
 }

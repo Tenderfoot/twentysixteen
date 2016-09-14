@@ -10,12 +10,19 @@
 typedef enum
 {
 	GRID_IDLE,
-	GRID_MOVING
+	GRID_MOVING,
+	GRID_ENDTURN
 }GridCharacterState;
 
 class GridCharacter : public SpineEntity
 {
 public:
+
+	GridCharacter()
+	{
+		type = GRID_CHARACTER;
+	}
+
 	std::map<boundinput, bool> keydown_map;
 	GridManager *grid_manager;
 	t_vertex desired_pos;
@@ -98,7 +105,7 @@ public:
 			}
 			else
 			{
-				state = GRID_IDLE;
+				state = GRID_ENDTURN;
 				spine_data.animation_name = "idle";
 			}
 			last_time = SDL_GetTicks();

@@ -25,7 +25,7 @@ public:
 	t_3dModel *mymodel;
 	GridCharacter *test; 
 	GridCharacter *current_char;
-
+	int current_char_entity;
 
 	// other stuff
 	int x, y;
