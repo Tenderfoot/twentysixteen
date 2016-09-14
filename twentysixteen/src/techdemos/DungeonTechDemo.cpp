@@ -7,6 +7,9 @@
 // that character can enter several states, for example, "moving"
 // when a character has exhausted its actions it is the next characters turn
 
+t_vertex Level::camera_position;
+t_vertex Level::camera_lookat;
+
 void DungeonTechDemo::init()
 {
 	TechDemoUI.add_widget(new TextWidget("Dungeon Tech Demo", 0.5, 0.1, 0.5, 0.15));
@@ -158,7 +161,8 @@ void DungeonTechDemo::draw()
 	for (i = 0; i < entities.size(); i++)
 	{
 		glPushMatrix();
-			entities.at(i)->draw();
+			if(grid_manager.tile_map[entities.at(i)->position.x][entities.at(i)->position.z].discovered)
+				entities.at(i)->draw();
 		glPopMatrix();
 	}
 }
