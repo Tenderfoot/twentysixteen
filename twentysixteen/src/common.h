@@ -5,6 +5,7 @@
 #define res_height  768
 #define NUM_TOTAL_ENTITIES 12
 #define NUM_PARTICLE_TYPES 4
+#define SPINE_TIMESCALE 550
 
 #include <stdio.h>
 #include <string>

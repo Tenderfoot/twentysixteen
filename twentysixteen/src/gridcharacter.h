@@ -11,7 +11,8 @@ typedef enum
 {
 	GRID_IDLE,
 	GRID_MOVING,
-	GRID_ENDTURN
+	GRID_ENDTURN,
+	GRID_ATTACKING
 }GridCharacterState;
 
 class GridCharacter : public SpineEntity
@@ -31,6 +32,13 @@ public:
 	t_vertex draw_position;
 
 	float last_time;
+
+	void attack_target(GridCharacter *target)
+	{
+		state = GRID_ATTACKING;
+		spine_data.start_time = SDL_GetTicks();
+		spine_data.animation_name = "cast";
+	}
 
 	void draw()
 	{
@@ -109,6 +117,13 @@ public:
 				spine_data.animation_name = "idle";
 			}
 			last_time = SDL_GetTicks();
+		}
+		else if (state == GRID_ATTACKING)
+		{
+			if ((((float)SDL_GetTicks()) - spine_data.start_time)/SPINE_TIMESCALE > spSkeletonData_findAnimation(spine_data.skeletonData, spine_data.animation_name)->duration)
+			{
+				state = GRID_ENDTURN;
+			}
 		}
 
 		spine_data.update_skeleton(time_delta);

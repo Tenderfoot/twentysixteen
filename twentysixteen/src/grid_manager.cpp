@@ -1,4 +1,4 @@
-
+#include <sstream>
 #include "grid_manager.h"
 
 // 1.5? I guess
@@ -23,7 +23,20 @@ bool in_set(std::vector<t_tile*> set, t_tile *vertex)
 	}
 	return false;
 }
-#include <sstream>
+
+
+int GridManager::entity_on_position(t_vertex entity_pos)
+{
+	int i;
+	for (i = 0; i < entities->size(); i++)
+	{
+		if (entity_pos.x == entities->at(i)->position.x && entity_pos.z == entities->at(i)->position.z)
+		{
+			return i;
+		}
+	}
+	return -1;
+}
 
 void GridManager::load_map(std::string mapname)
 {

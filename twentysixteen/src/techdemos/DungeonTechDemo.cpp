@@ -17,6 +17,8 @@ void DungeonTechDemo::init()
 
 	lookmode = false;
 
+	grid_manager.entities = &entities;
+
 	camera_rotation_y = 1;
 	camera_distance = 25.0f;
 
@@ -64,6 +66,9 @@ void DungeonTechDemo::run(float time_delta)
 	int char_index;
 	if (current_char->state == GRID_ENDTURN)
 	{
+		current_char->state = GRID_IDLE;
+		current_char->spine_data.animation_name = "idle";
+
 		for (i = 0; i < entities.size(); i++)
 		{
 			if (current_char == entities.at(i))
@@ -128,9 +133,15 @@ void DungeonTechDemo::take_input(boundinput input, bool type)
 
 	if (input == LMOUSE && type == true)
 	{
-		if (current_char->state != GRID_MOVING)
+		if (current_char->state != GRID_MOVING || GRID_ATTACKING)
 		{
-			current_char->set_moving(t_vertex(grid_manager.mouse_x, 0.0f, grid_manager.mouse_y));
+			int entity_pos = grid_manager.entity_on_position(t_vertex(grid_manager.mouse_x, 0.0f, grid_manager.mouse_y));
+			if (entity_pos != -1)
+			{
+				current_char->attack_target((GridCharacter*)entities.at(entity_pos));
+			}
+			else
+				current_char->set_moving(t_vertex(grid_manager.mouse_x, 0.0f, grid_manager.mouse_y));
 		}
 	}
 
