@@ -36,9 +36,15 @@ void CharacterWidget::draw()
 
 void CombatLog::draw()
 {
-	glPushMatrix();
+
+	x = (res_width / 8)*7.175;
+	y = (res_height / 16) * 15.7;
+	width = res_width / 4;
+	height = (res_height / 4);
 
 	glPushMatrix();
+
+/*	glPushMatrix();
 		glTranslatef(x, y, 0.0f);
 		glScalef(width, height, 1.0f);
 
@@ -47,14 +53,14 @@ void CombatLog::draw()
 		Paintbrush::draw_quad();
 		glColor3f(1.0, 1.0f, 1.0f);
 	glPopMatrix();
-
+*/
 
 	//glTranslatef(x, y, 0.0f);
 	//glScalef(width, height, 1.0f);
 
 	glColor3f(1.0, 1.0f, 1.0f);
 
-	while (log->size() > 11)
+	while (log->size() > 6)
 		log->erase(log->begin());
 
 	int i;

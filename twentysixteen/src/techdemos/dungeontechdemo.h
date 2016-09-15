@@ -19,6 +19,7 @@ public:
 	void init();
 	void take_input(boundinput input, bool type);
 	void draw_hud();
+	void reset();
 
 	// Dungeon stuff
 	GridManager grid_manager;

@@ -22,14 +22,6 @@ void DungeonTechDemo::init()
 	combat_log.push_back("Mo missed! [  8 vs 10AC  ]");
 	combat_log.push_back("Mo missed! [  8 vs 10AC  ]");
 	combat_log.push_back("Mo missed! [  8 vs 10AC  ]");
-	combat_log.push_back("Mo missed! [  8 vs 10AC  ]");
-	combat_log.push_back("Mo missed! [  8 vs 10AC  ]");
-	combat_log.push_back("Mo missed! [  8 vs 10AC  ]");
-	combat_log.push_back("Mo missed! [  8 vs 10AC  ]");
-	combat_log.push_back("Mo missed! [  8 vs 10AC  ]");
-	combat_log.push_back("Mo missed! [  8 vs 10AC  ]");
-	combat_log.push_back("Mo missed! [  8 vs 10AC  ]");
-	combat_log.push_back("Mo missed! [  8 vs 10AC  ]");
 
 	grid_manager.init(50, 50);
 
@@ -63,10 +55,16 @@ void DungeonTechDemo::init()
 
 	current_char->position.x = 1;
 	current_char->position.z = 1;
+
+	reset();
 }
 
 void DungeonTechDemo::run(float time_delta)
 {
+	LightManager::lights[0].x = 1;
+	LightManager::lights[0].y = 1;
+	LightManager::lights[0].z = 1;
+
 	grid_manager.lookmode = lookmode;
 	int i;
 
@@ -211,7 +209,10 @@ void DungeonTechDemo::draw()
 	camera_lookat = t_vertex(camera_pos.x, 0, (camera_pos.z));
 
 	gluLookAt((camera_pos.x * 5) + ((sin(camera_rotation_x)*camera_distance))*sin(camera_rotation_y), camera_distance*cos(camera_rotation_y), (camera_pos.z * 5) + ((cos(camera_rotation_x)*camera_distance))*sin(camera_rotation_y), camera_pos.x * 5, 0, (camera_pos.z * 5), 0.0f, 1.0f, 0.0f);
+	
+	//Paintbrush::use_shader(Paintbrush::get_shader("point_light"));
 	grid_manager.draw_3d();
+	//Paintbrush::stop_shader();
 
 	// sort and draw entities
 	std::vector<Entity*> sort_list;
@@ -222,10 +223,31 @@ void DungeonTechDemo::draw()
 	for (i = 0; i < sort_list.size(); i++)
 	{
 		glPushMatrix();
-			if(grid_manager.tile_map[sort_list.at(i)->position.x][sort_list.at(i)->position.z].discovered)
-				sort_list.at(i)->draw();
+		if (grid_manager.tile_map[sort_list.at(i)->position.x][sort_list.at(i)->position.z].discovered)
+		{
+			//Paintbrush::use_shader(Paintbrush::get_shader("point_light"));
+			sort_list.at(i)->draw();
+			//Paintbrush::stop_shader();
+		}
 		glPopMatrix();
 	}
+}
+
+void DungeonTechDemo::reset()
+{
+	LightManager::reset();
+
+	while (LightManager::lights.size() < 1)
+	{
+		// make sure there are actually two lights to manipulate
+		LightManager::lights.push_back(Light(0, 0, 0, 20));
+	}
+
+	// make this motherfucker red
+	LightManager::lights[0].radius = 20;
+	LightManager::lights[0].r = 1;
+	LightManager::lights[0].g = 1;
+	LightManager::lights[0].b = 1;
 }
 
 void DungeonTechDemo::draw_hud()
