@@ -41,7 +41,7 @@ std::map<std::pair<GLenum, std::string>, GLint> Paintbrush::uniform_db = {};
 
 void Paintbrush::init()
 {
-	font = TTF_OpenFont("data/fonts/Greyscale Basic Bold.ttf", 100);
+	font = TTF_OpenFont("data/fonts/Greyscale Basic Regular.ttf", 100);
 	if (!font)
 	{
 		printf("TTF_OpenFont: %s\n", TTF_GetError());

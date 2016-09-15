@@ -92,6 +92,12 @@ void ListWidget::draw()
 			glColor3f(1.0f, 1.0f, 1.0f);
 		}
 
+		glBindTexture(GL_TEXTURE_2D, Paintbrush::get_texture(std::string(list_items.at(i)), true, false));
+		int w, h;
+		int miplevel = 0;
+		glGetTexLevelParameteriv(GL_TEXTURE_2D, miplevel, GL_TEXTURE_WIDTH, &w);
+		glGetTexLevelParameteriv(GL_TEXTURE_2D, miplevel, GL_TEXTURE_HEIGHT, &h);
+
 		Paintbrush::draw_text(list_items.at(i), x*res_width, (y + (0.1*i))*res_height, width*res_width, height*res_height);
 
 		glColor3f(1.0f, 1.0f, 1.0f);
