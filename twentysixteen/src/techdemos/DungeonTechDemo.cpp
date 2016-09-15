@@ -14,6 +14,12 @@ void DungeonTechDemo::init()
 {
 	TechDemoUI.add_widget(new UIImage(0.5, 0.9, 1.01, 0.2, Paintbrush::Soil_Load_Texture("data/images/HUD.png", false, false)));
 	TechDemoUI.add_widget(new MapWidget(&grid_manager));
+	TechDemoUI.add_widget(new CombatLog(&combat_log));
+
+	combat_log.push_back("Witch took a swing at Mo! [  11 vs 10AC  ]");
+	combat_log.push_back("Witch landed a hit for 2 damage!");
+	combat_log.push_back("Mo took a swing at Witch!");
+	combat_log.push_back("Mo missed! [  8 vs 10AC  ]");
 
 	grid_manager.init(50, 50);
 

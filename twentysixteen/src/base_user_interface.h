@@ -135,6 +135,27 @@ public:
 	void draw();
 };
 
+class CombatLog : public UIWidget
+{
+public:
+	CombatLog(std::vector<std::string> *log_address)
+	{
+		visible = true;
+		log = log_address;
+		x = res_width / 8;
+		y = (res_height / 16) * 11;
+		width = res_width / 4;
+		height = (res_height / 4);
+	}
+
+	std::vector<std::string> *log;
+	float x, y, width, height;
+	bool visible;
+	void draw();
+};
+
+
+
 class BaseUserInterface
 {
 public:

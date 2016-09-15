@@ -71,7 +71,7 @@ public:
 			float left_mag = t_vertex(camera_position-new_left).Magnitude();
 			float right_mag = t_vertex(camera_position - new_right).Magnitude();
 
-			return left_mag > right_mag;
+			return left_constant > right_constant;
 		}
 	};
 };

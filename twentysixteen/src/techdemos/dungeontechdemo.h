@@ -28,6 +28,7 @@ public:
 	GridCharacter *current_char;
 	int current_char_entity;
 	CharacterWidget *char_widget;
+	std::vector<std::string> combat_log;
 
 	// other stuff
 	int x, y;

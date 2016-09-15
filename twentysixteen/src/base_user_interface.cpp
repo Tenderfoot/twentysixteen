@@ -34,6 +34,41 @@ void CharacterWidget::draw()
 	glPopMatrix();
 }
 
+void CombatLog::draw()
+{
+	glPushMatrix();
+
+	glPushMatrix();
+		glTranslatef(x, y, 0.0f);
+		glScalef(width, height, 1.0f);
+
+		glBindTexture(GL_TEXTURE_2D, NULL);
+		glColor4f(0.0, 0.0f, 0.0f, 0.5f);
+		Paintbrush::draw_quad();
+		glColor3f(1.0, 1.0f, 1.0f);
+	glPopMatrix();
+
+
+	//glTranslatef(x, y, 0.0f);
+	//glScalef(width, height, 1.0f);
+
+	glColor3f(1.0, 1.0f, 1.0f);
+
+	int i;
+	for (i = 0; i < log->size(); i++)
+	{
+		glBindTexture(GL_TEXTURE_2D, Paintbrush::get_texture(std::string(log->at(i)), true, false));
+
+		int w, h;
+		int miplevel = 0;
+		glGetTexLevelParameteriv(GL_TEXTURE_2D, miplevel, GL_TEXTURE_WIDTH, &w);
+		glGetTexLevelParameteriv(GL_TEXTURE_2D, miplevel, GL_TEXTURE_HEIGHT, &h);
+		Paintbrush::draw_text(log->at(i) , x, y + ((height / 12) * (-5 + i)), ((w/h)*(height / 12)), height / 12);
+	}
+	
+	glPopMatrix();
+}
+
 void ListWidget::draw()
 {
 	int i;
