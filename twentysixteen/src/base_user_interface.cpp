@@ -54,17 +54,20 @@ void CombatLog::draw()
 
 	glColor3f(1.0, 1.0f, 1.0f);
 
+	while (log->size() > 11)
+		log->erase(log->begin());
+
 	int i;
 	for (i = 0; i < log->size(); i++)
 	{
 		glBindTexture(GL_TEXTURE_2D, Paintbrush::get_texture(std::string(log->at(i)), true, false));
-
 		int w, h;
 		int miplevel = 0;
 		glGetTexLevelParameteriv(GL_TEXTURE_2D, miplevel, GL_TEXTURE_WIDTH, &w);
 		glGetTexLevelParameteriv(GL_TEXTURE_2D, miplevel, GL_TEXTURE_HEIGHT, &h);
-		Paintbrush::draw_text(log->at(i) , x, y + ((height / 12) * (-5 + i)), ((w/h)*(height / 12)), height / 12);
+		Paintbrush::draw_text(log->at(i), x, y + ((height / 12) * (-5 + i)), ((w / h)*(height / 12)), height / 12);
 	}
+
 	
 	glPopMatrix();
 }

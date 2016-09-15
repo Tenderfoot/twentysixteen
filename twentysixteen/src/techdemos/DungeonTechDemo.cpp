@@ -20,6 +20,16 @@ void DungeonTechDemo::init()
 	combat_log.push_back("Witch landed a hit for 2 damage!");
 	combat_log.push_back("Mo took a swing at Witch!");
 	combat_log.push_back("Mo missed! [  8 vs 10AC  ]");
+	combat_log.push_back("Mo missed! [  8 vs 10AC  ]");
+	combat_log.push_back("Mo missed! [  8 vs 10AC  ]");
+	combat_log.push_back("Mo missed! [  8 vs 10AC  ]");
+	combat_log.push_back("Mo missed! [  8 vs 10AC  ]");
+	combat_log.push_back("Mo missed! [  8 vs 10AC  ]");
+	combat_log.push_back("Mo missed! [  8 vs 10AC  ]");
+	combat_log.push_back("Mo missed! [  8 vs 10AC  ]");
+	combat_log.push_back("Mo missed! [  8 vs 10AC  ]");
+	combat_log.push_back("Mo missed! [  8 vs 10AC  ]");
+	combat_log.push_back("Mo missed! [  8 vs 10AC  ]");
 
 	grid_manager.init(50, 50);
 
