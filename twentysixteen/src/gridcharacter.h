@@ -4,9 +4,9 @@
 // This is a GameEntity with an attaches spine character.
 // Could be an NPC, the Player, or an enemy.
 
+#include "common.h"
 #include "spine_entity.h"
 #include "grid_manager.h"
-#include "grid_abilities.h"
 
 typedef enum
 {
@@ -23,8 +23,8 @@ public:
 	GridCharacter()
 	{
 		type = GRID_CHARACTER;
-		abilities.push_back(new Ability(MOVE, 0,0,0,LINE_OF_SIGHT));
-		abilities.push_back(new Ability(ATTACK, 0, 0, 0, LINE_OF_SIGHT));
+		abilities.push_back(0);
+		abilities.push_back(1);
 		active_ability = -1;
 	}
 
@@ -34,7 +34,8 @@ public:
 	GridCharacterState state;
 	float camera_x_rotation;
 	t_vertex draw_position;
-	std::vector<Ability*> abilities;
+	
+	std::vector<int> abilities;
 
 	int active_ability;
 
@@ -45,19 +46,6 @@ public:
 		state = GRID_ATTACKING;
 		spine_data.start_time = SDL_GetTicks();
 		spine_data.animation_name = "cast";
-	}
-
-	void activate_ability()
-	{
-		switch (abilities.at(active_ability)->identifier)
-		{
-			case MOVE:
-				printf("move!!\n");
-				break;
-			case ATTACK:
-				printf("attack!!");
-				break;
-		}
 	}
 
 	void draw()

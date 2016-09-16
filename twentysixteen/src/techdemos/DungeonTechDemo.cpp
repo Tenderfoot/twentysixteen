@@ -1,7 +1,7 @@
 
 #include "dungeontechdemo.h"
 #include "../game_entity.h"
-
+#include "../grid_abilities.h"
 // going to make a grid character thats like an entity
 // at any one point in time, its a characters turn
 // that character can enter several states, for example, "moving"
@@ -12,6 +12,9 @@ t_vertex Level::camera_lookat;
 
 void DungeonTechDemo::init()
 {
+	Ability_Manager::build_abilities();
+	Ability_Manager::grid_manager = &grid_manager;
+
 	TechDemoUI.add_widget(new UIImage(0.5, 0.9, 1.01, 0.2, Paintbrush::Soil_Load_Texture("data/images/HUD.png", false, false)));
 	TechDemoUI.add_widget(new MapWidget(&grid_manager));
 	TechDemoUI.add_widget(new CombatLog(&combat_log));
@@ -170,7 +173,7 @@ void DungeonTechDemo::take_input(boundinput input, bool type)
 		}
 		else
 		{
-			current_char->activate_ability();
+			Ability_Manager::use_ability(current_char, mouse_in_space);
 		}
 	}
 

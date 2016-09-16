@@ -113,6 +113,20 @@ enum entity_types
 	GRID_CHARACTER,
 };
 
+typedef enum
+{
+	ANY_SQUARE,
+	LINE_OF_SIGHT,
+	PATHABLE,
+	LINE_OF_SIGHT_TARGET
+}t_targetcondition;
+
+typedef enum
+{
+	MOVE,
+	ATTACK
+}t_ability_enum;
+
 enum player_states
 {
 	IDLE,
