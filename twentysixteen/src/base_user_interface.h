@@ -23,20 +23,25 @@ public:
 	UIWidget()
 	{
 		visible = true;
+		absorbs_mouse = false;
 	}
 
 	float x, y, width, height;
 	bool visible;
+	bool absorbs_mouse;
 
 	virtual bool coords_in_ui(t_vertex mousecoords)
 	{
 		if (mousecoords.x > this->x*res_width - (0.5*this->width*res_width) && mousecoords.x < this->x*res_width + (0.5*this->width*res_width) &&
-			mousecoords.y > this->y*res_height - (0.5*this->height*res_height) && mousecoords.y < this->y*res_height + (0.5*this->height*res_height))
+			mousecoords.y > this->y*res_height - (0.5*this->height*res_height) && mousecoords.y < this->y*res_height + (0.5*this->height*res_height) && absorbs_mouse)
 		{
 			return true;
 		}
 		return false;
 	}
+
+	t_vertex color;
+	int index;
 
 	virtual void draw() = 0;
 };
@@ -129,13 +134,27 @@ class AbilityButton : public UIWidget
 {
 public:
 
-	AbilityButton(float x, float y, float width, float height, GLuint image)
+	AbilityButton(float x, float y, float width, float height, GLuint image, int index)
 	{
 		this->x = x;
 		this->y = y;
 		this->width = width;
 		this->height = height;
 		this->tex = image;
+		absorbs_mouse = true;
+		this->index = index;
+	}
+
+	bool coords_in_ui(t_vertex mousecoords)
+	{
+		if (mousecoords.x > this->x*res_width - (0.5*this->width*res_width) && mousecoords.x < this->x*res_width + (0.5*this->width*res_width) &&
+			mousecoords.y > this->y*res_height - (0.5*this->height*res_height) && mousecoords.y < this->y*res_height + (0.5*this->height*res_height))
+		{
+			color = t_vertex(1.0f, 0.0f, 1.0f);
+			return true;
+		}
+		color = t_vertex(0.5f, 0.5f, 0.5f);
+		return false;
 	}
 
 	GLuint tex;

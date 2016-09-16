@@ -203,7 +203,9 @@ std::vector<t_tile*> GridManager::find_path(t_vertex start_pos, t_vertex end_pos
 			while (current != start)
 			{
 				return_vector.push_back(current);
-				current->in_path = true;
+				// this made the path yellow
+				// which is cool, but shouldn't be done here..
+				//current->in_path = true;
 				current = &tile_map[current->cameFrom.x][current->cameFrom.y];
 			}
 			return return_vector;

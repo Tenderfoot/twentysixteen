@@ -23,8 +23,9 @@ public:
 	GridCharacter()
 	{
 		type = GRID_CHARACTER;
-		abilities.push_back(GridAbilities::ability_db[MOVE]);
-		abilities.push_back(GridAbilities::ability_db[ATTACK]);
+		abilities.push_back(new Ability(MOVE, 0,0,0,LINE_OF_SIGHT));
+		abilities.push_back(new Ability(ATTACK, 0, 0, 0, LINE_OF_SIGHT));
+		active_ability = -1;
 	}
 
 	std::map<boundinput, bool> keydown_map;
@@ -33,7 +34,9 @@ public:
 	GridCharacterState state;
 	float camera_x_rotation;
 	t_vertex draw_position;
-	std::vector<Ability> abilities;
+	std::vector<Ability*> abilities;
+
+	int active_ability;
 
 	float last_time;
 
@@ -42,6 +45,19 @@ public:
 		state = GRID_ATTACKING;
 		spine_data.start_time = SDL_GetTicks();
 		spine_data.animation_name = "cast";
+	}
+
+	void activate_ability()
+	{
+		switch (abilities.at(active_ability)->identifier)
+		{
+			case MOVE:
+				printf("move!!\n");
+				break;
+			case ATTACK:
+				printf("attack!!");
+				break;
+		}
 	}
 
 	void draw()

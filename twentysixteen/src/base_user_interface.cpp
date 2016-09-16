@@ -43,7 +43,7 @@ void AbilityButton::draw()
 
 	glBindTexture(GL_TEXTURE_2D, tex);
 	if (tex == NULL)
-		glColor3f(0.0, 0.0f, 0.0f);
+		glColor3f(color.x, color.y, color.z);
 	Paintbrush::draw_quad();
 	glColor3f(1.0, 1.0f, 1.0f);
 
