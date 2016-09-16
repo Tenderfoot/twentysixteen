@@ -82,6 +82,11 @@ void DungeonTechDemo::run(float time_delta)
 	{
 	}
 
+	if (current_char->state == IDLE)
+	{
+		grid_manager.good_spot = Ability_Manager::check_valid(current_char, mouse_in_space);
+	}
+
 	if (lookmode)
 	{
 		camera_rotation_x += mouse_relative.x / 100;

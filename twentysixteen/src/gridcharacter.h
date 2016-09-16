@@ -25,7 +25,7 @@ public:
 		type = GRID_CHARACTER;
 		abilities.push_back(0);
 		abilities.push_back(1);
-		active_ability = -1;
+		active_ability = 0;
 	}
 
 	std::map<boundinput, bool> keydown_map;

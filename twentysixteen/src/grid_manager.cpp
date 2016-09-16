@@ -43,11 +43,30 @@ void GridManager::draw_path(t_vertex start_pos)
 	std::vector<t_tile*> test = find_path(start_pos, t_vertex(mouse_x, 0, mouse_y));
 
 	int i;
-	for (i = 0; i < test.size(); i++)
+	if (test.size() > 0)
 	{
-		test[i]->in_path = true;
+		for (i = 1; i < test.size(); i++)
+		{
+			test[i]->in_path = true;
+		}
 	}
 }
+
+int GridManager::num_path(t_vertex start_pos)
+{
+	int b = 0;
+	std::vector<t_tile*> test = find_path(start_pos, t_vertex(mouse_x, 0, mouse_y));
+
+	int i;
+	for (i = 0; i < test.size(); i++)
+	{
+		b++;
+		test[i]->in_path = true;
+	}
+	return b;
+}
+
+
 
 void GridManager::load_map(std::string mapname)
 {
@@ -280,7 +299,7 @@ std::vector<t_tile*> GridManager::find_path(t_vertex start_pos, t_vertex end_pos
 				break;
 			}
 
-			if ((new_x >= 0 && new_x < width && new_y >= 0 && new_y < height) && tile_map[new_x][new_y].wall == 0)
+			if ((new_x >= 0 && new_x < width && new_y >= 0 && new_y < height) && tile_map[new_x][new_y].wall == 0 && entity_on_position(t_vertex(new_x,0,new_y)) == -1)
 			{
 				neighbour = &tile_map[new_x][new_y];
 			}
@@ -321,14 +340,18 @@ void GridManager::draw_3d()
 	{
 		for (j2 = 0; j2 < height; j2++)
 		{
-
 			if (tile_map[i2][j2].visible)
 				glColor3f(1.0f, 1.0f, 1.0f);
 			else
 				glColor3f(0.5f, 0.5f, 0.5f);
 
 			if (mouse_x == i2 && mouse_y == j2 && !lookmode)
-				glColor3f(0.0f, 1.0f, 0.0f);
+			{
+				if(good_spot)
+					glColor3f(0.0f, 1.0f, 0.0f);
+				else
+					glColor3f(1.0f, 0.0f, 0.0f);
+			}
 
 			if (tile_map[i2][j2].in_path)
 				glColor3f(1.0f, 1.0f, 0.0f);

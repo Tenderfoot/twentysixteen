@@ -94,6 +94,7 @@ public:
 	void set_mouse_coords(int mx, int my);
 	int entity_on_position(t_vertex entity_pos);
 	void draw_path(t_vertex start_pos);
+	int num_path(t_vertex start_pos);
 
 	// pathfinding stuff
 	std::vector<t_tile*> find_path(t_vertex start_pos, t_vertex end_pos);
@@ -111,4 +112,6 @@ public:
 	std::map<int, std::map<int, t_tile>> tile_map;
 	int mouse_x, mouse_y;
 	bool lookmode;
+	bool good_spot;
+
 };

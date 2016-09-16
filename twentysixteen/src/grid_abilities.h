@@ -46,6 +46,36 @@ public:
 		return ability_db[index];
 	}
 
+	static bool check_valid(GridCharacter *activator, t_vertex activate_position)
+	{
+		float x, y;
+		x = activate_position.x + 2.5;
+		y = activate_position.z + 2.5;
+		x /= 5;
+		y /= 5;
+		t_vertex grid_pos = t_vertex(int(x), 0, int(y));
+
+		// handle abilities
+		if (activator->active_ability == MOVE)
+		{
+			if (activator->state == IDLE)
+			{
+				if (grid_manager->num_path(activator->position) > 0)
+					return true;
+			}
+		}
+
+		if (activator->active_ability == ATTACK)
+		{
+			if (grid_manager->entity_on_position(t_vertex(int(x), 0, int(y))) != -1 && activator->state == IDLE)
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	static void use_ability(GridCharacter *activator, t_vertex activate_position)
 	{
 		// gather some info
@@ -59,8 +89,14 @@ public:
 		// handle abilities
 		if (activator->active_ability == MOVE)
 		{
-			if(activator->state == IDLE)
-				activator->set_moving(grid_pos);
+			if (activator->state == IDLE)
+			{
+				if (grid_manager->num_path(activator->position) > 0)
+				{
+					activator->set_moving(grid_pos);
+					grid_manager->good_spot = true;
+				}
+			}
 		}
 		if (activator->active_ability == ATTACK)
 		{
