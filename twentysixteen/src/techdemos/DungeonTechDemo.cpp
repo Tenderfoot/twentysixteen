@@ -18,8 +18,12 @@ void DungeonTechDemo::init()
 	TechDemoUI.add_widget(new UIImage(0.5, 0.9, 1.01, 0.2, Paintbrush::Soil_Load_Texture("data/images/HUD.png", false, false)));
 	TechDemoUI.add_widget(new MapWidget(&grid_manager));
 	TechDemoUI.add_widget(new CombatLog(&combat_log));
-	TechDemoUI.add_widget(new AbilityButton(0.225, 0.935, 0.05, 0.05, NULL, 0));
-	TechDemoUI.add_widget(new AbilityButton(0.315, 0.935, 0.05, 0.05, NULL, 1));
+	
+	ability_buttons[0] = new AbilityButton(0.225, 0.925, 0.05, 0.05, NULL, 0);
+	ability_buttons[1] = new AbilityButton(0.325, 0.925, 0.05, 0.05, NULL, 1);
+
+	TechDemoUI.add_widget(ability_buttons[0]);
+	TechDemoUI.add_widget(ability_buttons[1]);
 
 	combat_log.push_back("Witch took a swing at Mo! [  11 vs 10AC  ]");
 	combat_log.push_back("Witch landed a hit for 2 damage!");
@@ -143,6 +147,10 @@ void DungeonTechDemo::run(float time_delta)
 		y /= 5;
 
 		grid_manager.set_mouse_coords(int(x), int(y));
+		if (Ability_Manager::ability_db[(t_ability_enum)current_char->active_ability].target_condition == PATHABLE)
+		{
+			grid_manager.draw_path(current_char->position);
+		}
 	}
 
 	mouse_relative.x = 0;

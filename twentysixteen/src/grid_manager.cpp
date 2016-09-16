@@ -38,6 +38,17 @@ int GridManager::entity_on_position(t_vertex entity_pos)
 	return -1;
 }
 
+void GridManager::draw_path(t_vertex start_pos)
+{
+	std::vector<t_tile*> test = find_path(start_pos, t_vertex(mouse_x, 0, mouse_y));
+
+	int i;
+	for (i = 0; i < test.size(); i++)
+	{
+		test[i]->in_path = true;
+	}
+}
+
 void GridManager::load_map(std::string mapname)
 {
 	std::stringstream filename;

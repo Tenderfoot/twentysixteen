@@ -30,6 +30,7 @@ public:
 	int current_char_entity;
 	CharacterWidget *char_widget;
 	std::vector<std::string> combat_log;
+	AbilityButton *ability_buttons[2];
 
 	// other stuff
 	int x, y;

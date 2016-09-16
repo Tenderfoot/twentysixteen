@@ -59,11 +59,12 @@ public:
 		// handle abilities
 		if (activator->active_ability == MOVE)
 		{
-			activator->set_moving(grid_pos);
+			if(activator->state == IDLE)
+				activator->set_moving(grid_pos);
 		}
 		if (activator->active_ability == ATTACK)
 		{
-			if (grid_manager->entity_on_position(t_vertex(int(x), 0, int(y))) != -1)
+			if (grid_manager->entity_on_position(t_vertex(int(x), 0, int(y))) != -1 && activator->state == IDLE)
 			{
 				Entity *entity_on_pos = grid_manager->entities->at(grid_manager->entity_on_position(t_vertex(int(x), 0, int(y))));
 				activator->attack_target((GridCharacter*)entity_on_pos);
