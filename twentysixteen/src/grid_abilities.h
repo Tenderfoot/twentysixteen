@@ -87,20 +87,14 @@ public:
 		t_vertex grid_pos = t_vertex(int(x), 0, int(y));
 
 		// handle abilities
-		if (activator->active_ability == MOVE)
+		if (check_valid(activator, activate_position))
 		{
-			if (activator->state == IDLE)
+			if (activator->active_ability == MOVE)
 			{
-				if (grid_manager->num_path(activator->position) > 0)
-				{
-					activator->set_moving(grid_pos);
-					grid_manager->good_spot = true;
-				}
+				activator->set_moving(grid_pos);
+				grid_manager->good_spot = true;
 			}
-		}
-		if (activator->active_ability == ATTACK)
-		{
-			if (grid_manager->entity_on_position(t_vertex(int(x), 0, int(y))) != -1 && activator->state == IDLE)
+			if (activator->active_ability == ATTACK)
 			{
 				Entity *entity_on_pos = grid_manager->entities->at(grid_manager->entity_on_position(t_vertex(int(x), 0, int(y))));
 				activator->attack_target((GridCharacter*)entity_on_pos);
