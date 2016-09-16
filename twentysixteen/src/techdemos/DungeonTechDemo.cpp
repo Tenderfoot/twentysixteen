@@ -9,12 +9,14 @@
 
 t_vertex Level::camera_position;
 t_vertex Level::camera_lookat;
+std::map<t_ability_enum, Ability> GridAbilities::ability_db;
 
 void DungeonTechDemo::init()
 {
 	TechDemoUI.add_widget(new UIImage(0.5, 0.9, 1.01, 0.2, Paintbrush::Soil_Load_Texture("data/images/HUD.png", false, false)));
 	TechDemoUI.add_widget(new MapWidget(&grid_manager));
 	TechDemoUI.add_widget(new CombatLog(&combat_log));
+	TechDemoUI.add_widget(new AbilityButton(0.5,0.5,0.25,0.25,NULL));
 
 	combat_log.push_back("Witch took a swing at Mo! [  11 vs 10AC  ]");
 	combat_log.push_back("Witch landed a hit for 2 damage!");
@@ -67,6 +69,13 @@ void DungeonTechDemo::run(float time_delta)
 
 	grid_manager.lookmode = lookmode;
 	int i;
+
+
+	TechDemoUI.mouse_coords = t_vertex(mousex, mousey, 0);
+	if (TechDemoUI.mouse_focus() != -1)
+	{
+		printf("mouse over %d\n", TechDemoUI.mouse_focus());
+	}
 
 	if (lookmode)
 	{
@@ -152,15 +161,19 @@ void DungeonTechDemo::take_input(boundinput input, bool type)
 
 	if (input == LMOUSE && type == true)
 	{
-		if (current_char->state != GRID_MOVING || GRID_ATTACKING)
+		if (current_char->state != GRID_MOVING && current_char->state != GRID_ATTACKING)
 		{
 			int entity_pos = grid_manager.entity_on_position(t_vertex(grid_manager.mouse_x, 0.0f, grid_manager.mouse_y));
 			if (entity_pos != -1)
 			{
 				current_char->attack_target((GridCharacter*)entities.at(entity_pos));
+				combat_log.push_back("Attacking!");
 			}
 			else
+			{
+				combat_log.push_back("Moving!");
 				current_char->set_moving(t_vertex(grid_manager.mouse_x, 0.0f, grid_manager.mouse_y));
+			}
 		}
 	}
 

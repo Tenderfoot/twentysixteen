@@ -6,6 +6,7 @@
 
 #include "spine_entity.h"
 #include "grid_manager.h"
+#include "grid_abilities.h"
 
 typedef enum
 {
@@ -22,6 +23,8 @@ public:
 	GridCharacter()
 	{
 		type = GRID_CHARACTER;
+		abilities.push_back(GridAbilities::ability_db[MOVE]);
+		abilities.push_back(GridAbilities::ability_db[ATTACK]);
 	}
 
 	std::map<boundinput, bool> keydown_map;
@@ -30,6 +33,7 @@ public:
 	GridCharacterState state;
 	float camera_x_rotation;
 	t_vertex draw_position;
+	std::vector<Ability> abilities;
 
 	float last_time;
 

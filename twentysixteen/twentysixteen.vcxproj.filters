@@ -192,6 +192,9 @@
     <ClCompile Include="src\techdemos\DungeonTechDemo.cpp">
       <Filter>Source Files\techdemos</Filter>
     </ClCompile>
+    <ClCompile Include="src\grid_abilities.cpp">
+      <Filter>Source Files\grid</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\level.h">
@@ -354,6 +357,9 @@
       <Filter>Header Files\techdemos</Filter>
     </ClInclude>
     <ClInclude Include="src\gridcharacter.h">
+      <Filter>Header Files\grid</Filter>
+    </ClInclude>
+    <ClInclude Include="src\grid_abilities.h">
       <Filter>Header Files\grid</Filter>
     </ClInclude>
   </ItemGroup>

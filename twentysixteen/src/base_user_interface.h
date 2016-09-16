@@ -27,6 +27,17 @@ public:
 
 	float x, y, width, height;
 	bool visible;
+
+	virtual bool coords_in_ui(t_vertex mousecoords)
+	{
+		if (mousecoords.x > this->x*res_width - (0.5*this->width*res_width) && mousecoords.x < this->x*res_width + (0.5*this->width*res_width) &&
+			mousecoords.y > this->y*res_height - (0.5*this->height*res_height) && mousecoords.y < this->y*res_height + (0.5*this->height*res_height))
+		{
+			return true;
+		}
+		return false;
+	}
+
 	virtual void draw() = 0;
 };
 
@@ -43,7 +54,6 @@ public:
 		this->height = height;
 	}
 
-	float x, y, width, height;
 	std::string text;
 	void draw();
 };
@@ -111,7 +121,24 @@ public:
 	}
 
 	GridManager *map_grid;
-	float x, y, width, height;
+	bool visible;
+	void draw();
+};
+
+class AbilityButton : public UIWidget
+{
+public:
+
+	AbilityButton(float x, float y, float width, float height, GLuint image)
+	{
+		this->x = x;
+		this->y = y;
+		this->width = width;
+		this->height = height;
+		this->tex = image;
+	}
+
+	GLuint tex;
 	bool visible;
 	void draw();
 };
@@ -130,7 +157,6 @@ public:
 	}
 
 	GridCharacter *character;
-	float x, y, width, height;
 	bool visible;
 	void draw();
 };
@@ -149,7 +175,6 @@ public:
 	}
 
 	std::vector<std::string> *log;
-	float x, y, width, height;
 	bool visible;
 	void draw();
 };
@@ -161,6 +186,9 @@ class BaseUserInterface
 public:
 
 	std::vector<UIWidget*> widgets;
+	t_vertex mouse_coords;
+
+	int mouse_focus();
 
 	void draw();
 	void add_widget(UIWidget *new_widget);

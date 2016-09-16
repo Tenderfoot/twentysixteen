@@ -34,6 +34,22 @@ void CharacterWidget::draw()
 	glPopMatrix();
 }
 
+void AbilityButton::draw()
+{
+	glPushMatrix();
+
+	glTranslatef(x*res_width, y*res_height, 0.0f);
+	glScalef(width*res_width, height*res_height, 1.0f);
+
+	glBindTexture(GL_TEXTURE_2D, tex);
+	if (tex == NULL)
+		glColor3f(0.0, 0.0f, 0.0f);
+	Paintbrush::draw_quad();
+	glColor3f(1.0, 1.0f, 1.0f);
+
+	glPopMatrix();
+}
+
 void CombatLog::draw()
 {
 
@@ -169,6 +185,24 @@ void BaseUserInterface::draw()
 	gluPerspective(80, (float)res_width / (float)res_height, 1.0, 1000.0);
 	glMatrixMode(GL_MODELVIEW);  // Select The Model View Matrix
 	glLoadIdentity();    // Reset The Model View Matrix
+}
+
+// returns whetehr or not
+int BaseUserInterface::mouse_focus()
+{
+	int i;
+	float width;
+	float height;
+	
+	for (i = 0; i < widgets.size(); i++)
+	{
+		if (widgets.at(i)->coords_in_ui(mouse_coords))
+		{
+			return i;
+		}
+	}
+	
+	return -1;
 }
 
 void BaseUserInterface::add_widget(UIWidget *new_widget)
