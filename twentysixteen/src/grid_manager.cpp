@@ -299,7 +299,7 @@ std::vector<t_tile*> GridManager::find_path(t_vertex start_pos, t_vertex end_pos
 				break;
 			}
 
-			if ((new_x >= 0 && new_x < width && new_y >= 0 && new_y < height) && tile_map[new_x][new_y].wall == 0 && entity_on_position(t_vertex(new_x,0,new_y)) == -1)
+			if ((new_x >= 0 && new_x < width && new_y >= 0 && new_y < height) && tile_map[new_x][new_y].wall == 0 && entity_on_position(t_vertex(new_x,0,new_y)) == -1 && valid)
 			{
 				neighbour = &tile_map[new_x][new_y];
 			}
@@ -316,9 +316,6 @@ std::vector<t_tile*> GridManager::find_path(t_vertex start_pos, t_vertex end_pos
 				openSet.push_back(neighbour);
 			else if (tentative_gScore >= neighbour->gscore)
 				continue;		// This is not a better path.
-
-			if(valid == false)
-				continue;
 
 			// This path is the best until now. Record it!
 			neighbour->cameFrom.x = current->x;
@@ -418,70 +415,6 @@ bool GridManager::point_can_be_seen(int i, int j, int i2, int j2)
 	}
 
 	return true;
-}
-
-t_polygon GridManager::get_vision_rect(int i, int j, int i2, int j2)
-{
-	t_polygon return_rect;
-	float slope;
-
-	if (i2 - i != 0)
-	{
-		slope = ((((float)j2) - (float)j) / (((float)i2) - (float)i));
-	}
-	else
-	{
-		slope = INFINITY;
-	}
-
-	float inv_slope;
-	if (slope == 0)
-	{
-		inv_slope == INFINITY;
-	}
-	else
-		inv_slope = -1 / slope;
-
-	float length = sqrt(1 + ((inv_slope)*(inv_slope)));
-
-	inv_slope = inv_slope / length;
-
-	t_vertex v1, v2, v3, v4;
-
-	float box_scale = 0.001;
-
-	v1.x = i2 + box_scale;
-	v2.x = i2 - box_scale;
-	v1.y = j2 + box_scale*(inv_slope);
-	v2.y = j2 - box_scale*(inv_slope);
-
-	v3.x = i + box_scale;
-	v4.x = i - box_scale;
-	v3.y = j + box_scale*(inv_slope);
-	v4.y = j - box_scale*(inv_slope);
-
-	t_edge new_edge;
-	new_edge.verticies.push_back(v1);
-	new_edge.verticies.push_back(v2);
-	return_rect.edges.push_back(new_edge);
-	new_edge.verticies.clear();
-
-	new_edge.verticies.push_back(v2);
-	new_edge.verticies.push_back(v4);
-	return_rect.edges.push_back(new_edge);
-	new_edge.verticies.clear();
-
-	new_edge.verticies.push_back(v4);
-	new_edge.verticies.push_back(v3);
-	return_rect.edges.push_back(new_edge);
-	new_edge.verticies.clear();
-
-	new_edge.verticies.push_back(v3);
-	new_edge.verticies.push_back(v1);
-	return_rect.edges.push_back(new_edge);
-	new_edge.verticies.clear();
-
-	return return_rect;
 }
 
 bool GridManager::check_collision(t_polygon rect, int i, int j)
