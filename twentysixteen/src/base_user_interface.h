@@ -143,6 +143,7 @@ public:
 		this->tex = image;
 		absorbs_mouse = true;
 		this->index = index;
+		this->active = false;
 	}
 
 	bool coords_in_ui(t_vertex mousecoords)
@@ -159,6 +160,7 @@ public:
 
 	GLuint tex;
 	bool visible;
+	bool active;
 	void draw();
 };
 

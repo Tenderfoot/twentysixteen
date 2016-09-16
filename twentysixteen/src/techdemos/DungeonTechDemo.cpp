@@ -77,6 +77,14 @@ void DungeonTechDemo::run(float time_delta)
 	grid_manager.lookmode = lookmode;
 	int i;
 
+	for (i = 0; i < 2; i++)
+	{
+		if (i == current_char->active_ability)
+			ability_buttons[i]->active = true;
+		else
+			ability_buttons[i]->active = false;
+	}
+
 	TechDemoUI.mouse_coords = t_vertex(mousex, mousey, 0);
 	if (TechDemoUI.mouse_focus() != -1)
 	{
@@ -181,7 +189,8 @@ void DungeonTechDemo::take_input(boundinput input, bool type)
 		{
 			if (TechDemoUI.widgets.at(TechDemoUI.mouse_focus())->absorbs_mouse)
 			{
-				current_char->active_ability = TechDemoUI.widgets.at(TechDemoUI.mouse_focus())->index;// mouse is over a UI element
+				if(current_char->state == IDLE)
+					current_char->active_ability = TechDemoUI.widgets.at(TechDemoUI.mouse_focus())->index;// mouse is over a UI element
 			}
 		}
 		else
