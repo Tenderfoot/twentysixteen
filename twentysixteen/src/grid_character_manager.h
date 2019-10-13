@@ -1,3 +1,4 @@
+#pragma once
 
 #include "common.h"
 #include "gridcharacter.h"
@@ -12,7 +13,7 @@ public:
 		this->current_character = 0;
 	}
 
-	void SpawnCharacters(std::vector<Entity*> *entities)
+	void spawn_characters(std::vector<Entity*> *entities)
 	{
 		Entity *current_entity = NULL;
 		GridCharacter *new_character = NULL;
@@ -24,6 +25,18 @@ public:
 				new_character = new GridCharacter();
 				new_character->spine_data.load_spine_data("everybody");
 				spSkeleton_setSkinByName(new_character->spine_data.skeleton, "witch");
+				new_character->spine_data.animation_name = "idle";
+				new_character->spine_data.looping = true;
+				new_character->grid_manager = grid_manager;
+				new_character->position = current_entity->position;
+				entities->push_back(new_character);
+				characters.push_back(new_character);
+			}
+			if (current_entity->type == GRID_ENEMYSPAWNPOINT)
+			{
+				new_character = new EnemyGridCharacter();
+				new_character->spine_data.load_spine_data("everybody");
+				spSkeleton_setSkinByName(new_character->spine_data.skeleton, "mo");
 				new_character->spine_data.animation_name = "idle";
 				new_character->spine_data.looping = true;
 				new_character->grid_manager = grid_manager;
@@ -44,24 +57,26 @@ public:
 			grid_manager->good_spot = Ability_Manager::check_valid(current_char, mouse_in_space);
 		}
 
+		for (int i = 0; i < characters.size(); i++)
+		{
+			characters.at(i)->camera_x_rotation = camera_rotation_x;
+		}
+		
+		current_char->think();
+
 		if (current_char->state == GRID_ENDTURN)
 		{
 			current_char->state = GRID_IDLE;
 			current_char->spine_data.animation_name = "idle";
 
-			current_character = (current_character+1) % characters.size();
+			current_character = (current_character + 1) % characters.size();
 			current_char = get_current_character();
-			
+
 			if (current_char->state != GRID_DEAD)
 			{
 				current_char->state = GRID_IDLE;
 				grid_manager->compute_visibility_raycast(current_char->position.x, current_char->position.z);
 			}
-		}
-
-		for (int i = 0; i < characters.size(); i++)
-		{
-			characters.at(i)->camera_x_rotation = camera_rotation_x;
 		}
 
 		// convert mouse position in space to grid coordinates...

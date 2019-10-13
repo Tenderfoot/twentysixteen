@@ -27,7 +27,7 @@ void DungeonTechDemo::init()
 	grid_manager.entities = &entities;
 	grid_manager.init();
 	character_manager.grid_manager = &grid_manager;
-	character_manager.SpawnCharacters(&entities);
+	character_manager.spawn_characters(&entities);
 
 	lookmode = false;
 
@@ -45,9 +45,9 @@ void DungeonTechDemo::init()
 
 void DungeonTechDemo::run(float time_delta)
 {
-
 	grid_manager.lookmode = lookmode;
 	character_manager.run(mouse_in_space, camera_rotation_x);
+	char_widget->character = character_manager.get_current_character();
 
 	// Loop through and update entities. This should stay and other things
 	// should be refactored out.
@@ -137,6 +137,7 @@ void DungeonTechDemo::draw()
 	GridCharacter *current_char = character_manager.get_current_character();
 
 	t_vertex camera_pos;
+
 	if (current_char->state == GRID_MOVING)
 		camera_pos = current_char->draw_position;
 	else

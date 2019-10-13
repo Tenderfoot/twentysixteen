@@ -158,3 +158,23 @@ public:
 	}
 };
 
+#include "grid_abilities.h"
+
+class EnemyGridCharacter : public GridCharacter
+{
+public:
+
+	void  think()
+	{
+		if (state == GRID_IDLE)
+		{
+			float x, z;
+			x = draw_position.x+1;
+			z = draw_position.z;
+
+			t_vertex grid_pos = t_vertex(int(x), 0, int(z));
+			set_moving(grid_pos);
+		}
+	}
+
+};

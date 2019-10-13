@@ -30,7 +30,7 @@ int GridManager::entity_on_position(t_vertex entity_pos)
 	int i;
 	for (i = 0; i < entities->size(); i++)
 	{
-		if (entity_pos.x == entities->at(i)->position.x && entity_pos.z == entities->at(i)->position.z && entities->at(i)->type != GRID_SPAWNPOINT)
+		if (entity_pos.x == entities->at(i)->position.x && entity_pos.z == entities->at(i)->position.z && entities->at(i)->type != GRID_SPAWNPOINT && entities->at(i)->type != GRID_ENEMYSPAWNPOINT)
 		{
 			return i;
 		}
@@ -90,6 +90,7 @@ void GridManager::load_map(std::string mapname)
 	i = 0;
 	j = 0;
 
+	Entity *grid_spawn = NULL;
 	while (std::getline(in, line))
 	{
 		for (i = 0; i < line.length(); i++)
@@ -108,10 +109,18 @@ void GridManager::load_map(std::string mapname)
 				break;
 			case 2:
 				tile_map[i][j].wall = 0;
-				Entity *grid_spawn = new Entity();
+				grid_spawn = new Entity();
 				grid_spawn->position.x = i;
 				grid_spawn->position.z = j;
 				grid_spawn->type = GRID_SPAWNPOINT;
+				entities->push_back(grid_spawn);
+				break;
+			case 3:
+				tile_map[i][j].wall = 0;
+				grid_spawn = new Entity();
+				grid_spawn->position.x = i;
+				grid_spawn->position.z = j;
+				grid_spawn->type = GRID_ENEMYSPAWNPOINT;
 				entities->push_back(grid_spawn);
 				break;
 			}
