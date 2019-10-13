@@ -45,24 +45,9 @@ void DungeonTechDemo::init()
 
 void DungeonTechDemo::run(float time_delta)
 {
-	GridCharacter *current_char = character_manager.get_current_character();
 
 	grid_manager.lookmode = lookmode;
 	character_manager.run(mouse_in_space, camera_rotation_x);
-
-	if (lookmode)
-	{
-		camera_rotation_x += mouse_relative.x / 100;
-		camera_rotation_y += mouse_relative.y / 100;
-		mouse_relative.x = 0;
-		mouse_relative.y = 0;
-
-		if (camera_rotation_y > 1.5)
-			camera_rotation_y = 1.5;
-
-		if (camera_rotation_y < 0.01)
-			camera_rotation_y = 0.01;
-	}
 
 	// Loop through and update entities. This should stay and other things
 	// should be refactored out.
@@ -80,6 +65,20 @@ void DungeonTechDemo::take_input(boundinput input, bool type)
 	{
 		TechDemoUI.mouse_coords = t_vertex(mousex, mousey, 0);
 		TechDemoUI.mouse_focus();
+
+		if (lookmode)
+		{
+			camera_rotation_x += mouse_relative.x / 100;
+			camera_rotation_y += mouse_relative.y / 100;
+			mouse_relative.x = 0;
+			mouse_relative.y = 0;
+
+			if (camera_rotation_y > 1.5)
+				camera_rotation_y = 1.5;
+
+			if (camera_rotation_y < 0.01)
+				camera_rotation_y = 0.01;
+		}
 	}
 
 	if (input == BACK && type == true)
