@@ -89,6 +89,8 @@ public:
 	// special stuff
 	bool check_collision(t_polygon rect, int i, int j);
 	void compute_visibility_raycast(int i, int j, bool discover);
+	bool position_visible(int x, int z);
+	void reset_visibility();
 	bool point_can_be_seen(int i, int j, int i2, int j2);
 	void set_mouse_coords(int mx, int my);
 	int entity_on_position(t_vertex entity_pos);

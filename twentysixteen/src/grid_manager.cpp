@@ -66,7 +66,10 @@ int GridManager::num_path(t_vertex start_pos)
 	return b;
 }
 
-
+bool GridManager::position_visible(int x, int z)
+{
+	return tile_map[x][z].visible;
+}
 
 void GridManager::load_map(std::string mapname)
 {
@@ -396,6 +399,17 @@ void GridManager::draw_3d()
 	}
 }
 
+void GridManager::reset_visibility()
+{
+	for (int i2 = 0; i2 < width; i2++)
+	{
+		for (int j2 = 0; j2 < height; j2++)
+		{
+			tile_map[i2][j2].visible = false;
+		}
+	}
+}
+
 void GridManager::compute_visibility_raycast(int i, int j, bool discover)
 {
 	t_polygon vision_rect;
@@ -410,7 +424,9 @@ void GridManager::compute_visibility_raycast(int i, int j, bool discover)
 	{
 		for (j2 = 0; j2 < height; j2++)
 		{
-			tile_map[i2][j2].visible = point_can_be_seen(i,j,i2,j2);
+			if(!tile_map[i2][j2].visible)
+				tile_map[i2][j2].visible = point_can_be_seen(i,j,i2,j2);
+
 			if (tile_map[i2][j2].visible && discover)
 				tile_map[i2][j2].discovered = true;
 		}

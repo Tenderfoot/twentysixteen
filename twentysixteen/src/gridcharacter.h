@@ -28,6 +28,7 @@ public:
 		abilities.push_back(0);
 		abilities.push_back(1);
 		active_ability = 0;
+		visible = true;
 	}
 
 	std::map<boundinput, bool> keydown_map;
@@ -36,6 +37,7 @@ public:
 	GridCharacterState state;
 	float camera_x_rotation;
 	t_vertex draw_position;
+	bool dirty_visibiltiy;
 	
 	std::vector<int> abilities;
 
@@ -65,12 +67,15 @@ public:
 			draw_position = position;
 		}
 		
-		glPushMatrix();
-			glTranslatef(draw_position.x*5, draw_position.y, draw_position.z*5);
+		if (visible)
+		{
+			glPushMatrix();
+			glTranslatef(draw_position.x * 5, draw_position.y, draw_position.z * 5);
 			glRotatef(camera_x_rotation*57.25, 0.0f, 1.0f, 0.0f);
 			glScalef(0.006f, 0.006f, 0.006f);
 			spine_data.draw();
-		glPopMatrix();
+			glPopMatrix();
+		}
 	}
 
 
@@ -122,8 +127,7 @@ public:
 					position.z = next_stop->y;
 
 					draw_position = position;
-					
-					grid_manager->compute_visibility_raycast(position.x, position.z, type == GRID_CHARACTER);
+					dirty_visibiltiy = true;
 				}
 				
 				spine_data.animation_name = "walk_two";
@@ -164,10 +168,12 @@ public:
 	EnemyGridCharacter()
 	{
 		type = GRID_ENEMYCHARACTER;
+		visible = true;
 	}
 
 	int enemy_visible()
 	{
+		grid_manager->reset_visibility();
 		grid_manager->compute_visibility_raycast(draw_position.x, draw_position.z, false);
 		for (int i = 0; i < grid_manager->entities->size(); i++)
 		{

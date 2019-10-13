@@ -26,6 +26,7 @@ public:
 		color = new_color;
 		initial_position = new_pos;
 		velocity = t_vertex(0, 0, 0);
+		visible = true;
 	}
 
 	// An Entity has a position - a GameEntity also has:
@@ -42,6 +43,7 @@ public:
 	{}
 	int activate_id;
 	bool activated;
+	bool visible;
 
 	// collision stuff
 	void correct_against_collisiongroup(t_collisiongroup collision_group, float time_delta);

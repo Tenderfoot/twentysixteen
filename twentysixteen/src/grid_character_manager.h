@@ -47,10 +47,42 @@ public:
 		}
 	}
 
+	void get_team_vision(entity_types type)
+	{
+		grid_manager->reset_visibility();
+		for (int i = 0; i < characters.size(); i++)
+		{
+			if(characters.at(i)->type == type && characters.at(i)->state != GRID_DEAD)
+				grid_manager->compute_visibility_raycast(characters.at(i)->position.x, characters.at(i)->position.z, characters.at(i)->type == GRID_CHARACTER);
+
+		}
+		for (int i = 0; i < characters.size(); i++)
+		{
+			if (characters.at(i)->type != type)
+			{
+				characters.at(i)->visible = grid_manager->position_visible(characters.at(i)->position.x, characters.at(i)->position.z);
+			}
+			else
+				characters.at(i)->visible = true;
+		}
+	}
+
+	void get_vision()
+	{
+		grid_manager->reset_visibility();
+		grid_manager->compute_visibility_raycast(get_current_character()->position.x, get_current_character()->position.z, true);
+	}
+
 	void run(t_vertex mouse_in_space, float camera_rotation_x)
 	{
 		// if turn is over, go to next grid character in entity list;
 		GridCharacter *current_char = get_current_character();
+
+		if (current_char->dirty_visibiltiy && current_char->type == GRID_CHARACTER)
+		{
+			get_team_vision(current_char->type);
+			current_char->dirty_visibiltiy = false;
+		}
 
 		if (current_char->state == IDLE)
 		{
@@ -79,7 +111,7 @@ public:
 			}
 
 			current_char->state = GRID_IDLE;
-			grid_manager->compute_visibility_raycast(current_char->position.x, current_char->position.z, current_char->type == GRID_CHARACTER);
+			get_team_vision(current_char->type);
 		}
 
 		// convert mouse position in space to grid coordinates...
