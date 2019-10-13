@@ -30,7 +30,7 @@ int GridManager::entity_on_position(t_vertex entity_pos)
 	int i;
 	for (i = 0; i < entities->size(); i++)
 	{
-		if (entity_pos.x == entities->at(i)->position.x && entity_pos.z == entities->at(i)->position.z)
+		if (entity_pos.x == entities->at(i)->position.x && entity_pos.z == entities->at(i)->position.z && entities->at(i)->type != GRID_SPAWNPOINT)
 		{
 			return i;
 		}
@@ -95,7 +95,27 @@ void GridManager::load_map(std::string mapname)
 		for (i = 0; i < line.length(); i++)
 		{
 			tile_map[i][j] = t_tile();
-			tile_map[i][j].wall = line.c_str()[i] - '0';
+
+			int tile_type = line.c_str()[i] - '0';
+
+			switch (tile_type)
+			{
+			case 0:
+				tile_map[i][j].wall = 0;
+				break;
+			case 1:
+				tile_map[i][j].wall = 1;
+				break;
+			case 2:
+				tile_map[i][j].wall = 0;
+				Entity *grid_spawn = new Entity();
+				grid_spawn->position.x = i;
+				grid_spawn->position.z = j;
+				grid_spawn->type = GRID_SPAWNPOINT;
+				entities->push_back(grid_spawn);
+				break;
+			}
+
 			tile_map[i][j].x = i;
 			tile_map[i][j].y = j;
 			tile_map[i][j].gscore = INFINITY;
@@ -107,17 +127,9 @@ void GridManager::load_map(std::string mapname)
 	}
 }
 
-void GridManager::init(int w, int h)
+void GridManager::init()
 {
-	width = w;
-	height = h;
-
 	load_map("gridmap");
-
-	x = 1;
-	y = 1;
-
-	compute_visibility_raycast(x, y);
 	
 	tile = ModelData::import("data/models/tile.fbx", 0.05);
 	wall = ModelData::import("data/models/tile_wall.fbx", 0.05);

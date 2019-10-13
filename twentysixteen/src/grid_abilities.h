@@ -76,6 +76,11 @@ public:
 		return false;
 	}
 
+	static Entity *get_entity_from_position(t_vertex position)
+	{
+		return  grid_manager->entities->at(grid_manager->entity_on_position(position));
+	}
+
 	static void use_ability(GridCharacter *activator, t_vertex activate_position)
 	{
 		// gather some info
@@ -96,7 +101,7 @@ public:
 			}
 			if (activator->active_ability == ATTACK)
 			{
-				Entity *entity_on_pos = grid_manager->entities->at(grid_manager->entity_on_position(t_vertex(int(x), 0, int(y))));
+				Entity *entity_on_pos = get_entity_from_position(grid_pos);
 				activator->attack_target((GridCharacter*)entity_on_pos);
 			}
 		}

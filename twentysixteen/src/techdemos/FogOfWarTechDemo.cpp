@@ -5,7 +5,7 @@
 void FogOfWarTechDemo::init()
 {
 	TechDemoUI.add_widget(new TextWidget("Fog Of War", 0.5, 0.1, 0.5, 0.15));
-	grid_manager.init(50,50);
+	grid_manager.init();
 
 	spineboy.load_spine_data("everybody");
 	spSkeleton_setSkinByName(spineboy.skeleton, "mo");
@@ -38,10 +38,6 @@ void FogOfWarTechDemo::run(float time_delta)
 		if (camera_rotation_y < 0.01)
 			camera_rotation_y = 0.01;
 	}
-
-	// This is because they are only set when there is deltas
-	mouse_relative.x = 0;
-	mouse_relative.y = 0;
 
 	// convert mouse position in space to grid coordinates...
 	float x, y;

@@ -1,8 +1,8 @@
 #pragma once
 
 // some globals
-#define res_width  1024
-#define res_height  768
+#define res_width  1280
+#define res_height  720
 #define NUM_TOTAL_ENTITIES 12
 #define NUM_PARTICLE_TYPES 4
 #define SPINE_TIMESCALE 550
@@ -72,7 +72,8 @@ enum boundinput
 	RMOUSE,
 	MWHEELDOWN,
 	MWHEELUP,
-	MIDDLEMOUSE
+	MIDDLEMOUSE,
+	MOUSEMOTION
 };
 
 enum particle_types
@@ -111,6 +112,7 @@ enum entity_types
 	SWORDSMAN_ENTITY,
 	ENEMY_SIDEFIRE_ENTITY,
 	GRID_CHARACTER,
+	GRID_SPAWNPOINT,
 };
 
 typedef enum

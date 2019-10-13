@@ -5,6 +5,7 @@
 #include "../linear_algebra.h"
 #include "../grid_manager.h"
 #include "../gridcharacter.h"
+#include "../grid_character_manager.h"
 
 class DungeonTechDemo : public BaseTechDemo
 {
@@ -23,14 +24,13 @@ public:
 
 	// Dungeon stuff
 	GridManager grid_manager;
+	GridCharacterManager character_manager;
 	std::vector<Entity*> entities;
-	t_3dModel *mymodel;
-	GridCharacter *test; 
-	GridCharacter *current_char;
-	int current_char_entity;
+	
+	// UI stuff
 	CharacterWidget *char_widget;
 	std::vector<std::string> combat_log;
-	AbilityButton *ability_buttons[2];
+	AbilityBar *ability_bar;
 
 	// other stuff
 	int x, y;

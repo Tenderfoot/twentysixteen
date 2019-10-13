@@ -40,6 +40,11 @@ public:
 		return false;
 	}
 
+	virtual void click_at_location(t_vertex mousecoords)
+	{
+
+	}
+
 	t_vertex color;
 	int index;
 
@@ -144,6 +149,7 @@ public:
 		absorbs_mouse = true;
 		this->index = index;
 		this->active = false;
+		color = t_vertex(0.5f, 0.5f, 0.5f);
 	}
 
 	bool coords_in_ui(t_vertex mousecoords)
@@ -161,6 +167,63 @@ public:
 	GLuint tex;
 	bool visible;
 	bool active;
+	void draw();
+};
+
+class AbilityBar : public UIWidget
+{
+public:
+
+	AbilityBar(float x, float y, float width, float height, GLuint image, int index)
+	{
+		this->x = x;
+		this->y = y;
+		this->width = width;
+		this->height = height;
+		absorbs_mouse = true;
+		this->index = index;
+
+		ability_buttons[0] = new AbilityButton(0.225, 0.925, 0.05, 0.05, NULL, 0);
+		ability_buttons[1] = new AbilityButton(0.325, 0.925, 0.05, 0.05, NULL, 1);
+
+		ability_buttons[0]->active = true;
+	}
+
+	bool coords_in_ui(t_vertex mousecoords)
+	{
+		return (ability_buttons[0]->coords_in_ui(mousecoords)) || (ability_buttons[1]->coords_in_ui(mousecoords));
+	}
+
+	void click_at_location(t_vertex mousecoords)
+	{
+		if (ability_buttons[0]->coords_in_ui(mousecoords))
+			set_active(0);
+		else
+			set_active(1);
+	}
+
+	void set_active(int index)
+	{
+		for (int i = 0; i < 2; i++)
+		{
+			if (i == index)
+				ability_buttons[i]->active = true;
+			else
+				ability_buttons[i]->active = false;
+		}
+	}
+
+	int get_active()
+	{
+		for (int i = 0; i < 2; i++)
+		{
+			if (ability_buttons[i]->active)
+				return i;
+		}
+	}
+
+	AbilityButton *ability_buttons[2];
+
 	void draw();
 };
 

@@ -11,8 +11,7 @@
 #define NO_SDL_GLEXT
 
 // whats next
-// draw order with respect to camera
-// opacity of wall tiles
+
 
 // General Libraries
 #include <GL/glew.h>
@@ -103,6 +102,7 @@ void draw()
 
 	// draw level
 	current_level->draw();
+
 	// get mouse position in space
 	// this needs to happen after draw, because it uses
 	// glReadPixels to get the depth at the mouse cursor,
@@ -249,13 +249,10 @@ void handle_sdl_event()
 
 		if (event.type == SDL_MOUSEMOTION)
 		{	
-			//current_level->mousex = event.motion.xrel;
-			//current_level->mousey = event.motion.yrel;
 			current_level->mousex = (float)event.motion.x;
 			current_level->mousey =  (float)event.motion.y;
 			current_level->mouse_relative = t_vertex(event.motion.xrel, event.motion.yrel, 0.0f);
-
-		//	printf("%d, %d\n", event.motion.x, event.motion.y);
+			current_level->take_input(MOUSEMOTION, false);
 		}
 
 		if (event.type == SDL_MOUSEBUTTONDOWN)

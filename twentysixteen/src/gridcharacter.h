@@ -13,7 +13,9 @@ typedef enum
 	GRID_IDLE,
 	GRID_MOVING,
 	GRID_ENDTURN,
-	GRID_ATTACKING
+	GRID_ATTACKING,
+	GRID_DYING,
+	GRID_DEAD
 }GridCharacterState;
 
 class GridCharacter : public SpineEntity
@@ -46,6 +48,14 @@ public:
 		state = GRID_ATTACKING;
 		spine_data.start_time = SDL_GetTicks();
 		spine_data.animation_name = "cast";
+		target->die();
+	}
+
+	void die()
+	{
+		state = GRID_DYING;
+		spine_data.start_time = SDL_GetTicks();
+		spine_data.animation_name = "die";
 	}
 
 	void draw()
@@ -133,9 +143,18 @@ public:
 				state = GRID_ENDTURN;
 			}
 		}
+		else if (state == GRID_DYING)
+		{
+			if ((((float)SDL_GetTicks()) - spine_data.start_time) / SPINE_TIMESCALE > spSkeletonData_findAnimation(spine_data.skeletonData, spine_data.animation_name)->duration)
+			{
+				state = GRID_DEAD;
+			}
+		}
 
-		spine_data.update_skeleton(time_delta);
+		if (state != GRID_DEAD)
+		{
+			spine_data.update_skeleton(time_delta);
+		}
 	}
-			
 };
 

@@ -90,6 +90,7 @@
     <ClInclude Include="src\grass_entity.h" />
     <ClInclude Include="src\gridcharacter.h" />
     <ClInclude Include="src\grid_abilities.h" />
+    <ClInclude Include="src\grid_character_manager.h" />
     <ClInclude Include="src\grid_manager.h" />
     <ClInclude Include="src\level.h" />
     <ClInclude Include="src\leveleditor.h" />

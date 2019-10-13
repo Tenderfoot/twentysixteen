@@ -53,6 +53,12 @@ void AbilityButton::draw()
 	glPopMatrix();
 }
 
+void AbilityBar::draw()
+{
+	ability_buttons[0]->draw();
+	ability_buttons[1]->draw();
+}
+
 void CombatLog::draw()
 {
 

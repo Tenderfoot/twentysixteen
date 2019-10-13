@@ -58,8 +58,6 @@ t_polygon *LinearAlgebra::get_edges_from_slice(t_3dModel from_model, float plane
 		}
 	}
 
-
-
 	return edge_set;
 }
 

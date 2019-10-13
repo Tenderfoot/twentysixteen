@@ -362,6 +362,9 @@
     <ClInclude Include="src\grid_abilities.h">
       <Filter>Header Files\grid</Filter>
     </ClInclude>
+    <ClInclude Include="src\grid_character_manager.h">
+      <Filter>Header Files\grid</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="data\shaders\grass.frag">

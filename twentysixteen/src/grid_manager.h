@@ -79,7 +79,7 @@ class GridManager
 {
 public:
 	// normal stuff
-	void init(int w, int h);
+	void init();
 	void load_map(std::string mapname);
 
 	// for debugging FOV
