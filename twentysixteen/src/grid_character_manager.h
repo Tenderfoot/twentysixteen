@@ -79,7 +79,7 @@ public:
 			}
 
 			current_char->state = GRID_IDLE;
-			grid_manager->compute_visibility_raycast(current_char->position.x, current_char->position.z);
+			grid_manager->compute_visibility_raycast(current_char->position.x, current_char->position.z, current_char->type == GRID_CHARACTER);
 		}
 
 		// convert mouse position in space to grid coordinates...

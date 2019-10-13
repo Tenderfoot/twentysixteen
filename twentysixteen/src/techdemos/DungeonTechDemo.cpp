@@ -38,7 +38,7 @@ void DungeonTechDemo::init()
 	GridCharacter *current_char = character_manager.get_current_character();
 	char_widget = new CharacterWidget(current_char);
 	TechDemoUI.add_widget(char_widget);
-	grid_manager.compute_visibility_raycast(current_char->position.x, current_char->position.z);
+	grid_manager.compute_visibility_raycast(current_char->position.x, current_char->position.z, true);
 
 	reset();
 }

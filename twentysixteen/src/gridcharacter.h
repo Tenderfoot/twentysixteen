@@ -88,7 +88,6 @@ public:
 
 	virtual void think()
 	{
-
 	}
 
 	void update(float time_delta)
@@ -123,8 +122,8 @@ public:
 					position.z = next_stop->y;
 
 					draw_position = position;
-
-					grid_manager->compute_visibility_raycast(position.x, position.z);
+					
+					grid_manager->compute_visibility_raycast(position.x, position.z, type == GRID_CHARACTER);
 				}
 				
 				spine_data.animation_name = "walk_two";
@@ -169,7 +168,7 @@ public:
 
 	int enemy_visible()
 	{
-		grid_manager->compute_visibility_raycast(draw_position.x, draw_position.z);
+		grid_manager->compute_visibility_raycast(draw_position.x, draw_position.z, false);
 		for (int i = 0; i < grid_manager->entities->size(); i++)
 		{
 			Entity *current = grid_manager->entities->at(i);

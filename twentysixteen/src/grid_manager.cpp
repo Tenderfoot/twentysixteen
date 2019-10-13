@@ -396,7 +396,7 @@ void GridManager::draw_3d()
 	}
 }
 
-void GridManager::compute_visibility_raycast(int i, int j)
+void GridManager::compute_visibility_raycast(int i, int j, bool discover)
 {
 	t_polygon vision_rect;
 	bool found;
@@ -411,7 +411,7 @@ void GridManager::compute_visibility_raycast(int i, int j)
 		for (j2 = 0; j2 < height; j2++)
 		{
 			tile_map[i2][j2].visible = point_can_be_seen(i,j,i2,j2);
-			if (tile_map[i2][j2].visible)
+			if (tile_map[i2][j2].visible && discover)
 				tile_map[i2][j2].discovered = true;
 		}
 	}
