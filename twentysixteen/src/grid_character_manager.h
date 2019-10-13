@@ -72,11 +72,14 @@ public:
 			current_character = (current_character + 1) % characters.size();
 			current_char = get_current_character();
 
-			if (current_char->state != GRID_DEAD)
+			while (current_char->state == GRID_DEAD)
 			{
-				current_char->state = GRID_IDLE;
-				grid_manager->compute_visibility_raycast(current_char->position.x, current_char->position.z);
+				current_character = (current_character + 1) % characters.size();
+				current_char = get_current_character();
 			}
+
+			current_char->state = GRID_IDLE;
+			grid_manager->compute_visibility_raycast(current_char->position.x, current_char->position.z);
 		}
 
 		// convert mouse position in space to grid coordinates...

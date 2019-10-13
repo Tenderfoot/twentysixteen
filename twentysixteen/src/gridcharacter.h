@@ -158,22 +158,49 @@ public:
 	}
 };
 
-#include "grid_abilities.h"
-
 class EnemyGridCharacter : public GridCharacter
 {
 public:
 
-	void  think()
+	EnemyGridCharacter()
+	{
+		type = GRID_ENEMYCHARACTER;
+	}
+
+	int enemy_visible()
+	{
+		grid_manager->compute_visibility_raycast(draw_position.x, draw_position.z);
+		for (int i = 0; i < grid_manager->entities->size(); i++)
+		{
+			Entity *current = grid_manager->entities->at(i);
+			if (current->type == GRID_CHARACTER)
+			{
+				if (grid_manager->tile_map[current->position.x][current->position.z].visible && ((GridCharacter*)current)->state != GRID_DEAD)
+				{
+					return i;
+				}
+			}
+		}
+		return -1;
+	}
+
+	void think()
 	{
 		if (state == GRID_IDLE)
 		{
 			float x, z;
-			x = draw_position.x+1;
-			z = draw_position.z;
-
-			t_vertex grid_pos = t_vertex(int(x), 0, int(z));
-			set_moving(grid_pos);
+			int enemy_visible_result = enemy_visible();
+			if (enemy_visible_result != -1)
+			{
+				attack_target((GridCharacter*)grid_manager->entities->at(enemy_visible_result));
+			}
+			else
+			{
+				x = draw_position.x + 1;
+				z = draw_position.z;
+				t_vertex grid_pos = t_vertex(int(x), 0, int(z));
+				set_moving(grid_pos);
+			}
 		}
 	}
 

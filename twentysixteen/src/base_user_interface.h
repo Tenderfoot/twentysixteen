@@ -174,14 +174,9 @@ class AbilityBar : public UIWidget
 {
 public:
 
-	AbilityBar(float x, float y, float width, float height, GLuint image, int index)
+	AbilityBar()
 	{
-		this->x = x;
-		this->y = y;
-		this->width = width;
-		this->height = height;
 		absorbs_mouse = true;
-		this->index = index;
 
 		ability_buttons[0] = new AbilityButton(0.225, 0.925, 0.05, 0.05, NULL, 0);
 		ability_buttons[1] = new AbilityButton(0.325, 0.925, 0.05, 0.05, NULL, 1);
