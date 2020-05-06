@@ -85,6 +85,7 @@ public:
 	// for debugging FOV
 	void draw_2d();
 	void draw_3d();
+	void draw_autotile();
 
 	// special stuff
 	bool check_collision(t_polygon rect, int i, int j);
@@ -114,5 +115,6 @@ public:
 	int mouse_x, mouse_y;
 	bool lookmode;
 	bool good_spot;
+	GLuint autotile_tex;
 
 };

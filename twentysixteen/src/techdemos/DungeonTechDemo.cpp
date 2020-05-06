@@ -150,7 +150,7 @@ void DungeonTechDemo::draw()
 	gluLookAt((camera_pos.x * 5) + ((sin(camera_rotation_x)*camera_distance))*sin(camera_rotation_y), camera_distance*cos(camera_rotation_y), (camera_pos.z * 5) + ((cos(camera_rotation_x)*camera_distance))*sin(camera_rotation_y), camera_pos.x * 5, 0, (camera_pos.z * 5), 0.0f, 1.0f, 0.0f);
 	
 	//Paintbrush::use_shader(Paintbrush::get_shader("point_light"));
-	grid_manager.draw_3d();
+	grid_manager.draw_autotile();
 	//Paintbrush::stop_shader();
 
 	// sort and draw entities

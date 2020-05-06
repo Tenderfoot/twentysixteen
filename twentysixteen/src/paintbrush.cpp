@@ -468,8 +468,8 @@ GLuint Paintbrush::Soil_Load_Texture(std::string filename, bool for_assimp, bool
 	else if (for_grass)
 		flags = SOIL_FLAG_INVERT_Y;
 	else
-		flags = SOIL_FLAG_MIPMAPS;
-
+		flags = SOIL_FLAG_POWER_OF_TWO;
+	
 	loaded_texture = SOIL_load_OGL_texture
 	(filename.c_str(),
 		SOIL_LOAD_AUTO,
