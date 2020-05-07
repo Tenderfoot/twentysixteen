@@ -410,27 +410,17 @@ void GridManager::draw_autotile()
 		{
 			int tex_wall = 0;
 
-			if ((i2 != 0 && i2 != width - 1 && j2 != 0 && j2 != height - 1))
-			{
-				if (tile_map[i2][j2].wall == 1)
-				{
-					if (tile_map[i2 - 1][j2 - 1].wall == 1 && tile_map[i2][j2 - 1].wall == 1)
-						tex_wall = (tex_wall | 1);
+			if (tile_map[i2 - 1][j2 - 1].wall == 1 && tile_map[i2][j2 - 1].wall == 1)
+				tex_wall = (tex_wall | 1);
 
-					if (tile_map[i2 + 1][j2 - 1].wall == 1 && tile_map[i2][j2 - 1].wall == 1)
-						tex_wall = (tex_wall | 2);
+			if (tile_map[i2 + 1][j2 - 1].wall == 1 && tile_map[i2][j2 - 1].wall == 1)
+				tex_wall = (tex_wall | 2);
 
-					if (tile_map[i2 - 1][j2 + 1].wall == 1 && tile_map[i2][j2 + 1].wall == 1)
-						tex_wall = (tex_wall | 4);
+			if (tile_map[i2 - 1][j2 + 1].wall == 1 && tile_map[i2][j2 + 1].wall == 1)
+				tex_wall = (tex_wall | 4);
 
-					if (tile_map[i2 + 1][j2 + 1].wall == 1 && tile_map[i2][j2 + 1].wall == 1)
-						tex_wall = (tex_wall | 8);
-				}
-			}
-			else
-			{
-				tex_wall = 16;
-			}
+			if (tile_map[i2 + 1][j2 + 1].wall == 1 && tile_map[i2][j2 + 1].wall == 1)
+				tex_wall = (tex_wall | 8);
 
 			int xcoord = tex_wall % 4;
 			int ycoord = tex_wall / 4;
