@@ -145,7 +145,7 @@ void GridManager::init()
 	
 	tile = ModelData::import("data/models/tile.fbx", 0.05);
 	wall = ModelData::import("data/models/tile_wall.fbx", 0.05);
-	autotile_tex = Paintbrush::Soil_Load_Texture("data/images/autotile_example.png", false, false);
+	autotile_tex = Paintbrush::Soil_Load_Texture("data/images/war2autotile_grasstodirt.png", false, false);
 
 	last_path = &tile_map[x][y];
 }
@@ -408,40 +408,46 @@ void GridManager::draw_autotile()
 	{
 		for (j2 = 0; j2 < height; j2++)
 		{
-			int wall = 0;
+			int tex_wall = 0;
 
-			if (i2 != 0)
-				if (tile_map[i2 - 1][j2].wall == 0)
-					wall = (wall | 2);
+			if ((i2 != 0 && i2 != width - 1 && j2 != 0 && j2 != height - 1))
+			{
+				if (tile_map[i2][j2].wall == 1)
+				{
+					if (tile_map[i2 - 1][j2 - 1].wall == 1 && tile_map[i2][j2 - 1].wall == 1)
+						tex_wall = (tex_wall | 1);
 
-			if (i2 != width)
-				if (tile_map[i2 + 1][j2].wall == 0)
-					wall = (wall | 4);
+					if (tile_map[i2 + 1][j2 - 1].wall == 1 && tile_map[i2][j2 - 1].wall == 1)
+						tex_wall = (tex_wall | 2);
 
-			if (j2 != 0)
-				if (tile_map[i2][j2-1].wall == 0)
-					wall = (wall | 1);
+					if (tile_map[i2 - 1][j2 + 1].wall == 1 && tile_map[i2][j2 + 1].wall == 1)
+						tex_wall = (tex_wall | 4);
 
-			if (j2 != height)
-				if (tile_map[i2][j2+1].wall == 0)
-					wall = (wall | 8);
+					if (tile_map[i2 + 1][j2 + 1].wall == 1 && tile_map[i2][j2 + 1].wall == 1)
+						tex_wall = (tex_wall | 8);
+				}
+			}
+			else
+			{
+				tex_wall = 16;
+			}
 
-			int xcoord = wall % 4;
-			int ycoord = wall / 4;
+			int xcoord = tex_wall % 4;
+			int ycoord = tex_wall / 4;
 
 			glPushMatrix();
-					glTranslatef(i2 * 5, 0.0f, j2 * 5);
-					glRotatef(90, 1.0f, 0.0f, 0.0f);
-					glScalef(5.0f, 5.0f, 1.0f);
-					glBindTexture(GL_TEXTURE_2D, autotile_tex);
-					glPushMatrix();
-						glBegin(GL_QUADS);
-						glTexCoord2f(0.25f + (0.25f*xcoord), 0.25f + (0.25f*ycoord));	glVertex3f(0.5f, 0.5f, 0.0f);
-						glTexCoord2f(0.0f + (0.25f*xcoord), 0.25f + (0.25f*ycoord));	glVertex3f(-0.5f, 0.5f, 0.0f);
-						glTexCoord2f(0.0f + (0.25f*xcoord), 0.0f + (0.25f*ycoord));	glVertex3f(-0.5f, -0.5f, 0.0f);
-						glTexCoord2f(0.25f + (0.25f*xcoord), 0.0f + (0.25f*ycoord));	glVertex3f(0.5f, -0.5f, 0.0f);
-						glEnd();
-					glPopMatrix();
+				glTranslatef(i2 * 5, 0.0f, j2 * 5);
+				glRotatef(90, 1.0f, 0.0f, 0.0f);
+				glScalef(2.5f, 2.5f, 1.0f);
+				glBindTexture(GL_TEXTURE_2D, autotile_tex);
+				glPushMatrix();
+					glBegin(GL_QUADS);
+						glTexCoord2f(0.25f + (0.25f*xcoord), 0.25f + (0.25f*ycoord));	glVertex3f(1.0f, 1.0f, 0.0f);
+						glTexCoord2f(0.0f + (0.25f*xcoord), 0.25f + (0.25f*ycoord));	glVertex3f(-1.0f, 1.0f, 0.0f);
+						glTexCoord2f(0.0f + (0.25f*xcoord), 0.0f + (0.25f*ycoord));	glVertex3f(-1.0f, -1.0f, 0.0f);
+						glTexCoord2f(0.25f + (0.25f*xcoord), 0.0f + (0.25f*ycoord));	glVertex3f(1.0f, -1.0f, 0.0f);
+					glEnd();
+				glPopMatrix();
 			glPopMatrix();
 		}
 	}

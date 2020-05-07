@@ -149,9 +149,7 @@ void DungeonTechDemo::draw()
 
 	gluLookAt((camera_pos.x * 5) + ((sin(camera_rotation_x)*camera_distance))*sin(camera_rotation_y), camera_distance*cos(camera_rotation_y), (camera_pos.z * 5) + ((cos(camera_rotation_x)*camera_distance))*sin(camera_rotation_y), camera_pos.x * 5, 0, (camera_pos.z * 5), 0.0f, 1.0f, 0.0f);
 	
-	//Paintbrush::use_shader(Paintbrush::get_shader("point_light"));
 	grid_manager.draw_autotile();
-	//Paintbrush::stop_shader();
 
 	// sort and draw entities
 	std::vector<Entity*> sort_list;
@@ -164,9 +162,7 @@ void DungeonTechDemo::draw()
 		glPushMatrix();
 		if (grid_manager.tile_map[sort_list.at(i)->position.x][sort_list.at(i)->position.z].discovered)
 		{
-			//Paintbrush::use_shader(Paintbrush::get_shader("point_light"));
 			sort_list.at(i)->draw();
-			//Paintbrush::stop_shader();
 		}
 		glPopMatrix();
 	}

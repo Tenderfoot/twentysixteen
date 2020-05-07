@@ -468,13 +468,20 @@ GLuint Paintbrush::Soil_Load_Texture(std::string filename, bool for_assimp, bool
 	else if (for_grass)
 		flags = SOIL_FLAG_INVERT_Y;
 	else
-		flags = SOIL_FLAG_POWER_OF_TWO;
+		flags = NULL;
 	
 	loaded_texture = SOIL_load_OGL_texture
 	(filename.c_str(),
 		SOIL_LOAD_AUTO,
 		SOIL_CREATE_NEW_ID,
 		flags);
+
+	printf("texture loaded: %d\n", loaded_texture);
+
+	if (0 == loaded_texture)
+	{
+		printf("SOIL loading error: '%s'\n", SOIL_last_result());
+	}
 
 	// Make sure texture is set to repeat on wrap
 	glBindTexture(GL_TEXTURE_2D, loaded_texture);
@@ -491,10 +498,12 @@ GLuint Paintbrush::Soil_Load_Texture(std::string filename, bool for_assimp, bool
 	}
 	else
 	{
-		// make sure it doesn't wrap
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	}
+
 	return loaded_texture;
 }
 
