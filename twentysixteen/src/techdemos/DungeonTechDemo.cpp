@@ -100,6 +100,14 @@ void DungeonTechDemo::take_input(boundinput input, bool type)
 		}
 	}
 
+	if (input == EDITOR_T && type == true)
+	{
+		if (grid_manager.active_autotile == grid_manager.autotile_tex)
+			grid_manager.active_autotile = grid_manager.autotile_tex_war2;
+		else
+			grid_manager.active_autotile = grid_manager.autotile_tex;
+	}
+
 	if (input == RMOUSE && type == true)
 	{
 		lookmode = true;
