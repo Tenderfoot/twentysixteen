@@ -442,7 +442,7 @@ void GridManager::draw_autotile()
 
 			if(i2==0 || i2==width-1 || j2==0 || j2==height-1)
 			{
-				tex_wall = 0;
+				tex_wall = 15;
 			}
 			else
 			{
@@ -469,6 +469,7 @@ void GridManager::draw_autotile()
 
 				if (tile_map[i2 - 1][j2].wall == 1)
 					tex_wall = (tex_wall | 128);
+
 
 				if (war2_autotile_map[tex_wall] != -1)
 				{
