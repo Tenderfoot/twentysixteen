@@ -403,6 +403,33 @@ void GridManager::draw_3d()
 	}
 }
 
+void GridManager::randomize_map()
+{
+
+	for (int i = 1; i < width - 2; i++)
+	{
+		for (int j = 1; j < height - 2; j++)
+		{
+			tile_map[i][j].wall = 0;
+		}
+	}
+
+	for (int i = 1; i < width - 2; i++)
+	{
+		for (int j = 1; j < height - 2; j++)
+		{
+			if(rand() % 5 == 0)
+			{ 
+				tile_map[i][j].wall = 1;
+				tile_map[i+1][j].wall = 1;
+				tile_map[i][j+1].wall = 1;
+				tile_map[i+1][j+1].wall = 1;
+			}
+		}
+	}
+	
+}
+
 void GridManager::draw_autotile()
 {
 	int i2, j2;
@@ -443,77 +470,10 @@ void GridManager::draw_autotile()
 				if (tile_map[i2 - 1][j2].wall == 1)
 					tex_wall = (tex_wall | 128);
 
-
-				/*
-				if (tex_wall == 56 || tex_wall == 108 || tex_wall == 60 || tex_wall ==  120 || tex_wall == 124)
-					tex_wall = 7;
-				else if (tex_wall == 224 || tex_wall == 177 || tex_wall == 225 || tex_wall==240 || tex_wall == 241)
-					tex_wall = 11;
-				
-				*/
-
-				int war2_autotile_map[] = { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-											-1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-											-1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-											-1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-											-1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-											-1, -1, -1, -1, -1, -1, 7, -1, -1, -1,
-											7, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-											-1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-											-1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-											-1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-											-1, -1, -1, -1, -1, -1, -1, -1, 7, -1,
-											-1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-											7, -1, -1, -1, 7, -1, -1, -1, -1, -1,
-											-1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-											-1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-											-1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-											-1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-											-1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-											-1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-											-1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-											-1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-											-1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-											-1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-											-1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-											-1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-											-1, -1, -1, -1, -1, -1 };
-
 				if (war2_autotile_map[tex_wall] != -1)
 				{
 					tex_wall = war2_autotile_map[tex_wall];
-					printf("found wall %d", tex_wall);
 				}
-				else if (tex_wall == 56 || tex_wall == 108 || tex_wall == 60 || tex_wall == 120 || tex_wall == 124)
-					tex_wall = 7;
-				else if (tex_wall == 224 || tex_wall == 177 || tex_wall == 225 || tex_wall == 240 || tex_wall == 241)
-					tex_wall = 11;
-				else if (tex_wall == 131 || tex_wall == 198 || tex_wall==135 || tex_wall == 195)
-					tex_wall = 14;
-				else if (tex_wall == 14 || tex_wall == 27 || tex_wall == 15 || tex_wall == 30)
-					tex_wall = 13;
-				else if (tex_wall == 248 || tex_wall == 252 || tex_wall==249)
-					tex_wall = 3;
-				else if (tex_wall == 143 || tex_wall == 159 || tex_wall == 207 || tex_wall == 223)
-					tex_wall = 12;
-				else if (tex_wall == 255)
-					tex_wall = 0;
-				else if (tex_wall == 62 || tex_wall == 126 || tex_wall == 63 || tex_wall == 127)
-					tex_wall = 5;
-				else if (tex_wall == 227 || tex_wall == 243 || tex_wall == 231 || tex_wall == 247)
-					tex_wall = 10;
-				else if (tex_wall == 228 || tex_wall == 78 || tex_wall== 238 || tex_wall == 229)
-					tex_wall = 9;
-				else if (tex_wall == 57 || tex_wall == 147 || tex_wall == 187 || tex_wall == 61 || tex_wall == 125 || tex_wall == 151 || tex_wall == 215)
-					tex_wall = 6;
-				else if (tex_wall == 191)
-					tex_wall = 4;
-				else if (tex_wall == 239)
-					tex_wall = 8;
-				else if (tex_wall == 254)
-					tex_wall = 1;
-				else if (tex_wall == 251)
-					tex_wall = 2;
 				else
 					tex_wall = 15;
 			}

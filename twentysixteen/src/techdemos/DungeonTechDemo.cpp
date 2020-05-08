@@ -108,6 +108,11 @@ void DungeonTechDemo::take_input(boundinput input, bool type)
 			grid_manager.active_autotile = grid_manager.autotile_tex;
 	}
 
+	if (input == NEXT && type == true)
+	{
+		grid_manager.randomize_map();
+	}
+
 	if (input == RMOUSE && type == true)
 	{
 		lookmode = true;
