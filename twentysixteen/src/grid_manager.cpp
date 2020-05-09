@@ -416,8 +416,12 @@ void GridManager::draw_3d()
 }
 
 // TODO:
-// - Rotate and randomize similar tiles
-// - add water tileset
+// add dark grass
+// add trees
+// split vision blockage between water and rocks
+// cull orphans
+// paint terrain (edit mode for grid stuff??)
+// split out new gridcharacter for fog of war
 
 static const int war2_autotile_map[] = { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
 										-1, -1, -1, -1, 13, 13, -1, -1, -1, -1,
@@ -480,7 +484,7 @@ void GridManager::randomize_map()
 	{
 		for (int j = 1; j < height - 3; j++)
 		{
-			if(rand() % 10 < 9)
+			if(rand() % 2 < 9)
 			{ 
 				dropblob(i, j, new_type);
 			}
@@ -492,7 +496,7 @@ void GridManager::randomize_map()
 	{
 		for (int j = 1; j < height - 3; j++)
 		{
-			if (rand() % 20 == 0)
+			if (rand() % 10 == 0)
 			{
 				dropblob(i, j, new_type);
 			}
@@ -511,6 +515,50 @@ void GridManager::randomize_map()
 		}
 	}
 	
+	cull_orphans();
+
+}
+
+void GridManager::cull_orphans()
+{
+
+	for (int i = 1; i < width - 2; i++)
+	{
+		for (int j = 1; j < height - 2; j++)
+		{
+			bool found = false;
+			int current_type = tile_map[i][j].type;
+
+			if (current_type != 0)
+			{
+				if (tile_map[i][j - 1].type == current_type)
+				{
+					if (tile_map[i - 1][j].type == current_type)
+						if (tile_map[i - 1][j - 1].type == current_type)
+							found = true;
+
+					if (tile_map[i + 1][j].type == current_type)
+						if (tile_map[i + 1][j - 1].type == current_type)
+							found = true;
+				}
+
+				if (tile_map[i][j + 1].type == current_type)
+				{
+					if (tile_map[i - 1][j].type == current_type)
+						if (tile_map[i - 1][j + 1].type == current_type)
+							found = true;
+
+					if (tile_map[i + 1][j].type == current_type)
+						if (tile_map[i + 1][j + 1].type == current_type)
+							found = true;
+				}
+
+				if (found == false)
+					tile_map[i][j].type = 0;
+			}
+		}
+	}
+
 }
 
 
@@ -595,11 +643,10 @@ void GridManager::draw_autotile()
 				else if (tile_map[i][j].type == 3)
 					glBindTexture(GL_TEXTURE_2D, texture_set[2]);
 
-				if (tile_map[i][j].in_path)
+				if (tile_map[i][j].type == 1)
 					glColor3f(0.0f, 1.0f, 1.0f);
 				else
 					glColor3f(1.0f, 1.0f, 1.0f);
-
 
 				glPushMatrix();
 					glBegin(GL_QUADS);
