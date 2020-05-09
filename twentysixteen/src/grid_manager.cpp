@@ -414,9 +414,9 @@ void GridManager::randomize_map()
 		}
 	}
 
-	for (int i = 1; i < width - 2; i++)
+	for (int i = 1; i < width - 3; i++)
 	{
-		for (int j = 1; j < height - 2; j++)
+		for (int j = 1; j < height - 3; j++)
 		{
 			if(rand() % 5 == 0)
 			{ 
@@ -430,44 +430,77 @@ void GridManager::randomize_map()
 	
 }
 
+// TODO:
+// - Rotate and randomize similar tiles
+// - add water tileset
+
+static const int war2_autotile_map[] = { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+										-1, -1, -1, -1, 13, 13, -1, -1, -1, -1,
+										-1, -1, -1, -1, -1, -1, -1, 13, -1, -1,
+										13, 13, -1, -1, -1, -1, -1, -1, -1, -1,
+										-1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+										-1, -1, -1, -1, -1, -1, 7, 6, -1, 7,
+										7, 6, 5, 5, -1, -1, -1, -1, -1, -1,
+										-1, -1, -1, -1, -1, -1, -1, -1, 9, 9,
+										-1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+										-1, -1, -1, -1, 9, 9, -1, -1, -1, -1,
+										-1, -1, -1, -1, -1, -1, -1, -1, 7, -1,
+										13, 13, -1, -1, -1, -1, -1, -1, -1, -1,
+										7, 6, -1, 7, 7, 6, 5, 5, -1, -1,
+										-1, 14, -1, -1, -1, 14, -1, -1, -1, -1,
+										-1, -1, -1, 12, -1, -1, -1, 6, -1, -1,
+										-1, 6, -1, -1, -1, 14, -1, -1, -1, 12,
+										-1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+										-1, -1, -1, -1, -1, -1, -1, 11, -1, 14,
+										-1, -1, -1, 14, -1, 7, -1, 6, -1, 7,
+										-1, 4, -1, -1, -1, 14, -1, -1, 14, 14,
+										-1, -1, -1, -1, -1, -1, 13, 12, -1, -1,
+										-1, 6, -1, -1, -1, 6, -1, -1, -1, 14,
+										-1, -1, 13, 12, 11, 11, -1, 10, 9, 9,
+										11, 10, -1, -1, -1, -1, 11, 11, 9, 8,
+										11, 11, -1, 10, 9, 9, 11, 10, 3, 3,
+										-1, 2, 3, 3, 1, 0 };
+//183=14
 void GridManager::draw_autotile()
 {
-	int i2, j2;
+	int i, j;
+	bool test;
 
-	for (i2 = 0; i2 < width; i2++)
+	for (i = 0; i < width; i++)
 	{
-		for (j2 = 0; j2 < height; j2++)
+		for (j = 0; j < height; j++)
 		{
 			int tex_wall = 0;
+			test = false;
 
-			if(i2==0 || i2==width-1 || j2==0 || j2==height-1)
+			if(i==0 || i==width-1 || j==0 || j==height-1)
 			{
 				tex_wall = 15;
 			}
 			else
 			{
-				if (tile_map[i2 - 1][j2 - 1].wall == 1)
+				if (tile_map[i - 1][j - 1].wall == 1)
 					tex_wall = (tex_wall | 1);
 
-				if (tile_map[i2][j2 - 1].wall == 1)
+				if (tile_map[i][j - 1].wall == 1)
 					tex_wall = (tex_wall | 2);
 
-				if (tile_map[i2 + 1][j2 - 1].wall == 1)
+				if (tile_map[i + 1][j - 1].wall == 1)
 					tex_wall = (tex_wall | 4);
 
-				if (tile_map[i2 + 1][j2].wall == 1)
+				if (tile_map[i + 1][j].wall == 1)
 					tex_wall = (tex_wall | 8);
 
-				if (tile_map[i2 + 1][j2 + 1].wall == 1)
+				if (tile_map[i + 1][j + 1].wall == 1)
 					tex_wall = (tex_wall | 16);
 
-				if (tile_map[i2][j2 + 1].wall == 1)
+				if (tile_map[i][j + 1].wall == 1)
 					tex_wall = (tex_wall | 32);
 
-				if (tile_map[i2 - 1][j2 + 1].wall == 1)
+				if (tile_map[i - 1][j + 1].wall == 1)
 					tex_wall = (tex_wall | 64);
 
-				if (tile_map[i2 - 1][j2].wall == 1)
+				if (tile_map[i - 1][j].wall == 1)
 					tex_wall = (tex_wall | 128);
 
 
@@ -479,14 +512,15 @@ void GridManager::draw_autotile()
 					tex_wall = 15;
 			}
 
-			if (tile_map[i2][j2].wall == 0)
+			if (tile_map[i][j].wall == 0)
+			{
 				tex_wall = 15;
-
+			}
 			int xcoord = tex_wall % 4;
 			int ycoord = tex_wall / 4;
 
 			glPushMatrix();
-				glTranslatef(i2 * 5, 0.0f, j2 * 5);
+				glTranslatef(i * 5, 0.0f, j * 5);
 				glRotatef(90, 1.0f, 0.0f, 0.0f);
 				glScalef(2.5f, 2.5f, 1.0f);
 				glBindTexture(GL_TEXTURE_2D, active_autotile);
