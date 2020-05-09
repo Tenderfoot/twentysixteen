@@ -151,7 +151,7 @@ void GridManager::load_map(std::string mapname)
 
 void GridManager::init()
 {
-	load_map("gridmap");
+	load_map("gridmap_large");
 	
 	tile = ModelData::import("data/models/tile.fbx", 0.05);
 	wall = ModelData::import("data/models/tile_wall.fbx", 0.05);
@@ -419,7 +419,6 @@ void GridManager::draw_3d()
 // add dark grass
 // add trees
 // split vision blockage between water and rocks
-// cull orphans
 // paint terrain (edit mode for grid stuff??)
 // split out new gridcharacter for fog of war
 
@@ -643,8 +642,8 @@ void GridManager::draw_autotile()
 				else if (tile_map[i][j].type == 3)
 					glBindTexture(GL_TEXTURE_2D, texture_set[2]);
 
-				if (tile_map[i][j].type == 1)
-					glColor3f(0.0f, 1.0f, 1.0f);
+				if (tile_map[i][j].in_path)
+					glColor3f(1.0f, 0.0f, 1.0f);
 				else
 					glColor3f(1.0f, 1.0f, 1.0f);
 
