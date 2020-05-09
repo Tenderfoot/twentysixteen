@@ -124,7 +124,7 @@ public:
 	bool lookmode;
 	bool good_spot;
 	bool use_tex;
-	GLuint fake_tex[2];
-	GLuint real_tex[2];
+	GLuint fake_tex[3];
+	GLuint real_tex[3];
 
 };

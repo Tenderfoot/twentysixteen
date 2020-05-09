@@ -151,8 +151,10 @@ void GridManager::init()
 	wall = ModelData::import("data/models/tile_wall.fbx", 0.05);
 	fake_tex[0] = Paintbrush::Soil_Load_Texture("data/images/war2autotile_grasstodirt.png", false, false);
 	fake_tex[1] = Paintbrush::Soil_Load_Texture("data/images/war2autotile_watertodirt.png", false, false);
+	fake_tex[2] = Paintbrush::Soil_Load_Texture("data/images/war2autotile_rockstodirt.png", false, false);
 	real_tex[0] = Paintbrush::Soil_Load_Texture("data/images/war2autotile_grasstodirt_real.png", false, false);
 	real_tex[1] = Paintbrush::Soil_Load_Texture("data/images/war2autotile_watertodirt_real.png", false, false);
+	real_tex[2] = Paintbrush::Soil_Load_Texture("data/images/war2autotile_rockstodirt_real.png", false, false);
 
 	last_path = &tile_map[x][y];
 }
@@ -454,7 +456,7 @@ void GridManager::randomize_map()
 	{
 		for (int j = 1; j < height - 3; j++)
 		{
-			if(rand() % 5 == 0)
+			if(rand() % 2 == 0)
 			{ 
 				tile_map[i][j].type = new_type;
 				tile_map[i+1][j].type = new_type;
@@ -463,13 +465,13 @@ void GridManager::randomize_map()
 			}
 		}
 	}
-	/*
+	
 	new_type = 2;
 	for (int i = 1; i < width - 3; i++)
 	{
 		for (int j = 1; j < height - 3; j++)
 		{
-			if (rand() % 5 == 0)
+			if (rand() % 10 == 0)
 			{
 				tile_map[i][j].type = new_type;
 				tile_map[i + 1][j].type = new_type;
@@ -479,16 +481,20 @@ void GridManager::randomize_map()
 		}
 	}
 
+	new_type = 3;
 	for (int i = 1; i < width - 3; i++)
 	{
 		for (int j = 1; j < height - 3; j++)
-		{	
-			if (calculate_tile(i, j, tile_map[i][j].type) == -1)
+		{
+			if (rand() % 50 == 0)
 			{
-				tile_map[i][j].type = 0;
+				tile_map[i][j].type = new_type;
+				tile_map[i + 1][j].type = new_type;
+				tile_map[i][j + 1].type = new_type;
+				tile_map[i + 1][j + 1].type = new_type;
 			}
 		}
-	}*/
+	}
 	
 }
 
@@ -578,8 +584,10 @@ void GridManager::draw_autotile()
 
 				if(tile_map[i][j].type == 0 || tile_map[i][j].type == 1)
 					glBindTexture(GL_TEXTURE_2D, texture_set[0]);
-				else
+				else if(tile_map[i][j].type == 2)
 					glBindTexture(GL_TEXTURE_2D, texture_set[1]);
+				else if (tile_map[i][j].type == 3)
+					glBindTexture(GL_TEXTURE_2D, texture_set[2]);
 
 				glPushMatrix();
 					glBegin(GL_QUADS);
