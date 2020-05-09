@@ -456,7 +456,7 @@ void GridManager::randomize_map()
 	{
 		for (int j = 1; j < height - 3; j++)
 		{
-			if(rand() % 2 == 0)
+			if(rand() % 10 < 9)
 			{ 
 				tile_map[i][j].type = new_type;
 				tile_map[i+1][j].type = new_type;
@@ -471,7 +471,7 @@ void GridManager::randomize_map()
 	{
 		for (int j = 1; j < height - 3; j++)
 		{
-			if (rand() % 10 == 0)
+			if (rand() % 5 == 0)
 			{
 				tile_map[i][j].type = new_type;
 				tile_map[i + 1][j].type = new_type;
