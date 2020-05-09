@@ -94,6 +94,7 @@ public:
 	void draw_3d();
 	void draw_autotile();
 	int calculate_tile(int i, int j, int current_type);
+	void dropblob(int i, int j, int blobtype);
 
 	// special stuff
 	bool check_collision(t_polygon rect, int i, int j);

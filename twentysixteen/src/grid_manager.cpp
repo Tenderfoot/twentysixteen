@@ -446,6 +446,23 @@ static const int war2_autotile_map[] = { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
 										11, 11, -1, 10, 11, 11, 11, 10, 3, 3,
 										-1, 2, 3, 3, 1, 0 };
 
+void GridManager::dropblob(int i, int j, int blobtype)
+{
+	int wall = 0;
+	if (blobtype == 2 || blobtype == 3)
+		wall = 1;
+
+	tile_map[i][j].type = blobtype;
+	tile_map[i][j].wall = wall;
+	tile_map[i + 1][j].type = blobtype;
+	tile_map[i + 1][j].wall = wall;
+	tile_map[i][j + 1].type = blobtype;
+	tile_map[i][j + 1].wall = wall;
+	tile_map[i + 1][j + 1].type = blobtype;
+	tile_map[i + 1][j + 1].wall = wall;
+
+}
+
 void GridManager::randomize_map()
 {
 
@@ -454,6 +471,7 @@ void GridManager::randomize_map()
 		for (int j = 1; j < height - 2; j++)
 		{
 			tile_map[i][j].type = 0;
+			tile_map[i][j].wall = 0;
 		}
 	}
 
@@ -464,10 +482,7 @@ void GridManager::randomize_map()
 		{
 			if(rand() % 10 < 9)
 			{ 
-				tile_map[i][j].type = new_type;
-				tile_map[i+1][j].type = new_type;
-				tile_map[i][j+1].type = new_type;
-				tile_map[i+1][j+1].type = new_type;
+				dropblob(i, j, new_type);
 			}
 		}
 	}
@@ -479,10 +494,7 @@ void GridManager::randomize_map()
 		{
 			if (rand() % 20 == 0)
 			{
-				tile_map[i][j].type = new_type;
-				tile_map[i + 1][j].type = new_type;
-				tile_map[i][j + 1].type = new_type;
-				tile_map[i + 1][j + 1].type = new_type;
+				dropblob(i, j, new_type);
 			}
 		}
 	}
@@ -494,10 +506,7 @@ void GridManager::randomize_map()
 		{
 			if (rand() % 50 == 0)
 			{
-				tile_map[i][j].type = new_type;
-				tile_map[i + 1][j].type = new_type;
-				tile_map[i][j + 1].type = new_type;
-				tile_map[i + 1][j + 1].type = new_type;
+				dropblob(i, j, new_type);
 			}
 		}
 	}
@@ -585,6 +594,12 @@ void GridManager::draw_autotile()
 					glBindTexture(GL_TEXTURE_2D, texture_set[1]);
 				else if (tile_map[i][j].type == 3)
 					glBindTexture(GL_TEXTURE_2D, texture_set[2]);
+
+				if (tile_map[i][j].in_path)
+					glColor3f(0.0f, 1.0f, 1.0f);
+				else
+					glColor3f(1.0f, 1.0f, 1.0f);
+
 
 				glPushMatrix();
 					glBegin(GL_QUADS);
