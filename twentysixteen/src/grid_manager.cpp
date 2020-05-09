@@ -110,6 +110,12 @@ void GridManager::load_map(std::string mapname)
 				tile_map[i][j].wall = 0;
 				break;
 			case 1:
+				tile_map[i][j].wall = 0;
+				break;
+			case 2:
+				tile_map[i][j].wall = 1;
+				break;
+			case 3:
 				tile_map[i][j].wall = 1;
 				break;
 			case 4:
@@ -471,7 +477,7 @@ void GridManager::randomize_map()
 	{
 		for (int j = 1; j < height - 3; j++)
 		{
-			if (rand() % 5 == 0)
+			if (rand() % 20 == 0)
 			{
 				tile_map[i][j].type = new_type;
 				tile_map[i + 1][j].type = new_type;
@@ -544,28 +550,17 @@ void GridManager::draw_autotile()
 	int i, j;
 	bool test;
 
-	// get current tiles type
-	// check surrounding tiles FOR THAT TYPE
-
 	for (i = 0; i < width; i++)
 	{
 		for (j = 0; j < height; j++)
 		{
-			int tex_wall = 0;
+			int tex_wall = calculate_tile(i, j, tile_map[i][j].type);
 
-			int current_type = tile_map[i][j].type;
-
-			if (calculate_tile(i, j, current_type) != -1)
-			{
-				tex_wall = calculate_tile(i, j, current_type);
-			}
-			else
+			if (tex_wall == -1)
 				tex_wall = 15;
 
 			if (tile_map[i][j].type == 0)
-			{
 				tex_wall = 15;
-			}
 
 			int xcoord = tex_wall % 4;
 			int ycoord = tex_wall / 4;
@@ -576,6 +571,8 @@ void GridManager::draw_autotile()
 				texture_set = fake_tex;
 			else
 				texture_set = real_tex;
+
+			glEnable(GL_DEPTH_TEST);
 
 			glPushMatrix();
 				glTranslatef(i * 5, 0.0f, j * 5);
