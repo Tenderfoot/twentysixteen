@@ -13,6 +13,12 @@ typedef struct
 	int x;
 	int y;
 	int wall;
+	
+	// 0 - dirt
+	// 1 - grass
+	// 2 - water
+	int type; 
+	
 	std::vector<std::pair<int, int>> visible_tiles;
 	bool visible;
 	bool discovered;
@@ -116,8 +122,8 @@ public:
 	int mouse_x, mouse_y;
 	bool lookmode;
 	bool good_spot;
-	GLuint autotile_tex;
-	GLuint autotile_tex_war2;
-	GLuint active_autotile;
+	bool use_tex;
+	GLuint fake_tex[2];
+	GLuint real_tex[2];
 
 };

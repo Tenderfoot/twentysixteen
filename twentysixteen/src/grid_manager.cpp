@@ -102,6 +102,8 @@ void GridManager::load_map(std::string mapname)
 
 			int tile_type = line.c_str()[i] - '0';
 
+			tile_map[i][j].type = tile_type;
+
 			switch (tile_type)
 			{
 			case 0:
@@ -110,16 +112,18 @@ void GridManager::load_map(std::string mapname)
 			case 1:
 				tile_map[i][j].wall = 1;
 				break;
-			case 2:
+			case 4:
 				tile_map[i][j].wall = 0;
+				tile_map[i][j].type = 0;
 				grid_spawn = new Entity();
 				grid_spawn->position.x = i;
 				grid_spawn->position.z = j;
 				grid_spawn->type = GRID_SPAWNPOINT;
 				entities->push_back(grid_spawn);
 				break;
-			case 3:
+			case 5:
 				tile_map[i][j].wall = 0;
+				tile_map[i][j].type = 0;
 				grid_spawn = new Entity();
 				grid_spawn->position.x = i;
 				grid_spawn->position.z = j;
@@ -145,10 +149,10 @@ void GridManager::init()
 	
 	tile = ModelData::import("data/models/tile.fbx", 0.05);
 	wall = ModelData::import("data/models/tile_wall.fbx", 0.05);
-	autotile_tex = Paintbrush::Soil_Load_Texture("data/images/war2autotile_grasstodirt.png", false, false);
-	autotile_tex_war2 = Paintbrush::Soil_Load_Texture("data/images/war2autotile_grasstodirt_real.png", false, false);
-
-	active_autotile = autotile_tex;
+	fake_tex[0] = Paintbrush::Soil_Load_Texture("data/images/war2autotile_grasstodirt.png", false, false);
+	fake_tex[1] = Paintbrush::Soil_Load_Texture("data/images/war2autotile_watertodirt.png", false, false);
+	real_tex[0] = Paintbrush::Soil_Load_Texture("data/images/war2autotile_grasstodirt_real.png", false, false);
+	real_tex[1] = Paintbrush::Soil_Load_Texture("data/images/war2autotile_watertodirt_real.png", false, false);
 
 	last_path = &tile_map[x][y];
 }
@@ -410,23 +414,39 @@ void GridManager::randomize_map()
 	{
 		for (int j = 1; j < height - 2; j++)
 		{
-			tile_map[i][j].wall = 0;
+			tile_map[i][j].type = 0;
 		}
 	}
 
+	int new_type = 1;
 	for (int i = 1; i < width - 3; i++)
 	{
 		for (int j = 1; j < height - 3; j++)
 		{
 			if(rand() % 5 == 0)
 			{ 
-				tile_map[i][j].wall = 1;
-				tile_map[i+1][j].wall = 1;
-				tile_map[i][j+1].wall = 1;
-				tile_map[i+1][j+1].wall = 1;
+				tile_map[i][j].type = new_type;
+				tile_map[i+1][j].type = new_type;
+				tile_map[i][j+1].type = new_type;
+				tile_map[i+1][j+1].type = new_type;
 			}
 		}
 	}
+
+	/*new_type = 2;
+	for (int i = 1; i < width - 3; i++)
+	{
+		for (int j = 1; j < height - 3; j++)
+		{
+			if (rand() % 5 == 0)
+			{
+				tile_map[i][j].type = new_type;
+				tile_map[i + 1][j].type = new_type;
+				tile_map[i][j + 1].type = new_type;
+				tile_map[i + 1][j + 1].type = new_type;
+			}
+		}
+	}*/
 	
 }
 
@@ -466,6 +486,9 @@ void GridManager::draw_autotile()
 	int i, j;
 	bool test;
 
+	// get current tiles type
+	// check surrounding tiles FOR THAT TYPE
+
 	for (i = 0; i < width; i++)
 	{
 		for (j = 0; j < height; j++)
@@ -473,34 +496,36 @@ void GridManager::draw_autotile()
 			int tex_wall = 0;
 			test = false;
 
+			int current_type = tile_map[i][j].type;
+
 			if(i==0 || i==width-1 || j==0 || j==height-1)
 			{
 				tex_wall = 15;
 			}
 			else
 			{
-				if (tile_map[i - 1][j - 1].wall == 1)
+				if (tile_map[i - 1][j - 1].type == current_type)
 					tex_wall = (tex_wall | 1);
 
-				if (tile_map[i][j - 1].wall == 1)
+				if (tile_map[i][j - 1].type == current_type)
 					tex_wall = (tex_wall | 2);
 
-				if (tile_map[i + 1][j - 1].wall == 1)
+				if (tile_map[i + 1][j - 1].type == current_type)
 					tex_wall = (tex_wall | 4);
 
-				if (tile_map[i + 1][j].wall == 1)
+				if (tile_map[i + 1][j].type == current_type)
 					tex_wall = (tex_wall | 8);
 
-				if (tile_map[i + 1][j + 1].wall == 1)
+				if (tile_map[i + 1][j + 1].type == current_type)
 					tex_wall = (tex_wall | 16);
 
-				if (tile_map[i][j + 1].wall == 1)
+				if (tile_map[i][j + 1].type == current_type)
 					tex_wall = (tex_wall | 32);
 
-				if (tile_map[i - 1][j + 1].wall == 1)
+				if (tile_map[i - 1][j + 1].type == current_type)
 					tex_wall = (tex_wall | 64);
 
-				if (tile_map[i - 1][j].wall == 1)
+				if (tile_map[i - 1][j].type == current_type)
 					tex_wall = (tex_wall | 128);
 
 
@@ -512,18 +537,30 @@ void GridManager::draw_autotile()
 					tex_wall = 15;
 			}
 
-			if (tile_map[i][j].wall == 0)
+			if (tile_map[i][j].type == 0)
 			{
 				tex_wall = 15;
 			}
 			int xcoord = tex_wall % 4;
 			int ycoord = tex_wall / 4;
 
+			GLuint *texture_set;
+
+			if (use_tex)
+				texture_set = fake_tex;
+			else
+				texture_set = real_tex;
+
 			glPushMatrix();
 				glTranslatef(i * 5, 0.0f, j * 5);
 				glRotatef(90, 1.0f, 0.0f, 0.0f);
 				glScalef(2.5f, 2.5f, 1.0f);
-				glBindTexture(GL_TEXTURE_2D, active_autotile);
+
+				if(tile_map[i][j].type == 0 || tile_map[i][j].type == 1)
+					glBindTexture(GL_TEXTURE_2D, texture_set[0]);
+				else
+					glBindTexture(GL_TEXTURE_2D, texture_set[1]);
+
 				glPushMatrix();
 					glBegin(GL_QUADS);
 						glTexCoord2f(0.25f + (0.25f*xcoord), 0.25f + (0.25f*ycoord));	glVertex3f(1.0f, 1.0f, 0.0f);
