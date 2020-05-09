@@ -100,11 +100,6 @@ void DungeonTechDemo::take_input(boundinput input, bool type)
 		}
 	}
 
-	if (input == EDITOR_T && type == true)
-	{
-		grid_manager.use_tex = !grid_manager.use_tex;
-	}
-
 	if (input == NEXT && type == true)
 	{
 		grid_manager.randomize_map();
@@ -159,7 +154,7 @@ void DungeonTechDemo::draw()
 
 	gluLookAt((camera_pos.x * 5) + ((sin(camera_rotation_x)*camera_distance))*sin(camera_rotation_y), camera_distance*cos(camera_rotation_y), (camera_pos.z * 5) + ((cos(camera_rotation_x)*camera_distance))*sin(camera_rotation_y), camera_pos.x * 5, 0, (camera_pos.z * 5), 0.0f, 1.0f, 0.0f);
 	
-	grid_manager.draw_autotile();
+	grid_manager.draw_3d();
 
 	// sort and draw entities
 	std::vector<Entity*> sort_list;
