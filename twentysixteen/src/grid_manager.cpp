@@ -407,49 +407,6 @@ void GridManager::draw_3d()
 	}
 }
 
-void GridManager::randomize_map()
-{
-
-	for (int i = 1; i < width - 2; i++)
-	{
-		for (int j = 1; j < height - 2; j++)
-		{
-			tile_map[i][j].type = 0;
-		}
-	}
-
-	int new_type = 1;
-	for (int i = 1; i < width - 3; i++)
-	{
-		for (int j = 1; j < height - 3; j++)
-		{
-			if(rand() % 5 == 0)
-			{ 
-				tile_map[i][j].type = new_type;
-				tile_map[i+1][j].type = new_type;
-				tile_map[i][j+1].type = new_type;
-				tile_map[i+1][j+1].type = new_type;
-			}
-		}
-	}
-
-	/*new_type = 2;
-	for (int i = 1; i < width - 3; i++)
-	{
-		for (int j = 1; j < height - 3; j++)
-		{
-			if (rand() % 5 == 0)
-			{
-				tile_map[i][j].type = new_type;
-				tile_map[i + 1][j].type = new_type;
-				tile_map[i][j + 1].type = new_type;
-				tile_map[i + 1][j + 1].type = new_type;
-			}
-		}
-	}*/
-	
-}
-
 // TODO:
 // - Rotate and randomize similar tiles
 // - add water tileset
@@ -480,6 +437,101 @@ static const int war2_autotile_map[] = { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
 										11, 10, -1, -1, -1, -1, 11, 11, 9, 8,
 										11, 11, -1, 10, 9, 9, 11, 10, 3, 3,
 										-1, 2, 3, 3, 1, 0 };
+
+void GridManager::randomize_map()
+{
+
+	for (int i = 1; i < width - 2; i++)
+	{
+		for (int j = 1; j < height - 2; j++)
+		{
+			tile_map[i][j].type = 0;
+		}
+	}
+
+	int new_type = 1;
+	for (int i = 1; i < width - 3; i++)
+	{
+		for (int j = 1; j < height - 3; j++)
+		{
+			if(rand() % 5 == 0)
+			{ 
+				tile_map[i][j].type = new_type;
+				tile_map[i+1][j].type = new_type;
+				tile_map[i][j+1].type = new_type;
+				tile_map[i+1][j+1].type = new_type;
+			}
+		}
+	}
+
+	new_type = 2;
+	for (int i = 1; i < width - 3; i++)
+	{
+		for (int j = 1; j < height - 3; j++)
+		{
+			if (rand() % 5 == 0)
+			{
+				tile_map[i][j].type = new_type;
+				tile_map[i + 1][j].type = new_type;
+				tile_map[i][j + 1].type = new_type;
+				tile_map[i + 1][j + 1].type = new_type;
+			}
+		}
+	}
+
+	for (int i = 1; i < width - 3; i++)
+	{
+		for (int j = 1; j < height - 3; j++)
+		{	
+			if (calculate_tile(i, j, tile_map[i][j].type) == -1)
+			{
+				tile_map[i][j].type = 0;
+			}
+		}
+	}
+	
+}
+
+
+int GridManager::calculate_tile(int i, int j, int current_type)
+{
+
+	int tex_wall = 0;
+
+	if (i == 0 || i == width - 1 || j == 0 || j == height - 1)
+	{
+		tex_wall = 15;
+	}
+	else
+	{
+		if (tile_map[i - 1][j - 1].type == current_type)
+			tex_wall = (tex_wall | 1);
+
+		if (tile_map[i][j - 1].type == current_type)
+			tex_wall = (tex_wall | 2);
+
+		if (tile_map[i + 1][j - 1].type == current_type)
+			tex_wall = (tex_wall | 4);
+
+		if (tile_map[i + 1][j].type == current_type)
+			tex_wall = (tex_wall | 8);
+
+		if (tile_map[i + 1][j + 1].type == current_type)
+			tex_wall = (tex_wall | 16);
+
+		if (tile_map[i][j + 1].type == current_type)
+			tex_wall = (tex_wall | 32);
+
+		if (tile_map[i - 1][j + 1].type == current_type)
+			tex_wall = (tex_wall | 64);
+
+		if (tile_map[i - 1][j].type == current_type)
+			tex_wall = (tex_wall | 128);
+	}
+
+	return war2_autotile_map[tex_wall];
+}
+
 //183=14
 void GridManager::draw_autotile()
 {
@@ -494,53 +546,21 @@ void GridManager::draw_autotile()
 		for (j = 0; j < height; j++)
 		{
 			int tex_wall = 0;
-			test = false;
 
 			int current_type = tile_map[i][j].type;
 
-			if(i==0 || i==width-1 || j==0 || j==height-1)
+			if (calculate_tile(i, j, current_type) != -1)
 			{
-				tex_wall = 15;
+				tex_wall = calculate_tile(i, j, current_type);
 			}
 			else
-			{
-				if (tile_map[i - 1][j - 1].type == current_type)
-					tex_wall = (tex_wall | 1);
-
-				if (tile_map[i][j - 1].type == current_type)
-					tex_wall = (tex_wall | 2);
-
-				if (tile_map[i + 1][j - 1].type == current_type)
-					tex_wall = (tex_wall | 4);
-
-				if (tile_map[i + 1][j].type == current_type)
-					tex_wall = (tex_wall | 8);
-
-				if (tile_map[i + 1][j + 1].type == current_type)
-					tex_wall = (tex_wall | 16);
-
-				if (tile_map[i][j + 1].type == current_type)
-					tex_wall = (tex_wall | 32);
-
-				if (tile_map[i - 1][j + 1].type == current_type)
-					tex_wall = (tex_wall | 64);
-
-				if (tile_map[i - 1][j].type == current_type)
-					tex_wall = (tex_wall | 128);
-
-
-				if (war2_autotile_map[tex_wall] != -1)
-				{
-					tex_wall = war2_autotile_map[tex_wall];
-				}
-				else
-					tex_wall = 15;
-			}
+				tex_wall = 15;
 
 			if (tile_map[i][j].type == 0)
 			{
 				tex_wall = 15;
 			}
+
 			int xcoord = tex_wall % 4;
 			int ycoord = tex_wall / 4;
 

@@ -93,6 +93,7 @@ public:
 	void draw_2d();
 	void draw_3d();
 	void draw_autotile();
+	int calculate_tile(int i, int j, int current_type);
 
 	// special stuff
 	bool check_collision(t_polygon rect, int i, int j);
