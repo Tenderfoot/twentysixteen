@@ -94,6 +94,7 @@ public:
 	void draw_3d();
 	void draw_autotile();
 	int calculate_tile(int i, int j, int current_type);
+	bool check_compatible(int i, int j, int current_type);
 	void dropblob(int i, int j, int blobtype);
 	void cull_orphans();
 
@@ -126,7 +127,7 @@ public:
 	bool lookmode;
 	bool good_spot;
 	bool use_tex;
-	GLuint fake_tex[3];
-	GLuint real_tex[3];
+	GLuint fake_tex[4];
+	GLuint real_tex[4];
 
 };

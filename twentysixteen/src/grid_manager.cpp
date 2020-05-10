@@ -119,6 +119,12 @@ void GridManager::load_map(std::string mapname)
 				tile_map[i][j].wall = 1;
 				break;
 			case 4:
+				tile_map[i][j].wall = 1;
+				break;
+			case 5:
+				tile_map[i][j].wall = 1;
+				break;
+			case 6:
 				tile_map[i][j].wall = 0;
 				tile_map[i][j].type = 0;
 				grid_spawn = new Entity();
@@ -127,7 +133,7 @@ void GridManager::load_map(std::string mapname)
 				grid_spawn->type = GRID_SPAWNPOINT;
 				entities->push_back(grid_spawn);
 				break;
-			case 5:
+			case 7:
 				tile_map[i][j].wall = 0;
 				tile_map[i][j].type = 0;
 				grid_spawn = new Entity();
@@ -151,16 +157,18 @@ void GridManager::load_map(std::string mapname)
 
 void GridManager::init()
 {
-	load_map("gridmap_large");
+	load_map("gridmap");
 	
 	tile = ModelData::import("data/models/tile.fbx", 0.05);
 	wall = ModelData::import("data/models/tile_wall.fbx", 0.05);
 	fake_tex[0] = Paintbrush::Soil_Load_Texture("data/images/war2autotile_grasstodirt.png", false, false);
 	fake_tex[1] = Paintbrush::Soil_Load_Texture("data/images/war2autotile_watertodirt.png", false, false);
 	fake_tex[2] = Paintbrush::Soil_Load_Texture("data/images/war2autotile_rockstodirt.png", false, false);
+	fake_tex[3] = Paintbrush::Soil_Load_Texture("data/images/war2autotile_treestograss.png", false, false);
 	real_tex[0] = Paintbrush::Soil_Load_Texture("data/images/war2autotile_grasstodirt_real.png", false, false);
 	real_tex[1] = Paintbrush::Soil_Load_Texture("data/images/war2autotile_watertodirt_real.png", false, false);
 	real_tex[2] = Paintbrush::Soil_Load_Texture("data/images/war2autotile_rockstodirt_real.png", false, false);
+	real_tex[3] = Paintbrush::Soil_Load_Texture("data/images/war2autotile_treestograss_real.png", false, false);
 
 	last_path = &tile_map[x][y];
 }
@@ -418,6 +426,7 @@ void GridManager::draw_3d()
 // TODO:
 // add dark grass
 // add trees
+	// fix
 // split vision blockage between water and rocks
 // paint terrain (edit mode for grid stuff??)
 // split out new gridcharacter for fog of war
@@ -483,7 +492,7 @@ void GridManager::randomize_map()
 	{
 		for (int j = 1; j < height - 3; j++)
 		{
-			if(rand() % 2 < 9)
+			if(rand() % 2 == 0)
 			{ 
 				dropblob(i, j, new_type);
 			}
@@ -513,6 +522,20 @@ void GridManager::randomize_map()
 			}
 		}
 	}
+
+	/*
+	new_type = 4;
+	for (int i = 2; i < width - 4; i++)
+	{
+		for (int j = 2; j < height - 4; j++)
+		{
+			if (rand() % 2 == 0)
+			{
+				dropblob(i, j, new_type);
+			}
+		}
+	}*/
+	
 	
 	cull_orphans();
 
@@ -527,13 +550,13 @@ void GridManager::cull_orphans()
 		{
 			bool found = false;
 			int current_type = tile_map[i][j].type;
-
+			
 			if (current_type != 0)
 			{
-				if (tile_map[i][j - 1].type == current_type)
+				if (check_compatible(i, j-1, current_type))
 				{
-					if (tile_map[i - 1][j].type == current_type)
-						if (tile_map[i - 1][j - 1].type == current_type)
+					if (check_compatible(i-1, j, current_type))
+						if (check_compatible(i-1, j - 1, current_type))
 							found = true;
 
 					if (tile_map[i + 1][j].type == current_type)
@@ -541,14 +564,14 @@ void GridManager::cull_orphans()
 							found = true;
 				}
 
-				if (tile_map[i][j + 1].type == current_type)
+				if (check_compatible(i, j + 1, current_type))
 				{
-					if (tile_map[i - 1][j].type == current_type)
-						if (tile_map[i - 1][j + 1].type == current_type)
+					if (check_compatible(i-1, j, current_type))
+						if (check_compatible(i - 1, j+1, current_type))
 							found = true;
 
-					if (tile_map[i + 1][j].type == current_type)
-						if (tile_map[i + 1][j + 1].type == current_type)
+					if (check_compatible(i + 1, j, current_type))
+						if (check_compatible(i + 1, j + 1, current_type))
 							found = true;
 				}
 
@@ -558,6 +581,15 @@ void GridManager::cull_orphans()
 		}
 	}
 
+}
+
+bool GridManager::check_compatible(int i, int j, int current_type)
+{
+	if (current_type == 1)
+		if (tile_map[i][j].type == 1 || tile_map[i][j].type == 4)
+			return true;
+
+	return tile_map[i][j].type == current_type;
 }
 
 
@@ -572,28 +604,28 @@ int GridManager::calculate_tile(int i, int j, int current_type)
 	}
 	else
 	{
-		if (tile_map[i - 1][j - 1].type == current_type)
+		if (check_compatible(i-1,j-1,current_type))
 			tex_wall = (tex_wall | 1);
 
-		if (tile_map[i][j - 1].type == current_type)
+		if (check_compatible(i, j - 1, current_type))
 			tex_wall = (tex_wall | 2);
 
-		if (tile_map[i + 1][j - 1].type == current_type)
+		if (check_compatible(i + 1, j - 1, current_type))
 			tex_wall = (tex_wall | 4);
 
-		if (tile_map[i + 1][j].type == current_type)
+		if (check_compatible(i + 1, j, current_type))
 			tex_wall = (tex_wall | 8);
 
-		if (tile_map[i + 1][j + 1].type == current_type)
+		if (check_compatible(i + 1, j + 1, current_type))
 			tex_wall = (tex_wall | 16);
 
-		if (tile_map[i][j + 1].type == current_type)
+		if (check_compatible(i, j + 1, current_type))
 			tex_wall = (tex_wall | 32);
 
-		if (tile_map[i - 1][j + 1].type == current_type)
+		if (check_compatible(i - 1, j + 1, current_type))
 			tex_wall = (tex_wall | 64);
 
-		if (tile_map[i - 1][j].type == current_type)
+		if (check_compatible(i - 1, j, current_type))
 			tex_wall = (tex_wall | 128);
 	}
 
@@ -641,6 +673,8 @@ void GridManager::draw_autotile()
 					glBindTexture(GL_TEXTURE_2D, texture_set[1]);
 				else if (tile_map[i][j].type == 3)
 					glBindTexture(GL_TEXTURE_2D, texture_set[2]);
+				else if (tile_map[i][j].type == 4)
+					glBindTexture(GL_TEXTURE_2D, texture_set[3]);
 
 				if (tile_map[i][j].in_path)
 					glColor3f(1.0f, 0.0f, 1.0f);
