@@ -144,16 +144,16 @@ void FogOfWarTechDemo::draw()
 
 	t_vertex camera_pos;
 
-	if (current_char->state == GRID_MOVING)
-		camera_pos = current_char->draw_position;
-	else
-		camera_pos = current_char->position;
+	camera_pos = t_vertex(5.0f, 0.0f, 5.0f);
+	camera_rotation_y = 0.5;
+	camera_rotation_x = 0;
+
 
 	// this stuff is for the current draw order
 	camera_position = t_vertex((camera_pos.x) + ((sin(camera_rotation_x)*camera_distance))*sin(camera_rotation_y), camera_distance*cos(camera_rotation_y), (camera_pos.z) + ((cos(camera_rotation_x)*camera_distance))*sin(camera_rotation_y));
 	camera_lookat = t_vertex(camera_pos.x, 0, (camera_pos.z));
 
-	gluLookAt((camera_pos.x * 5) + ((sin(camera_rotation_x)*camera_distance))*sin(camera_rotation_y), camera_distance*cos(camera_rotation_y), (camera_pos.z * 5) + ((cos(camera_rotation_x)*camera_distance))*sin(camera_rotation_y), camera_pos.x * 5, 0, (camera_pos.z * 5), 0.0f, 1.0f, 0.0f);
+	gluLookAt((camera_pos.x * 5), camera_distance, (camera_pos.z * 5), camera_pos.x * 5, 0, (camera_pos.z * 5)-0.000001, 0.0f, 1.0f, 0.0f);
 
 	grid_manager.draw_autotile();
 

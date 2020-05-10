@@ -52,6 +52,9 @@
     <Filter Include="Source Files\grid">
       <UniqueIdentifier>{47e5a6b8-9072-4c0a-83ab-525fef63c522}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\grid\fog_of_war">
+      <UniqueIdentifier>{370da345-bb44-4dbb-9e21-7cac6021c1d6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -364,6 +367,9 @@
     </ClInclude>
     <ClInclude Include="src\grid_character_manager.h">
       <Filter>Header Files\grid</Filter>
+    </ClInclude>
+    <ClInclude Include="src\techdemos\fow_character.h">
+      <Filter>Header Files\grid\fog_of_war</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

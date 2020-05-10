@@ -4,7 +4,7 @@
 #include "../spine_data.h"
 #include "../linear_algebra.h"
 #include "../grid_manager.h"
-#include "../gridcharacter.h"
+#include "fow_character.h"
 #include "../grid_character_manager.h"
 
 class FogOfWarTechDemo : public BaseTechDemo

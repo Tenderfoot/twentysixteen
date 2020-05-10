@@ -116,6 +116,7 @@
     <ClInclude Include="src\techdemos\emittertechdemo.h" />
     <ClInclude Include="src\techdemos\enemytechdemo.h" />
     <ClInclude Include="src\techdemos\fogofwartechdemo.h" />
+    <ClInclude Include="src\techdemos\fow_character.h" />
     <ClInclude Include="src\techdemos\grasstechdemo.h" />
     <ClInclude Include="src\techdemos\graveyardtechdemo.h" />
     <ClInclude Include="src\techdemos\JokeTechDemo.h" />
