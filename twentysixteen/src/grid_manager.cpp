@@ -157,7 +157,7 @@ void GridManager::load_map(std::string mapname)
 
 void GridManager::init()
 {
-	load_map("gridmap");
+	load_map("gridmap_medium");
 	
 	tile = ModelData::import("data/models/tile.fbx", 0.05);
 	wall = ModelData::import("data/models/tile_wall.fbx", 0.05);
@@ -429,7 +429,6 @@ void GridManager::draw_3d()
 	// fix
 // split vision blockage between water and rocks
 // paint terrain (edit mode for grid stuff??)
-// split out new gridcharacter for fog of war
 
 static const int war2_autotile_map[] = { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
 										-1, -1, -1, -1, 13, 13, -1, -1, -1, -1,

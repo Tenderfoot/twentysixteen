@@ -37,5 +37,7 @@ public:
 	float camera_rotation_x, camera_rotation_y;
 	float camera_distance;
 	bool lookmode;
+	t_vertex camera_pos;
+	FOWCharacter *new_character;
 	
 };

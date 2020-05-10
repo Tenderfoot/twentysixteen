@@ -9,30 +9,38 @@ void FogOfWarTechDemo::init()
 
 	TechDemoUI.add_widget(new UIImage(0.5, 0.9, 1.01, 0.2, Paintbrush::Soil_Load_Texture("data/images/HUD.png", false, false)));
 	TechDemoUI.add_widget(new MapWidget(&grid_manager));
-	TechDemoUI.add_widget(new CombatLog(&combat_log));
-	ability_bar = new AbilityBar();
-	TechDemoUI.add_widget(ability_bar);
-
-	combat_log.push_back("Witch took a swing at Mo! [  11 vs 10AC  ]");
-	combat_log.push_back("Witch landed a hit for 2 damage!");
-	combat_log.push_back("Mo took a swing at Witch!");
-	combat_log.push_back("Mo missed! [  8 vs 10AC  ]");
-	combat_log.push_back("Mo missed! [  8 vs 10AC  ]");
-	combat_log.push_back("Mo missed! [  8 vs 10AC  ]");
 
 	grid_manager.entities = &entities;
 	grid_manager.init();
+
+	// This will spawn the character for now
 	character_manager.grid_manager = &grid_manager;
-	character_manager.spawn_characters(&entities);
+
+	for (int i = 0; i < entities.size(); i++)
+	{
+		Entity *current_entity = entities.at(i);
+		if (current_entity->type == GRID_SPAWNPOINT)
+		{
+			new_character = new FOWCharacter();
+			new_character->spine_data.load_spine_data("everybody");
+			spSkeleton_setSkinByName(new_character->spine_data.skeleton, "witch");
+			new_character->spine_data.animation_name = "idle";
+			new_character->spine_data.looping = true;
+			new_character->grid_manager = &grid_manager;
+			new_character->position = current_entity->position;
+			entities.push_back(new_character);
+		}
+	}
 
 	lookmode = false;
 
 	camera_rotation_y = 1;
 	camera_distance = 25.0f;
 
-	// Some other stuff
-	GridCharacter *current_char = character_manager.get_current_character();
-	char_widget = new CharacterWidget(current_char);
+	// This adds the character widget to the UI
+	// will need to be updated to use the players selected unit
+	GridCharacter *current_char = new_character;
+	char_widget = new CharacterWidget(new_character);
 	TechDemoUI.add_widget(char_widget);
 	grid_manager.compute_visibility_raycast(current_char->position.x, current_char->position.z, true);
 
@@ -42,8 +50,9 @@ void FogOfWarTechDemo::init()
 void FogOfWarTechDemo::run(float time_delta)
 {
 	grid_manager.lookmode = lookmode;
-	character_manager.run(mouse_in_space, camera_rotation_x);
-	char_widget->character = character_manager.get_current_character();
+
+	//character_manager.run(mouse_in_space, camera_rotation_x);
+	//char_widget->character = character_manager.get_current_character();
 
 	// Loop through and update entities. This should stay and other things
 	// should be refactored out.
@@ -55,7 +64,7 @@ void FogOfWarTechDemo::run(float time_delta)
 
 void FogOfWarTechDemo::take_input(boundinput input, bool type)
 {
-	GridCharacter *current_char = character_manager.get_current_character();
+	GridCharacter *current_char = new_character;
 
 	if (input == MOUSEMOTION)
 	{
@@ -94,6 +103,26 @@ void FogOfWarTechDemo::take_input(boundinput input, bool type)
 		{
 			Ability_Manager::use_ability(current_char, mouse_in_space);
 		}
+	}
+
+	if (input == RIGHT && type == true)
+	{
+		camera_pos.x++;
+	}
+
+	if (input == LEFT && type == true)
+	{
+		camera_pos.x--;
+	}
+
+	if (input == UP && type == true)
+	{
+		camera_pos.z--;
+	}
+
+	if (input == DOWN && type == true)
+	{
+		camera_pos.z++;
 	}
 
 	if (input == EDITOR_T && type == true)
@@ -140,14 +169,10 @@ void FogOfWarTechDemo::take_input(boundinput input, bool type)
 
 void FogOfWarTechDemo::draw()
 {
-	GridCharacter *current_char = character_manager.get_current_character();
+	GridCharacter *current_char = new_character;
 
-	t_vertex camera_pos;
-
-	camera_pos = t_vertex(5.0f, 0.0f, 5.0f);
 	camera_rotation_y = 0.5;
 	camera_rotation_x = 0;
-
 
 	// this stuff is for the current draw order
 	camera_position = t_vertex((camera_pos.x) + ((sin(camera_rotation_x)*camera_distance))*sin(camera_rotation_y), camera_distance*cos(camera_rotation_y), (camera_pos.z) + ((cos(camera_rotation_x)*camera_distance))*sin(camera_rotation_y));

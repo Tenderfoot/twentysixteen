@@ -95,7 +95,7 @@ public:
 	{
 	}
 
-	void update(float time_delta)
+	virtual void update(float time_delta)
 	{
 		if (state == GRID_MOVING)
 		{
