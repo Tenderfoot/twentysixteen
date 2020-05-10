@@ -191,10 +191,7 @@ void FogOfWarTechDemo::draw()
 	for (i = 0; i < sort_list.size(); i++)
 	{
 		glPushMatrix();
-		if (grid_manager.tile_map[sort_list.at(i)->position.x][sort_list.at(i)->position.z].discovered)
-		{
 			sort_list.at(i)->draw();
-		}
 		glPopMatrix();
 	}
 }

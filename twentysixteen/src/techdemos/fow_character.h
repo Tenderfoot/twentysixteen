@@ -24,15 +24,16 @@ public:
 			draw_position = position;
 		}
 
-		if (visible)
-		{
+
 			glPushMatrix();
-			glTranslatef(draw_position.x * 5, draw_position.y+0.5, draw_position.z * 5);
+			glTranslatef(draw_position.x * 5, draw_position.y+0.5, (draw_position.z * 5) + 2);
 			glRotatef(-90, 1.0f, 0.0f, 0.0f);
-			glScalef(0.01f, 0.01f, 0.01f);
+			if (desired_pos.x > draw_position.x)
+				glRotatef(180.0f, 0.0f, 1.0f, 0.0f);
+			glScalef(0.0125f, 0.0125f, 0.0125f);
 			spine_data.draw();
 			glPopMatrix();
-		}
+		
 	}
 
 	void update(float time_delta)
