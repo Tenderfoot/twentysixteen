@@ -196,6 +196,19 @@ void GridManager::set_mouse_coords(int mx, int my)
 	
 }
 
+t_vertex GridManager::convert_mouse_coords(t_vertex mouse_space)
+{
+	x = mouse_space.x + 2.5;
+	y = mouse_space.z + 2.5;
+
+	x /= 5;
+	y /= 5;
+
+	set_mouse_coords(int(x), int(y));
+
+	return t_vertex(x, y, 0.0f);
+}
+
 void GridManager::draw_2d()
 {
 	int p;

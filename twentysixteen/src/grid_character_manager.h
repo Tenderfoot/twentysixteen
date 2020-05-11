@@ -117,18 +117,7 @@ public:
 		// convert mouse position in space to grid coordinates...
 		if (current_char->state != GRID_MOVING)
 		{
-			float x, y;
-			x = mouse_in_space.x + 2.5;
-			y = mouse_in_space.z + 2.5;
-
-			x /= 5;
-			y /= 5;
-
-			grid_manager->set_mouse_coords(int(x), int(y));
-			if (Ability_Manager::ability_db[(t_ability_enum)current_char->active_ability].target_condition == PATHABLE)
-			{
-				grid_manager->draw_path(current_char->position);
-			}
+			grid_manager->convert_mouse_coords(mouse_in_space);
 		}
 	}
 

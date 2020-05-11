@@ -108,6 +108,7 @@ public:
 	int entity_on_position(t_vertex entity_pos);
 	void draw_path(t_vertex start_pos);
 	int num_path(t_vertex start_pos);
+	t_vertex convert_mouse_coords(t_vertex mouse_space);
 
 	// pathfinding stuff
 	std::vector<t_tile*> find_path(t_vertex start_pos, t_vertex end_pos);

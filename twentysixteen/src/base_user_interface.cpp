@@ -174,16 +174,16 @@ void GreenBox::draw()
 	if (visible)
 	{
 		glColor3f(0.5f, 1.0f, 0.5f);
-
+		glLineWidth(2.0f);
 		glBegin(GL_LINES);
-		glVertex2f(x, y);
-		glVertex2f(width, y);
-		glVertex2f(x, y);
-		glVertex2f(x, height);
-		glVertex2f(width, y);
-		glVertex2f(width, height);
-		glVertex2f(x, height);
-		glVertex2f(width, height);
+			glVertex2f(x, y);
+			glVertex2f(width, y);
+			glVertex2f(x, y);
+			glVertex2f(x, height);
+			glVertex2f(width, y);
+			glVertex2f(width, height);
+			glVertex2f(x, height);
+			glVertex2f(width, height);
 		glEnd();
 
 		glColor3f(1.0f, 1.0f, 1.0f);

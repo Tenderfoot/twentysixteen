@@ -22,6 +22,7 @@ public:
 	void take_input(boundinput input, bool type);
 	void draw_hud();
 	void reset();
+	FOWCharacter *get_selection(t_vertex start, t_vertex end);
 
 	// Dungeon stuff
 	GridManager grid_manager;

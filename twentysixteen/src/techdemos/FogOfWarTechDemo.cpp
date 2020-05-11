@@ -44,7 +44,7 @@ void FogOfWarTechDemo::init()
 		{
 			new_character = new FOWCharacter();
 			new_character->spine_data.load_spine_data("everybody");
-			spSkeleton_setSkinByName(new_character->spine_data.skeleton, "witch");
+			spSkeleton_setSkinByName(new_character->spine_data.skeleton, "knight");
 			new_character->spine_data.animation_name = "idle";
 			new_character->spine_data.looping = true;
 			new_character->grid_manager = &grid_manager;
@@ -61,6 +61,7 @@ void FogOfWarTechDemo::init()
 	// This adds the character widget to the UI
 	// will need to be updated to use the players selected unit
 	GridCharacter *current_char = new_character;
+
 	char_widget = new CharacterWidget(new_character);
 	TechDemoUI.add_widget(char_widget);
 	grid_manager.compute_visibility_raycast(current_char->position.x, current_char->position.z, true);
@@ -81,6 +82,20 @@ void FogOfWarTechDemo::run(float time_delta)
 	{
 		entities.at(i)->update(time_delta);
 	}
+}
+
+FOWCharacter *FogOfWarTechDemo::get_selection(t_vertex start, t_vertex end)
+{	
+
+	t_vertex tile_space = grid_manager.convert_mouse_coords(start);
+
+	if(int(tile_space.x) > 0 && int(tile_space.x) < grid_manager.width)
+		if (int(tile_space.y) > 0 && int(tile_space.y) < grid_manager.height)
+		{
+			grid_manager.dropblob(tile_space.x, tile_space.y, 1);
+			printf("%d %d\n", int(tile_space.x), int(tile_space.y));
+		}
+	return NULL;
 }
 
 void FogOfWarTechDemo::take_input(boundinput input, bool type)
@@ -112,27 +127,16 @@ void FogOfWarTechDemo::take_input(boundinput input, bool type)
 
 	if (input == LMOUSE && type == true)
 	{
-		if (TechDemoUI.mouse_focus() != -1)
-		{
-			if (TechDemoUI.widgets.at(TechDemoUI.mouse_focus())->absorbs_mouse)
-			{
-				TechDemoUI.widgets.at(TechDemoUI.mouse_focus())->click_at_location(t_vertex(mousex, mousey, 0));
-				current_char->active_ability = ability_bar->get_active();
-			}
-		}
-		else
-		{
-			Ability_Manager::use_ability(current_char, mouse_in_space);
-		}
-
 		green_box->x = mousex;
 		green_box->y = mousey;
+		green_box->mouse_in_space = mouse_in_space;
 		green_box->visible = true;
 	}
 
 	if (input == LMOUSE && type == false)
 	{
 		green_box->visible = false;
+		get_selection(green_box->mouse_in_space, mouse_in_space);
 	}
 
 	if (input == RIGHT && type == true)
@@ -167,14 +171,11 @@ void FogOfWarTechDemo::take_input(boundinput input, bool type)
 
 	if (input == RMOUSE && type == true)
 	{
-		lookmode = true;
-		SDL_SetRelativeMouseMode(SDL_TRUE);
+		Ability_Manager::use_ability(current_char, mouse_in_space);
 	}
 
 	if (input == RMOUSE && type == false)
 	{
-		lookmode = false;
-		SDL_SetRelativeMouseMode(SDL_FALSE);
 	}
 
 	if (input == MWHEELUP)

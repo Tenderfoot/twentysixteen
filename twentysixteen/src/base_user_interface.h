@@ -272,6 +272,7 @@ public:
 
 	bool visible;
 	void draw();
+	t_vertex mouse_in_space;
 };
 
 
