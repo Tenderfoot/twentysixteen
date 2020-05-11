@@ -2,6 +2,8 @@
 
 // some globals
 #define USE_FULLSCREEN 1
+//#define res_width 2560
+//#define res_height  1440
 #define res_width 1920 
 #define res_height  1080
 #define NUM_TOTAL_ENTITIES 12

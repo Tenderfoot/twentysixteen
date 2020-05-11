@@ -423,13 +423,6 @@ void GridManager::draw_3d()
 	}
 }
 
-// TODO:
-// add dark grass
-// add trees
-	// fix
-// split vision blockage between water and rocks
-// paint terrain (edit mode for grid stuff??)
-
 static const int war2_autotile_map[] = { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
 										-1, -1, -1, -1, 13, 13, -1, -1, -1, -1,
 										-1, -1, -1, -1, -1, -1, -1, 13, -1, -1,
@@ -522,7 +515,7 @@ void GridManager::randomize_map()
 		}
 	}
 
-	/*
+	
 	new_type = 4;
 	for (int i = 2; i < width - 4; i++)
 	{
@@ -533,7 +526,7 @@ void GridManager::randomize_map()
 				dropblob(i, j, new_type);
 			}
 		}
-	}*/
+	}
 	
 	
 	cull_orphans();

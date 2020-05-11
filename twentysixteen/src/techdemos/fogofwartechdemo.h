@@ -6,6 +6,7 @@
 #include "../grid_manager.h"
 #include "fow_character.h"
 #include "../grid_character_manager.h"
+#include "../fow_player.h"
 
 class FogOfWarTechDemo : public BaseTechDemo
 {
@@ -31,6 +32,7 @@ public:
 	CharacterWidget *char_widget;
 	std::vector<std::string> combat_log;
 	AbilityBar *ability_bar;
+	GreenBox *green_box;
 
 	// other stuff
 	int x, y;
@@ -39,5 +41,6 @@ public:
 	bool lookmode;
 	t_vertex camera_pos;
 	FOWCharacter *new_character;
+	FOWPlayer *new_player;
 	
 };

@@ -131,7 +131,13 @@ void ListWidget::draw()
 
 void MapWidget::draw()
 {
-	//printf("%d, %d\n", map_grid->width, map_grid->height);
+	// this is for safety
+	if (map_grid != NULL)
+	{
+		width = (res_width / 14) / (map_grid->width/15);
+		height = ((res_height / 12) / (map_grid->height/15));
+	}
+
 	int i, j;
 	for (i = 0; i < map_grid->width; i++)
 	{
@@ -160,6 +166,27 @@ void MapWidget::draw()
 
 			glPopMatrix();
 		}
+	}
+}
+
+void GreenBox::draw()
+{
+	if (visible)
+	{
+		glColor3f(0.5f, 1.0f, 0.5f);
+
+		glBegin(GL_LINES);
+		glVertex2f(x, y);
+		glVertex2f(width, y);
+		glVertex2f(x, y);
+		glVertex2f(x, height);
+		glVertex2f(width, y);
+		glVertex2f(width, height);
+		glVertex2f(x, height);
+		glVertex2f(width, height);
+		glEnd();
+
+		glColor3f(1.0f, 1.0f, 1.0f);
 	}
 }
 

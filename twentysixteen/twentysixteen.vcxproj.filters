@@ -371,6 +371,9 @@
     <ClInclude Include="src\techdemos\fow_character.h">
       <Filter>Header Files\grid\fog_of_war</Filter>
     </ClInclude>
+    <ClInclude Include="src\fow_player.h">
+      <Filter>Header Files\grid\fog_of_war</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="data\shaders\grass.frag">

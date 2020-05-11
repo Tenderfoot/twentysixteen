@@ -2,6 +2,21 @@
 #include "../game_entity.h"
 #include "../grid_abilities.h"
 
+
+// TODO:
+
+// RTS Stuff
+	// FOWPlayerController
+	// Greenboxing / Unit selection
+
+// TILE STUFF:
+	// add dark grass
+	// add trees
+		// fix
+	// split vision blockage between water and rocks
+	// paint terrain (edit mode for grid stuff??)
+
+
 void FogOfWarTechDemo::init()
 {
 	Ability_Manager::build_abilities();
@@ -10,8 +25,14 @@ void FogOfWarTechDemo::init()
 	TechDemoUI.add_widget(new UIImage(0.5, 0.9, 1.01, 0.2, Paintbrush::Soil_Load_Texture("data/images/HUD.png", false, false)));
 	TechDemoUI.add_widget(new MapWidget(&grid_manager));
 
+	green_box = new GreenBox();
+	TechDemoUI.add_widget(green_box);
+
 	grid_manager.entities = &entities;
 	grid_manager.init();
+
+	// make the player
+	new_player = new FOWPlayer();
 
 	// This will spawn the character for now
 	character_manager.grid_manager = &grid_manager;
@@ -103,6 +124,15 @@ void FogOfWarTechDemo::take_input(boundinput input, bool type)
 		{
 			Ability_Manager::use_ability(current_char, mouse_in_space);
 		}
+
+		green_box->x = mousex;
+		green_box->y = mousey;
+		green_box->visible = true;
+	}
+
+	if (input == LMOUSE && type == false)
+	{
+		green_box->visible = false;
 	}
 
 	if (input == RIGHT && type == true)
@@ -181,6 +211,11 @@ void FogOfWarTechDemo::draw()
 	gluLookAt((camera_pos.x * 5), camera_distance, (camera_pos.z * 5), camera_pos.x * 5, 0, (camera_pos.z * 5)-0.000001, 0.0f, 1.0f, 0.0f);
 
 	grid_manager.draw_autotile();
+
+	// green box
+	green_box->width = mousex;
+	green_box->height = mousey;
+
 
 	// sort and draw entities
 	std::vector<Entity*> sort_list;

@@ -126,7 +126,7 @@ public:
 		map_grid = grid;
 		x = res_width/100;
 		y = (res_height / 9)*7.5;
-		width = res_width / 14;
+		width = (res_width / 14);
 		height = (res_height / 12);
 	}
 
@@ -258,6 +258,21 @@ public:
 	void draw();
 };
 
+class GreenBox : public UIWidget
+{
+public:
+	GreenBox()
+	{
+		visible = true;
+		x = 0;
+		y = 0;
+		width = 0;
+		height =  0;
+	}
+
+	bool visible;
+	void draw();
+};
 
 
 class BaseUserInterface
