@@ -90,6 +90,7 @@ FOWCharacter *FogOfWarTechDemo::get_selection(t_vertex start, t_vertex end)
 {	
 
 	t_vertex tile_space = grid_manager.convert_mouse_coords(start);
+	t_vertex tile_end = grid_manager.convert_mouse_coords(end);
 
 	if(int(tile_space.x) > 0 && int(tile_space.x) < grid_manager.width)
 		if (int(tile_space.y) > 0 && int(tile_space.y) < grid_manager.height)
@@ -99,7 +100,8 @@ FOWCharacter *FogOfWarTechDemo::get_selection(t_vertex start, t_vertex end)
 				Entity *test = entities.at(i);
 				if (test->type == FOW_CHARACTER)
 				{
-					if (test->position.x == tile_space.x && test->position.z == tile_space.y)
+					if (test->position.x >= tile_space.x && test->position.z >= tile_space.y
+						&& test->position.x <= tile_end.x && test->position.z <= tile_end.y)
 						return (FOWCharacter*)test;
 				}
 			}
