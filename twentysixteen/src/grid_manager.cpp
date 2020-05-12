@@ -528,7 +528,7 @@ void GridManager::randomize_map()
 		}
 	}
 
-	
+	/*
 	new_type = 4;
 	for (int i = 2; i < width - 4; i++)
 	{
@@ -539,7 +539,7 @@ void GridManager::randomize_map()
 				dropblob(i, j, new_type);
 			}
 		}
-	}
+	}*/
 	
 	
 	cull_orphans();

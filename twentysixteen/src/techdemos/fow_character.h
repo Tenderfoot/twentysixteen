@@ -14,6 +14,7 @@ public:
 		abilities.push_back(1);
 		active_ability = 0;
 		visible = true;
+		selected = false;
 	}
 
 
@@ -26,7 +27,7 @@ public:
 
 
 			glPushMatrix();
-			glTranslatef(draw_position.x * 5, draw_position.y+0.5, (draw_position.z * 5) + 2);
+			glTranslatef(draw_position.x * 5, draw_position.y+0.5, (draw_position.z * 5)+1);
 			glRotatef(-90, 1.0f, 0.0f, 0.0f);
 			if (desired_pos.x > draw_position.x)
 				glRotatef(180.0f, 0.0f, 1.0f, 0.0f);
@@ -100,5 +101,7 @@ public:
 			spine_data.update_skeleton(time_delta);
 		}
 	}
+
+	bool selected;
 
 };

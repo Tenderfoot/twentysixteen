@@ -64,7 +64,7 @@ void FogOfWarTechDemo::init()
 	// will need to be updated to use the players selected unit
 	GridCharacter *current_char = new_character;
 
-	char_widget = new CharacterWidget(new_character);
+	char_widget = new CharacterWidget(selected_character);
 	TechDemoUI.add_widget(char_widget);
 	grid_manager.compute_visibility_raycast(current_char->position.x, current_char->position.z, true);
 
@@ -143,7 +143,15 @@ void FogOfWarTechDemo::take_input(boundinput input, bool type)
 	if (input == LMOUSE && type == false)
 	{
 		green_box->visible = false;
+
+		if (selected_character != nullptr)
+			selected_character->selected = false;
+
 		selected_character = get_selection(green_box->mouse_in_space, mouse_in_space);
+		char_widget->character = selected_character;
+
+		if(selected_character != nullptr)
+			selected_character->selected = true;
 	}
 
 	if (input == RIGHT && type == true)
@@ -234,6 +242,36 @@ void FogOfWarTechDemo::draw()
 	std::sort(sort_list.begin(), sort_list.end(), by_depth_entity());
 
 	int i;
+
+	for (i = 0; i < sort_list.size(); i++)
+	{
+		glPushMatrix();
+		if (sort_list.at(i)->type == FOW_CHARACTER)
+		{
+			FOWCharacter *fow_character = (FOWCharacter*)sort_list.at(i);
+
+			if (fow_character->selected)
+			{
+				glColor3f(0.5f, 1.0f, 0.5f);
+				glDisable(GL_TEXTURE_2D);
+				glLineWidth(1.0f);
+				glBegin(GL_LINES);
+					glVertex3f((fow_character->draw_position.x * 5) - 2.5, 0.1f, (fow_character->draw_position.z * 5) - 2.5);
+					glVertex3f((fow_character->draw_position.x * 5) - 2.5, 0.1f, (fow_character->draw_position.z * 5) + 2.5);
+					glVertex3f((fow_character->draw_position.x * 5) - 2.5, 0.1f, (fow_character->draw_position.z * 5) - 2.5);
+					glVertex3f((fow_character->draw_position.x * 5) + 2.5, 0.1f, (fow_character->draw_position.z * 5) - 2.5);
+					glVertex3f((fow_character->draw_position.x * 5) - 2.5, 0.1f, (fow_character->draw_position.z * 5) + 2.5);
+					glVertex3f((fow_character->draw_position.x * 5) + 2.5, 0.1f, (fow_character->draw_position.z * 5) + 2.5);
+					glVertex3f((fow_character->draw_position.x * 5) + 2.5, 0.1f, (fow_character->draw_position.z * 5) - 2.5);
+					glVertex3f((fow_character->draw_position.x * 5) + 2.5, 0.1f, (fow_character->draw_position.z * 5) + 2.5);
+				glEnd();
+				glColor3f(1.0f, 1.0f, 1.0f);
+				glEnable(GL_TEXTURE_2D);
+			}
+		}
+		glPopMatrix();
+	}
+
 	for (i = 0; i < sort_list.size(); i++)
 	{
 		glPushMatrix();
