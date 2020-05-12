@@ -7,7 +7,7 @@
 
 // RTS Stuff
 	// FOWPlayerController
-	// Greenboxing / Unit selection
+	// BUG: Draw order should use draw position not position
 
 // TILE STUFF:
 	// add dark grass
@@ -30,6 +30,8 @@ void FogOfWarTechDemo::init()
 
 	grid_manager.entities = &entities;
 	grid_manager.init();
+
+	selected_character = nullptr;
 
 	// make the player
 	new_player = new FOWPlayer();
@@ -92,16 +94,21 @@ FOWCharacter *FogOfWarTechDemo::get_selection(t_vertex start, t_vertex end)
 	if(int(tile_space.x) > 0 && int(tile_space.x) < grid_manager.width)
 		if (int(tile_space.y) > 0 && int(tile_space.y) < grid_manager.height)
 		{
-			grid_manager.dropblob(tile_space.x, tile_space.y, 1);
-			printf("%d %d\n", int(tile_space.x), int(tile_space.y));
+			for (int i = 0; i < entities.size(); i++)
+			{
+				Entity *test = entities.at(i);
+				if (test->type == FOW_CHARACTER)
+				{
+					if (test->position.x == tile_space.x && test->position.z == tile_space.y)
+						return (FOWCharacter*)test;
+				}
+			}
 		}
-	return NULL;
+	return nullptr;
 }
 
 void FogOfWarTechDemo::take_input(boundinput input, bool type)
 {
-	GridCharacter *current_char = new_character;
-
 	if (input == MOUSEMOTION)
 	{
 		TechDemoUI.mouse_coords = t_vertex(mousex, mousey, 0);
@@ -136,7 +143,7 @@ void FogOfWarTechDemo::take_input(boundinput input, bool type)
 	if (input == LMOUSE && type == false)
 	{
 		green_box->visible = false;
-		get_selection(green_box->mouse_in_space, mouse_in_space);
+		selected_character = get_selection(green_box->mouse_in_space, mouse_in_space);
 	}
 
 	if (input == RIGHT && type == true)
@@ -171,7 +178,10 @@ void FogOfWarTechDemo::take_input(boundinput input, bool type)
 
 	if (input == RMOUSE && type == true)
 	{
-		Ability_Manager::use_ability(current_char, mouse_in_space);
+		if (selected_character != nullptr)
+		{
+			Ability_Manager::use_ability(selected_character, mouse_in_space);
+		}
 	}
 
 	if (input == RMOUSE && type == false)

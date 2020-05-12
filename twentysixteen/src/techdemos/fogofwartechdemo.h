@@ -43,5 +43,6 @@ public:
 	t_vertex camera_pos;
 	FOWCharacter *new_character;
 	FOWPlayer *new_player;
+	FOWCharacter *selected_character;
 	
 };

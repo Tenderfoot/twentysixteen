@@ -9,7 +9,7 @@ public:
 
 	FOWCharacter()
 	{
-		type = GRID_CHARACTER;
+		type = FOW_CHARACTER;
 		abilities.push_back(0);
 		abilities.push_back(1);
 		active_ability = 0;
@@ -30,7 +30,7 @@ public:
 			glRotatef(-90, 1.0f, 0.0f, 0.0f);
 			if (desired_pos.x > draw_position.x)
 				glRotatef(180.0f, 0.0f, 1.0f, 0.0f);
-			glScalef(0.01f, 0.01f, 0.01f);
+			glScalef(0.0125f, 0.0125f, 0.0125f);
 			spine_data.draw();
 			glPopMatrix();
 		

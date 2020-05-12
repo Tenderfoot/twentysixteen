@@ -83,13 +83,11 @@ public:
 
 	static void use_ability(GridCharacter *activator, t_vertex activate_position)
 	{
-		// gather some info
-		float x, y;
-		x = activate_position.x + 2.5;
-		y = activate_position.z + 2.5;
-		x /= 5;
-		y /= 5;
-		t_vertex grid_pos = t_vertex(int(x), 0, int(y));
+		t_vertex grid_pos = grid_manager->convert_mouse_coords(activate_position);
+
+		// hack for now to allow for FOW stuff
+		grid_pos.z = grid_pos.y;
+		grid_pos.y = 0;
 
 		// handle abilities
 		if (check_valid(activator, activate_position))
