@@ -8,6 +8,7 @@
 // RTS Stuff
 	// FOWPlayerController
 	// BUG: Draw order should use draw position not position
+	// Bug: Crashes when greenbox leaves area
 
 // TILE STUFF:
 	// add dark grass
@@ -92,21 +93,40 @@ FOWCharacter *FogOfWarTechDemo::get_selection(t_vertex start, t_vertex end)
 	t_vertex tile_space = grid_manager.convert_mouse_coords(start);
 	t_vertex tile_end = grid_manager.convert_mouse_coords(end);
 
+	if (new_player->selection_group.selected_characters.size() > 0)
+	{
+		for (int i = 0; i < new_player->selection_group.selected_characters.size(); i++)
+		{
+			new_player->selection_group.selected_characters.at(i)->selected = false;
+		}
+	}
+
+	new_player->selection_group.selected_characters.clear();
+
 	if(int(tile_space.x) > 0 && int(tile_space.x) < grid_manager.width)
 		if (int(tile_space.y) > 0 && int(tile_space.y) < grid_manager.height)
-		{
-			for (int i = 0; i < entities.size(); i++)
-			{
-				Entity *test = entities.at(i);
-				if (test->type == FOW_CHARACTER)
+			if (int(tile_end.x) > 0 && int(tile_end.x) < grid_manager.width)
+				if (int(tile_end.y) > 0 && int(tile_end.y) < grid_manager.height)
 				{
-					if (test->position.x >= tile_space.x && test->position.z >= tile_space.y
-						&& test->position.x <= tile_end.x && test->position.z <= tile_end.y)
-						return (FOWCharacter*)test;
+					for (int i = 0; i < entities.size(); i++)
+					{
+						Entity *test = entities.at(i);
+						if (test->type == FOW_CHARACTER)
+						{
+							if (test->position.x >= tile_space.x && test->position.z >= tile_space.y
+								&& test->position.x <= tile_end.x && test->position.z <= tile_end.y)
+							{
+								new_player->selection_group.selected_characters.push_back((FOWCharacter*)test);
+								((FOWCharacter*)test)->selected = true;
+							}
+						}
+					}
 				}
-			}
-		}
-	return nullptr;
+
+	if (new_player->selection_group.selected_characters.size() > 0)
+		return new_player->selection_group.selected_characters.at(0);
+	else
+		return nullptr;
 }
 
 void FogOfWarTechDemo::take_input(boundinput input, bool type)
@@ -146,14 +166,8 @@ void FogOfWarTechDemo::take_input(boundinput input, bool type)
 	{
 		green_box->visible = false;
 
-		if (selected_character != nullptr)
-			selected_character->selected = false;
-
 		selected_character = get_selection(green_box->mouse_in_space, mouse_in_space);
 		char_widget->character = selected_character;
-
-		if(selected_character != nullptr)
-			selected_character->selected = true;
 	}
 
 	if (input == RIGHT && type == true)
@@ -188,9 +202,9 @@ void FogOfWarTechDemo::take_input(boundinput input, bool type)
 
 	if (input == RMOUSE && type == true)
 	{
-		if (selected_character != nullptr)
+		if (new_player->selection_group.selected_characters.size() == 1)
 		{
-			Ability_Manager::use_ability(selected_character, mouse_in_space);
+			Ability_Manager::use_ability(new_player->selection_group.selected_characters.at(0), mouse_in_space);
 		}
 	}
 
