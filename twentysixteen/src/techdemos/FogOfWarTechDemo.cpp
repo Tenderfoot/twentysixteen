@@ -181,7 +181,7 @@ void FogOfWarTechDemo::draw()
 	sort_list = entities;
 	std::sort(sort_list.begin(), sort_list.end(), by_depth_entity());
 
-	for (i = 0; i < sort_list.size(); i++)
+	for (int i = 0; i < sort_list.size(); i++)
 	{
 		glPushMatrix();
 			sort_list.at(i)->draw();
