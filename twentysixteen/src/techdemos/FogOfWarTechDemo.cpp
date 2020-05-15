@@ -36,7 +36,8 @@ void FogOfWarTechDemo::init()
 	new_player = new FOWPlayer();
 
 	// This will spawn the character for now
-	character_manager.grid_manager = &grid_manager;
+	new_player->grid_manager = &grid_manager;
+	new_player->entities = &entities;
 
 	for (int i = 0; i < entities.size(); i++)
 	{
@@ -84,56 +85,6 @@ void FogOfWarTechDemo::run(float time_delta)
 	}
 }
 
-
-// FOWPlayer for this one
-FOWCharacter *FogOfWarTechDemo::get_selection(t_vertex start, t_vertex end)
-{	
-
-	t_vertex tile_space = grid_manager.convert_mouse_coords(start);
-	t_vertex tile_end = grid_manager.convert_mouse_coords(end);
-
-	t_vertex maxes = t_vertex(std::max(tile_space.x, tile_end.x), std::max(tile_space.z, tile_end.z), 0.0f);
-	t_vertex mins = t_vertex(std::min(tile_space.x, tile_end.x), std::min(tile_space.z, tile_end.z), 0.0f);
-
-	// clear selected characters
-	if (new_player->selection_group.selected_characters.size() > 0)
-	{
-		for (int i = 0; i < new_player->selection_group.selected_characters.size(); i++)
-		{
-			new_player->selection_group.selected_characters.at(i)->selected = false;
-		}
-	}
-
-	new_player->selection_group.selected_characters.clear();
-
-
-	// if the box is valid, make a new selection group
-	if(int(mins.x) > 0 && int(mins.x) < grid_manager.width)
-		if (int(mins.y) > 0 && int(mins.y) < grid_manager.height)
-			if (int(maxes.x) > 0 && int(maxes.x) < grid_manager.width)
-				if (int(maxes.y) > 0 && int(maxes.y) < grid_manager.height)
-				{
-					for (int i = 0; i < entities.size(); i++)
-					{
-						Entity *test = entities.at(i);
-						if (test->type == FOW_CHARACTER)
-						{
-							if (test->position.x >= mins.x && test->position.z >= mins.y
-								&& test->position.x <= maxes.x && test->position.z <= maxes.y)
-							{
-								new_player->selection_group.selected_characters.push_back((FOWCharacter*)test);
-								((FOWCharacter*)test)->selected = true;
-							}
-						}
-					}
-				}
-
-	if (new_player->selection_group.selected_characters.size() > 0)
-		return new_player->selection_group.selected_characters.at(0);
-	else
-		return nullptr;
-}
-
 void FogOfWarTechDemo::take_input(boundinput input, bool type)
 {
 	if (input == MOUSEMOTION)
@@ -170,9 +121,9 @@ void FogOfWarTechDemo::take_input(boundinput input, bool type)
 	if (input == LMOUSE && type == false)
 	{
 		green_box->visible = false;
-
-		selected_character = get_selection(green_box->mouse_in_space, mouse_in_space);
-		char_widget->character = selected_character;
+		new_player->get_selection(grid_manager.convert_mouse_coords(green_box->mouse_in_space), grid_manager.convert_mouse_coords(mouse_in_space));
+		if(new_player->selection_group.selected_characters.size()>0)
+			char_widget->character = new_player->selection_group.selected_characters.at(0);
 	}
 
 	if (input == RIGHT && type == true)
