@@ -15,6 +15,11 @@ public:
 		this->type = type;
 		this->position = position;
 	}
+	
+	bool operator==(const FOWCommand& rhs)
+	{
+		return (this->type == rhs.type && this->position.x == rhs.position.x &&  this->position.z == rhs.position.z);
+	}
 
 	t_vertex position;
 	t_ability_enum type;

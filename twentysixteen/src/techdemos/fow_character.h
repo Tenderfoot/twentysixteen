@@ -43,8 +43,16 @@ public:
 			draw_position = position;
 		}
 
+		current_command = next_command;
+
 		FOWSelectable::process_command(next_command);
 	};
+
+	void give_command(FOWCommand command)
+	{
+		command_queue.clear();
+		command_queue.push_back(command);
+	}
 
 	void update(float time_delta)
 	{
@@ -82,6 +90,12 @@ public:
 
 					draw_position = position;
 					dirty_visibiltiy = true;
+
+					// a new move command came in, process after you hit the next grid space
+					if (!(current_command == command_queue.at(0)))
+					{
+						process_command(command_queue.at(0));
+					}
 				}
 
 				spine_data.animation_name = "walk_two";
@@ -105,6 +119,11 @@ public:
 			{
 				state = GRID_IDLE;
 			}
+		}
+		else if (state == GRID_IDLE)
+		{
+			if (command_queue.size() > 0)
+				process_command(command_queue.at(0));
 		}
 
 		if (state != GRID_DEAD)

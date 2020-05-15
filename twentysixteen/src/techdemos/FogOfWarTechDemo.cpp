@@ -212,7 +212,8 @@ void FogOfWarTechDemo::take_input(boundinput input, bool type)
 	{
 		if (new_player->selection_group.selected_characters.size() == 1)
 		{
-			new_player->selection_group.selected_characters.at(0)->process_command(FOWCommand(MOVE, grid_manager.convert_mouse_coords(mouse_in_space)));
+			new_player->selection_group.selected_characters.at(0)->command_queue.clear();
+			new_player->selection_group.selected_characters.at(0)->give_command(FOWCommand(MOVE, grid_manager.convert_mouse_coords(mouse_in_space)));
 		}
 	}
 
