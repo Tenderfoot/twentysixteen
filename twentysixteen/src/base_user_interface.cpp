@@ -27,10 +27,19 @@ void CharacterWidget::draw()
 	x = (res_width / 20) * 15;
 	y = res_height;
 	glPushMatrix();
-	glTranslatef(x, y, 0.0f);
-	glScalef(0.25, -0.25, 1.0f);
-	if(character != NULL)
-		character->spine_data.draw();
+	if (character != NULL)
+		if (character->type == 17)
+		{
+			glTranslatef(x, y, 0.0f);
+			glScalef(0.5, 0.5, 0.5);
+			character->spine_data.draw();
+		}
+		else
+		{
+			glTranslatef(x, y, 0.0f);
+			glScalef(0.25, 0.25, 1.0f);
+			character->spine_data.draw();
+		}
 	glPopMatrix();
 }
 

@@ -5,7 +5,7 @@
 
 typedef struct
 {
-	std::vector<FOWCharacter*> selected_characters;
+	std::vector<FOWSelectable*> selected_characters;
 } t_selectiongroup;
 
 class FOWPlayer
@@ -43,13 +43,13 @@ public:
 						for (int i = 0; i < entities->size(); i++)
 						{
 							Entity *test = entities->at(i);
-							if (test->type == FOW_CHARACTER)
+							if (test->type == FOW_CHARACTER || test->type == FOW_BUILDING)
 							{
 								if (test->position.x >= mins.x && test->position.z >= mins.y
 									&& test->position.x <= maxes.x && test->position.z <= maxes.y)
 								{
-									selection_group.selected_characters.push_back((FOWCharacter*)test);
-									((FOWCharacter*)test)->selected = true;
+									selection_group.selected_characters.push_back((FOWSelectable*)test);
+									((FOWSelectable*)test)->selected = true;
 								}
 							}
 						}
@@ -60,7 +60,7 @@ public:
 	t_vertex gridstart_world;
 	t_selectiongroup selection_group;
 
-	FOWCharacter *selection;
+	FOWSelectable *selection;
 
 	std::vector<Entity*> *entities;
 	GridManager *grid_manager;

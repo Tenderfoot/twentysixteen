@@ -99,8 +99,10 @@ void FogOfWarTechDemo::take_input(boundinput input, bool type)
 	{
 		green_box->visible = false;
 		new_player->get_selection(grid_manager.convert_mouse_coords(green_box->mouse_in_space), grid_manager.convert_mouse_coords(mouse_in_space));
-		if(new_player->selection_group.selected_characters.size()>0)
+		if (new_player->selection_group.selected_characters.size() > 0)
 			char_widget->character = new_player->selection_group.selected_characters.at(0);
+		else
+			char_widget->character = nullptr;
 	}
 
 	if (input == RIGHT && type == true)
@@ -148,7 +150,9 @@ void FogOfWarTechDemo::take_input(boundinput input, bool type)
 			{
 				if(new_player->queue_add_toggle == false)
 					new_player->selection_group.selected_characters.at(i)->command_queue.clear();
-				new_player->selection_group.selected_characters.at(i)->give_command(FOWCommand(MOVE, t_vertex(hit_position.x+i, 0.0f, hit_position.z+i%2)));
+				
+				if(new_player->selection_group.selected_characters.at(i)->type == FOW_CHARACTER)
+					((FOWCharacter*)new_player->selection_group.selected_characters.at(i))->give_command(FOWCommand(MOVE, t_vertex(hit_position.x+i, 0.0f, hit_position.z+i%2)));
 			}
 		}
 	}
@@ -196,29 +200,39 @@ void FogOfWarTechDemo::draw()
 void FogOfWarTechDemo::draw_selections()
 {
 	int i;
+	t_vertex draw_position;
+	int draw_size;
 	// This is for the selection border
 	// needs to be drawn before characters - or does it
 	for (i = 0; i < entities.size(); i++)
 	{
 		glPushMatrix();
-		if (entities.at(i)->type == FOW_CHARACTER)
+		if (entities.at(i)->type == FOW_CHARACTER || entities.at(i)->type == FOW_BUILDING)
 		{
-			FOWCharacter *fow_character = (FOWCharacter*)entities.at(i);
+			if (entities.at(i)->type == FOW_CHARACTER)
+			{
+				FOWCharacter *fow_character = (FOWCharacter*)entities.at(i);
+				draw_position = fow_character->draw_position;
+			}
+			if (entities.at(i)->type == FOW_BUILDING)
+			{
+				draw_position = entities.at(i)->position;
+			}
 
-			if (fow_character->selected)
+			if (((FOWSelectable*)entities.at(i))->selected)
 			{
 				glColor3f(0.5f, 1.0f, 0.5f);
 				glDisable(GL_TEXTURE_2D);
 				glLineWidth(1.0f);
 				glBegin(GL_LINES);
-					glVertex3f((fow_character->draw_position.x * 5) - 2.5, 0.1f, (fow_character->draw_position.z * 5) - 2.5);
-					glVertex3f((fow_character->draw_position.x * 5) - 2.5, 0.1f, (fow_character->draw_position.z * 5) + 2.5);
-					glVertex3f((fow_character->draw_position.x * 5) - 2.5, 0.1f, (fow_character->draw_position.z * 5) - 2.5);
-					glVertex3f((fow_character->draw_position.x * 5) + 2.5, 0.1f, (fow_character->draw_position.z * 5) - 2.5);
-					glVertex3f((fow_character->draw_position.x * 5) - 2.5, 0.1f, (fow_character->draw_position.z * 5) + 2.5);
-					glVertex3f((fow_character->draw_position.x * 5) + 2.5, 0.1f, (fow_character->draw_position.z * 5) + 2.5);
-					glVertex3f((fow_character->draw_position.x * 5) + 2.5, 0.1f, (fow_character->draw_position.z * 5) - 2.5);
-					glVertex3f((fow_character->draw_position.x * 5) + 2.5, 0.1f, (fow_character->draw_position.z * 5) + 2.5);
+					glVertex3f((draw_position.x * 5) - 2.5, 0.1f, (draw_position.z * 5) - 2.5);
+					glVertex3f((draw_position.x * 5) - 2.5, 0.1f, (draw_position.z * 5) + 2.5);
+					glVertex3f((draw_position.x * 5) - 2.5, 0.1f, (draw_position.z * 5) - 2.5);
+					glVertex3f((draw_position.x * 5) + 2.5, 0.1f, (draw_position.z * 5) - 2.5);
+					glVertex3f((draw_position.x * 5) - 2.5, 0.1f, (draw_position.z * 5) + 2.5);
+					glVertex3f((draw_position.x * 5) + 2.5, 0.1f, (draw_position.z * 5) + 2.5);
+					glVertex3f((draw_position.x * 5) + 2.5, 0.1f, (draw_position.z * 5) - 2.5);
+					glVertex3f((draw_position.x * 5) + 2.5, 0.1f, (draw_position.z * 5) + 2.5);
 				glEnd();
 				glColor3f(1.0f, 1.0f, 1.0f);
 				glEnable(GL_TEXTURE_2D);
