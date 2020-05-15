@@ -23,4 +23,3 @@ public:
 	FOWCharacter *selection;
 
 };
-#pragma once

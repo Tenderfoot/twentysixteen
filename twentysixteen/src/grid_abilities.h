@@ -85,10 +85,6 @@ public:
 	{
 		t_vertex grid_pos = grid_manager->convert_mouse_coords(activate_position);
 
-		// hack for now to allow for FOW stuff
-		grid_pos.z = grid_pos.y;
-		grid_pos.y = 0;
-
 		// handle abilities
 		if (check_valid(activator, activate_position))
 		{

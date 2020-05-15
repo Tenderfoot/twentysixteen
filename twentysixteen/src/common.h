@@ -151,3 +151,13 @@ enum EDITOR_MODES
 	EDIT_MODE,
 	PLAY_MODE
 };
+
+typedef enum
+{
+	GRID_IDLE,
+	GRID_MOVING,
+	GRID_ENDTURN,
+	GRID_ATTACKING,
+	GRID_DYING,
+	GRID_DEAD
+}GridCharacterState;

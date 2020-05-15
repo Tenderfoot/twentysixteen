@@ -5,7 +5,9 @@
 // TODO:
 
 // RTS Stuff
-	// FOWPlayerController
+	// TWO THINGS TONIGHT:
+		// Multiunit Move command
+		// Queued Command
 	// BUG: Draw order should use draw position not position
 	// Bug: Crashes when greenbox leaves area
 
@@ -62,11 +64,10 @@ void FogOfWarTechDemo::init()
 
 	// This adds the character widget to the UI
 	// will need to be updated to use the players selected unit
-	GridCharacter *current_char = new_character;
-
 	char_widget = new CharacterWidget(selected_character);
 	TechDemoUI.add_widget(char_widget);
-	grid_manager.compute_visibility_raycast(current_char->position.x, current_char->position.z, true);
+	
+	grid_manager.compute_visibility_raycast(new_character->position.x, new_character->position.z, true);
 
 	reset();
 }
@@ -94,8 +95,8 @@ FOWCharacter *FogOfWarTechDemo::get_selection(t_vertex start, t_vertex end)
 	t_vertex tile_space = grid_manager.convert_mouse_coords(start);
 	t_vertex tile_end = grid_manager.convert_mouse_coords(end);
 
-	t_vertex maxes = t_vertex(std::max(tile_space.x, tile_end.x), std::max(tile_space.y, tile_end.y), 0.0f);
-	t_vertex mins = t_vertex(std::min(tile_space.x, tile_end.x), std::min(tile_space.y, tile_end.y), 0.0f);
+	t_vertex maxes = t_vertex(std::max(tile_space.x, tile_end.x), std::max(tile_space.z, tile_end.z), 0.0f);
+	t_vertex mins = t_vertex(std::min(tile_space.x, tile_end.x), std::min(tile_space.z, tile_end.z), 0.0f);
 
 	// clear selected characters
 	if (new_player->selection_group.selected_characters.size() > 0)
@@ -211,7 +212,7 @@ void FogOfWarTechDemo::take_input(boundinput input, bool type)
 	{
 		if (new_player->selection_group.selected_characters.size() == 1)
 		{
-			Ability_Manager::use_ability(new_player->selection_group.selected_characters.at(0), mouse_in_space);
+			new_player->selection_group.selected_characters.at(0)->process_command(FOWCommand(MOVE, grid_manager.convert_mouse_coords(mouse_in_space)));
 		}
 	}
 
@@ -241,8 +242,6 @@ void FogOfWarTechDemo::take_input(boundinput input, bool type)
 
 void FogOfWarTechDemo::draw()
 {
-	GridCharacter *current_char = new_character;
-
 	camera_rotation_y = 0.5;
 	camera_rotation_x = 0;
 

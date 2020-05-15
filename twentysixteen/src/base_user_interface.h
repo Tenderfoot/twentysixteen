@@ -225,7 +225,7 @@ public:
 class CharacterWidget : public UIWidget
 {
 public:
-	CharacterWidget(GridCharacter *newchar)
+	CharacterWidget(SpineEntity *newchar)
 	{
 		visible = true;
 		character = newchar;
@@ -235,7 +235,7 @@ public:
 		height = (res_height / 4);
 	}
 
-	GridCharacter *character;
+	SpineEntity *character;
 	bool visible;
 	void draw();
 };

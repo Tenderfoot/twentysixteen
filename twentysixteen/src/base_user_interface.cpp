@@ -30,7 +30,7 @@ void CharacterWidget::draw()
 	glTranslatef(x, y, 0.0f);
 	glScalef(0.25, -0.25, 1.0f);
 	if(character != NULL)
-		((GridCharacter*)character)->spine_data.draw();
+		character->spine_data.draw();
 	glPopMatrix();
 }
 

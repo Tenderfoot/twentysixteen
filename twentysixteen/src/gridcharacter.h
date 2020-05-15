@@ -8,16 +8,6 @@
 #include "spine_entity.h"
 #include "grid_manager.h"
 
-typedef enum
-{
-	GRID_IDLE,
-	GRID_MOVING,
-	GRID_ENDTURN,
-	GRID_ATTACKING,
-	GRID_DYING,
-	GRID_DEAD
-}GridCharacterState;
-
 class GridCharacter : public SpineEntity
 {
 public:
@@ -42,8 +32,6 @@ public:
 	std::vector<int> abilities;
 
 	int active_ability;
-
-	float last_time;
 
 	void attack_target(GridCharacter *target)
 	{
@@ -137,7 +125,6 @@ public:
 				state = GRID_ENDTURN;
 				spine_data.animation_name = "idle";
 			}
-			last_time = SDL_GetTicks();
 		}
 		else if (state == GRID_ATTACKING)
 		{

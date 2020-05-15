@@ -86,6 +86,7 @@
     <ClInclude Include="src\enemy_sidefire.h" />
     <ClInclude Include="src\entity.h" />
     <ClInclude Include="src\fow_player.h" />
+    <ClInclude Include="src\fow_selectable.h" />
     <ClInclude Include="src\game_entity.h" />
     <ClInclude Include="src\glext.h" />
     <ClInclude Include="src\grass_entity.h" />
