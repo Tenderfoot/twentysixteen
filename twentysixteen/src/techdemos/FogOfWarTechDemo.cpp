@@ -20,6 +20,8 @@ void FogOfWarTechDemo::init()
 {
 	TechDemoUI.add_widget(new UIImage(0.5, 0.9, 1.01, 0.2, Paintbrush::Soil_Load_Texture("data/images/HUD.png", false, false)));
 	TechDemoUI.add_widget(new MapWidget(&grid_manager));
+	char_widget = new CharacterWidget(nullptr);
+	TechDemoUI.add_widget(char_widget);
 
 	green_box = new GreenBox();
 	TechDemoUI.add_widget(green_box);
@@ -50,16 +52,7 @@ void FogOfWarTechDemo::init()
 	}
 
 	lookmode = false;
-
-	camera_rotation_y = 1;
 	camera_distance = 25.0f;
-
-	// This adds the character widget to the UI
-	// will need to be updated to use the players selected unit
-	char_widget = new CharacterWidget(nullptr);
-	TechDemoUI.add_widget(char_widget);
-	
-	grid_manager.compute_visibility_raycast(new_character->position.x, new_character->position.z, true);
 
 	reset();
 }
