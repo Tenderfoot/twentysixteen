@@ -70,8 +70,9 @@ void SpineData::load_spine_data(char* spine_folder)
 	sprintf_s(dir, sizeof(char)*64, "data/spinedata/%s/skeleton.json", spine_folder);
 
 	skeletonData = spSkeletonJson_readSkeletonDataFile(skeletonJson, dir);
-	skeleton = spSkeleton_create(skeletonData);
 	if (!skeletonData) printf("Error: %s\n", skeletonJson->error);
+
+	skeleton = spSkeleton_create(skeletonData);
 	spSkeletonJson_dispose(skeletonJson);
 
 	spSkeleton_setToSetupPose(skeleton);

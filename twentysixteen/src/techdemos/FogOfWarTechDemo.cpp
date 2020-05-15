@@ -1,10 +1,13 @@
 #include "fogofwartechdemo.h"
 #include "../game_entity.h"
-#include "../grid_abilities.h"
+
 
 // TODO:
 
 // RTS Stuff
+	// Make a building (Town Hall?)
+	// Make a unit (gatherer)
+	// produce unit out of building (HUD buttons?)
 	// BUG: Draw order should use draw position not position
 	// Bug: Crashes when greenbox leaves area
 
@@ -50,6 +53,10 @@ void FogOfWarTechDemo::init()
 			entities.push_back(new_character);
 		}
 	}
+
+	FOWBuilding *new_building = new FOWBuilding(2,2,3);
+	entities.push_back(new_building);
+
 
 	lookmode = false;
 

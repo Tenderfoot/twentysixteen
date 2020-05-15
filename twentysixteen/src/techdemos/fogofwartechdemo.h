@@ -7,6 +7,7 @@
 #include "fow_character.h"
 #include "../grid_character_manager.h"
 #include "../fow_player.h"
+#include "../fow_building.h"
 
 class FogOfWarTechDemo : public BaseTechDemo
 {

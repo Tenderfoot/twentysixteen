@@ -377,6 +377,9 @@
     <ClInclude Include="src\fow_selectable.h">
       <Filter>Header Files\grid\fog_of_war</Filter>
     </ClInclude>
+    <ClInclude Include="src\fow_building.h">
+      <Filter>Header Files\grid\fog_of_war</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="data\shaders\grass.frag">
