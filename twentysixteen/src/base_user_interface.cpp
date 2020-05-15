@@ -30,14 +30,17 @@ void CharacterWidget::draw()
 	if (character != NULL)
 		if (character->type == 17)
 		{
-			glTranslatef(x, y, 0.0f);
-			glScalef(0.5, 0.5, 0.5);
+			// building spine template is positioned differently than character
+			glTranslatef(x-40.0f, y-150.0f, 0.0f);
+			glRotatef(180, 0.0f, 1.0f, 0.0f);
+			glRotatef(180, 0.0f, 0.0f, 1.0f);
+			glScalef(0.5f, 0.5f, 0.5f);
 			character->spine_data.draw();
 		}
 		else
 		{
 			glTranslatef(x, y, 0.0f);
-			glScalef(0.25, 0.25, 1.0f);
+			glScalef(0.25, -0.25, 1.0f);
 			character->spine_data.draw();
 		}
 	glPopMatrix();
