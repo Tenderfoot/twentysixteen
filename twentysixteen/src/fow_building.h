@@ -24,7 +24,7 @@ public:
 		glPushMatrix();
 			glTranslatef((position.x * 5)-2.5, position.y + 0.01, (position.z * 5)-2.5);
 			glRotatef(-90, 1.0f, 0.0f, 0.0f);
-			glScalef((0.023f)*size, (0.023f)*size, (0.023f)*size);
+			glScalef((0.02275f)*size, (0.02275f)*size, (0.02275f)*size);
 			spine_data.draw();
 		glPopMatrix();
 	}
