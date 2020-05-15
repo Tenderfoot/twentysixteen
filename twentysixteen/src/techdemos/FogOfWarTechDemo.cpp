@@ -86,6 +86,8 @@ void FogOfWarTechDemo::run(float time_delta)
 	}
 }
 
+
+// FOWPlayer for this one
 FOWCharacter *FogOfWarTechDemo::get_selection(t_vertex start, t_vertex end)
 {	
 
@@ -248,7 +250,7 @@ void FogOfWarTechDemo::draw()
 	camera_position = t_vertex((camera_pos.x) + ((sin(camera_rotation_x)*camera_distance))*sin(camera_rotation_y), camera_distance*cos(camera_rotation_y), (camera_pos.z) + ((cos(camera_rotation_x)*camera_distance))*sin(camera_rotation_y));
 	camera_lookat = t_vertex(camera_pos.x, 0, (camera_pos.z));
 
-	gluLookAt((camera_pos.x * 5), camera_distance, (camera_pos.z * 5), camera_pos.x * 5, 0, (camera_pos.z * 5)-0.000001, 0.0f, 1.0f, 0.0f);
+	gluLookAt((camera_pos.x * 5), camera_distance, (camera_pos.z * 5), camera_pos.x * 5, 0, (camera_pos.z * 5), 0.0f, 0.0f, -1.0f);
 
 	grid_manager.draw_autotile();
 
