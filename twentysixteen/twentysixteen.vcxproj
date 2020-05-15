@@ -223,6 +223,10 @@
     <IncludePath>C:\Users\grant\Desktop\TwentyTwenty\twentysixteen\include\GL;C:\Users\grant\Desktop\TwentyTwenty\twentysixteen\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Users\grant\Desktop\TwentyTwenty\twentysixteen\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>C:\Users\grant\Desktop\TwentyTwenty\twentysixteen\include\GL;C:\Users\grant\Desktop\TwentyTwenty\twentysixteen\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\grant\Desktop\TwentyTwenty\twentysixteen\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>

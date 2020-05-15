@@ -2,7 +2,6 @@
 #include "../game_entity.h"
 #include "../grid_abilities.h"
 
-
 // TODO:
 
 // RTS Stuff
@@ -93,6 +92,10 @@ FOWCharacter *FogOfWarTechDemo::get_selection(t_vertex start, t_vertex end)
 	t_vertex tile_space = grid_manager.convert_mouse_coords(start);
 	t_vertex tile_end = grid_manager.convert_mouse_coords(end);
 
+	t_vertex maxes = t_vertex(std::max(tile_space.x, tile_end.x), std::max(tile_space.y, tile_end.y), 0.0f);
+	t_vertex mins = t_vertex(std::min(tile_space.x, tile_end.x), std::min(tile_space.y, tile_end.y), 0.0f);
+
+	// clear selected characters
 	if (new_player->selection_group.selected_characters.size() > 0)
 	{
 		for (int i = 0; i < new_player->selection_group.selected_characters.size(); i++)
@@ -103,18 +106,20 @@ FOWCharacter *FogOfWarTechDemo::get_selection(t_vertex start, t_vertex end)
 
 	new_player->selection_group.selected_characters.clear();
 
-	if(int(tile_space.x) > 0 && int(tile_space.x) < grid_manager.width)
-		if (int(tile_space.y) > 0 && int(tile_space.y) < grid_manager.height)
-			if (int(tile_end.x) > 0 && int(tile_end.x) < grid_manager.width)
-				if (int(tile_end.y) > 0 && int(tile_end.y) < grid_manager.height)
+
+	// if the box is valid, make a new selection group
+	if(int(mins.x) > 0 && int(mins.x) < grid_manager.width)
+		if (int(mins.y) > 0 && int(mins.y) < grid_manager.height)
+			if (int(maxes.x) > 0 && int(maxes.x) < grid_manager.width)
+				if (int(maxes.y) > 0 && int(maxes.y) < grid_manager.height)
 				{
 					for (int i = 0; i < entities.size(); i++)
 					{
 						Entity *test = entities.at(i);
 						if (test->type == FOW_CHARACTER)
 						{
-							if (test->position.x >= tile_space.x && test->position.z >= tile_space.y
-								&& test->position.x <= tile_end.x && test->position.z <= tile_end.y)
+							if (test->position.x >= mins.x && test->position.z >= mins.y
+								&& test->position.x <= maxes.x && test->position.z <= maxes.y)
 							{
 								new_player->selection_group.selected_characters.push_back((FOWCharacter*)test);
 								((FOWCharacter*)test)->selected = true;
@@ -259,6 +264,9 @@ void FogOfWarTechDemo::draw()
 
 	int i;
 
+
+	// This is for the selection border
+	// needs to be drawn before characters - or does it
 	for (i = 0; i < sort_list.size(); i++)
 	{
 		glPushMatrix();
