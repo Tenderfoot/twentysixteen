@@ -52,6 +52,9 @@ void FogOfWarTechDemo::init()
 	}
 
 	lookmode = false;
+
+	// this is actually important, need to fix lookat calc
+	camera_rotation_y = 1;
 	camera_distance = 25.0f;
 
 	reset();

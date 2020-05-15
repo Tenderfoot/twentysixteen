@@ -173,6 +173,7 @@ void GreenBox::draw()
 {
 	if (visible)
 	{
+		glDisable(GL_TEXTURE_2D);
 		glColor3f(0.5f, 1.0f, 0.5f);
 		glLineWidth(2.0f);
 		glBegin(GL_LINES);
@@ -185,7 +186,7 @@ void GreenBox::draw()
 			glVertex2f(x, height);
 			glVertex2f(width, height);
 		glEnd();
-
+		glEnable(GL_TEXTURE_2D);
 		glColor3f(1.0f, 1.0f, 1.0f);
 	}
 }
