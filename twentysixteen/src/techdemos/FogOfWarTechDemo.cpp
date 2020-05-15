@@ -5,9 +5,6 @@
 // TODO:
 
 // RTS Stuff
-	// TWO THINGS TONIGHT:
-		// Multiunit Move command
-		// Queued Command
 	// BUG: Draw order should use draw position not position
 	// Bug: Crashes when greenbox leaves area
 
@@ -208,12 +205,23 @@ void FogOfWarTechDemo::take_input(boundinput input, bool type)
 		grid_manager.randomize_map();
 	}
 
+	if (input == USE)
+	{
+		new_player->queue_add_toggle = type;
+	}
+
 	if (input == RMOUSE && type == true)
 	{
-		if (new_player->selection_group.selected_characters.size() == 1)
+		t_vertex hit_position = grid_manager.convert_mouse_coords(mouse_in_space);
+
+		if (new_player->selection_group.selected_characters.size() > 0)
 		{
-			new_player->selection_group.selected_characters.at(0)->command_queue.clear();
-			new_player->selection_group.selected_characters.at(0)->give_command(FOWCommand(MOVE, grid_manager.convert_mouse_coords(mouse_in_space)));
+			for (int i = 0; i < new_player->selection_group.selected_characters.size(); i++)
+			{
+				if(new_player->queue_add_toggle == false)
+					new_player->selection_group.selected_characters.at(i)->command_queue.clear();
+				new_player->selection_group.selected_characters.at(i)->give_command(FOWCommand(MOVE, t_vertex(hit_position.x+i, 0.0f, hit_position.z+i%2)));
+			}
 		}
 	}
 

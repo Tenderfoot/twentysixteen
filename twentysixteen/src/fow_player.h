@@ -14,6 +14,7 @@ public:
 
 	FOWPlayer()
 	{
+		queue_add_toggle = false;
 	}
 
 	t_vertex gridstart_ui;
@@ -21,5 +22,7 @@ public:
 	t_selectiongroup selection_group;
 
 	FOWCharacter *selection;
+
+	bool queue_add_toggle;
 
 };

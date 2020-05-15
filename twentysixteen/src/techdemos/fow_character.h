@@ -50,7 +50,6 @@ public:
 
 	void give_command(FOWCommand command)
 	{
-		command_queue.clear();
 		command_queue.push_back(command);
 	}
 
@@ -104,6 +103,7 @@ public:
 			{
 				state = GRID_IDLE;
 				spine_data.animation_name = "idle";
+				command_queue.erase(command_queue.begin());
 			}
 		}
 		else if (state == GRID_ATTACKING)
