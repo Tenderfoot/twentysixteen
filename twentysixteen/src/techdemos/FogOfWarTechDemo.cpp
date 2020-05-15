@@ -18,9 +18,6 @@
 
 void FogOfWarTechDemo::init()
 {
-	Ability_Manager::build_abilities();
-	Ability_Manager::grid_manager = &grid_manager;
-
 	TechDemoUI.add_widget(new UIImage(0.5, 0.9, 1.01, 0.2, Paintbrush::Soil_Load_Texture("data/images/HUD.png", false, false)));
 	TechDemoUI.add_widget(new MapWidget(&grid_manager));
 
@@ -30,15 +27,12 @@ void FogOfWarTechDemo::init()
 	grid_manager.entities = &entities;
 	grid_manager.init();
 
-	selected_character = nullptr;
-
 	// make the player
 	new_player = new FOWPlayer();
-
-	// This will spawn the character for now
 	new_player->grid_manager = &grid_manager;
 	new_player->entities = &entities;
 
+	// this should go somewhere
 	for (int i = 0; i < entities.size(); i++)
 	{
 		Entity *current_entity = entities.at(i);
@@ -62,7 +56,7 @@ void FogOfWarTechDemo::init()
 
 	// This adds the character widget to the UI
 	// will need to be updated to use the players selected unit
-	char_widget = new CharacterWidget(selected_character);
+	char_widget = new CharacterWidget(nullptr);
 	TechDemoUI.add_widget(char_widget);
 	
 	grid_manager.compute_visibility_raycast(new_character->position.x, new_character->position.z, true);
@@ -72,10 +66,9 @@ void FogOfWarTechDemo::init()
 
 void FogOfWarTechDemo::run(float time_delta)
 {
-	grid_manager.lookmode = lookmode;
-
-	//character_manager.run(mouse_in_space, camera_rotation_x);
-	//char_widget->character = character_manager.get_current_character();
+	// green box (this updates info for the widget that draws it)
+	green_box->width = mousex;
+	green_box->height = mousey;
 
 	// Loop through and update entities. This should stay and other things
 	// should be refactored out.
@@ -87,26 +80,6 @@ void FogOfWarTechDemo::run(float time_delta)
 
 void FogOfWarTechDemo::take_input(boundinput input, bool type)
 {
-	if (input == MOUSEMOTION)
-	{
-		TechDemoUI.mouse_coords = t_vertex(mousex, mousey, 0);
-		TechDemoUI.mouse_focus();
-
-		if (lookmode)
-		{
-			camera_rotation_x += mouse_relative.x / 100;
-			camera_rotation_y += mouse_relative.y / 100;
-			mouse_relative.x = 0;
-			mouse_relative.y = 0;
-
-			if (camera_rotation_y > 1.5)
-				camera_rotation_y = 1.5;
-
-			if (camera_rotation_y < 0.01)
-				camera_rotation_y = 0.01;
-		}
-	}
-
 	if (input == BACK && type == true)
 		exit_level = TECHDEMO_BASE;
 
@@ -176,10 +149,6 @@ void FogOfWarTechDemo::take_input(boundinput input, bool type)
 		}
 	}
 
-	if (input == RMOUSE && type == false)
-	{
-	}
-
 	if (input == MWHEELUP)
 	{
 		if (camera_distance > 5)
@@ -191,49 +160,46 @@ void FogOfWarTechDemo::take_input(boundinput input, bool type)
 		if (camera_distance < 100)
 			camera_distance++;
 	}
-
-	if (input == MIDDLEMOUSE)
-	{
-		camera_distance = 25.0f;
-		camera_rotation_y = 1;
-		camera_rotation_x = 0;
-	}
 }
 
 void FogOfWarTechDemo::draw()
 {
-	camera_rotation_y = 0.5;
-	camera_rotation_x = 0;
-
-	// this stuff is for the current draw order
+	// this stuff is to sort the draw order - used in level
 	camera_position = t_vertex((camera_pos.x) + ((sin(camera_rotation_x)*camera_distance))*sin(camera_rotation_y), camera_distance*cos(camera_rotation_y), (camera_pos.z) + ((cos(camera_rotation_x)*camera_distance))*sin(camera_rotation_y));
 	camera_lookat = t_vertex(camera_pos.x, 0, (camera_pos.z));
 
 	gluLookAt((camera_pos.x * 5), camera_distance, (camera_pos.z * 5), camera_pos.x * 5, 0, (camera_pos.z * 5), 0.0f, 0.0f, -1.0f);
 
+	// draw the map
 	grid_manager.draw_autotile();
 
-	// green box
-	green_box->width = mousex;
-	green_box->height = mousey;
-
+	// draw boxes around selected characters
+	draw_selections();
 
 	// sort and draw entities
 	std::vector<Entity*> sort_list;
 	sort_list = entities;
 	std::sort(sort_list.begin(), sort_list.end(), by_depth_entity());
 
-	int i;
-
-
-	// This is for the selection border
-	// needs to be drawn before characters - or does it
 	for (i = 0; i < sort_list.size(); i++)
 	{
 		glPushMatrix();
-		if (sort_list.at(i)->type == FOW_CHARACTER)
+			sort_list.at(i)->draw();
+		glPopMatrix();
+	}
+}
+
+void FogOfWarTechDemo::draw_selections()
+{
+	int i;
+	// This is for the selection border
+	// needs to be drawn before characters - or does it
+	for (i = 0; i < entities.size(); i++)
+	{
+		glPushMatrix();
+		if (entities.at(i)->type == FOW_CHARACTER)
 		{
-			FOWCharacter *fow_character = (FOWCharacter*)sort_list.at(i);
+			FOWCharacter *fow_character = (FOWCharacter*)entities.at(i);
 
 			if (fow_character->selected)
 			{
@@ -254,13 +220,6 @@ void FogOfWarTechDemo::draw()
 				glEnable(GL_TEXTURE_2D);
 			}
 		}
-		glPopMatrix();
-	}
-
-	for (i = 0; i < sort_list.size(); i++)
-	{
-		glPushMatrix();
-			sort_list.at(i)->draw();
 		glPopMatrix();
 	}
 }
