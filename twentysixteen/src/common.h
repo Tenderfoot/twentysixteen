@@ -119,6 +119,7 @@ enum entity_types
 	GRID_SPAWNPOINT,
 	GRID_ENEMYSPAWNPOINT,
 	FOW_CHARACTER,
+	FOW_BUILDING
 };
 
 typedef enum

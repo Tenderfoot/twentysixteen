@@ -8,11 +8,11 @@ public:
 
 	FOWBuilding()
 	{
-		size = 1;
 	}
 
 	FOWBuilding(int x, int z, int size)
 	{
+		type = FOW_BUILDING;
 		spine_data.load_spine_data("buildings");
 		position.x = x;
 		position.z = z;

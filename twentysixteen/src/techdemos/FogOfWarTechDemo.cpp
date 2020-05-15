@@ -54,9 +54,10 @@ void FogOfWarTechDemo::init()
 		}
 	}
 
-	FOWBuilding *new_building = new FOWBuilding(2,2,3);
+	FOWBuilding *new_building = new FOWBuilding(10,10, 3);
 	entities.push_back(new_building);
-
+	new_building = new FOWBuilding(14, 14, 2);
+	entities.push_back(new_building);
 
 	lookmode = false;
 
