@@ -43,6 +43,7 @@ public:
 			desired_position = next_command.position;
 			state = GRID_MOVING;
 			draw_position = position;
+			current_path = grid_manager->find_path(position, desired_position);
 		}
 
 		if (next_command.type == GATHER)
@@ -50,6 +51,7 @@ public:
 			desired_position = t_vertex(next_command.target->position.x,0, next_command.target->position.z-1);
 			state = GRID_MOVING;
 			draw_position = position;
+			current_path = grid_manager->find_path(position, desired_position);
 		}
 
 
@@ -67,14 +69,9 @@ public:
 	{
 		if (state == GRID_MOVING)
 		{
-
-			// This is actually disgusting, this shouldn't run every frame, only when it first starts moving, or if it gets stopped
-			// currently happening every frame for every character
-			std::vector<t_tile*> path = grid_manager->find_path(position, desired_position);
-
-			if (path.size() > 0)
+			if (current_path.size() > 0)
 			{
-				t_tile *next_stop = path.at(path.size() - 1);
+				t_tile *next_stop = current_path.at(current_path.size() - 1);
 
 				if (abs(draw_position.x - next_stop->x) > 0.01)
 				{
@@ -96,6 +93,8 @@ public:
 				{
 					position.x = next_stop->x;
 					position.z = next_stop->y;
+
+					current_path = grid_manager->find_path(position, desired_position);
 
 					draw_position = position;
 					dirty_visibiltiy = true;
@@ -147,6 +146,7 @@ public:
 	t_vertex desired_position;
 	bool dirty_visibiltiy;
 	FOWPlayer *owner;
+	std::vector<t_tile*> current_path;
 };
 
 
@@ -173,21 +173,30 @@ public:
 	{
 		if (state == GRID_MOVING)
 		{
-			std::vector<t_tile*> path = grid_manager->find_path(position, desired_position);
-
-			if (path.size() > 0)
+			if (current_path.size() > 0)
 			{	
 			}
 			else
 			{
 				if (position.x != desired_position.x || position.y != desired_position.y)
 				{
-					// something is blocking me so I'll just forget what I was doing
-					state = GRID_IDLE;
-					spine_data.animation_name = "idle";
-					desired_position = position;
-					draw_position = position;
-					process_command(FOWCommand(MOVE, position));
+					if (current_command.target != nullptr)
+					{
+						t_vertex new_position;
+						if (has_gold)
+							new_position = t_vertex(target_town_hall->position.x + 1, 0, target_town_hall->position.z + 1);
+						else
+							new_position = t_vertex(current_command.target->position.x + 1, 0, current_command.target->position.z + 1);
+
+						desired_position = new_position;
+						current_path = grid_manager->find_path(position, desired_position);
+						while (current_path.size() == 0)
+						{
+							new_position = t_vertex(new_position.x + 1, 0, new_position.z);
+							desired_position = new_position;
+							current_path = grid_manager->find_path(position, new_position);
+						}
+					}
 				}
 				else
 				{
@@ -250,6 +259,7 @@ public:
 								target_town_hall = (FOWSelectable*)townhall_list.at(i);
 							}
 						}
+						current_path = grid_manager->find_path(position, desired_position);
 					}
 					else
 					{
@@ -263,6 +273,7 @@ public:
 					owner->gold++;
 					printf("Player now has %d gold\n", owner->gold);
 					desired_position = t_vertex(current_command.target->position.x, 0, current_command.target->position.z - 1);
+					current_path = grid_manager->find_path(position, desired_position);
 					state = GRID_MOVING;
 					draw_position = position;
 				}

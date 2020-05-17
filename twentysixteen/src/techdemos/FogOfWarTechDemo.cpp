@@ -5,8 +5,7 @@
 // TODO:
 
 // RTS Stuff
-	// produce unit out of building
-		// USE HOTKEYS FOR SIMPLICITY
+	// TODO: Choose spot around building if spot is taken
 	// BUG: Draw order should use draw position not position
 	// Bug: Crashes when greenbox leaves area
 
