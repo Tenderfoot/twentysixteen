@@ -546,6 +546,17 @@ void GridManager::randomize_map()
 
 }
 
+std::vector<Entity*> GridManager::get_entities_of_type(entity_types type)
+{
+	std::vector<Entity*> return_list;
+	int i;
+	for (i = 0; i < entities->size(); i++)
+		if (entities->at(i)->type == type)
+			return_list.push_back(entities->at(i));
+
+	return return_list;
+}
+
 void GridManager::cull_orphans()
 {
 

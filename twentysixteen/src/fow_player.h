@@ -59,7 +59,7 @@ public:
 
 	bool is_selectable(entity_types type)
 	{
-		return (type == FOW_CHARACTER || type == FOW_GATHERER || type == FOW_BUILDING);
+		return (type == FOW_CHARACTER || type == FOW_GATHERER || type == FOW_BUILDING || type == FOW_TOWNHALL || type == FOW_GOLDMINE);
 	}
 
 	float gold;

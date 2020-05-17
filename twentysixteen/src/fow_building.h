@@ -20,7 +20,6 @@ public:
 	FOWBuilding(int x, int z, int size)
 	{
 		type = FOW_BUILDING;
-		subtype = BUILDING;
 		spine_data.load_spine_data("buildings");
 		position.x = x;
 		position.z = z;
@@ -39,8 +38,6 @@ public:
 
 	int size;
 
-	building_types subtype;
-
 };
 
 class FOWTownHall: public FOWBuilding
@@ -53,8 +50,7 @@ public:
 
 	FOWTownHall(int x, int z, int size)
 	{
-		type = FOW_BUILDING;
-		subtype = TOWNHALL;
+		type = FOW_TOWNHALL;
 		spine_data.load_spine_data("buildings");
 		position.x = x;
 		position.z = z;
@@ -73,8 +69,7 @@ public:
 
 	FOWGoldMine(int x, int z, int size)
 	{
-		type = FOW_BUILDING;
-		subtype = GOLDMINE;
+		type = FOW_GOLDMINE;
 		spine_data.load_spine_data("buildings");
 		position.x = x;
 		position.z = z;

@@ -9,6 +9,7 @@ public:
 	FOWCharacter()
 	{
 		type = FOW_CHARACTER;
+		visible = true;
 	}
 
 
@@ -19,16 +20,17 @@ public:
 			draw_position = position;
 		}
 
-
+		if (visible)
+		{
 			glPushMatrix();
-			glTranslatef(draw_position.x * 5, draw_position.y+0.5, (draw_position.z * 5)+1);
-			glRotatef(-90, 1.0f, 0.0f, 0.0f);
-			if (desired_position.x > draw_position.x)
-				glRotatef(180.0f, 0.0f, 1.0f, 0.0f);
-			glScalef(0.0125f, 0.0125f, 0.0125f);
-			spine_data.draw();
+				glTranslatef(draw_position.x * 5, draw_position.y + 0.5, (draw_position.z * 5) + 1);
+				glRotatef(-90, 1.0f, 0.0f, 0.0f);
+				if (desired_position.x > draw_position.x)
+					glRotatef(180.0f, 0.0f, 1.0f, 0.0f);
+				glScalef(0.0125f, 0.0125f, 0.0125f);
+				spine_data.draw();
 			glPopMatrix();
-		
+		}
 	}
 
 	void process_command(FOWCommand next_command)
@@ -115,6 +117,7 @@ public:
 		}
 		else if (state == GRID_ATTACKING)
 		{
+			// why in the fuck is this not a "animationfinished" method on SpineEntity
 			if ((((float)SDL_GetTicks()) - spine_data.start_time) / SPINE_TIMESCALE > spSkeletonData_findAnimation(spine_data.skeletonData, spine_data.animation_name)->duration)
 			{
 				state = GRID_IDLE;
@@ -153,10 +156,15 @@ public:
 	{
 		type = FOW_GATHERER;
 		has_gold = false;
+		target_town_hall = nullptr;
+		target_mine = nullptr;
 	}
 
 	bool has_gold;
+	float collecting_time;
+
 	FOWSelectable *target_mine;
+	FOWSelectable *target_town_hall;
 
 
 	virtual void update(float time_delta)
@@ -170,8 +178,76 @@ public:
 			}
 			else
 			{
-				if(current_command.type == GATHER)
-					printf("Reached destination for gold\n");
+				if (current_command.type == GATHER)
+				{
+					// if we're gathering and we've reached our destination we're either at a gold mine or a town hall
+					if (has_gold == false)
+					{
+						position = current_command.target->position;
+						draw_position = current_command.target->position;
+						visible = false;
+						state = GRID_COLLECTING;
+						spine_data.animation_name = "idle";
+						collecting_time = SDL_GetTicks();
+					}
+					else
+					{
+						t_vertex new_position = t_vertex(target_town_hall->position.x, 0, target_town_hall->position.z);
+						position = new_position;
+						draw_position = new_position;
+						visible = false;
+						state = GRID_COLLECTING;
+						spine_data.animation_name = "idle";
+						collecting_time = SDL_GetTicks();
+					}
+				}
+			}
+		}
+
+		if (state == GRID_COLLECTING)
+		{
+			// done dropping off or collecting
+			visible = true;
+
+			if (has_gold == false)
+			{
+				has_gold = true;
+				t_vertex new_position = t_vertex(current_command.target->position.x - 1, 0, current_command.target->position.z);
+				position = new_position;
+				draw_position = new_position;
+
+				std::vector<Entity*> townhall_list = grid_manager->get_entities_of_type(FOW_TOWNHALL);
+
+				if (townhall_list.size() > 0)
+				{
+					state = GRID_MOVING;
+					target_mine = (FOWSelectable*)current_command.target;
+
+					// set the new position to be the closes town hall
+					int i;
+					for (i = 0; i < townhall_list.size(); i++)
+					{
+						Entity *town_hall = townhall_list.at(i);
+						if (town_hall->type == FOW_TOWNHALL)
+						{
+							desired_position = t_vertex(town_hall->position.x, 0, town_hall->position.z - 1);
+							target_town_hall = (FOWSelectable*)townhall_list.at(i);
+						}
+					}
+				}
+				else
+				{
+					state = GRID_IDLE;
+					spine_data.animation_name = "idle";
+				}
+			}
+			else
+			{
+				has_gold = false;
+				
+				desired_position = t_vertex(current_command.target->position.x, 0, current_command.target->position.z - 1);
+				state = GRID_MOVING;
+				draw_position = position;
 			}
 		}
 

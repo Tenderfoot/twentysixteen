@@ -5,12 +5,12 @@
 // TODO:
 
 // RTS Stuff
-	// Make a building (Town Hall?)
 	// Make a unit (gatherer)
 		// make gatherer
 		// if right click
 		// if its a gatherer
-	// produce unit out of building (HUD buttons?)
+	// produce unit out of building
+		// USE HOTKEYS FOR SIMPLICITY
 	// BUG: Draw order should use draw position not position
 	// Bug: Crashes when greenbox leaves area
 
@@ -57,7 +57,7 @@ void FogOfWarTechDemo::init()
 		}
 	}
 
-	FOWBuilding *new_building = new FOWBuilding(9,7, 3);
+	FOWBuilding *new_building = new FOWTownHall(9,7, 3);
 	entities.push_back(new_building);
 	new_building = new FOWGoldMine(22, 7, 3);
 	entities.push_back(new_building);
@@ -155,7 +155,7 @@ void FogOfWarTechDemo::take_input(boundinput input, bool type)
 		for (int i = 0; i < entities.size(); i++)
 		{
 			Entity *test = entities.at(i);
-			if (test->type == FOW_CHARACTER || test->type == FOW_BUILDING)
+			if (new_player->is_selectable(test->type))
 			{
 				if (test->position.x == hit_position.x && test->position.z == hit_position.z
 					&& test->position.x == hit_position.x && test->position.z == hit_position.z)
@@ -182,7 +182,7 @@ void FogOfWarTechDemo::take_input(boundinput input, bool type)
 
 					if (hit_target != nullptr)
 					{
-						if (hit_target->type == FOW_BUILDING)
+						if (hit_target->type == FOW_GOLDMINE)
 						{
 							gatherer->give_command(FOWCommand(GATHER, hit_target));
 						}
@@ -248,14 +248,14 @@ void FogOfWarTechDemo::draw_selections()
 	for (i = 0; i < entities.size(); i++)
 	{
 		glPushMatrix();
-		if (entities.at(i)->type == FOW_CHARACTER || entities.at(i)->type == FOW_BUILDING || entities.at(i)->type == FOW_GATHERER)
+		if (new_player->is_selectable(entities.at(i)->type))
 		{
 			if (entities.at(i)->type == FOW_CHARACTER || entities.at(i)->type == FOW_GATHERER)
 			{
 				FOWCharacter *fow_character = (FOWCharacter*)entities.at(i);
 				draw_position = fow_character->draw_position;
 			}
-			if (entities.at(i)->type == FOW_BUILDING)
+			if (entities.at(i)->type == FOW_BUILDING || entities.at(i)->type == FOW_TOWNHALL || entities.at(i)->type == FOW_GOLDMINE)
 			{
 				draw_position = entities.at(i)->position;
 			}
