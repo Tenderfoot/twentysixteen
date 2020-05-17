@@ -2,6 +2,13 @@
 
 #include "fow_selectable.h"
 
+enum building_types
+{
+	BUILDING,
+	TOWNHALL,
+	GOLDMINE
+};
+
 class FOWBuilding : public FOWSelectable
 {
 public:
@@ -13,6 +20,7 @@ public:
 	FOWBuilding(int x, int z, int size)
 	{
 		type = FOW_BUILDING;
+		subtype = BUILDING;
 		spine_data.load_spine_data("buildings");
 		position.x = x;
 		position.z = z;
@@ -31,4 +39,45 @@ public:
 
 	int size;
 
+	building_types subtype;
+
+};
+
+class FOWTownHall: public FOWBuilding
+{
+public:
+
+	FOWTownHall()
+	{
+	}
+
+	FOWTownHall(int x, int z, int size)
+	{
+		type = FOW_BUILDING;
+		subtype = TOWNHALL;
+		spine_data.load_spine_data("buildings");
+		position.x = x;
+		position.z = z;
+		this->size = size;
+	}
+
+};
+
+class FOWGoldMine : public FOWBuilding
+{
+public:
+
+	FOWGoldMine()
+	{
+	}
+
+	FOWGoldMine(int x, int z, int size)
+	{
+		type = FOW_BUILDING;
+		subtype = GOLDMINE;
+		spine_data.load_spine_data("buildings");
+		position.x = x;
+		position.z = z;
+		this->size = size;
+	}
 };

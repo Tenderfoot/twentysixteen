@@ -43,7 +43,7 @@ public:
 						for (int i = 0; i < entities->size(); i++)
 						{
 							Entity *test = entities->at(i);
-							if (test->type == FOW_CHARACTER || test->type == FOW_BUILDING)
+							if (is_selectable(test->type))
 							{
 								if (test->position.x >= mins.x && test->position.z >= mins.y
 									&& test->position.x <= maxes.x && test->position.z <= maxes.y)
@@ -54,6 +54,11 @@ public:
 							}
 						}
 					}
+	}
+
+	bool is_selectable(entity_types type)
+	{
+		return (type == FOW_CHARACTER || type == FOW_GATHERER || type == FOW_BUILDING);
 	}
 
 	t_vertex gridstart_ui;

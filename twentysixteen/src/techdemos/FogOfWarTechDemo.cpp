@@ -7,6 +7,9 @@
 // RTS Stuff
 	// Make a building (Town Hall?)
 	// Make a unit (gatherer)
+		// make gatherer
+		// if right click
+		// if its a gatherer
 	// produce unit out of building (HUD buttons?)
 	// BUG: Draw order should use draw position not position
 	// Bug: Crashes when greenbox leaves area
@@ -43,7 +46,7 @@ void FogOfWarTechDemo::init()
 		Entity *current_entity = entities.at(i);
 		if (current_entity->type == GRID_SPAWNPOINT)
 		{
-			new_character = new FOWCharacter();
+			new_character = new FOWGatherer();
 			new_character->spine_data.load_spine_data("everybody");
 			spSkeleton_setSkinByName(new_character->spine_data.skeleton, "knight");
 			new_character->spine_data.animation_name = "idle";
@@ -54,16 +57,19 @@ void FogOfWarTechDemo::init()
 		}
 	}
 
-	FOWBuilding *new_building = new FOWBuilding(10,10, 3);
+	FOWBuilding *new_building = new FOWBuilding(9,7, 3);
 	entities.push_back(new_building);
-	new_building = new FOWBuilding(14, 14, 2);
+	new_building = new FOWGoldMine(22, 7, 3);
 	entities.push_back(new_building);
 
 	lookmode = false;
 
 	// this is actually important, need to fix lookat calc
 	camera_rotation_y = 1;
-	camera_distance = 25.0f;
+	camera_distance = 50.0f;
+	camera_pos.x = 15;
+	camera_pos.z = 10;
+
 
 	reset();
 }
@@ -143,16 +149,48 @@ void FogOfWarTechDemo::take_input(boundinput input, bool type)
 	if (input == RMOUSE && type == true)
 	{
 		t_vertex hit_position = grid_manager.convert_mouse_coords(mouse_in_space);
+		Entity *hit_target = nullptr;
+
+		// lets see if theres something on the hit position...
+		for (int i = 0; i < entities.size(); i++)
+		{
+			Entity *test = entities.at(i);
+			if (test->type == FOW_CHARACTER || test->type == FOW_BUILDING)
+			{
+				if (test->position.x == hit_position.x && test->position.z == hit_position.z
+					&& test->position.x == hit_position.x && test->position.z == hit_position.z)
+				{
+					hit_target = test;
+				}
+			}
+		}
 
 		if (new_player->selection_group.selected_characters.size() > 0)
 		{
 			for (int i = 0; i < new_player->selection_group.selected_characters.size(); i++)
-			{
-				if(new_player->queue_add_toggle == false)
-					new_player->selection_group.selected_characters.at(i)->command_queue.clear();
-				
-				if(new_player->selection_group.selected_characters.at(i)->type == FOW_CHARACTER)
-					((FOWCharacter*)new_player->selection_group.selected_characters.at(i))->give_command(FOWCommand(MOVE, t_vertex(hit_position.x+i, 0.0f, hit_position.z+i%2)));
+			{	
+				if (new_player->selection_group.selected_characters.at(i)->type == FOW_CHARACTER)
+				{
+					if (new_player->queue_add_toggle == false)
+						new_player->selection_group.selected_characters.at(i)->command_queue.clear();
+					((FOWCharacter*)new_player->selection_group.selected_characters.at(i))->give_command(FOWCommand(MOVE, t_vertex(hit_position.x + i, 0.0f, hit_position.z + i % 2)));
+				}
+
+				if (new_player->selection_group.selected_characters.at(i)->type == FOW_GATHERER)
+				{
+					if (hit_target != nullptr)
+					{
+						if (hit_target->type == FOW_BUILDING)
+						{
+						}
+					}
+					else
+					{
+						if (new_player->queue_add_toggle == false)
+							new_player->selection_group.selected_characters.at(i)->command_queue.clear();
+						((FOWCharacter*)new_player->selection_group.selected_characters.at(i))->give_command(FOWCommand(MOVE, t_vertex(hit_position.x + i, 0.0f, hit_position.z + i % 2)));
+					}
+				}
 			}
 		}
 	}
@@ -207,9 +245,9 @@ void FogOfWarTechDemo::draw_selections()
 	for (i = 0; i < entities.size(); i++)
 	{
 		glPushMatrix();
-		if (entities.at(i)->type == FOW_CHARACTER || entities.at(i)->type == FOW_BUILDING)
+		if (entities.at(i)->type == FOW_CHARACTER || entities.at(i)->type == FOW_BUILDING || entities.at(i)->type == FOW_GATHERER)
 		{
-			if (entities.at(i)->type == FOW_CHARACTER)
+			if (entities.at(i)->type == FOW_CHARACTER || entities.at(i)->type == FOW_GATHERER)
 			{
 				FOWCharacter *fow_character = (FOWCharacter*)entities.at(i);
 				draw_position = fow_character->draw_position;

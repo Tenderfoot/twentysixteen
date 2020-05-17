@@ -9,7 +9,6 @@ public:
 	FOWCharacter()
 	{
 		type = FOW_CHARACTER;
-		selected = false;
 	}
 
 
@@ -135,4 +134,20 @@ public:
 	t_vertex draw_position;
 	t_vertex desired_position;
 	bool dirty_visibiltiy;
+};
+
+
+class FOWGatherer : public FOWCharacter
+{
+public:
+
+	FOWGatherer()
+	{
+		type = FOW_GATHERER;
+		has_gold = false;
+	}
+
+	bool has_gold;
+	FOWSelectable *target_mine;
+
 };
