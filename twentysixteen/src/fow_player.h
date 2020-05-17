@@ -62,7 +62,7 @@ public:
 		return (type == FOW_CHARACTER || type == FOW_GATHERER || type == FOW_BUILDING || type == FOW_TOWNHALL || type == FOW_GOLDMINE);
 	}
 
-	float gold;
+	int gold;
 
 	t_vertex gridstart_ui;
 	t_vertex gridstart_world;

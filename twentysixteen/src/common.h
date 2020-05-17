@@ -137,7 +137,8 @@ typedef enum
 {
 	MOVE,
 	ATTACK,
-	GATHER
+	GATHER,
+	BUILD_UNIT
 }t_ability_enum;
 
 enum player_states

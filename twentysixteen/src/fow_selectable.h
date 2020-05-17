@@ -22,6 +22,12 @@ public:
 		this->target = target;
 	}
 	
+	FOWCommand(t_ability_enum type, entity_types unit_type)
+	{
+		this->type = type;
+		this->unit_type = unit_type;
+	}
+
 	bool operator==(const FOWCommand& rhs)
 	{
 		return (this->type == rhs.type && this->position.x == rhs.position.x &&  this->position.z == rhs.position.z);
@@ -29,6 +35,7 @@ public:
 
 	t_vertex position;
 	t_ability_enum type;
+	entity_types unit_type;
 	Entity *target;
 };
 

@@ -57,6 +57,17 @@ public:
 		this->size = size;
 	}
 
+	void process_command(FOWCommand next_command)
+	{
+		
+		if (next_command.type == BUILD_UNIT)
+		{
+			printf("Build Unit command recieved\n");
+		}
+
+		FOWSelectable::process_command(next_command);
+	};
+
 };
 
 class FOWGoldMine : public FOWBuilding

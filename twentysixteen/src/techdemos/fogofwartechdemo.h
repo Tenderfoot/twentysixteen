@@ -44,6 +44,7 @@ public:
 	bool lookmode;
 	t_vertex camera_pos;
 	FOWCharacter *new_character;
+	FOWGatherer *new_gatherer;
 	FOWPlayer *new_player;
 	FOWCharacter *selected_character;
 	

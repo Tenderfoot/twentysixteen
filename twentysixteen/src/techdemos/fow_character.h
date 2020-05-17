@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../fow_selectable.h"
+#include "../fow_player.h"
 
 class FOWCharacter : public FOWSelectable
 {
@@ -145,6 +146,7 @@ public:
 	t_vertex draw_position;
 	t_vertex desired_position;
 	bool dirty_visibiltiy;
+	FOWPlayer *owner;
 };
 
 
@@ -174,31 +176,43 @@ public:
 			std::vector<t_tile*> path = grid_manager->find_path(position, desired_position);
 
 			if (path.size() > 0)
-			{
+			{	
 			}
 			else
 			{
-				if (current_command.type == GATHER)
+				if (position.x != desired_position.x || position.y != desired_position.y)
 				{
-					// if we're gathering and we've reached our destination we're either at a gold mine or a town hall
-					if (has_gold == false)
+					// something is blocking me so I'll just forget what I was doing
+					state = GRID_IDLE;
+					spine_data.animation_name = "idle";
+					desired_position = position;
+					draw_position = position;
+					process_command(FOWCommand(MOVE, position));
+				}
+				else
+				{
+					if (current_command.type == GATHER)
 					{
-						position = current_command.target->position;
-						draw_position = current_command.target->position;
-						visible = false;
-						state = GRID_COLLECTING;
-						spine_data.animation_name = "idle";
-						collecting_time = SDL_GetTicks();
-					}
-					else
-					{
-						t_vertex new_position = t_vertex(target_town_hall->position.x, 0, target_town_hall->position.z);
-						position = new_position;
-						draw_position = new_position;
-						visible = false;
-						state = GRID_COLLECTING;
-						spine_data.animation_name = "idle";
-						collecting_time = SDL_GetTicks();
+						// if we're gathering and we've reached our destination we're either at a gold mine or a town hall
+						if (has_gold == false)
+						{
+							position = current_command.target->position;
+							draw_position = current_command.target->position;
+							visible = false;
+							state = GRID_COLLECTING;
+							spine_data.animation_name = "idle";
+							collecting_time = SDL_GetTicks();
+						}
+						else
+						{
+							t_vertex new_position = t_vertex(target_town_hall->position.x, 0, target_town_hall->position.z);
+							position = new_position;
+							draw_position = new_position;
+							visible = false;
+							state = GRID_COLLECTING;
+							spine_data.animation_name = "idle";
+							collecting_time = SDL_GetTicks();
+						}
 					}
 				}
 			}
@@ -207,47 +221,51 @@ public:
 		if (state == GRID_COLLECTING)
 		{
 			// done dropping off or collecting
-			visible = true;
 
-			if (has_gold == false)
+			if (SDL_GetTicks() - collecting_time > 1000)
 			{
-				has_gold = true;
-				t_vertex new_position = t_vertex(current_command.target->position.x - 1, 0, current_command.target->position.z);
-				position = new_position;
-				draw_position = new_position;
-
-				std::vector<Entity*> townhall_list = grid_manager->get_entities_of_type(FOW_TOWNHALL);
-
-				if (townhall_list.size() > 0)
+				visible = true;
+				if (has_gold == false)
 				{
-					state = GRID_MOVING;
-					target_mine = (FOWSelectable*)current_command.target;
+					has_gold = true;
+					t_vertex new_position = t_vertex(current_command.target->position.x - 1, 0, current_command.target->position.z);
+					position = new_position;
+					draw_position = new_position;
 
-					// set the new position to be the closes town hall
-					int i;
-					for (i = 0; i < townhall_list.size(); i++)
+					std::vector<Entity*> townhall_list = grid_manager->get_entities_of_type(FOW_TOWNHALL);
+
+					if (townhall_list.size() > 0)
 					{
-						Entity *town_hall = townhall_list.at(i);
-						if (town_hall->type == FOW_TOWNHALL)
+						state = GRID_MOVING;
+						target_mine = (FOWSelectable*)current_command.target;
+
+						// set the new position to be the closes town hall
+						int i;
+						for (i = 0; i < townhall_list.size(); i++)
 						{
-							desired_position = t_vertex(town_hall->position.x, 0, town_hall->position.z - 1);
-							target_town_hall = (FOWSelectable*)townhall_list.at(i);
+							Entity *town_hall = townhall_list.at(i);
+							if (town_hall->type == FOW_TOWNHALL)
+							{
+								desired_position = t_vertex(town_hall->position.x, 0, town_hall->position.z - 1);
+								target_town_hall = (FOWSelectable*)townhall_list.at(i);
+							}
 						}
+					}
+					else
+					{
+						state = GRID_IDLE;
+						spine_data.animation_name = "idle";
 					}
 				}
 				else
 				{
-					state = GRID_IDLE;
-					spine_data.animation_name = "idle";
+					has_gold = false;
+					owner->gold++;
+					printf("Player now has %d gold\n", owner->gold);
+					desired_position = t_vertex(current_command.target->position.x, 0, current_command.target->position.z - 1);
+					state = GRID_MOVING;
+					draw_position = position;
 				}
-			}
-			else
-			{
-				has_gold = false;
-				
-				desired_position = t_vertex(current_command.target->position.x, 0, current_command.target->position.z - 1);
-				state = GRID_MOVING;
-				draw_position = position;
 			}
 		}
 

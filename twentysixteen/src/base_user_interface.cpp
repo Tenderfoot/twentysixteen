@@ -28,7 +28,7 @@ void CharacterWidget::draw()
 	y = res_height;
 	glPushMatrix();
 	if (character != NULL)
-		if (character->type == 17)
+		if (character->type == FOW_BUILDING || character->type == FOW_TOWNHALL || character->type == FOW_GOLDMINE)
 		{
 			// building spine template is positioned differently than character
 			glTranslatef(x-40.0f, y-150.0f, 0.0f);

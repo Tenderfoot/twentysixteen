@@ -5,10 +5,6 @@
 // TODO:
 
 // RTS Stuff
-	// Make a unit (gatherer)
-		// make gatherer
-		// if right click
-		// if its a gatherer
 	// produce unit out of building
 		// USE HOTKEYS FOR SIMPLICITY
 	// BUG: Draw order should use draw position not position
@@ -51,6 +47,7 @@ void FogOfWarTechDemo::init()
 			spSkeleton_setSkinByName(new_character->spine_data.skeleton, "farm");
 			new_character->spine_data.animation_name = "idle";
 			new_character->spine_data.looping = true;
+			new_character->owner = new_player;
 			new_character->grid_manager = &grid_manager;
 			new_character->position = current_entity->position;
 			entities.push_back(new_character);
@@ -144,6 +141,29 @@ void FogOfWarTechDemo::take_input(boundinput input, bool type)
 	if (input == USE)
 	{
 		new_player->queue_add_toggle = type;
+
+		if (new_player->selection_group.selected_characters.size() == 1)
+		{
+			if (new_player->selection_group.selected_characters.at(0)->type == FOW_TOWNHALL)
+			{
+				if (new_player->gold > 0)
+				{
+					new_player->gold--;
+					new_player->selection_group.selected_characters.at(0)->process_command(FOWCommand(BUILD_UNIT, FOW_GATHERER));
+					new_gatherer = new FOWGatherer();
+					new_gatherer->spine_data.load_spine_data("everybody");
+					spSkeleton_setSkinByName(new_gatherer->spine_data.skeleton, "farm");
+					new_gatherer->spine_data.animation_name = "idle";
+					new_gatherer->spine_data.looping = true;
+					new_gatherer->owner = new_player;
+					new_gatherer->grid_manager = &grid_manager;
+					new_gatherer->position = t_vertex(new_player->selection_group.selected_characters.at(0)->position.x + 4, 0.0f, new_player->selection_group.selected_characters.at(0)->position.z);
+					entities.push_back(new_gatherer);
+				}
+				else
+					printf("not enough minerals\n");
+			}
+		}
 	}
 
 	if (input == RMOUSE && type == true)
