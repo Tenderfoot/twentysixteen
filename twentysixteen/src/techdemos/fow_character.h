@@ -42,6 +42,14 @@ public:
 			draw_position = position;
 		}
 
+		if (next_command.type == GATHER)
+		{
+			desired_position = t_vertex(next_command.target->position.x,0, next_command.target->position.z-1);
+			state = GRID_MOVING;
+			draw_position = position;
+		}
+
+
 		current_command = next_command;
 
 		FOWSelectable::process_command(next_command);
@@ -52,7 +60,7 @@ public:
 		command_queue.push_back(command);
 	}
 
-	void update(float time_delta)
+	virtual void update(float time_delta)
 	{
 		if (state == GRID_MOVING)
 		{
@@ -149,5 +157,25 @@ public:
 
 	bool has_gold;
 	FOWSelectable *target_mine;
+
+
+	virtual void update(float time_delta)
+	{
+		if (state == GRID_MOVING)
+		{
+			std::vector<t_tile*> path = grid_manager->find_path(position, desired_position);
+
+			if (path.size() > 0)
+			{
+			}
+			else
+			{
+				if(current_command.type == GATHER)
+					printf("Reached destination for gold\n");
+			}
+		}
+
+		FOWCharacter::update(time_delta);
+	}
 
 };

@@ -15,6 +15,7 @@ public:
 	FOWPlayer()
 	{
 		queue_add_toggle = false;
+		gold = 0;
 	}
 
 	// FOWPlayer for this one
@@ -60,6 +61,8 @@ public:
 	{
 		return (type == FOW_CHARACTER || type == FOW_GATHERER || type == FOW_BUILDING);
 	}
+
+	float gold;
 
 	t_vertex gridstart_ui;
 	t_vertex gridstart_world;

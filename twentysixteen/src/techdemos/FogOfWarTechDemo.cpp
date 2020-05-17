@@ -48,7 +48,7 @@ void FogOfWarTechDemo::init()
 		{
 			new_character = new FOWGatherer();
 			new_character->spine_data.load_spine_data("everybody");
-			spSkeleton_setSkinByName(new_character->spine_data.skeleton, "knight");
+			spSkeleton_setSkinByName(new_character->spine_data.skeleton, "farm");
 			new_character->spine_data.animation_name = "idle";
 			new_character->spine_data.looping = true;
 			new_character->grid_manager = &grid_manager;
@@ -178,10 +178,13 @@ void FogOfWarTechDemo::take_input(boundinput input, bool type)
 
 				if (new_player->selection_group.selected_characters.at(i)->type == FOW_GATHERER)
 				{
+					FOWGatherer *gatherer = (FOWGatherer*)new_player->selection_group.selected_characters.at(i);
+
 					if (hit_target != nullptr)
 					{
 						if (hit_target->type == FOW_BUILDING)
 						{
+							gatherer->give_command(FOWCommand(GATHER, hit_target));
 						}
 					}
 					else
