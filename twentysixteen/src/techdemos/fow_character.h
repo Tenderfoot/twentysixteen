@@ -15,6 +15,14 @@ public:
 		visible = true;
 	}
 
+	void die()
+	{
+		state = GRID_DYING;
+		spine_data.start_time = SDL_GetTicks();
+		spine_data.animation_name = "die";
+		spine_data.looping = false;
+	}
+
 
 	void draw()
 	{
@@ -65,7 +73,14 @@ public:
 			current_path = grid_manager->find_path(position, desired_position);
 		}
 
-
+		if (next_command.type == ATTACK)
+		{
+			printf("Lets kill a person\n");
+			desired_position = t_vertex(next_command.target->position.x, 0, next_command.target->position.z - 1);
+			state = GRID_MOVING;
+			draw_position = position;
+			current_path = grid_manager->find_path(position, desired_position);
+		}
 
 		current_command = next_command;
 
@@ -101,10 +116,14 @@ public:
 						draw_position.z -= 0.002*time_delta;
 				}
 
-				if (t_vertex(t_vertex(next_stop->x, 0, next_stop->y) - draw_position).Magnitude() < 0.025)
+				if (t_vertex(t_vertex(next_stop->x, 0, next_stop->y) - draw_position).Magnitude() < 0.1)
 				{
 					position.x = next_stop->x;
 					position.z = next_stop->y;
+
+					// follow that enemy!
+					if(current_command.type == ATTACK)
+						desired_position = t_vertex(current_command.target->position.x, 0, current_command.target->position.z - 1);
 
 					current_path = grid_manager->find_path(position, desired_position);
 

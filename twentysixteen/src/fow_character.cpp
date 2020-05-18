@@ -20,7 +20,10 @@ void FOWGatherer::update(float time_delta)
 					if (has_gold)
 						new_position = t_vertex(target_town_hall->position.x + 1, 0, target_town_hall->position.z + 1);
 					else
-						new_position = t_vertex(current_command.target->position.x + 1, 0, current_command.target->position.z + 1);
+						if(current_command.type == ATTACK)
+							new_position = t_vertex(current_command.target->position.x, 0, current_command.target->position.z - 1);
+						else
+							new_position = t_vertex(current_command.position.x + 1, 0, current_command.position.z + 1);
 
 					desired_position = new_position;
 					current_path = grid_manager->find_path(position, desired_position);
@@ -62,6 +65,10 @@ void FOWGatherer::update(float time_delta)
 				{
 					FOWTownHall *test = new FOWTownHall(current_command.position.x, current_command.position.z, 3);
 					grid_manager->entities->push_back(test);
+				}
+				if (current_command.type == ATTACK)
+				{
+					((FOWCharacter*)current_command.target)->die();
 				}
 			}
 		}
