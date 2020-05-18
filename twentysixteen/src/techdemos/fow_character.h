@@ -44,6 +44,36 @@ public:
 		}
 	}
 
+	virtual void OnReachNextSquare()
+	{
+		t_tile *next_stop = current_path.at(current_path.size() - 1);
+
+		position.x = next_stop->x;
+		position.z = next_stop->y;
+
+		// follow that enemy!
+		if (current_command.type == ATTACK)
+			desired_position = t_vertex(current_command.target->position.x, 0, current_command.target->position.z - 1);
+
+		current_path = grid_manager->find_path(position, desired_position);
+
+		draw_position = position;
+		dirty_visibiltiy = true;
+
+		// a new move command came in, process after you hit the next grid space
+		if (!(current_command == command_queue.at(0)))
+		{
+			process_command(command_queue.at(0));
+		}
+	}
+
+	virtual void OnReachDestination()
+	{
+		state = GRID_IDLE;
+		spine_data.animation_name = "idle";
+		command_queue.erase(command_queue.begin());
+	}
+
 	void process_command(FOWCommand next_command)
 	{
 		// Every Character can move, buildings can't
@@ -116,34 +146,16 @@ public:
 						draw_position.z -= 0.002*time_delta;
 				}
 
-				if (t_vertex(t_vertex(next_stop->x, 0, next_stop->y) - draw_position).Magnitude() < 0.1)
+				if (t_vertex(t_vertex(next_stop->x, 0, next_stop->y) - draw_position).Magnitude() < 0.025)
 				{
-					position.x = next_stop->x;
-					position.z = next_stop->y;
-
-					// follow that enemy!
-					if(current_command.type == ATTACK)
-						desired_position = t_vertex(current_command.target->position.x, 0, current_command.target->position.z - 1);
-
-					current_path = grid_manager->find_path(position, desired_position);
-
-					draw_position = position;
-					dirty_visibiltiy = true;
-
-					// a new move command came in, process after you hit the next grid space
-					if (!(current_command == command_queue.at(0)))
-					{
-						process_command(command_queue.at(0));
-					}
+					OnReachNextSquare();
 				}
 
 				spine_data.animation_name = "walk_two";
 			}
 			else
 			{
-				state = GRID_IDLE;
-				spine_data.animation_name = "idle";
-				command_queue.erase(command_queue.begin());
+				OnReachDestination();
 			}
 		}
 		else if (state == GRID_ATTACKING)
@@ -203,6 +215,8 @@ public:
 	bool good_spot;
 
 	virtual void update(float time_delta);
+
+	virtual void OnReachDestination();
 
 	void clear_selection() 
 	{

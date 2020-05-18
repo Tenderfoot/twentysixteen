@@ -5,7 +5,9 @@
 // TODO:
 
 // RTS Stuff
-	// Units Attacking
+	// Refactor everything out of here
+		// FOW -> FOWPlayer
+		// FOWCharacter make "atdestination" call or something
 
 // TILE STUFF:
 	// add dark grass
