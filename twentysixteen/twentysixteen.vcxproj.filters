@@ -55,6 +55,9 @@
     <Filter Include="Header Files\grid\fog_of_war">
       <UniqueIdentifier>{370da345-bb44-4dbb-9e21-7cac6021c1d6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\grid\fog_of_war">
+      <UniqueIdentifier>{d505ee05-bd0e-4d15-afe6-9b74ebface0f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -197,6 +200,9 @@
     </ClCompile>
     <ClCompile Include="src\grid_abilities.cpp">
       <Filter>Source Files\grid</Filter>
+    </ClCompile>
+    <ClCompile Include="src\fow_character.cpp">
+      <Filter>Source Files\grid\fog_of_war</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -71,6 +71,18 @@ public:
 				if (builder->build_mode)
 				{
 					FOWBuilding new_building(grid_manager->mouse_x, grid_manager->mouse_y, 3);
+
+					if (grid_manager->space_free(t_vertex(grid_manager->mouse_x, grid_manager->mouse_y, 0.0f), 3))
+					{
+						new_building.spine_data.color = t_vertex(0.0f, 1.0f, 0.0f);
+						builder->good_spot = true;
+					}
+					else
+					{
+						new_building.spine_data.color = t_vertex(1.0f, 0.0f, 0.0f);
+						builder->good_spot = false;
+					}
+						
 					new_building.draw();
 				}
 

@@ -15,6 +15,11 @@
 class SpineData
 {
 public:
+
+	SpineData()
+	{
+		color = t_vertex(1.0f, 1.0f, 1.0f);
+	}
 	
 	void load_spine_data(char* spine_folder);
 	void setslots();
@@ -27,6 +32,7 @@ public:
 	char *animation_name;
 	float current_time;
 	float start_time;
+	t_vertex color;
 
 	bool looping;
 

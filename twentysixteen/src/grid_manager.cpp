@@ -550,6 +550,16 @@ std::vector<Entity*> GridManager::get_entities_of_type(entity_types type)
 	return return_list;
 }
 
+bool GridManager::space_free(t_vertex position, int size)
+{
+	for (int i = 0; i < size; i++)
+		for (int j = 0; j < size; j++)
+			if (tile_map[i+position.x][j+position.y].wall)
+				return false;
+
+	return true;
+}
+
 void GridManager::cull_orphans()
 {
 

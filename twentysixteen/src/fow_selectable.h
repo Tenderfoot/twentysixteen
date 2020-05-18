@@ -1,6 +1,8 @@
 #pragma once
 
 #include "linear_algebra.h"
+#include "spine_entity.h"
+#include "grid_manager.h"
 
 class FOWCommand
 {

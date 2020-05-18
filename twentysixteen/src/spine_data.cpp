@@ -96,7 +96,7 @@ void SpineData::draw_regionattachment(int i)
 		glNormal3d(0, 0, 1);
 
 		glBindTexture(GL_TEXTURE_2D, texture);
-		glColor3f(1.0f, 1.0f, 1.0f);
+		glColor3f(color.x, color.y , color.z);
 
 		glTranslatef(skeleton->slots[i]->bone->worldX, skeleton->slots[i]->bone->worldY, 0.0f);
 		glRotatef(spBone_getWorldRotationX(skeleton->slots[i]->bone), 0.0f, 0.0f, 1.0f);
@@ -130,7 +130,7 @@ void SpineData::draw_meshattachment(int i)
 		glNormal3d(0, 0, 1);
 
 		glBindTexture(GL_TEXTURE_2D, texture);
-		glColor3f(1.0f, 1.0f, 1.0f);
+		glColor3f(color.x, color.y, color.z);
 
 		int index;
 		glBegin(GL_TRIANGLES);

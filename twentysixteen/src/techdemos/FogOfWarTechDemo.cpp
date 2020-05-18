@@ -6,10 +6,8 @@
 
 // RTS Stuff
 	// Building Buildings
-		// pressing B puts gatherer in build mode
-		// pressing B puts gatherer in build mode with building_ptr not null
-		// mouse shows potential location of building
-		// when clicked, gatherer given command
+		// when gatherer reaches destination, if is in build mode, make the building
+			// mostly create the entity and spawn it
 	// Units Attacking
 
 // TILE STUFF:
@@ -52,7 +50,7 @@ void FogOfWarTechDemo::init()
 		{
 			new_character = new FOWGatherer();
 			new_character->spine_data.load_spine_data("everybody");
-			spSkeleton_setSkinByName(new_character->spine_data.skeleton, "gym");
+			spSkeleton_setSkinByName(new_character->spine_data.skeleton, "farm");
 			new_character->spine_data.animation_name = "idle";
 			new_character->spine_data.looping = true;
 			new_character->grid_manager = &grid_manager;
@@ -110,12 +108,26 @@ void FogOfWarTechDemo::take_input(boundinput input, bool type)
 
 	if (input == LMOUSE && type == false)
 	{
+
+		if (new_player->selection_group.selected_characters.size() == 1)
+		{
+			if (new_player->selection_group.selected_characters.at(0)->type == FOW_GATHERER)
+			{
+				FOWGatherer *gatherer = ((FOWGatherer*)new_player->selection_group.selected_characters.at(0));
+				if (gatherer->build_mode && gatherer->good_spot)
+				{
+					gatherer->give_command(FOWCommand(BUILD_BUILDING, t_vertex(grid_manager.mouse_x, 0.0f, grid_manager.mouse_y)));
+				}
+			}
+		}
+
 		green_box->visible = false;
 		new_player->get_selection(grid_manager.convert_mouse_coords(green_box->mouse_in_space), grid_manager.convert_mouse_coords(mouse_in_space));
 		if (new_player->selection_group.selected_characters.size() > 0)
 			char_widget->character = new_player->selection_group.selected_characters.at(0);
 		else
 			char_widget->character = nullptr;
+
 	}
 
 	if (input == RIGHT && type == true)
@@ -173,7 +185,7 @@ void FogOfWarTechDemo::take_input(boundinput input, bool type)
 					new_player->selection_group.selected_characters.at(0)->process_command(FOWCommand(BUILD_UNIT, FOW_GATHERER));
 					new_gatherer = new FOWGatherer();
 					new_gatherer->spine_data.load_spine_data("everybody");
-					spSkeleton_setSkinByName(new_gatherer->spine_data.skeleton, "gym");
+					spSkeleton_setSkinByName(new_gatherer->spine_data.skeleton, "farm");
 					new_gatherer->spine_data.animation_name = "idle";
 					new_gatherer->spine_data.looping = true;
 					new_gatherer->grid_manager = &grid_manager;
