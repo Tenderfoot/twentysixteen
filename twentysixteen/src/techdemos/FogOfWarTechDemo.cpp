@@ -1,6 +1,6 @@
 #include "fogofwartechdemo.h"
 #include "../game_entity.h"
-
+#include "../audio_controller.h"
 
 // TODO:
 
@@ -22,6 +22,9 @@
 void FogOfWarTechDemo::init()
 {
 
+	// music?
+	//AudioController::play_sound("data/sounds/battle.wav");
+
 	// UI
 	TechDemoUI.add_widget(new UIImage(0.5, 0.9, 1.01, 0.2, Paintbrush::Soil_Load_Texture("data/images/HUD.png", false, false)));
 	TechDemoUI.add_widget(new MapWidget(&grid_manager));
@@ -40,7 +43,6 @@ void FogOfWarTechDemo::init()
 	// these are the screen level coords of the mouse, find a better way
 	new_player->mousex = &mousex;
 	new_player->mousey = &mousey;
-
 
 	// this should go somewhere
 	for (int i = 0; i < entities.size(); i++)

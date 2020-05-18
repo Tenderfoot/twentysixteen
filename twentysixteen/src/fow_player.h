@@ -37,6 +37,8 @@ public:
 	float *mousex;
 	float *mousey;
 
+	float last_poor_warning;
+
 	FOWSelectable *selection;
 
 	std::vector<Entity*> *entities;

@@ -3,7 +3,7 @@
 #include "fow_building.h"
 #include "fow_player.h"
 #include "base_user_interface.h"
-
+#include "audio_controller.h"
 
 FOWPlayer::FOWPlayer()
 {
@@ -240,7 +240,13 @@ void FOWPlayer::take_input(boundinput input, bool type)
 					entities->push_back(new_gatherer);
 				}
 				else
-					printf("not enough minerals\n");
+				{
+					if (type == true && SDL_GetTicks() - last_poor_warning > 2500)
+					{
+						AudioController::play_sound("data/sounds/notenough.wav");
+						last_poor_warning = SDL_GetTicks();
+					}
+				}
 			}
 		}
 	}
