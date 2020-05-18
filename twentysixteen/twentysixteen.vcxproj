@@ -36,6 +36,7 @@
     <ClCompile Include="src\enemy_sidefire.cpp" />
     <ClCompile Include="src\entity.cpp" />
     <ClCompile Include="src\fow_character.cpp" />
+    <ClCompile Include="src\fow_player.cpp" />
     <ClCompile Include="src\game_entity.cpp" />
     <ClCompile Include="src\grid_abilities.cpp" />
     <ClCompile Include="src\grid_manager.cpp" />

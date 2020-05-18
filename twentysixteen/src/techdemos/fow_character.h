@@ -23,7 +23,6 @@ public:
 		spine_data.looping = false;
 	}
 
-
 	void draw()
 	{
 		if (state == GRID_IDLE)
@@ -42,6 +41,13 @@ public:
 				spine_data.draw();
 			glPopMatrix();
 		}
+	}
+
+	void set_idle()
+	{
+		state = GRID_IDLE;
+		spine_data.animation_name = "idle";
+		command_queue.erase(command_queue.begin());
 	}
 
 	virtual void OnReachNextSquare()
@@ -69,9 +75,19 @@ public:
 
 	virtual void OnReachDestination()
 	{
-		state = GRID_IDLE;
-		spine_data.animation_name = "idle";
-		command_queue.erase(command_queue.begin());
+		if (current_command.type == MOVE)
+		{
+			set_idle();
+		}
+		if (current_command.type == ATTACK)
+		{
+			((FOWCharacter*)current_command.target)->die();
+			FOWCharacter::set_idle();
+		}
+	}
+
+	virtual void PathBlocked()
+	{
 	}
 
 	void process_command(FOWCommand next_command)
@@ -86,26 +102,8 @@ public:
 			current_path = grid_manager->find_path(position, desired_position);
 		}
 
-		if (next_command.type == GATHER)
-		{
-			desired_position = t_vertex(next_command.target->position.x,0, next_command.target->position.z-1);
-			state = GRID_MOVING;
-			draw_position = position;
-			current_path = grid_manager->find_path(position, desired_position);
-		}
-
-		if (next_command.type == BUILD_BUILDING)
-		{
-			printf("Building Building\n");
-			desired_position = next_command.position;
-			state = GRID_MOVING;
-			draw_position = position;
-			current_path = grid_manager->find_path(position, desired_position);
-		}
-
 		if (next_command.type == ATTACK)
 		{
-			printf("Lets kill a person\n");
 			desired_position = t_vertex(next_command.target->position.x, 0, next_command.target->position.z - 1);
 			state = GRID_MOVING;
 			draw_position = position;
@@ -155,7 +153,14 @@ public:
 			}
 			else
 			{
-				OnReachDestination();
+				if (position.x != desired_position.x || position.y != desired_position.y)
+				{
+					PathBlocked();
+				}
+				else
+				{
+					OnReachDestination();
+				}
 			}
 		}
 		else if (state == GRID_ATTACKING)
@@ -190,8 +195,8 @@ public:
 	bool dirty_visibiltiy;
 	std::vector<t_tile*> current_path;
 	FOWPlayer *owner;
-};
 
+};
 
 class FOWGatherer : public FOWCharacter
 {
@@ -215,8 +220,9 @@ public:
 	bool good_spot;
 
 	virtual void update(float time_delta);
-
 	virtual void OnReachDestination();
+	virtual void PathBlocked();
+	virtual void process_command(FOWCommand next_command);
 
 	void clear_selection() 
 	{

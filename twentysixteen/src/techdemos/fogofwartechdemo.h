@@ -35,7 +35,6 @@ public:
 	CharacterWidget *char_widget;
 	std::vector<std::string> combat_log;
 	AbilityBar *ability_bar;
-	GreenBox *green_box;
 
 	// other stuff
 	int x, y;

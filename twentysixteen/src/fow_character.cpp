@@ -5,72 +5,83 @@
 
 void FOWGatherer::OnReachDestination()
 {
-	// This should be moved to character
-	if (position.x != desired_position.x || position.y != desired_position.y)
+	if (current_command.type == GATHER)
 	{
-		if (current_command.target != nullptr)
+		// if we're gathering and we've reached our destination we're either at a gold mine or a town hall
+		if (has_gold == false)
 		{
-			t_vertex new_position;
-			if (has_gold)
-				new_position = t_vertex(target_town_hall->position.x + 1, 0, target_town_hall->position.z + 1);
-			else
-				if (current_command.type == ATTACK)
-					new_position = t_vertex(current_command.target->position.x, 0, current_command.target->position.z - 1);
-				else
-					new_position = t_vertex(current_command.position.x + 1, 0, current_command.position.z + 1);
-
-			desired_position = new_position;
-			current_path = grid_manager->find_path(position, desired_position);
-			while (current_path.size() == 0)
-			{
-				new_position = t_vertex(new_position.x + 1, 0, new_position.z);
-				desired_position = new_position;
-				current_path = grid_manager->find_path(position, new_position);
-			}
+			position = current_command.target->position;
+			draw_position = current_command.target->position;
+			visible = false;
+			state = GRID_COLLECTING;
+			spine_data.animation_name = "idle";
+			collecting_time = SDL_GetTicks();
+		}
+		else
+		{
+			t_vertex new_position = t_vertex(target_town_hall->position.x, 0, target_town_hall->position.z);
+			position = new_position;
+			draw_position = new_position;
+			owner->gold++;
+			visible = false;
+			state = GRID_COLLECTING;
+			spine_data.animation_name = "idle";
+			collecting_time = SDL_GetTicks();
 		}
 	}
-	else
-	{
-		// This should be whats in this function
-		if (current_command.type == MOVE)
-		{
-			FOWCharacter::OnReachDestination();
-		}
 
-		if (current_command.type == GATHER)
-		{
-			// if we're gathering and we've reached our destination we're either at a gold mine or a town hall
-			if (has_gold == false)
-			{
-				position = current_command.target->position;
-				draw_position = current_command.target->position;
-				visible = false;
-				state = GRID_COLLECTING;
-				spine_data.animation_name = "idle";
-				collecting_time = SDL_GetTicks();
-			}
+	if (current_command.type == BUILD_BUILDING)
+	{
+		FOWTownHall *test = new FOWTownHall(current_command.position.x, current_command.position.z, 3);
+		grid_manager->entities->push_back(test);
+		FOWCharacter::set_idle();
+	}
+
+	FOWCharacter::OnReachDestination();
+}
+
+void FOWGatherer::process_command(FOWCommand next_command)
+{
+	if (next_command.type == GATHER)
+	{
+		desired_position = t_vertex(next_command.target->position.x, 0, next_command.target->position.z - 1);
+		state = GRID_MOVING;
+		draw_position = position;
+		current_path = grid_manager->find_path(position, desired_position);
+	}
+
+	if (next_command.type == BUILD_BUILDING)
+	{
+		printf("Building Building\n");
+		desired_position = next_command.position;
+		state = GRID_MOVING;
+		draw_position = position;
+		current_path = grid_manager->find_path(position, desired_position);
+	}
+
+	FOWCharacter::process_command(next_command);
+}
+
+void FOWGatherer::PathBlocked()
+{
+	if (current_command.target != nullptr)
+	{
+		t_vertex new_position;
+		if (has_gold)
+			new_position = t_vertex(target_town_hall->position.x + 1, 0, target_town_hall->position.z + 1);
+		else
+			if (current_command.type == ATTACK)
+				new_position = t_vertex(current_command.target->position.x, 0, current_command.target->position.z - 1);
 			else
-			{
-				t_vertex new_position = t_vertex(target_town_hall->position.x, 0, target_town_hall->position.z);
-				position = new_position;
-				draw_position = new_position;
-				owner->gold++;
-				visible = false;
-				state = GRID_COLLECTING;
-				spine_data.animation_name = "idle";
-				collecting_time = SDL_GetTicks();
-			}
-		}
-		if (current_command.type == BUILD_BUILDING)
+				new_position = t_vertex(current_command.position.x + 1, 0, current_command.position.z + 1);
+
+		desired_position = new_position;
+		current_path = grid_manager->find_path(position, desired_position);
+		while (current_path.size() == 0)
 		{
-			FOWTownHall *test = new FOWTownHall(current_command.position.x, current_command.position.z, 3);
-			grid_manager->entities->push_back(test);
-			FOWCharacter::OnReachDestination();
-		}
-		if (current_command.type == ATTACK)
-		{
-			((FOWCharacter*)current_command.target)->die();
-			FOWCharacter::OnReachDestination();
+			new_position = t_vertex(new_position.x + 1, 0, new_position.z);
+			desired_position = new_position;
+			current_path = grid_manager->find_path(position, new_position);
 		}
 	}
 }

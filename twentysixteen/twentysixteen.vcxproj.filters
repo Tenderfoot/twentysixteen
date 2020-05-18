@@ -204,6 +204,9 @@
     <ClCompile Include="src\fow_character.cpp">
       <Filter>Source Files\grid\fog_of_war</Filter>
     </ClCompile>
+    <ClCompile Include="src\fow_player.cpp">
+      <Filter>Source Files\grid\fog_of_war</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\level.h">

@@ -1,23 +1,15 @@
 #pragma once
 
 #include "linear_algebra.h"
-#include "./techdemos/fow_character.h"
-#include "./fow_building.h"
+class GreenBox;
 
-typedef struct
-{
-	std::vector<FOWSelectable*> selected_characters;
-} t_selectiongroup;
+class FOWSelectable;
 
 class FOWPlayer
 {
 public:
 
-	FOWPlayer()
-	{
-		queue_add_toggle = false;
-		gold = 0;
-	}
+	FOWPlayer();
 
 	// FOWPlayer for this one
 	void get_selection(t_vertex tile_space, t_vertex tile_end)
@@ -26,15 +18,15 @@ public:
 		t_vertex mins = t_vertex(std::min(tile_space.x, tile_end.x), std::min(tile_space.z, tile_end.z), 0.0f);
 
 		// clear selected characters
-		if (selection_group.selected_characters.size() > 0)
+		if (selection_group.size() > 0)
 		{
-			for (int i = 0; i < selection_group.selected_characters.size(); i++)
+			for (int i = 0; i < selection_group.size(); i++)
 			{
-				selection_group.selected_characters.at(i)->clear_selection();
+				selection_group.at(i)->clear_selection();
 			}
 		}
 
-		selection_group.selected_characters.clear();
+		selection_group.clear();
 
 		// if the box is valid, make a new selection group
 		if (int(mins.x) > 0 && int(mins.x) < grid_manager->width)
@@ -50,7 +42,7 @@ public:
 								if (test->position.x >= mins.x && test->position.z >= mins.y
 									&& test->position.x <= maxes.x && test->position.z <= maxes.y)
 								{
-									selection_group.selected_characters.push_back((FOWSelectable*)test);
+									selection_group.push_back((FOWSelectable*)test);
 									((FOWSelectable*)test)->selected = true;
 								}
 							}
@@ -58,49 +50,28 @@ public:
 					}
 	}
 
-	void draw()
-	{
-		
-		if (selection_group.selected_characters.size() == 1)
-		{
-			Entity *current = selection_group.selected_characters.at(0);
-			if (current->type == FOW_GATHERER)
-			{
-				FOWGatherer *builder = (FOWGatherer*)current;
-
-				if (builder->build_mode)
-				{
-					FOWBuilding new_building(grid_manager->mouse_x, grid_manager->mouse_y, 3);
-
-					if (grid_manager->space_free(t_vertex(grid_manager->mouse_x, grid_manager->mouse_y, 0.0f), 3))
-					{
-						new_building.spine_data.color = t_vertex(0.0f, 1.0f, 0.0f);
-						builder->good_spot = true;
-					}
-					else
-					{
-						new_building.spine_data.color = t_vertex(1.0f, 0.0f, 0.0f);
-						builder->good_spot = false;
-					}
-						
-					new_building.draw();
-				}
-
-			}
-		}
-
-	}
+	void take_input(boundinput input, bool type);
 
 	bool is_selectable(entity_types type)
 	{
 		return (type == FOW_CHARACTER || type == FOW_GATHERER || type == FOW_BUILDING || type == FOW_TOWNHALL || type == FOW_GOLDMINE);
 	}
 
+	void draw();
+	void update();
+
 	int gold;
 
 	t_vertex gridstart_ui;
 	t_vertex gridstart_world;
-	t_selectiongroup selection_group;
+	t_vertex mouse_in_space;
+	t_vertex camera_pos;
+	float camera_distance;
+	std::vector<FOWSelectable*> selection_group;
+	GreenBox *green_box;
+
+	float *mousex;
+	float *mousey;
 
 	FOWSelectable *selection;
 
