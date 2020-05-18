@@ -5,15 +5,11 @@
 // TODO:
 
 // RTS Stuff
-	// Refactor everything out of here
-		// FOW -> FOWPlayer
-		// FOWCharacter make "atdestination" call or something
 
 // TILE STUFF:
 	// add dark grass
 	// split vision blockage between water and rocks
 	// paint terrain (edit mode for grid stuff??)
-
 
 /************ BUG AND TODO PILE ***************/
 /******************* TODOS ********************/
@@ -114,9 +110,6 @@ void FogOfWarTechDemo::draw()
 	// draw the map
 	grid_manager.draw_autotile();
 
-	// draw boxes around selected characters
-	draw_selections();
-
 	// draw things specific to the player i.e. planned buildings, unit paths maybe
 	new_player->draw();
 
@@ -129,51 +122,6 @@ void FogOfWarTechDemo::draw()
 	{
 		glPushMatrix();
 			sort_list.at(i)->draw();
-		glPopMatrix();
-	}
-}
-
-void FogOfWarTechDemo::draw_selections()
-{
-	int i;
-	t_vertex draw_position;
-	int draw_size;
-	// This is for the selection border
-	// needs to be drawn before characters - or does it
-	for (i = 0; i < entities.size(); i++)
-	{
-		glPushMatrix();
-		if (new_player->is_selectable(entities.at(i)->type))
-		{
-			if (entities.at(i)->type == FOW_CHARACTER || entities.at(i)->type == FOW_GATHERER)
-			{
-				FOWCharacter *fow_character = (FOWCharacter*)entities.at(i);
-				draw_position = fow_character->draw_position;
-			}
-			if (entities.at(i)->type == FOW_BUILDING || entities.at(i)->type == FOW_TOWNHALL || entities.at(i)->type == FOW_GOLDMINE)
-			{
-				draw_position = entities.at(i)->position;
-			}
-
-			if (((FOWSelectable*)entities.at(i))->selected)
-			{
-				glColor3f(0.5f, 1.0f, 0.5f);
-				glDisable(GL_TEXTURE_2D);
-				glLineWidth(1.0f);
-				glBegin(GL_LINES);
-					glVertex3f((draw_position.x * 5) - 2.5, 0.1f, (draw_position.z * 5) - 2.5);
-					glVertex3f((draw_position.x * 5) - 2.5, 0.1f, (draw_position.z * 5) + 2.5);
-					glVertex3f((draw_position.x * 5) - 2.5, 0.1f, (draw_position.z * 5) - 2.5);
-					glVertex3f((draw_position.x * 5) + 2.5, 0.1f, (draw_position.z * 5) - 2.5);
-					glVertex3f((draw_position.x * 5) - 2.5, 0.1f, (draw_position.z * 5) + 2.5);
-					glVertex3f((draw_position.x * 5) + 2.5, 0.1f, (draw_position.z * 5) + 2.5);
-					glVertex3f((draw_position.x * 5) + 2.5, 0.1f, (draw_position.z * 5) - 2.5);
-					glVertex3f((draw_position.x * 5) + 2.5, 0.1f, (draw_position.z * 5) + 2.5);
-				glEnd();
-				glColor3f(1.0f, 1.0f, 1.0f);
-				glEnable(GL_TEXTURE_2D);
-			}
-		}
 		glPopMatrix();
 	}
 }
