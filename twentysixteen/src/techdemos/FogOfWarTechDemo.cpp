@@ -5,9 +5,6 @@
 // TODO:
 
 // RTS Stuff
-	// Building Buildings
-		// when gatherer reaches destination, if is in build mode, make the building
-			// mostly create the entity and spawn it
 	// Units Attacking
 
 // TILE STUFF:
