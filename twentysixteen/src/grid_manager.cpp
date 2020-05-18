@@ -187,13 +187,6 @@ void GridManager::set_mouse_coords(int mx, int my)
 		mouse_y = 0;
 	if (mouse_y > height)
 		mouse_y = height;
-
-	if (!are_equal(&tile_map[mouse_x][mouse_y], last_path))
-	{
-		last_path = &tile_map[mouse_x][mouse_y];
-		find_path(t_vertex(x,0,y), t_vertex(last_path->x, 0.0f, last_path->y));
-	}
-	
 }
 
 t_vertex GridManager::convert_mouse_coords(t_vertex mouse_space)

@@ -5,17 +5,26 @@
 // TODO:
 
 // RTS Stuff
-	// TODO: Choose spot around building if spot is taken
-	// BUG: Draw order should use draw position not position
-	// Bug: Crashes when greenbox leaves area
+	// Building Buildings
+		// pressing B puts gatherer in build mode
+		// pressing B puts gatherer in build mode with building_ptr not null
+		// mouse shows potential location of building
+		// when clicked, gatherer given command
+	// Units Attacking
 
 // TILE STUFF:
 	// add dark grass
-	// add trees
-		// fix
 	// split vision blockage between water and rocks
 	// paint terrain (edit mode for grid stuff??)
 
+
+/************ BUG AND TODO PILE ***************/
+/******************* TODOS ********************/
+	// TODO: Choose spot around building if spot is takem
+/******************  BUGS *********************/
+	// BUG: Draw order should use draw position not position
+	// Bug: Crashes when greenbox leaves area
+/**********************************************/
 
 void FogOfWarTechDemo::init()
 {
@@ -43,10 +52,9 @@ void FogOfWarTechDemo::init()
 		{
 			new_character = new FOWGatherer();
 			new_character->spine_data.load_spine_data("everybody");
-			spSkeleton_setSkinByName(new_character->spine_data.skeleton, "farm");
+			spSkeleton_setSkinByName(new_character->spine_data.skeleton, "gym");
 			new_character->spine_data.animation_name = "idle";
 			new_character->spine_data.looping = true;
-			new_character->owner = new_player;
 			new_character->grid_manager = &grid_manager;
 			new_character->position = current_entity->position;
 			entities.push_back(new_character);
@@ -75,6 +83,9 @@ void FogOfWarTechDemo::run(float time_delta)
 	// green box (this updates info for the widget that draws it)
 	green_box->width = mousex;
 	green_box->height = mousey;
+
+	// this gives grid manager the mouse x y, which is used by player to draw buildings
+	grid_manager.convert_mouse_coords(mouse_in_space);
 
 	// Loop through and update entities. This should stay and other things
 	// should be refactored out.
@@ -137,6 +148,17 @@ void FogOfWarTechDemo::take_input(boundinput input, bool type)
 		grid_manager.randomize_map();
 	}
 
+	if (input == HOTKEY_B && type == true)
+	{
+		if (new_player->selection_group.selected_characters.size() == 1)
+		{
+			if (new_player->selection_group.selected_characters.at(0)->type == FOW_GATHERER)
+			{
+				((FOWGatherer*)new_player->selection_group.selected_characters.at(0))->build_mode = true;
+			}
+		}
+	}
+
 	if (input == USE)
 	{
 		new_player->queue_add_toggle = type;
@@ -151,10 +173,9 @@ void FogOfWarTechDemo::take_input(boundinput input, bool type)
 					new_player->selection_group.selected_characters.at(0)->process_command(FOWCommand(BUILD_UNIT, FOW_GATHERER));
 					new_gatherer = new FOWGatherer();
 					new_gatherer->spine_data.load_spine_data("everybody");
-					spSkeleton_setSkinByName(new_gatherer->spine_data.skeleton, "farm");
+					spSkeleton_setSkinByName(new_gatherer->spine_data.skeleton, "gym");
 					new_gatherer->spine_data.animation_name = "idle";
 					new_gatherer->spine_data.looping = true;
-					new_gatherer->owner = new_player;
 					new_gatherer->grid_manager = &grid_manager;
 					new_gatherer->position = t_vertex(new_player->selection_group.selected_characters.at(0)->position.x + 4, 0.0f, new_player->selection_group.selected_characters.at(0)->position.z);
 					entities.push_back(new_gatherer);
@@ -243,6 +264,9 @@ void FogOfWarTechDemo::draw()
 
 	// draw boxes around selected characters
 	draw_selections();
+
+	// draw things specific to the player i.e. planned buildings, unit paths maybe
+	new_player->draw();
 
 	// sort and draw entities
 	std::vector<Entity*> sort_list;

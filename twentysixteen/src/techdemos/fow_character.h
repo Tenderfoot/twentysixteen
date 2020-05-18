@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../fow_selectable.h"
-#include "../fow_player.h"
 
 class FOWCharacter : public FOWSelectable
 {
@@ -145,7 +144,6 @@ public:
 	t_vertex draw_position;
 	t_vertex desired_position;
 	bool dirty_visibiltiy;
-	FOWPlayer *owner;
 	std::vector<t_tile*> current_path;
 };
 
@@ -160,6 +158,7 @@ public:
 		has_gold = false;
 		target_town_hall = nullptr;
 		target_mine = nullptr;
+		build_mode = false;
 	}
 
 	bool has_gold;
@@ -167,7 +166,7 @@ public:
 
 	FOWSelectable *target_mine;
 	FOWSelectable *target_town_hall;
-
+	bool build_mode;
 
 	virtual void update(float time_delta)
 	{
@@ -270,8 +269,6 @@ public:
 				else
 				{
 					has_gold = false;
-					owner->gold++;
-					printf("Player now has %d gold\n", owner->gold);
 					desired_position = t_vertex(current_command.target->position.x, 0, current_command.target->position.z - 1);
 					current_path = grid_manager->find_path(position, desired_position);
 					state = GRID_MOVING;
@@ -281,6 +278,12 @@ public:
 		}
 
 		FOWCharacter::update(time_delta);
+	}
+
+	void clear_selection() 
+	{
+		build_mode = false;
+		FOWSelectable::clear_selection();
 	}
 
 };

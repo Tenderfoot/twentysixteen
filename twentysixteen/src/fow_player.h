@@ -2,6 +2,7 @@
 
 #include "linear_algebra.h"
 #include "./techdemos/fow_character.h"
+#include "./fow_building.h"
 
 typedef struct
 {
@@ -29,7 +30,7 @@ public:
 		{
 			for (int i = 0; i < selection_group.selected_characters.size(); i++)
 			{
-				selection_group.selected_characters.at(i)->selected = false;
+				selection_group.selected_characters.at(i)->clear_selection();
 			}
 		}
 
@@ -55,6 +56,27 @@ public:
 							}
 						}
 					}
+	}
+
+	void draw()
+	{
+		
+		if (selection_group.selected_characters.size() == 1)
+		{
+			Entity *current = selection_group.selected_characters.at(0);
+			if (current->type == FOW_GATHERER)
+			{
+				FOWGatherer *builder = (FOWGatherer*)current;
+
+				if (builder->build_mode)
+				{
+					FOWBuilding new_building(grid_manager->mouse_x, grid_manager->mouse_y, 3);
+					new_building.draw();
+				}
+
+			}
+		}
+
 	}
 
 	bool is_selectable(entity_types type)

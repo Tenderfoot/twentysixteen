@@ -52,6 +52,11 @@ public:
 	{
 	};
 
+	virtual void clear_selection() 
+	{
+		selected = false;
+	};
+
 	FOWCommand current_command;
 
 	std::vector<FOWCommand> command_queue;

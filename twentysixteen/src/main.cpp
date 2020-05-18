@@ -149,6 +149,8 @@ boundinput translate_key_input(SDL_Keycode keycode)
 			return QUICKSWITCH;
 		case SDLK_e:
 			return USE;
+		case SDLK_b:
+			return HOTKEY_B;
 		case SDLK_KP_7:
 			return EDITOR_SCALE_X_PLUS;
 		case SDLK_KP_4:
