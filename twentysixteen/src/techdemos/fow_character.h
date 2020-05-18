@@ -3,6 +3,7 @@
 #include "../fow_selectable.h"
 
 class FOWBuilding;
+class FOWPlayer;
 
 class FOWCharacter : public FOWSelectable
 {
@@ -157,6 +158,7 @@ public:
 	t_vertex desired_position;
 	bool dirty_visibiltiy;
 	std::vector<t_tile*> current_path;
+	FOWPlayer *owner;
 };
 
 

@@ -51,6 +51,7 @@ void FogOfWarTechDemo::init()
 			new_character->spine_data.animation_name = "idle";
 			new_character->spine_data.looping = true;
 			new_character->grid_manager = &grid_manager;
+			new_character->owner = new_player;
 			new_character->position = current_entity->position;
 			entities.push_back(new_character);
 		}
@@ -184,6 +185,7 @@ void FogOfWarTechDemo::take_input(boundinput input, bool type)
 					new_gatherer->spine_data.load_spine_data("everybody");
 					spSkeleton_setSkinByName(new_gatherer->spine_data.skeleton, "farm");
 					new_gatherer->spine_data.animation_name = "idle";
+					new_gatherer->owner = new_player;
 					new_gatherer->spine_data.looping = true;
 					new_gatherer->grid_manager = &grid_manager;
 					new_gatherer->position = t_vertex(new_player->selection_group.selected_characters.at(0)->position.x + 4, 0.0f, new_player->selection_group.selected_characters.at(0)->position.z);
@@ -234,6 +236,10 @@ void FogOfWarTechDemo::take_input(boundinput input, bool type)
 						if (hit_target->type == FOW_GOLDMINE)
 						{
 							gatherer->give_command(FOWCommand(GATHER, hit_target));
+						}
+						else if (hit_target->type == FOW_GATHERER)
+						{
+							gatherer->give_command(FOWCommand(ATTACK, hit_target));
 						}
 					}
 					else

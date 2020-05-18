@@ -1,6 +1,7 @@
 
 #include "techdemos/fow_character.h"
 #include "fow_building.h"
+#include "fow_player.h"
 
 void FOWGatherer::update(float time_delta)
 {
@@ -50,6 +51,7 @@ void FOWGatherer::update(float time_delta)
 						t_vertex new_position = t_vertex(target_town_hall->position.x, 0, target_town_hall->position.z);
 						position = new_position;
 						draw_position = new_position;
+						owner->gold++;
 						visible = false;
 						state = GRID_COLLECTING;
 						spine_data.animation_name = "idle";
