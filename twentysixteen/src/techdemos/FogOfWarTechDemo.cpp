@@ -7,7 +7,6 @@
 // RTS Stuff
 
 // TILE STUFF:
-	// Figure out which tile to draw once not every frame
 	// add dark grass
 	// split vision blockage between water and rocks
 
@@ -16,7 +15,6 @@
 	// TODO: Choose spot around building if spot is takem
 /******************  BUGS *********************/
 	// BUG: Draw order should use draw position not position
-	// Bug: Crashes when greenbox leaves area
 /**********************************************/
 
 void FogOfWarTechDemo::init()
@@ -115,7 +113,6 @@ void FogOfWarTechDemo::take_input(boundinput input, bool type)
 	{
 		new_player = &player;
 	}
-
 
 	new_player->take_input(input, type);
 }
