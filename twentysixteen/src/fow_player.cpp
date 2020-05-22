@@ -200,11 +200,6 @@ void FOWPlayer::take_input(boundinput input, bool type)
 		grid_manager->use_tex = !grid_manager->use_tex;
 	}
 
-	if (input == NEXT && type == true)
-	{
-		grid_manager->randomize_map();
-	}
-
 	if (input == HOTKEY_B && type == true)
 	{
 		if (selection_group.size() == 1)

@@ -537,6 +537,7 @@ void GridManager::randomize_map()
 	
 	
 	cull_orphans();
+	calc_all_tiles();
 
 }
 

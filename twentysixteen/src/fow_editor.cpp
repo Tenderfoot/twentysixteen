@@ -71,6 +71,11 @@ void FOWEditor::take_input(boundinput input, bool type)
 		grid_manager->use_tex = !grid_manager->use_tex;
 	}
 
+	if (input == USE && type == true)
+	{
+		grid_manager->randomize_map();
+	}
+
 	if (input == NEXT && type == true)
 	{
 		blobtype++;
