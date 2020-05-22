@@ -21,6 +21,7 @@ void FOWEditor::update()
 	if (blob_droppin)
 	{
 		grid_manager->dropblob(grid_manager->mouse_x, grid_manager->mouse_y, blobtype);
+		grid_manager->cull_orphans();
 	}
 	FOWPlayer::update();
 }
@@ -41,7 +42,6 @@ void FOWEditor::take_input(boundinput input, bool type)
 	{
 		green_box->visible = false;
 		blob_droppin = false;
-		grid_manager->cull_orphans();
 		get_selection(grid_manager->convert_mouse_coords(green_box->mouse_in_space), grid_manager->convert_mouse_coords(mouse_in_space));
 	}
 

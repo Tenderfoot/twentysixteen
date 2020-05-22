@@ -157,7 +157,7 @@ void GridManager::load_map(std::string mapname)
 
 void GridManager::init()
 {
-	load_map("garden_of_war");
+	load_map("one_twenty_eight");
 	
 	tile = ModelData::import("data/models/tile.fbx", 0.05);
 	wall = ModelData::import("data/models/tile_wall.fbx", 0.05);
