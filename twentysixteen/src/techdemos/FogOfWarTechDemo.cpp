@@ -40,7 +40,6 @@ void FogOfWarTechDemo::init()
 	new_player->grid_manager = &grid_manager;
 	new_player->entities = &entities;
 	TechDemoUI.add_widget(new_player->green_box);
-	// these are the screen level coords of the mouse, find a better way
 	new_player->mousex = &mousex;
 	new_player->mousey = &mousey;
 
@@ -49,7 +48,6 @@ void FogOfWarTechDemo::init()
 	new_player->grid_manager = &grid_manager;
 	new_player->entities = &entities;
 	TechDemoUI.add_widget(new_player->green_box);
-	// these are the screen level coords of the mouse, find a better way
 	new_player->mousex = &mousex;
 	new_player->mousey = &mousey;
 
