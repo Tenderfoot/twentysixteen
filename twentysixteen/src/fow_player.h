@@ -21,7 +21,7 @@ public:
 	}
 
 	void draw();
-	void update();
+	virtual void update();
 	void draw_selections();
 
 	int gold;
