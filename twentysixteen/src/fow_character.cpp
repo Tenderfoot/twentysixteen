@@ -64,26 +64,8 @@ void FOWGatherer::process_command(FOWCommand next_command)
 
 void FOWGatherer::PathBlocked()
 {
-	if (current_command.target != nullptr)
-	{
-		t_vertex new_position;
-		if (has_gold)
-			new_position = t_vertex(target_town_hall->position.x + 1, 0, target_town_hall->position.z + 1);
-		else
-			if (current_command.type == ATTACK)
-				new_position = t_vertex(current_command.target->position.x, 0, current_command.target->position.z - 1);
-			else
-				new_position = t_vertex(current_command.position.x + 1, 0, current_command.position.z + 1);
-
-		desired_position = new_position;
-		current_path = grid_manager->find_path(position, desired_position);
-		while (current_path.size() == 0)
-		{
-			new_position = t_vertex(new_position.x + 1, 0, new_position.z);
-			desired_position = new_position;
-			current_path = grid_manager->find_path(position, new_position);
-		}
-	}
+	printf("I'm Blocked!");
+	set_idle();
 }
 
 void FOWGatherer::update(float time_delta)

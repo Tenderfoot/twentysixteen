@@ -13,7 +13,7 @@ public:
 
 	// FOWPlayer for this one
 	void get_selection(t_vertex tile_space, t_vertex tile_end);
-	void take_input(boundinput input, bool type);
+	virtual void take_input(boundinput input, bool type);
 
 	bool is_selectable(entity_types type)
 	{

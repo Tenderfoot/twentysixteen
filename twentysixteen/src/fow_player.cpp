@@ -26,8 +26,7 @@ void FOWPlayer::draw_selections()
 	int i;
 	t_vertex draw_position;
 	int draw_size;
-	// This is for the selection border
-	// needs to be drawn before characters - or does it
+
 	for (i = 0; i < entities->size(); i++)
 	{
 		Entity *current_entity = entities->at(i);

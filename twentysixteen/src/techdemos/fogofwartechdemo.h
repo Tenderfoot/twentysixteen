@@ -6,7 +6,7 @@
 #include "../grid_manager.h"
 #include "fow_character.h"
 #include "../grid_character_manager.h"
-#include "../fow_player.h"
+#include "../fow_editor.h"
 #include "../fow_building.h"
 
 class FogOfWarTechDemo : public BaseTechDemo
@@ -43,6 +43,8 @@ public:
 	FOWCharacter *new_character;
 	FOWGatherer *new_gatherer;
 	FOWPlayer *new_player;
+	FOWPlayer player;
+	FOWEditor editor;
 	FOWCharacter *selected_character;
 	
 };

@@ -36,13 +36,24 @@ void FogOfWarTechDemo::init()
 	grid_manager.init();
 
 	// make the player
-	new_player = new FOWPlayer();
+	new_player = &player;
 	new_player->grid_manager = &grid_manager;
 	new_player->entities = &entities;
 	TechDemoUI.add_widget(new_player->green_box);
 	// these are the screen level coords of the mouse, find a better way
 	new_player->mousex = &mousex;
 	new_player->mousey = &mousey;
+
+	// make the player
+	new_player = &editor;
+	new_player->grid_manager = &grid_manager;
+	new_player->entities = &entities;
+	TechDemoUI.add_widget(new_player->green_box);
+	// these are the screen level coords of the mouse, find a better way
+	new_player->mousex = &mousex;
+	new_player->mousey = &mousey;
+
+	new_player = &player;
 
 	// this should go somewhere
 	for (int i = 0; i < entities.size(); i++)
@@ -96,6 +107,17 @@ void FogOfWarTechDemo::take_input(boundinput input, bool type)
 {
 	if (input == BACK && type == true)
 		exit_level = TECHDEMO_BASE;
+
+	if (input == EDITOR_CREATE_MODE && type == true)
+	{
+		new_player = &editor;
+	}
+	
+	if (input == EDITOR_PLAY_MODE && type == true)
+	{
+		new_player = &player;
+	}
+
 
 	new_player->take_input(input, type);
 }

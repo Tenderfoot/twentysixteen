@@ -88,6 +88,7 @@
     <ClInclude Include="src\enemy_sidefire.h" />
     <ClInclude Include="src\entity.h" />
     <ClInclude Include="src\fow_building.h" />
+    <ClInclude Include="src\fow_editor.h" />
     <ClInclude Include="src\fow_player.h" />
     <ClInclude Include="src\fow_selectable.h" />
     <ClInclude Include="src\game_entity.h" />
