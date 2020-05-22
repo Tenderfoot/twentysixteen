@@ -7,9 +7,9 @@
 // RTS Stuff
 
 // TILE STUFF:
+	// Figure out which tile to draw once not every frame
 	// add dark grass
 	// split vision blockage between water and rocks
-	// paint terrain (edit mode for grid stuff??)
 
 /************ BUG AND TODO PILE ***************/
 /******************* TODOS ********************/

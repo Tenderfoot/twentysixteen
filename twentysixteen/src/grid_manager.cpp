@@ -157,7 +157,8 @@ void GridManager::load_map(std::string mapname)
 
 void GridManager::init()
 {
-	load_map("one_twenty_eight");
+	load_map("garden_of_war");
+	calc_all_tiles();
 	
 	tile = ModelData::import("data/models/tile.fbx", 0.05);
 	wall = ModelData::import("data/models/tile_wall.fbx", 0.05);
@@ -651,6 +652,20 @@ int GridManager::calculate_tile(int i, int j, int current_type)
 	return war2_autotile_map[tex_wall];
 }
 
+
+void GridManager::calc_all_tiles()
+{
+	int i, j;
+
+	for (i = 0; i < width; i++)
+	{
+		for (j = 0; j < height; j++)
+		{
+			tile_map[i][j].tex_wall = calculate_tile(i, j, tile_map[i][j].type);
+		}
+	}
+}
+
 //183=14
 void GridManager::draw_autotile()
 {
@@ -661,16 +676,14 @@ void GridManager::draw_autotile()
 	{
 		for (j = 0; j < height; j++)
 		{
-			int tex_wall = calculate_tile(i, j, tile_map[i][j].type);
-
-			if (tex_wall == -1)
-				tex_wall = 15;
+			if (tile_map[i][j].tex_wall == -1)
+				tile_map[i][j].tex_wall = 15;
 
 			if (tile_map[i][j].type == 0)
-				tex_wall = 15;
+				tile_map[i][j].tex_wall = 15;
 
-			int xcoord = tex_wall % 4;
-			int ycoord = tex_wall / 4;
+			int xcoord = tile_map[i][j].tex_wall % 4;
+			int ycoord = tile_map[i][j].tex_wall / 4;
 
 			GLuint *texture_set;
 

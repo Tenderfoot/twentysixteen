@@ -22,6 +22,7 @@ void FOWEditor::update()
 	{
 		grid_manager->dropblob(grid_manager->mouse_x, grid_manager->mouse_y, blobtype);
 		grid_manager->cull_orphans();
+		grid_manager->calc_all_tiles();
 	}
 	FOWPlayer::update();
 }
@@ -78,14 +79,13 @@ void FOWEditor::take_input(boundinput input, bool type)
 
 	if (input == MWHEELUP)
 	{
-		if (camera_distance > 5)
-			camera_distance--;
+		if (camera_distance > 0)
+			camera_distance-=10;
 	}
 
 	if (input == MWHEELDOWN)
 	{
-		if (camera_distance < 100)
-			camera_distance++;
+			camera_distance+=10;
 	}
 
 }
